@@ -31,6 +31,7 @@ then
 
   patch -p0 < ../xerces-c-3.1.1_fixcast.patch
   
+<<<<<<< HEAD
   LDFLAGS_BAK=$LDFLAGS
   if [ "$compiler" = "Clang" -a "$platform" = "linux" ]; then
     LDFLAGS=$CXXFLAGS
@@ -47,6 +48,12 @@ then
 
 
 
+=======
+  ./configure --prefix=$install_prefix
+  
+  $MAKE_command -j$number_of_processes  install
+
+>>>>>>> Add possibility to build python bindings. If choosen check if all needed python dependencies are installed.
   if [ "$platform" = "macosx" ];
   then
     cd $install_prefix/lib
@@ -56,8 +63,11 @@ then
   check_success XercesC $checkfile
   check=$?
       
+<<<<<<< HEAD
   LDFLAGS=$LDFLAGS_BAK   
         
+=======
+>>>>>>> Add possibility to build python bindings. If choosen check if all needed python dependencies are installed.
 fi
 
 cd  $SIMPATH
