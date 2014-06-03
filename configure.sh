@@ -75,36 +75,80 @@ source scripts/functions.sh
 # show the menues. Else get some input interactively.
 if [ $# == "0" ];
 then
-
-  source scripts/menu.sh
- 
+  source scripts/first_menu.sh
+elif [ $# == "1" ];
+then
+  installation_type=$1
 else
-  if [ $1 = "automatic" ];
+  echo "Call the script either with no parameter, then your are guided through the installation procedure,"
+  echo "or with one parameter which defines the installation type."
+  echo "The supported installation types are:"
+  echo " - automatic"
+  echo " - custom"
+  echo " - grid"
+  echo " - onlyreco"
+  exit 1
+fi
+
+echo $installation_type
+
+if [ "$installation_type" = "custom" ]
+then
+  echo "Custom mode"
+  source scripts/menu.sh
+  if [ "$install_sim" = "yes" ]
   then
-    compiler=
-    debug=yes
-    optimize=no
-    geant4_download_install_data_automatic=yes
-    geant4_install_data_from_dir=no
-    build_python=no
-    export SIMPATH_INSTALL=$PWD/installation
-  elif [ $1 = "grid" ];
+     onlyreco=0
+  elif [ "$install_sim" = "no" ]
   then
-    compiler=gcc
-    debug=no
-    optimize=no
-    geant4_download_install_data_automatic=no
-    geant4_install_data_from_dir=yes
-    build_python=no
-    SIMPATH_INSTALL=$PWD/installation
-    build_for_grid=yes
-  else
-    echo "Parameter given to the script is not known."
-    echo "The only valid parameter up to now is automatic."
-    echo "Stop execution at this point."
-    exit 42
-  fi   
-fi  
+     onlyreco=1
+  fi
+elif [ "$installation_type" = "automatic" ]
+then
+  echo "*** Edit the configure.sh script and add the compiler in line 110."
+  echo "*** The following error is due to the undefinded compiler."
+  compiler=
+  debug=yes
+  optimize=no
+  geant4_download_install_data_automatic=yes
+  geant4_install_data_from_dir=no
+  build_python=no
+  export SIMPATH_INSTALL=$PWD/installation
+  onlyreco=0
+elif [ "$installation_type" = "grid" ]
+then
+  compiler=gcc
+  debug=no
+  optimize=no
+  geant4_download_install_data_automatic=no
+  geant4_install_data_from_dir=yes
+  build_python=no
+  export SIMPATH_INSTALL=$PWD/installation
+  build_for_grid=yes
+  onlyreco=0
+elif [ "$installation_type" = "onlyreco" ]
+then
+  echo "*** Edit the configure.sh script and add the compiler in line 133."
+  echo "*** The following error is due to the undefinded compiler."
+  compiler=
+  debug=yes
+  optimize=no
+  geant4_download_install_data_automatic=no
+  geant4_install_data_from_dir=no
+  build_python=no
+  export SIMPATH_INSTALL=$PWD/installation
+  onlyreco=1
+else
+  echo "Parameter given to the script is not known."
+  echo "Call the script either with no parameter, then your are guided through the installation procedure,"
+  echo "or with one parameter which defines the installation type."
+  echo "The supported installation types are:"
+  echo " - automatic"
+  echo " - custom"
+  echo " - grid"
+  echo " - onlyreco"
+  exit 42
+fi
 
 if [ "$build_python" = "yes" ]; 
 then
@@ -138,6 +182,11 @@ echo "g4_get_data         : " $geant4_get_data | tee -a $logfile
 echo "Number of parallel    " | tee -a $logfile
 echo "processes for build : " $number_of_processes | tee -a $logfile
 echo "Installation Directory: " $SIMPATH_INSTALL | tee -a $logfile
+if [ "$onlyreco" = "1" ];
+then
+echo "Reco Only Installation  "
+fi
+
 
 check=1
 
@@ -186,21 +235,21 @@ fi
 
 ##################### Pythia 6 #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
   source scripts/install_pythia6.sh 
 fi
 
 ##################### HepMC ## #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
   source scripts/install_hepmc.sh 
 fi
 
 ##################### Pythia 8 #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
   source scripts/install_pythia8.sh 
 fi
@@ -209,7 +258,7 @@ fi
 
 if [ "$build_python" = "yes" ]; 
 then
-  if [ "$check" = "1" ];
+  if [ "$check" = "1" -a "$onlyreco" = "0" ];
   then
     source scripts/install_xercesc.sh
   fi
@@ -224,14 +273,14 @@ fi
 
 ##################### GEANT 4 #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
   source scripts/install_geant4.sh
 fi
 
 ###################### GEANT 4 Data ########################################
 
-if [ "$check" = "1" -a "$geant4_install_data_from_dir" = "yes" ];
+if [ "$check" = "1" -a "$geant4_install_data_from_dir" = "yes" -a "$onlyreco" = "0" ];
 then
   source scripts/install_geant4_data.sh
 fi
@@ -247,7 +296,7 @@ fi
 
 if [ "$build_python" = "yes" ]; 
 then
-  if [ "$check" = "1" ];
+  if [ "$check" = "1" -a "$onlyreco" = "0" ];
   then
     source scripts/install_g4py.sh
   fi
@@ -255,35 +304,35 @@ fi
 
 ##################### Pluto #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
   source scripts/install_pluto.sh
 fi
 
 ##################### Geant 3 VMC #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
   source scripts/install_geant3.sh
 fi
 
 ##################### VGM #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
     source scripts/install_vgm.sh
 fi
 
 ##################### Geant 4 VMC #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
   source scripts/install_geant4_vmc.sh
 fi
 
 ##################### Millepede #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
   source scripts/install_millepede.sh
 fi
