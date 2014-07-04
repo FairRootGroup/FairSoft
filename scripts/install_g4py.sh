@@ -7,7 +7,11 @@ checkfile=$install_prefix/lib/g4py/__init__.pyc
 if (not_there g4py $checkfile);
 then
 
-    [ -e $SIMPATH_INSTALL/lib64 ] || (cd $SIMPATH_INSTALL; ln -s lib lib64)
+    if [ ! -e $SIMPATH_INSTALL/lib64 ]; then
+      cd $SIMPATH_INSTALL
+      ln -s lib lib64
+    fi
+      
     cd $SIMPATH/transport/geant4/environments/g4py
     patch -p0 < ../../../g4py.patch
 
