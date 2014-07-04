@@ -154,6 +154,9 @@ source scripts/package_versions.sh
 if [ "$check" = "1" ];
 then
   source scripts/install_cmake.sh
+  if [ "$install_cmake" = "yes" ] ; then  # recehck system with newer CMAKE
+    source scripts/check_system.sh
+  fi
 fi
 
 ############ Google Test framework ###############################
