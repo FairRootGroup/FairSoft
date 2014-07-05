@@ -3,9 +3,8 @@
 if [ ! -d  $SIMPATH/transport/geant4_vmc ];
 then
   cd $SIMPATH/transport
-  git clone http://root.cern.ch/git/geant4_vmc.git
+  git clone -b v2-15-patches http://root.cern.ch/git/geant4_vmc.git
   cd geant4_vmc
-  git checkout master 
 fi
                  
 install_prefix=$SIMPATH_INSTALL
