@@ -416,6 +416,7 @@ then
 fi
 
 export FC=$(grep FortranCompiler $SIMPATH/test/configure | cut -f2 -d:)
+[ "$FC" = "f95" ] && export FC=$(readlink `which f95`)
 export F77=$FC
 
 # actualy one should check for mac os x 10.8 
