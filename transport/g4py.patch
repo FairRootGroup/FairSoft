@@ -90,8 +90,7 @@
 +    .def("SetMomentumDirection",   &G4PrimaryParticle::SetMomentumDirection)
 +    .def("SetCharge",   &G4PrimaryParticle::SetCharge)
 +    .def("GetParticleDefinition",   &G4PrimaryParticle::GetParticleDefinition,
-+          return_internal_reference<>())
-     ;
++          return_internal_reference<>())     ;
  }
  
 --- source/particles/pyG4PrimaryVertex.cc_orig	2014-02-27 18:12:19.000000000 +0100
