@@ -42,7 +42,9 @@ then
   else
     ./configure --prefix=$install_prefix 
   fi
-   $MAKE_command -j$number_of_processes  install
+    
+  $MAKE_command -j$number_of_processes  install
+
 
 
   if [ "$platform" = "macosx" ];
@@ -54,7 +56,8 @@ then
   check_success XercesC $checkfile
   check=$?
       
-  LDFLAGS=$LDFLAGS_BAK
+  LDFLAGS=$LDFLAGS_BAK   
+        
 fi
 
 cd  $SIMPATH
