@@ -230,6 +230,7 @@ then
     source scripts/install_xercesc.sh
   fi
 fi
+
 ############ Mesa libraries ###############################
 
 if [ "$check" = "1" -a "$compiler" = "Clang" -a "$platform" = "linux" ];
