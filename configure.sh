@@ -93,7 +93,7 @@ then
     fi
   elif [ "$installation_type" = "automatic" ]
   then
-    compiler=gcc
+    compiler=
     debug=yes
     optimize=no
     geant4_download_install_data_automatic=yes
@@ -114,7 +114,7 @@ then
     mqinstall=0
   elif [ "$installation_type" = "mqonly" ]
   then
-    compiler=Clang
+    compiler=
     debug=yes
     optimize=no
     geant4_download_install_data_automatic=no
@@ -127,7 +127,7 @@ else
   mqinstall=0
   if [ $1 = "mqonly" ];
   then
-  compiler=Clang
+  compiler=
   debug=yes
   optimize=no
   geant4_download_install_data_automatic=no
