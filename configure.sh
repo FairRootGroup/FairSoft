@@ -76,10 +76,22 @@ source scripts/functions.sh
 if [ $# == "0" ];
 then
 
-  source scripts/menu.sh
- 
-else
-  if [ $1 = "automatic" ];
+  source scripts/first_menu.sh
+
+  echo $installation_type
+
+  if [ "$installation_type" = "custom" ]
+  then
+    echo "Custom mode"
+    source scripts/menu.sh
+    if [ "$install_sim" = "yes" ]
+    then
+       mqinstall=0
+    elif [ "$install_sim" = "no" ]
+    then
+       mqinstall=1
+    fi
+  elif [ "$installation_type" = "automatic" ]
   then
     compiler=
     debug=yes
@@ -88,6 +100,51 @@ else
     geant4_install_data_from_dir=no
     build_python=no
     export SIMPATH_INSTALL=$PWD/installation
+    mqinstall=0
+  elif [ "$installation_type" = "grid" ]
+  then
+    compiler=gcc
+    debug=no
+    optimize=no
+    geant4_download_install_data_automatic=no
+    geant4_install_data_from_dir=yes
+    build_python=no
+    SIMPATH_INSTALL=$PWD/installation
+    build_for_grid=yes
+    mqinstall=0
+  elif [ "$installation_type" = "mqonly" ]
+  then
+    compiler=
+    debug=yes
+    optimize=no
+    geant4_download_install_data_automatic=no
+    geant4_install_data_from_dir=no
+    export SIMPATH_INSTALL=$PWD/installation
+    mqinstall=1
+  fi
+
+else
+  mqinstall=0
+  if [ $1 = "mqonly" ];
+  then
+  compiler=
+  debug=yes
+  optimize=no
+  geant4_download_install_data_automatic=no
+  geant4_install_data_from_dir=no
+  export SIMPATH_INSTALL=$PWD/installation
+  mqinstall=1
+
+  elif [ $1 = "automatic" ];
+  then
+    compiler=
+    debug=yes
+    optimize=no
+    geant4_download_install_data_automatic=yes
+    geant4_install_data_from_dir=no
+    build_python=no
+    export SIMPATH_INSTALL=$PWD/installation
+
   elif [ $1 = "grid" ];
   then
     compiler=gcc
@@ -138,6 +195,10 @@ echo "g4_get_data         : " $geant4_get_data | tee -a $logfile
 echo "Number of parallel    " | tee -a $logfile
 echo "processes for build : " $number_of_processes | tee -a $logfile
 echo "Installation Directory: " $SIMPATH_INSTALL | tee -a $logfile
+if [ "$mqinstall" = "1" ];
+then
+echo "MQ Only Installation  "
+fi
 
 check=1
 
@@ -193,14 +254,14 @@ fi
 
 ##################### HepMC ## #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$mqinstall" = "0" ];
 then
   source scripts/install_hepmc.sh 
 fi
 
 ##################### Pythia 8 #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$mqinstall" = "0" ];
 then
   source scripts/install_pythia8.sh 
 fi
@@ -214,7 +275,7 @@ then
     source scripts/install_xercesc.sh
   fi
 fi
-  
+
 ############ Mesa libraries ###############################
 
 if [ "$check" = "1" -a "$compiler" = "Clang" -a "$platform" = "linux" ];
@@ -224,14 +285,14 @@ fi
 
 ##################### GEANT 4 #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$mqinstall" = "0" ];
 then
   source scripts/install_geant4.sh
 fi
 
 ###################### GEANT 4 Data ########################################
 
-if [ "$check" = "1" -a "$geant4_install_data_from_dir" = "yes" ];
+if [ "$check" = "1" -a "$geant4_install_data_from_dir" = "yes" -a "$mqinstall" = "0" ];
 then
   source scripts/install_geant4_data.sh
 fi
@@ -255,35 +316,35 @@ fi
 
 ##################### Pluto #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$mqinstall" = "0" ];
 then
   source scripts/install_pluto.sh
 fi
 
 ##################### Geant 3 VMC #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$mqinstall" = "0" ];
 then
   source scripts/install_geant3.sh
 fi
 
 ##################### VGM #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$mqinstall" = "0" ];
 then
     source scripts/install_vgm.sh
 fi
 
 ##################### Geant 4 VMC #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$mqinstall" = "0" ];
 then
   source scripts/install_geant4_vmc.sh
 fi
 
 ##################### Millepede #############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$mqinstall" = "0" ];
 then
   source scripts/install_millepede.sh
 fi

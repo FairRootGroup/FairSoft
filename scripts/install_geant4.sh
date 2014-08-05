@@ -64,8 +64,8 @@ then
 
   if [ "$build_python" = "yes" ];
   then
-    geant4_opengl="-DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_GDML=ON -DXERCESC_ROOT_DIR=$install_prefix" 
-  else   
+    geant4_opengl="-DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_GDML=ON -DXERCESC_ROOT_DIR=$install_prefix"
+  else
     geant4_opengl=""
   fi
 
