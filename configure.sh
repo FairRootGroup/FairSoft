@@ -76,7 +76,52 @@ source scripts/functions.sh
 if [ $# == "0" ];
 then
 
-  source scripts/menu.sh
+  source scripts/first_menu.sh
+
+  echo $installation_type
+
+  if [ "$installation_type" = "custom" ]
+  then
+    echo "Custom mode"
+    source scripts/menu.sh
+    if [ "$install_sim" = "yes" ]
+    then
+       mqinstall=0
+    elif [ "$install_sim" = "no" ]
+    then
+       mqinstall=1
+    fi
+  elif [ "$installation_type" = "automatic" ]
+  then
+    compiler=gcc
+    debug=yes
+    optimize=no
+    geant4_download_install_data_automatic=yes
+    geant4_install_data_from_dir=no
+    build_python=no
+    export SIMPATH_INSTALL=$PWD/installation
+    mqinstall=0
+  elif [ "$installation_type" = "grid" ]
+  then
+    compiler=gcc
+    debug=no
+    optimize=no
+    geant4_download_install_data_automatic=no
+    geant4_install_data_from_dir=yes
+    build_python=no
+    SIMPATH_INSTALL=$PWD/installation
+    build_for_grid=yes
+    mqinstall=0
+  elif [ "$installation_type" = "mqonly" ]
+  then
+    compiler=Clang
+    debug=yes
+    optimize=no
+    geant4_download_install_data_automatic=no
+    geant4_install_data_from_dir=no
+    export SIMPATH_INSTALL=$PWD/installation
+    mqinstall=1
+  fi
 
 else
   mqinstall=0
