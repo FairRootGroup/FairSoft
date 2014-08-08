@@ -77,6 +77,15 @@ if [ -h boost ]; then
   rm -rf boost
 fi
 
+#  xerces remove all unneeded files
+cd $SIMPATH/basics
+if [ -d xerces-c-$XERCESCVERSION ]; then
+  rm -rf xerces-c-$XERCESCVERSION
+fi
+if [ -h xercesc ]; then
+  rm -rf xercesc
+fi
+
 #  CMake remove all unneeded files
 cd $SIMPATH/basics
 if [ -d $CMAKEVERSION ]; then
