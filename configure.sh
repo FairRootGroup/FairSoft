@@ -92,41 +92,15 @@ fi
 
 echo $installation_type
 
-<<<<<<< HEAD
 if [ "$installation_type" = "custom" ]
 then
   echo "Custom mode"
   source scripts/menu.sh
   if [ "$install_sim" = "yes" ]
-=======
-  if [ "$installation_type" = "custom" ]
-  then
-    echo "Custom mode"
-    source scripts/menu.sh
-    if [ "$install_sim" = "yes" ]
-    then
-       mqinstall=0
-    elif [ "$install_sim" = "no" ]
-    then
-       mqinstall=1
-    fi
-  elif [ "$installation_type" = "automatic" ]
-  then
-    compiler=
-    debug=yes
-    optimize=no
-    geant4_download_install_data_automatic=yes
-    geant4_install_data_from_dir=no
-    build_python=no
-    export SIMPATH_INSTALL=$PWD/installation
-    mqinstall=0
-  elif [ "$installation_type" = "grid" ]
->>>>>>> c2221eb... No default compiler for automatic and Mq only installation
   then
      onlyreco=0
   elif [ "$install_sim" = "no" ]
   then
-<<<<<<< HEAD
      onlyreco=1
   fi
 elif [ "$installation_type" = "automatic" ]
@@ -156,21 +130,6 @@ elif [ "$installation_type" = "onlyreco" ]
 then
   echo "*** Edit the configure.sh script and add the compiler in line 133."
   echo "*** The following error is due to the undefinded compiler."
-=======
-    compiler=
-    debug=yes
-    optimize=no
-    geant4_download_install_data_automatic=no
-    geant4_install_data_from_dir=no
-    export SIMPATH_INSTALL=$PWD/installation
-    mqinstall=1
-  fi
-
-else
-  mqinstall=0
-  if [ $1 = "mqonly" ];
-  then
->>>>>>> c2221eb... No default compiler for automatic and Mq only installation
   compiler=
   debug=yes
   optimize=no
@@ -191,7 +150,14 @@ else
   exit 42
 fi
 
-if [ "$build_python" = "yes" ]; 
+if [ "$installation_type" = "grid" ];
+then
+  export BUILD_BATCH=TRUE
+else
+  export BUILD_BATCH=FALSE
+fi
+
+if [ "$build_python" = "yes" ];
 then
   export BUILD_PYTHON=TRUE
 else
@@ -304,7 +270,7 @@ then
     source scripts/install_xercesc.sh
   fi
 fi
-
+  
 ############ Mesa libraries ###############################
 
 if [ "$check" = "1" -a "$compiler" = "Clang" -a "$platform" = "linux" ];
