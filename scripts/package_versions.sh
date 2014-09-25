@@ -36,7 +36,7 @@ export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10
 export MESAVERSION=MesaLib-7.10.3
 
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
-export ROOTVERSION=87c1d2a0e691781d2ac93a4f05afee1436feaf4a
+export ROOTVERSION=f255544c8ee8369c67d7817ca0dbc8e3b7137c48
 
 export PLUTO_LOCATION="http://web-docs.gsi.de/%7Ehadeshyp/pluto/v5.37/"
 export PLUTOVERSION=pluto_v5.37
