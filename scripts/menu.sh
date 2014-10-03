@@ -24,12 +24,12 @@ echo
 echo "Which compiler you want to use to compile the external packages?"
 PS3='Please enter a choice from the above menu: '
 
-select CHOICE in "GCC (Linux, Solaris and Mac OSX)" "Intel Compiler (Linux)" "CC (Solaris)" "Portland Compiler" "Clang" Quit
+select CHOICE in "GCC (Linux, and older versions of Mac OSX)" "Intel Compiler (Linux)" "CC (Solaris)" "Portland Compiler" "Clang (Mac OSX)" Quit
 do
   case "$CHOICE" in
                Quit) exit			
                      ;;
-              "GCC (Linux, Solaris and Mac OSX)") 
+              "GCC (Linux, and older versions of Mac OSX)") 
                      compiler=gcc
                      break
                      ;;
@@ -45,7 +45,7 @@ do
                      compiler=PGI
                      break
                      ;;
-                "Clang") 
+                "Clang (Mac OSX)") 
                      compiler=Clang
                      break
                      ;;
