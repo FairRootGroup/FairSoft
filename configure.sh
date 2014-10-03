@@ -127,7 +127,7 @@ source scripts/check_system.sh
 
 # generate the config.cache file
 generate_config_cache
- 
+
 echo "The following parameters are set." | tee -a $logfile
 echo "System              : " $system | tee -a $logfile
 echo "C++ compiler        : " $CXX | tee -a $logfile
