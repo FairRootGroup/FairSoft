@@ -24,12 +24,12 @@ then
   cd geant3 
 
   # patch to correctly install geant3 on linuxx8664icc 
-  patch -p0 < ../Makefile_geant3.patch | tee -a $logfile
-  patch -p0 < ../geant3_geane.patch | tee -a $logfile
+  mypatch ../Makefile_geant3.patch | tee -a $logfile
+  mypatch ../geant3_geane.patch | tee -a $logfile
   	
   if [ "$platform" = "macosx" ];
   then
-    patch -p0 < ../Makefile_geant3_macos.patch | tee -a $logfile
+    mypatch ../Makefile_geant3_macos.patch | tee -a $logfile
   fi
           
             # install gcalor only on 32bit and 64bit machines

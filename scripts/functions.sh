@@ -79,6 +79,28 @@ function check_success {
     fi
 }
 #_____________________________________________________________________
+# script to do the patching. This should avoid problems with applying
+# the same patch again. In each package directory a apllied_patches.txt
+# file is created and the information about the aplied patches is
+# saved. When runing the script again it is checked if the patch
+# was already aplied. If this is the case no action is taken, else
+# the patch is applied 
+function mypatch {
+  patch_full_file=$1
+  patch_file=$(basename "$patch_full_file")
+  if [ ! -e applied_patches.txt ]; then
+    patch -p0 < $patch_full_file
+    echo $patch_file >> applied_patches.txt
+  else
+    if [ "$(grep -c $patch_file applied_patches.txt )" = "1" ]; then
+      echo "The patch $patch_file is already applied."
+    else
+      patch -p0 < $patch_full_file
+      echo $patch_file >> applied_patches.txt
+    fi
+  fi
+}
+#_____________________________________________________________________
 # scripts perform sed command differently on linux and on Mac Os X
 # return error code
 # first parameter is the text to search for, the second is the

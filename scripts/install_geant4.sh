@@ -35,11 +35,11 @@ then
   cd $SIMPATH/transport/geant4/
   
   if [ -f ../${GEANT4VERSION}_c++11.patch ]; then
-    patch -p0 < ../${GEANT4VERSION}_c++11.patch | tee -a $logfile
+    mypatch ../${GEANT4VERSION}_c++11.patch | tee -a $logfile
   fi
 
   if [ "$platform" = "linux" -a "$compiler" = "Clang" ]; then
-    patch -p0 < ../geant4.10.00_clang_linux.patch
+    mypatch ../geant4.10.00_clang_linux.patch
   fi
   
   if (not_there Geant4-build  $G4WORKDIR/build);

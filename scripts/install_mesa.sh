@@ -25,7 +25,7 @@ then
     cd $SIMPATH/basics/mesa
 
     if [ "$platform" = "linux" -a "$compiler" = "Clang" ]; then
-      patch -p0 < ../mesa_clang.patch
+      mypatch ../mesa_clang.patch
       LDFLAGS="-stdlib=libc++" ./configure --prefix=$install_prefix --with-driver=xlib --disable-gallium
     else
       ./configure --prefix=$install_prefix --with-driver=xlib --disable-gallium

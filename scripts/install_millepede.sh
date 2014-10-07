@@ -21,7 +21,7 @@ then
 
   # patch needed since the gcc of Apple does not have gfortran
   # Also use the found fortran (FC) and c (CC) compiler
-  patch -p0 < ../Makefile_millepede.patch | tee -a $logfile
+  mypatch ../Makefile_millepede.patch | tee -a $logfile
 
   # add the correct library path for gfortran on Mac OS since 
   # gfortran is not installed in the system path 

@@ -29,7 +29,7 @@ then
 
   cd $SIMPATH/basics/xercesc
 
-  patch -p0 < ../xerces-c-3.1.1_fixcast.patch
+  mypatch ../xerces-c-3.1.1_fixcast.patch
   
   LDFLAGS_BAK=$LDFLAGS
   if [ "$compiler" = "Clang" -a "$platform" = "linux" ]; then

@@ -43,7 +43,7 @@ then
   if [ "$result" = "0" ];then
     if [ "$system" = "32bit" ]; then
       echo "*** Applying patch needed for Fedora 16 32bit " | tee -a $logfile
-      patch -p0 < ../root_fedora16_32bit.patch  
+      mypatch ../root_fedora16_32bit.patch  
     fi
   fi
   if [ "$debug" = "yes" ];
@@ -97,14 +97,14 @@ then
   fi
 
   # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
-#  patch -p0 < ../root5_34_17_LLVM51.patch | tee -a $logfile 
-  patch -p0 < ../root5_34_17_linux_libc++.patch | tee -a $logfile 
+#  mypatch ../root5_34_17_LLVM51.patch | tee -a $logfile 
+  mypatch ../root5_34_17_linux_libc++.patch | tee -a $logfile 
 
   # needed to solve problem with the TGeoManger for some CBM and Panda geometries
-  patch -p0 < ../root_TGeoShape.patch
+  mypatch ../root_TGeoShape.patch
 
   # needed due to some problem with the ALICE HLT code
-  patch -p0 < ../root5_34_19_hlt.patch    
+  mypatch ../root5_34_19_hlt.patch    
 
   . rootconfig.sh
 
@@ -157,7 +157,7 @@ then
       if [ "$compiler" = "Clang" ]; then
         mysed 'CXXOPTS       = $(OPT)' "CXXOPTS       = ${CXXFLAGS_BAK}" Makefile.$arch
         cd $SIMPATH/tools/root
-        patch -p0 < ../root_vmc_MakeMacros.diff
+        mypatch ../root_vmc_MakeMacros.diff
       fi   
     elif [ "$arch" = "linuxia64gcc" ];
     then 

@@ -22,7 +22,7 @@ if (not_there zeromq $checkfile);
 then
     cd $SIMPATH/basics/zeromq
 
-    patch -p0 < ../zeromq_clang_c++11.patch
+    mypatch ../zeromq_clang_c++11.patch
 
     ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
     make

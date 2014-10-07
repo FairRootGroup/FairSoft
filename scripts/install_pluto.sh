@@ -44,21 +44,21 @@ then
     cd pluto
     case $PLUTOVERSION in
 	*412*)  echo Compiling Old Pluto Version
-	    patch -p0 < ../pluto_v412.patch | tee -a $logfile
+	    mypatch ../pluto_v412.patch | tee -a $logfile
 	    ;;
 	*5.33*)  echo Compiling v5.33 Pluto Version
             cp ../Makefile_pluto5 Makefile
             cp ../newline.awk .
-	    patch -p0 < ../pluto_v533.patch | tee -a $logfile
+	    mypatch ../pluto_v533.patch | tee -a $logfile
             ;;
 	*5.36*)  echo Compiling v5.36 Pluto Version
             cp Makefile.fairsoft Makefile
             ;;
 	*5.37*)  echo Compiling v5.37 Pluto Version
             cp Makefile.fairsoft Makefile
-	    patch -p0 < ../pluto_v537.patch | tee -a $logfile
+	    mypatch ../pluto_v537.patch | tee -a $logfile
             # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
-            patch -p0 < ../pluto_friend.patch | tee -a $logfile
+            mypatch ../pluto_friend.patch | tee -a $logfile
             ;;
 	*5.4*)  echo Compiling v5.4x Pluto Version
             cp Makefile.fairsoft Makefile
