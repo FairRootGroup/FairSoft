@@ -41,6 +41,10 @@ then
   if [ "$platform" = "linux" -a "$compiler" = "Clang" ]; then
     mypatch ../geant4.10.00_clang_linux.patch
   fi
+
+  if [ "$platform" = "macosx" ]; then
+    mypatch ../geant4.10.00_clang_osx.patch
+  fi
   
   if (not_there Geant4-build  $G4WORKDIR/build);
   then 

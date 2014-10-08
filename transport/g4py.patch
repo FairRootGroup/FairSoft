@@ -1,41 +1,16 @@
-<<<<<<< HEAD
 --- CMakeLists.txt_orig	2014-02-27 18:12:19.000000000 +0100
 +++ CMakeLists.txt	2014-05-06 16:46:20.000000000 +0200
 @@ -6,8 +6,7 @@
-=======
---- source/geometry/pyG4Polycone.cc_orig	2014-04-02 13:24:49.000000000 +0200
-+++ source/geometry/pyG4Polycone.cc	2014-04-02 13:23:04.000000000 +0200
-@@ -96,7 +96,7 @@
-     .def("GetStartPhi",    &G4Polycone::GetStartPhi)
-     .def("GetEndPhi",      &G4Polycone::GetEndPhi)
-     .def("IsOpen",         &G4Polycone::IsOpen)
--    .def("IsGeneric",      &G4Polycone::IsGeneric)
-+//    .def("IsGeneric",      &G4Polycone::IsGeneric)
-     .def("GetNumRZCorner", &G4Polycone::GetNumRZCorner)
- 
-     // operators
---- CMakeLists.txt_orig	2014-02-27 18:12:19.000000000 +0100
-+++ CMakeLists.txt	2014-04-02 14:14:09.000000000 +0200
-@@ -6,7 +6,7 @@
->>>>>>> Add possibility to build python bindings. If choosen check if all needed python dependencies are installed.
  project(Geant4Py)
  #------------------------------------------------------------------------------
  # installation prefixes for libraries
 -set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
-<<<<<<< HEAD
 -
 +set(CMAKE_INSTALL_PREFIX $ENV{SIMPATH_INSTALL})
  # debug mode
  set(DEBUG FALSE CACHE BOOL "Debug Mode (Debug On)")
  
-@@ -25,10 +24,17 @@
-=======
-+set(CMAKE_INSTALL_PREFIX $ENV{SIMPATH_INSTALL})
- 
- # debug mode
- set(DEBUG FALSE CACHE BOOL "Debug Mode (Debug On)")
-@@ -25,10 +25,17 @@
->>>>>>> Add possibility to build python bindings. If choosen check if all needed python dependencies are installed.
+@@ -25,10 +24,18 @@
  find_package(Geant4 REQUIRED)
  find_package(PythonInterp REQUIRED)
  find_package(PythonLibs REQUIRED)
@@ -49,12 +24,12 @@
 +if (CMAKE_SYSTEM_NAME MATCHES Darwin)
 +      SET(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS} -flat_namespace -single_module -undefined dynamic_lookup")
 +      SET(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -flat_namespace -single_module -undefined dynamic_lookup")
++      SET(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
 +endif()
 +
  #------------------------------------------------------------------------------
  # parameters for building
  message(STATUS "--------------------------------------------------------")
-<<<<<<< HEAD
 --- source/gdml/pyG4GDMLParser.cc_orig	2014-02-27 18:12:18.000000000 +0100
 +++ source/gdml/pyG4GDMLParser.cc	2014-05-06 16:26:53.000000000 +0200
 @@ -81,6 +81,7 @@
@@ -413,5 +388,3 @@
  
  ////////////////////////////////////////////////////////////////////////////
  void G4EzVolume::CreateTubeVolume(G4Material* amaterial,
-=======
->>>>>>> Add possibility to build python bindings. If choosen check if all needed python dependencies are installed.

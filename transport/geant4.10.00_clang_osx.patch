@@ -1,0 +1,13 @@
+--- CMakeLists.txt_orig	2013-12-05 10:41:41.000000000 +0100
++++ CMakeLists.txt	2014-06-03 13:55:20.623401050 +0200
+@@ -34,7 +34,9 @@
+ #
+ project(Geant4)
+ 
+-
++if (CMAKE_SYSTEM_NAME MATCHES Darwin)
++      SET(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
++endif()
+ #----------------------------------------------------------------------------
+ # - Prepend our own CMake Modules to the search path
+ # This allows us to customize, add, and factor out functionality
