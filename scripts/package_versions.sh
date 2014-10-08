@@ -44,7 +44,7 @@ export PLUTOVERSION=pluto_v5.37
 export GEANT3_LOCATION="ftp://root.cern.ch/root/vmc/"
 export GEANT3VERSION=geant321+_vmc.1.15a
 
-export VGM_LOCATION="https://svn.code.sf.net/p/vgm/code/tags/"
+export VGM_LOCATION="http://svn.code.sf.net/p/vgm/code/tags/"
 export VGMVERSION=v3-06
 
 export GEANT4VMC_LOCATION="http://root.cern.ch/git/geant4_vmc.git"
