@@ -59,6 +59,7 @@ unset MINUIT2
 unset TABLE
 unset XMLDIR
 unset ROOTDICTTYPE
+unset PLATFORM
 
 export SIMPATH=$PWD
 
