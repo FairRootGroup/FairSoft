@@ -44,7 +44,7 @@ run a simulation. If unsure choose _Yes_.
 
 If the previous choice was _Yes_ one has to define in the next menu how to handle the 
 Geant4 data files. These files have after installation a size of approximately 650 MB. 
-If you don't intent to use Geant4 you shoule choose _Don't install_, if unsure choose
+If you don't intent to use Geant4 you should choose _Don't install_, if unsure choose
 one of the other options described below. 
 
 If the data files should be installed it is normally save to choose the
@@ -103,7 +103,21 @@ directory of FairSoft.
 * ZeroMQ 3.2.4
 * Protocoll Buffers 2.5.0
 * Nano Message  0.4-beta
-Packages included:
+
+##Installation of ALFA (Alice-FAIR software)
+
+The ALFA installation will install the FairSoft as above and after that it will install
+three more packages:
+
+* FairRoot 
+* DDS
+* AliRoot
+
+  FairSoft> ./alfaconfig.sh
+
+The script will get the source code of all the packages from there own repostories, 
+compile and install tme. The versions and the urls of the different repostories used
+are specified in the file "scripts/package_versions.sh" 
 
 
 

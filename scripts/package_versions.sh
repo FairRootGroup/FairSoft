@@ -92,3 +92,13 @@ export RadioactiveDecay_TAR=G4RadioactiveDecay.4.0.tar.gz
 
 export RealSurface_VERSION=RealSurface1.0
 export RealSurface_TAR=RealSurface.1.0.tar.gz
+
+export FAIRROOT_LOCATION="https://github.com/FairRootGroup/FairRoot.git"
+export FAIRROOTVERSION=dev
+
+export DDS_LOCATION="https://github.com/FairRootGroup/DDS.git"
+export DDSVERSION=master
+
+export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
+export ALIROOTVERSION=master
+

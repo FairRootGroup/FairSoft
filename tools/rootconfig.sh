@@ -55,6 +55,14 @@
       PYTHONBUILD=" "
    fi
    
+   if [ "$install_alfasoft" = "yes" ];
+   then
+      VCBUILD=" "
+   else
+      VCBUILD="--enable-vc"
+   fi
+
+   
    #######################################################
       
      pythia6_libdir=$SIMPATH_INSTALL/lib
@@ -75,7 +83,7 @@
                     --disable-globus \
                     --disable-reflex \
                     --disable-cintex \
-                    --enable-vc --enable-http \
+                    $VCBUILD --enable-http \
                     --with-gsl-incdir=$gsl_dir/include \
                     --with-gsl-libdir=$gsl_dir/lib \
                     --with-f77=$FC $root_comp_flag $prefix_string \

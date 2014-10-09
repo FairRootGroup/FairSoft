@@ -104,6 +104,41 @@ then
    onlyreco=1
 fi
 
+#echo $installation_type
+
+#if [ "$installation_type" = "custom" ]
+#then
+#  echo "Custom mode"
+#elif [ "$installation_type" = "automatic" ]
+#then
+#  compiler=
+#  if [ "$compiler" = "" ]; then
+#    echo "*** Edit the configure.sh script and add the compiler in line 112."
+#    echo "*** The following error is due to the undefinded compiler."
+#    exit 1
+#  fi
+#elif [ "$installation_type" = "grid" ]
+#then
+#elif [ "$installation_type" = "onlyreco" ]
+#then
+#  compiler=
+#  if [ "$compiler" = "" ]; then
+#    echo "*** Edit the configure.sh script and add the compiler in line 140."
+#    echo "*** The following error is due to the undefinded compiler."
+#    exit 1
+#  fi
+#else
+#  echo "Parameter given to the script is not known."
+#  echo "Call the script either with no parameter, then your are guided through the installation procedure,"
+#  echo "or with one parameter which defines the installation type."
+#  echo "The supported installation types are:"
+#  echo " - automatic"
+#  echo " - custom"
+#  echo " - grid"
+#  echo " - onlyreco"
+#  exit 42
+#fi
+
 if [ "$installation_type" = "grid" ];
 then
   export BUILD_BATCH=TRUE
@@ -332,7 +367,12 @@ then
       echo "During the installation a new version of CMake has been installed in $SIMPATH_INSTALL/bin."
       echo "Please add this path to your environment variable PATH to use this new version of CMake."
     fi
-    exit 0    
+    if [ "$install_alfasoft" = "yes" ];
+    then
+      echo "----------------- End of FairSoft installation ---------------"
+    else
+      exit 0
+    fi
 else
     echo "*** End installation of external packages with Errors***"  | tee -a $logfile
     exit 42

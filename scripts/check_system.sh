@@ -380,6 +380,14 @@ if [ "$result" = "0" ]; then
   exit 1
 fi
 
+if [ "$install_alfasoft" = "yes" ];
+then
+  echo "----------------- Install AlFaSoft ---------------"
+else
+  echo "----------------- Install FairSoft ---------------"
+fi
+
+
 mkdir -p $SIMPATH/test/build
 cd $SIMPATH/test
 
@@ -406,6 +414,7 @@ hascxx11=$(grep HasCxx11 $SIMPATH/test/configure | cut -f2 -d:)
 haslibcxx=$(grep HasLibCxx $SIMPATH/test/configure | cut -f2 -d:)
 _hascurl=$(grep HasCurl $SIMPATH/test/configure | cut -f2 -d:)
 
+
 if [ ${_hascurl} ];
 then
   install_curl=no
@@ -419,6 +428,12 @@ if [ $hascxx11 ];
 then
   export CXXFLAGS="${CXXFLAGS} -std=c++11"
   export build_cpp11=yes
+else
+  if [ "$install_alfasoft" = "yes" ];
+  then
+     echo "AlFaSoft require C++11, please install a compiler that support C++11 "
+     exit
+  fi
 fi
 
 if [ $haslibcxx ];

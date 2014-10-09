@@ -279,6 +279,120 @@ check_yes_no() {
 }
 
 #_____________________________________________________________________
+# The function checks if all needed variables are defined in the input file and
+# if only valid values and value combinations are present in the input file.
+function check_variables {
+
+  if [ "$compiler" = "" ]; then
+    echo "*** The compiler definition is not set in the input file."
+    echo "*** Please add the compiler definition in the input file."
+    echo "*** e.g.: compiler=gcc"
+    echo "*** possible values are gcc, Clang, intel" # CC, PGI
+    exit 1
+  else
+    if [ ! "$compiler" = "gcc" -a ! "$compiler" = "Clang" -a ! "$compiler" = "intel" ]; then
+      echo "*** The compiler definition $compiler is not known."
+      echo "*** possible values are gcc, Clang, intel" # CC, PGI
+      echo "*** Please correct the compiler definition in the input file."
+      echo "*** e.g.: compiler=gcc"
+      exit 1
+    fi
+  fi
+  if [ "$debug" = "" ]; then
+    echo "*** The debug definition is not set in the input file."
+    echo "*** Please add the debug definition in the input file."
+    echo "*** e.g.: debug=no or debug=yes"
+    exit 1
+  else
+    check_yes_no debug
+  fi
+  if [ "$optimize" = "" ]; then
+    echo "*** The optimize definition is not set in the input file."
+    echo "*** Please add the optimize definition in the input file."
+    echo "*** e.g.: optimize=no or optimize=yes"
+    exit 1
+  else
+    check_yes_no optimize
+  fi
+  if [ "$geant4_download_install_data_automatic" = "" ]; then
+    echo "*** It is not defined in the input file if the geant4 data should be downloaded automatically."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: geant4_download_install_data_automatic=[no/yes]"
+    exit 1
+  else
+    check_yes_no geant4_download_install_data_automatic
+  fi
+  if [ "$geant4_install_data_from_dir" = "" ]; then
+    echo "*** It is not defined in the input file if the geant4 data should be installed from the directory."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: geant4_install_data_from_dir=[no/yes]"
+    exit 1
+  else
+    check_yes_no geant4_install_data_from_dir
+  fi
+  if [ "$build_python" = "" ]; then
+    echo "*** It is not defined in the input file if the python bindings should be installed."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: build_python=[no/yes]"
+    exit 1
+  else
+    check_yes_no build_python
+  fi
+  if [ "$install_sim" = "" ]; then
+    echo "*** It is not defined in the input file if all tools for simulation should be installed."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: install_sim=[no/yes]"
+    exit 1
+  else
+    check_yes_no install_sim
+  fi
+  if [ "$SIMPATH_INSTALL" = "" ]; then
+    echo "*** No installation directory is defined in the input file."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: SIMPATH_INSTALL=<installation directory>"
+    exit 1
+  else
+    # expand variables, which could be in the filepath. 
+    # A example is if $PWD is in the path
+    eval SIMPATH_INSTALL=$SIMPATH_INSTALL
+    #check if the user can write to the installation path
+    mkdir -p $SIMPATH_INSTALL
+    if [ $? -ne 0 ]; then
+      echo "Cannot write to the installation directory $SIMPATH_INSTALL."
+      exit 1
+    fi  
+  fi
+  if [ "$debug" = "yes" -a "$optimize" = "yes" ]; then
+    echo "*** The variables \"debug\" and \"otimize\" can't be set both to \"yes\" at the"
+    echo "*** same time. All other combinations yes/no, no/no, and no/yes are valid."
+    echo "*** Please change the definitions in the input file."
+    exit 1 
+  fi
+  if [ "$geant4_download_install_data_automatic" = "yes" -a "$geant4_install_data_from_dir" = "yes" ]; then
+    echo "*** The variables \"geant4_download_install_data_automatic\" and"
+    echo "*** \"geant4_install_data_from_dir\" can't be set both to \"yes\" at the"
+    echo "*** same time. All other combinations yes/no, no/no, and no/yes are valid."
+    echo "*** Please change the definitions in the input file."
+    exit 1 
+  fi
+
+}
+
+#_____________________________________________________________________
+# The function checks if the varibale has either yes or no as value.
+# In case any other value is given the script stops with an error message.
+check_yes_no() {
+  variable=$1
+  eval value=\$$1 #eval forces update of $a which is set to the value of $1
+  if [ ! "$value" = "yes" -a ! "$value" = "no" ]; then
+    echo "*** For the variable $variable only yes or no are allowed."
+    echo "*** Please correct the definition of \"$variable=$value\" in the input file."
+    echo "*** e.g.: $variable=no or $variable=yes"
+    exit 1
+  fi
+}
+
+#_____________________________________________________________________
 function is_in_path {
     # This function checks if a file exists in the $PATH.
     # To do so it uses which.
@@ -325,6 +439,19 @@ function create_links {
          ln -s $file ${file%.*}.$ext2
       done
 
+}
+
+#_____________________________________________________________________
+function generate_config_cache {
+  echo compiler=$compiler > $cache_file
+  echo debug=$debug >> $cache_file
+  echo optimize=$optimize >> $cache_file
+  echo geant4_download_install_data_automatic=$geant4_download_install_data_automatic >> $cache_file
+  echo geant4_install_data_from_dir=$geant4_install_data_from_dir >> $cache_file
+  echo build_python=$build_python >> $cache_file
+  echo install_sim=$install_sim >> $cache_file
+  echo SIMPATH_INSTALL=$SIMPATH_INSTALL >> $cache_file
+  echo platform=$platform >> $cache_file
 }
 
 #_____________________________________________________________________
