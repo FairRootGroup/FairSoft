@@ -63,6 +63,9 @@ unset PLATFORM
 
 export SIMPATH=$PWD
 
+# Set the cache file name
+cache_file="config.cache"
+
 # define the logfile
 datum=$(date +%d%m%y_%H%M%S)
 logfile=$PWD/Install_$datum.log
@@ -73,82 +76,32 @@ source scripts/functions.sh
 
 # check if there was a parameter given to the script.
 # if yes then use some standard parameters and don't
-# show the menues. Else get some input interactively.
+# show the menus. Else get some input interactively.
 if [ $# == "0" ];
 then
-  source scripts/first_menu.sh
+  source scripts/menu.sh
 elif [ $# == "1" ];
 then
-  installation_type=$1
+  # test if the file exist and if all needed varaibles are defined in the script
+  if [ -e $1 ]; then
+    source $1
+    check_variables
+  else
+    echo "The file passed as parameter does not exist."
+    exit 1
+  fi
 else
   echo "Call the script either with no parameter, then your are guided through the installation procedure,"
-  echo "or with one parameter which defines the installation type."
-  echo "The supported installation types are:"
-  echo " - automatic"
-  echo " - custom"
-  echo " - grid"
-  echo " - onlyreco"
+  echo "or with one parameter which defines an input file with the needed parameters."
   exit 1
 fi
 
-echo $installation_type
-
-if [ "$installation_type" = "custom" ]
+if [ "$install_sim" = "yes" ]
 then
-  echo "Custom mode"
-  source scripts/menu.sh
-  if [ "$install_sim" = "yes" ]
-  then
-     onlyreco=0
-  elif [ "$install_sim" = "no" ]
-  then
-     onlyreco=1
-  fi
-elif [ "$installation_type" = "automatic" ]
+   onlyreco=0
+elif [ "$install_sim" = "no" ]
 then
-  echo "*** Edit the configure.sh script and add the compiler in line 110."
-  echo "*** The following error is due to the undefinded compiler."
-  compiler=
-  debug=yes
-  optimize=no
-  geant4_download_install_data_automatic=yes
-  geant4_install_data_from_dir=no
-  build_python=no
-  export SIMPATH_INSTALL=$PWD/installation
-  onlyreco=0
-elif [ "$installation_type" = "grid" ]
-then
-  compiler=gcc
-  debug=no
-  optimize=no
-  geant4_download_install_data_automatic=no
-  geant4_install_data_from_dir=yes
-  build_python=no
-  export SIMPATH_INSTALL=$PWD/installation
-  build_for_grid=yes
-  onlyreco=0
-elif [ "$installation_type" = "onlyreco" ]
-then
-  echo "*** Edit the configure.sh script and add the compiler in line 133."
-  echo "*** The following error is due to the undefinded compiler."
-  compiler=
-  debug=yes
-  optimize=no
-  geant4_download_install_data_automatic=no
-  geant4_install_data_from_dir=no
-  build_python=no
-  export SIMPATH_INSTALL=$PWD/installation
-  onlyreco=1
-else
-  echo "Parameter given to the script is not known."
-  echo "Call the script either with no parameter, then your are guided through the installation procedure,"
-  echo "or with one parameter which defines the installation type."
-  echo "The supported installation types are:"
-  echo " - automatic"
-  echo " - custom"
-  echo " - grid"
-  echo " - onlyreco"
-  exit 42
+   onlyreco=1
 fi
 
 if [ "$installation_type" = "grid" ];
@@ -165,11 +118,16 @@ else
   export BUILD_PYTHON=FALSE
 fi
 
+export SIMPATH_INSTALL
+
 # check the architecture automatically
 # set the compiler options according to architecture, compiler
 # debug and optimization options
 source scripts/check_system.sh
 
+# generate the config.cache file
+generate_config_cache
+ 
 echo "The following parameters are set." | tee -a $logfile
 echo "System              : " $system | tee -a $logfile
 echo "C++ compiler        : " $CXX | tee -a $logfile
@@ -190,11 +148,11 @@ echo "g4_get_data         : " $geant4_get_data | tee -a $logfile
 echo "Number of parallel    " | tee -a $logfile
 echo "processes for build : " $number_of_processes | tee -a $logfile
 echo "Installation Directory: " $SIMPATH_INSTALL | tee -a $logfile
+
 if [ "$onlyreco" = "1" ];
 then
-echo "Reco Only Installation  "
+  echo "Reco Only Installation  "
 fi
-
 
 check=1
 
@@ -271,7 +229,7 @@ then
     source scripts/install_xercesc.sh
   fi
 fi
-  
+
 ############ Mesa libraries ###############################
 
 if [ "$check" = "1" -a "$compiler" = "Clang" -a "$platform" = "linux" ];
