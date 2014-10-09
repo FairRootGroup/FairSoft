@@ -139,6 +139,16 @@ then
   build_python=no
   export SIMPATH_INSTALL=$PWD/installation
   onlyreco=1
+elif [ "$installation_type" = "params.conf" ]
+then
+  if [ -e "params.conf" ]
+  then
+    source params.conf
+  else
+    echo "The parameter file params.conf does not exist."
+    echo "Please create it, e.g. as an extraction from configure.sh."
+    exit 42
+  fi
 else
   echo "Parameter given to the script is not known."
   echo "Call the script either with no parameter, then your are guided through the installation procedure,"
@@ -148,6 +158,7 @@ else
   echo " - custom"
   echo " - grid"
   echo " - onlyreco"
+  echo " - params.conf"
   exit 42
 fi
 
