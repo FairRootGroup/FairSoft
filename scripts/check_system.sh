@@ -369,6 +369,17 @@ esac
 # Use CMake to do all the system checks
 # Creates also the version info fill
 
+is_in_path cmake
+result=$?
+if [ "$result" = "0" ]; then
+  echo "cmake not found in PATH" | tee -a $logfile
+  echo ""
+  echo "cmake is needed to run the system introspection." | tee -a $logfile
+  echo "Please install the CMake package either using your package manager or"
+  echo "get the source from cmake.org and install it yourself."
+  exit 1
+fi
+
 mkdir -p $SIMPATH/test/build
 cd $SIMPATH/test
 
