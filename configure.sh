@@ -99,45 +99,12 @@ fi
 if [ "$install_sim" = "yes" ]
 then
    onlyreco=0
+   export Fortran_Needed=TRUE
 elif [ "$install_sim" = "no" ]
 then
    onlyreco=1
+   export Fortran_Needed=FALSE
 fi
-
-#echo $installation_type
-
-#if [ "$installation_type" = "custom" ]
-#then
-#  echo "Custom mode"
-#elif [ "$installation_type" = "automatic" ]
-#then
-#  compiler=
-#  if [ "$compiler" = "" ]; then
-#    echo "*** Edit the configure.sh script and add the compiler in line 112."
-#    echo "*** The following error is due to the undefinded compiler."
-#    exit 1
-#  fi
-#elif [ "$installation_type" = "grid" ]
-#then
-#elif [ "$installation_type" = "onlyreco" ]
-#then
-#  compiler=
-#  if [ "$compiler" = "" ]; then
-#    echo "*** Edit the configure.sh script and add the compiler in line 140."
-#    echo "*** The following error is due to the undefinded compiler."
-#    exit 1
-#  fi
-#else
-#  echo "Parameter given to the script is not known."
-#  echo "Call the script either with no parameter, then your are guided through the installation procedure,"
-#  echo "or with one parameter which defines the installation type."
-#  echo "The supported installation types are:"
-#  echo " - automatic"
-#  echo " - custom"
-#  echo " - grid"
-#  echo " - onlyreco"
-#  exit 42
-#fi
 
 if [ "$installation_type" = "grid" ];
 then
