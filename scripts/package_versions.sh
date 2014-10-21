@@ -26,8 +26,8 @@ export PYTHIA8_LOCATION="http://home.thep.lu.se/~torbjorn/pythia8/"
 export PYTHIA8VERSION=pythia8183
 
 export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
-export GEANT4VERSION=geant4.10.00.p01
-export GEANT4VERSIONp=Geant4-10.0.1
+export GEANT4VERSION=geant4.10.00.p02
+export GEANT4VERSIONp=Geant4-10.0.2
 
 export XERCESC_LOCATION="http://mirror.serversupportforum.de/apache//xerces/c/3/sources/"
 export XERCESCVERSION=3.1.1
@@ -100,5 +100,5 @@ export DDS_LOCATION="https://github.com/FairRootGroup/DDS.git"
 export DDSVERSION=master
 
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
-export ALIROOTVERSION=master
+export ALIROOTVERSION=splitdev
 
