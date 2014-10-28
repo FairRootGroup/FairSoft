@@ -83,6 +83,7 @@
                     --disable-globus \
                     --disable-reflex \
                     --disable-cintex \
+                    --disable-cocoa \
                     $VCBUILD --enable-http \
                     --with-gsl-incdir=$gsl_dir/include \
                     --with-gsl-libdir=$gsl_dir/lib \
