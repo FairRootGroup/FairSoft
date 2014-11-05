@@ -1,3 +1,4 @@
+config.cache
 Install_*.log
 libraries_*.log
 basics/icu
@@ -48,3 +49,6 @@ basics/nanomsg-0.4-beta/
 basics/protobuf
 basics/protobuf-2.5.0.tar.gz
 basics/protobuf-2.5.0/
+AliRoot
+FairRoot
+DDS
