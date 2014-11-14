@@ -20,7 +20,7 @@ then
     mkdir build_for_alfa
   fi
   cd build_for_alfa
-  BOOST_ROOT=$SIMPATH_INSTALL cmake -DCMAKE_INSTALL_PREFIX=install_prefix  -C ../BuildSetup.cmake ../
+  BOOST_ROOT=$SIMPATH_INSTALL cmake -DCMAKE_INSTALL_PREFIX=$install_prefix  -C ../BuildSetup.cmake ../
   $MAKE_command -j$number_of_processes wn_bin
   $MAKE_command -j$number_of_processes install
 
