@@ -11,18 +11,23 @@ then
   export CXXFLAGS
 fi
 
+checkfile=$install_prefix/bin/root.exe
+
 if [ ! -d  $SIMPATH/tools/root ];
 then
   cd $SIMPATH/tools
   git clone $ROOT_LOCATION
+  if [ -e $checkfile ];
+  then
+    # always build if new clone
+    rm $checkfile
+  fi
 fi
 cd $SIMPATH/tools/root
 git checkout $ROOTVERSION
 
 install_prefix=$SIMPATH_INSTALL
 libdir=$install_prefix/lib/root
-
-checkfile=$install_prefix/bin/root.exe
 
 if [ "$platform" = "macosx" ];
 then
