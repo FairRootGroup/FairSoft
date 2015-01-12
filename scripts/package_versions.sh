@@ -103,5 +103,5 @@ export DDS_LOCATION="https://github.com/FairRootGroup/DDS.git"
 export DDSVERSION=master
 
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
-export ALIROOTVERSION=feature-splitdev
+export ALIROOTVERSION=master
 
