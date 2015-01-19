@@ -35,8 +35,11 @@ export XERCESCVERSION=3.1.1
 export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10.3/"
 export MESAVERSION=MesaLib-7.10.3
 
+#export ROOT_LOCATION="https://github.com/root-mirror/root/"
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
-export ROOTVERSION=8c554b49a4820455e5777297b598760a871f9a58
+export ROOTVERSION=7f61de23d790479b053e47f718affb2725de9ab1
+
+export XROOTDVERSION=4.1.1
 
 export PLUTO_LOCATION="http://web-docs.gsi.de/%7Ehadeshyp/pluto/v5.37/"
 export PLUTOVERSION=pluto_v5.37

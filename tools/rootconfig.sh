@@ -19,8 +19,8 @@
    then
       XROOTD="--disable-xrootd"
    else
-      XROOTD=" "
-    fi
+      XROOTD="--with-xrootd=$SIMPATH_INSTALL"
+   fi
    #######################################################
 
    OPENGL=" "

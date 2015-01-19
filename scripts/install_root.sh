@@ -36,6 +36,13 @@ else
   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
 fi
 
+# install xrootd as prerequisit for root
+# since we use a script delivered with root we have to first unpack root to use the script
+# TODO: Check if the installation was done already
+if (not_there xrootd $install_prefix/bin/xrd);
+then           
+  build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
+fi
 
 if (not_there root $checkfile);
 then          

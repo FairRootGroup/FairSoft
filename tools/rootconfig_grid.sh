@@ -15,7 +15,7 @@
    then
       XROOTD="--disable-xrootd"
    else
-      XROOTD=" "
+      XROOTD="--with-xrootd=$SIMPATH_INSTALL"
     fi
    #######################################################
    
