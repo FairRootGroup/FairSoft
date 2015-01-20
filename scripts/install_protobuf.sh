@@ -23,7 +23,7 @@ checkfile=$install_prefix/bin/protoc
 if (not_there protobuf $checkfile);
 then
     cd $SIMPATH/basics/protobuf
-    
+
     ./configure --prefix=$install_prefix
 
     make -j$number_of_processes

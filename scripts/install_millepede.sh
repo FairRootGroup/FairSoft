@@ -2,14 +2,14 @@
 
 
 if [ ! -d  $SIMPATH/basics/MillepedeII ];
-then 
+then
   cd $SIMPATH/basics
   if [ ! -d MillepedeII ];
   then
     echo "*** Downloading MillepedeII sources with subversion***"
     svn co $MILLEPEDE_LOCATION/$MILLEPEDE_VERSION MillepedeII
   fi
-fi 
+fi
 
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/bin/pede
@@ -23,16 +23,16 @@ then
   # Also use the found fortran (FC) and c (CC) compiler
   mypatch ../Makefile_millepede.patch | tee -a $logfile
 
-  # add the correct library path for gfortran on Mac OS since 
-  # gfortran is not installed in the system path 
+  # add the correct library path for gfortran on Mac OS since
+  # gfortran is not installed in the system path
   if [ "$platform" = "macosx" ];
-  then 
+  then
     fortran_filepath=$(gfortran -print-file-name=libgfortran.dylib)
     fortran_libdir=$(dirname $fortran_filepath)
     mysed "-lgfortran " "-L${fortran_libdir} -lgfortran " Makefile has_slash
   fi
 
-  make 
+  make
 
   # fake make install
   mkdir -p $install_prefix/bin
@@ -49,7 +49,7 @@ then
     cd $install_prefix/lib
     create_links dylib so
   fi
-              
+
   check_success Millepede $checkfile
   check=$?
 

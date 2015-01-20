@@ -30,7 +30,7 @@ then
   cd $SIMPATH/basics/xercesc
 
 #  mypatch ../xerces-c-3.1.1_fixcast.patch
-  
+
   LDFLAGS_BAK=$LDFLAGS
   if [ "$compiler" = "Clang" -a "$platform" = "linux" ]; then
     LDFLAGS=$CXXFLAGS
@@ -40,9 +40,9 @@ then
 
     mysed "-lstdc++" "-lc++" libtool
   else
-    ./configure --prefix=$install_prefix 
+    ./configure --prefix=$install_prefix
   fi
-    
+
   $MAKE_command -j$number_of_processes  install
 
 
@@ -52,12 +52,12 @@ then
     cd $install_prefix/lib
     create_links dylib so
   fi
-              
+
   check_success XercesC $checkfile
   check=$?
-      
-  LDFLAGS=$LDFLAGS_BAK   
-        
+
+  LDFLAGS=$LDFLAGS_BAK
+
 fi
 
 cd  $SIMPATH

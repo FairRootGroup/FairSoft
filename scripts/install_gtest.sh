@@ -2,7 +2,7 @@
 
 
 if [ ! -d  $SIMPATH/basics/gtest ];
-then 
+then
   cd $SIMPATH/basics
   if [ ! -e $GTESTVERSION.zip ];
   then
@@ -10,11 +10,11 @@ then
     download_file $GTEST_LOCATION/$GTESTVERSION.zip
   fi
   untar gtest $GTESTVERSION.zip
-  if [ -d  $GTESTVERSION ]; 
+  if [ -d  $GTESTVERSION ];
   then
     ln -s $GTESTVERSION gtest
   fi
-fi 
+fi
 
 
 install_prefix=$SIMPATH_INSTALL
@@ -34,14 +34,14 @@ then
     cp libgtest.a libgtest_main.a $install_prefix/lib
     if [ ! -d $install_prefix/include/gtest ];then
       mkdir -p $install_prefix/include
-      cp -r ../include/gtest $install_prefix/include 
+      cp -r ../include/gtest $install_prefix/include
     fi
 
     check_all_libraries  $install_prefix/lib
 
     check_success gtest $checkfile
     check=$?
-    
+
 fi
 
 cd $SIMPATH

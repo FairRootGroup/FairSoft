@@ -3,7 +3,7 @@
 
 
 if [ ! -d  $SIMPATH/generators/pythia6 ];
-then 
+then
   cd $SIMPATH/generators
   if [ ! -e $PYTHIA6VERSION.tar.gz ];
   then
@@ -11,7 +11,7 @@ then
     download_file $PYTHIA6_LOCATION/$PYTHIA6VERSION.tar.gz
   fi
   untar pythia6 $PYTHIA6VERSION.tar.gz
-fi 
+fi
 
 install_prefix=$SIMPATH_INSTALL
 
@@ -29,8 +29,8 @@ then
   cp ../CMakeLists.txt_pythia6 CMakeLists.txt
   mkdir build
   cd build
-  cmake .. -DCMAKE_INSTALL_PREFIX=$install_prefix 
-  make install 
+  cmake .. -DCMAKE_INSTALL_PREFIX=$install_prefix
+  make install
 
   if [ "$platform" = "macosx" ];
   then

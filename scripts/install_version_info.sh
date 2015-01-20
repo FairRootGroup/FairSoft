@@ -10,7 +10,7 @@ cp $SIMPATH/scripts/GenerateVersionInfo.cmake .
 cp $SIMPATH/scripts/Test_CMakeLists.txt CMakeLists.txt
 
 cd build
-cmake .. 
+cmake ..
 
 #rm -rf $SIMPATH/build
 

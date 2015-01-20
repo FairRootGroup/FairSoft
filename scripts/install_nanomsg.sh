@@ -15,7 +15,7 @@ then
     ln -s $NANOMSG_VERSION nanomsg
   fi
 fi
- 
+
 install_prefix=$SIMPATH_INSTALL
 
 checkfile=$install_prefix/bin/nanocat
@@ -23,7 +23,7 @@ checkfile=$install_prefix/bin/nanocat
 if (not_there nanomsg $checkfile);
 then
     cd $SIMPATH/basics/nanomsg
-    
+
     ./configure --prefix=$install_prefix
 
     make -j$number_of_processes
