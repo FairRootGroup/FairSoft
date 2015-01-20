@@ -39,10 +39,15 @@ elif [ "$cmake_installed_major_version" -eq "$cmake_required_major_version" -a  
       echo "install cmake as external package"| tee -a $logfile
   fi
 else
-  install_cmake=yes    
-  echo "Found cmake version older than $cmake_required_version PATH"| tee -a $logfile
-  echo "This version is to old"| tee -a $logfile
-  echo "install cmake as external package"| tee -a $logfile
+  if [ -e $SIMPATH_INSTALL/bin/cmake ]; then
+    install_cmake=no
+    not_there CMake $SIMPATH_INSTALL/bin/cmake
+  else
+    install_cmake=yes    
+    echo "Found cmake version older than $cmake_required_version in PATH"| tee -a $logfile
+    echo "This version is to old"| tee -a $logfile
+    echo "install cmake as external package"| tee -a $logfile
+  fi
 fi
 
 if [ "$install_cmake" = "yes" ];

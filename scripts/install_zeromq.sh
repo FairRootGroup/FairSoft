@@ -9,9 +9,9 @@ then
     download_file $ZEROMQ_LOCATION/zeromq-$ZEROMQVERSION.tar.gz
   fi
   untar zeromq zeromq-$ZEROMQVERSION.tar.gz 
-  if [ -d zeromq-$ZEROMQVERSION ]; 
+  if [ -d zeromq-$ZEROMQDIR ]; 
   then
-    ln -s zeromq-$ZEROMQVERSION zeromq  
+    ln -s zeromq-$ZEROMQDIR zeromq  
   fi
 fi 
 
@@ -22,7 +22,7 @@ if (not_there zeromq $checkfile);
 then
     cd $SIMPATH/basics/zeromq
 
-    mypatch ../zeromq_clang_c++11.patch
+#    mypatch ../zeromq_clang_c++11.patch
 
     ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
     make

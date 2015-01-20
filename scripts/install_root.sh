@@ -22,9 +22,13 @@ then
     # always build if new clone
     rm $checkfile
   fi
+
+  cd $SIMPATH/tools/root
+  git checkout $ROOTVERSION
+
 fi
+
 cd $SIMPATH/tools/root
-git checkout $ROOTVERSION
 
 install_prefix=$SIMPATH_INSTALL
 libdir=$install_prefix/lib/root
@@ -115,6 +119,9 @@ then
   # needed to solve problem with the TGeoManger for some CBM and Panda geometries
   mypatch ../root_TGeoShape.patch
 
+  # needed to solve a problem with VMC, TGeoManager and Geant4. This fix should be only needed for root 5.34.25
+  mypatch ../root5_34_25_TGeo.patch
+  
   # needed due to some problem with the ALICE HLT code
   mypatch ../root5_34_19_hlt.patch    
 

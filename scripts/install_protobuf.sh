@@ -6,7 +6,7 @@ then
   cd $SIMPATH/basics
   if [ ! -e $PROTOBUF_VERSION.tar.gz ];
   then
-    echo "*** Downloading gtest sources ***"
+    echo "*** Downloading protobuf sources ***"
     download_file $PROTOBUF_LOCATION/$PROTOBUF_VERSION.tar.gz
   fi
   untar protobuf $PROTOBUF_VERSION.tar.gz

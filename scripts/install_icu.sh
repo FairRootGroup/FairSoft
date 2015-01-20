@@ -6,7 +6,7 @@ then
   cd $SIMPATH/basics
   if [ ! -e $ICUVERSION-src.tgz ];
   then
-    echo "*** Downloading gtest sources ***"
+    echo "*** Downloading icu sources ***"
     download_file $ICU_LOCATION/$ICUVERSION-src.tgz
   fi
   untar icu $ICUVERSION-src.tgz

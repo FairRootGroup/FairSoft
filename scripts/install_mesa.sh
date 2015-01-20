@@ -6,7 +6,7 @@ then
   cd $SIMPATH/basics
   if [ ! -e $MESAVERSION.tar.bz2 ];
   then
-    echo "*** Downloading gtest sources ***"
+    echo "*** Downloading mesa sources ***"
     download_file $MESA_LOCATION/$MESAVERSION.tar.bz2
   fi
   untar mesa $MESAVERSION.tar.bz2
@@ -37,7 +37,7 @@ then
 
     check_all_libraries  $install_prefix/lib
 
-    check_success icu $checkfile
+    check_success mesa $checkfile
     check=$?
   
     unset LDFLAGS

@@ -1,60 +1,61 @@
 #!/bin/bash
 #export CXXVERBOSE=1
 
-if [ ! -d  $SIMPATH/transport/geant3 ];
-then 
+
+if [ ! -d  $SIMPATH/transport/geant3 ]; then
   cd $SIMPATH/transport
-  if [ ! -e $GEANT3VERSION.tar.gz ];
-  then
-    echo "*** Downloading geant3 sources ***"
-    download_file $GEANT3_LOCATION/$GEANT3VERSION.tar.gz
-  fi
-  untar geant3 $GEANT3VERSION.tar.gz 
-fi 
+  git clone $GEANT3_LOCATION
+
+  cd $SIMPATH/transport/geant3
+  git checkout -b $GEANT3BRANCH $GEANT3BRANCH
+
+fi
+
+cd $SIMPATH/transport/geant3
 
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/lib/libgeant321.so
 
 if (not_there Geant3 $checkfile);
 then
+
   cd $SIMPATH/transport
   cp gdecay.F geant3/gphys
   cp gdalet.F geant3/gphys
   cp gdalitzcbm.F geant3/gphys
+
   cd geant3 
 
-  # patch to correctly install geant3 on linuxx8664icc 
-  mypatch ../Makefile_geant3.patch | tee -a $logfile
-  mypatch ../geant3_geane.patch | tee -a $logfile
-  	
-  if [ "$platform" = "macosx" ];
-  then
-    mypatch ../Makefile_geant3_macos.patch | tee -a $logfile
-  fi
-          
-            # install gcalor only on 32bit and 64bit machines
-  # The probem is fixed in the new version of gcalor which comes with fairsoft
+  # add support for gcalor. Remove files with dummy functions which are implemented in gcalor.F
   mkdir gcalor
   cp ../gcalor.F gcalor
+  rm added/dummies_gcalor.c
+
+  # patches needed to compile gcalor and for changes in geane 
+  mypatch ../geant3_geane.patch | tee -a $logfile
+  mypatch ../Geant3_CMake.patch | tee -a $logfile
+ 
   if [ ! -f data/xsneut.dat ];
   then
     cp ../xsneut.dat.bz2 data
     bunzip2 data/xsneut.dat.bz2
   fi
   cp ../chetc.dat data
-  mysed 'minicern gdraw' 'minicern gdraw gcalor' Makefile
 
-  make 
+  mkdir build
+  cd build
+  cmake .. -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
+           -DROOT_DIR=$SIMPATH_INSTALL
 
-  # fake make install
-  mkdir -p $install_prefix/lib
-  cp $SIMPATH/transport/geant3/lib/tgt_$arch/libgeant321.so $install_prefix/lib
-  mkdir -p $install_prefix/include/TGeant3
-  cp $SIMPATH/transport/geant3/TGeant3/*.h $install_prefix/include/TGeant3
+  make -j$number_of_processes
+  make install
 
-  mkdir -p $install_prefix/share/geant3
-  cp -r $SIMPATH/transport/geant3/data $install_prefix/share/geant3
-                           
+  if [ "$platform" = "macosx" ];
+  then
+    cd $install_prefix/lib
+    create_links dylib so
+  fi
+
   check_all_libraries $install_prefix/lib
 
   check_success Geant3 $checkfile
