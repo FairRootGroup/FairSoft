@@ -6,7 +6,7 @@ then
   cd $SIMPATH/basics
   if [ ! -e $NANOMSG_VERSION.tar.gz ];
   then
-    echo "*** Downloading gtest sources ***"
+    echo "*** Downloading nanomsg sources ***"
     download_file $NANOMSG_LOCATION/$NANOMSG_VERSION.tar.gz
   fi
   untar nanomsg $NANOMSG_VERSION.tar.gz
