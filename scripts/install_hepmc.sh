@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -d  $SIMPATH/generators/HepMC ];
-then 
+then
   cd $SIMPATH/generators
   if [ ! -e HepMC-$HEPMCVERSION.tar.gz ];
   then
@@ -9,11 +9,11 @@ then
     download_file $HEPMC_LOCATION/HepMC-$HEPMCVERSION.tar.gz
   fi
   untar hepmc HepMC-$HEPMCVERSION.tar.gz
-  if [ -d HepMC-$HEPMCVERSION ]; 
+  if [ -d HepMC-$HEPMCVERSION ];
   then
     ln -s HepMC-$HEPMCVERSION HepMC
   fi
-fi 
+fi
 
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/lib/libHepMC.a
@@ -22,21 +22,21 @@ if [ ! -d $install_prefix/lib ];
 then
   mkdir -p $install_prefix/lib
 fi
-  
+
 if (not_there hepmc $checkfile)
 then
-  
+
   cd $SIMPATH/generators
 
   mkdir build_HepMC
   cd build_HepMC
-        
+
   cmake -DCMAKE_INSTALL_PREFIX=$install_prefix -Dmomentum:STRING=GEV -Dlength:STRING=CM ../HepMC
 
   make install -j$number_of_processes
- 
+
   if [ "$platform" = "macosx" ];
-  then 
+  then
       cd $install_prefix/lib
       create_links dylib so
   fi
@@ -48,7 +48,7 @@ then
 
 fi
 
-export HEPINSTALLDIR=$install_prefix 
+export HEPINSTALLDIR=$install_prefix
 
 if [ "$platform" = "macosx" ];
 then

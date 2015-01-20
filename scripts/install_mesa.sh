@@ -10,12 +10,12 @@ then
     download_file $MESA_LOCATION/$MESAVERSION.tar.bz2
   fi
   untar mesa $MESAVERSION.tar.bz2
-  if [ -d  Mesa-7.10.3 ]; 
+  if [ -d  Mesa-7.10.3 ];
   then
-    ln -s Mesa-7.10.3 mesa 
+    ln -s Mesa-7.10.3 mesa
   fi
 fi
-    
+
 install_prefix=$SIMPATH_INSTALL
 
 checkfile=$install_prefix/lib/libGLU.so
@@ -30,7 +30,7 @@ then
     else
       ./configure --prefix=$install_prefix --with-driver=xlib --disable-gallium
     fi
-        
+
     LDFLAGS="-stdlib=libc++" make -j$number_of_processes
 
     make install
@@ -39,7 +39,7 @@ then
 
     check_success mesa $checkfile
     check=$?
-  
+
     unset LDFLAGS
 fi
 

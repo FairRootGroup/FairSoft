@@ -20,7 +20,7 @@ if (not_there icu $checkfile);
 then
     cd $SIMPATH/basics
     cd icu/source
-    
+
     LDFLAGS_BAK=$LDFLAGS
     LDFLAGS=$CXXFLAGS
 
@@ -36,7 +36,7 @@ then
     check=$?
 
     LDFLAGS=$LDFLAGS_BAK
-    
+
 fi
 
 cd $SIMPATH

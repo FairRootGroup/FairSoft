@@ -16,7 +16,6 @@ set +xv
 # unset ROOTSYS. If it is set this can make problems when compiling Geant3
 unset ROOTSYS
 
-
 #Clean the enviroment
 unset ROOTBUILD
 unset THREAD
@@ -260,7 +259,7 @@ fi
 
 if [ "$check" = "1" ];
 then
-  source scripts/install_root.sh
+  source scripts/install_root6.sh
 fi
 
 ##################### G4Py #############################################

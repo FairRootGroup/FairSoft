@@ -24,7 +24,6 @@ export HEPMCVERSION=2.06.09
 
 export PYTHIA8_LOCATION="http://home.thep.lu.se/~torbjorn/pythia8/"
 export PYTHIA8VERSION=pythia8183
-#export PYTHIA8VERSION=pythia8201
 
 export XERCESC_LOCATION="http://mirror.serversupportforum.de/apache/xerces/c/3/sources/"
 export XERCESCVERSION=3.1.2
@@ -36,12 +35,14 @@ export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
 export GEANT4VERSION=geant4.10.01
 export GEANT4VERSIONp=Geant4-10.1.0
 
-#export ROOT_LOCATION="https://github.com/root-mirror/root/"
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
-# Root v5.34.25
-export ROOTVERSION=7f61de23d790479b053e47f718affb2725de9ab1
-# Root v5.34.24
-#export ROOTVERSION=3e7673472eedd975f9b5fcc1ced44ddbd8db476d
+if [ "$build_root6" = "yes" ]; then
+  # Root v6.02.01
+  export ROOTVERSION=v6-02-01
+else
+  # Root v5.34.26
+  export ROOTVERSION=v5-34-26
+fi
 
 export XROOTDVERSION=4.1.1
 
@@ -109,4 +110,3 @@ export DDSVERSION=master
 
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
 export ALIROOTVERSION=master
-

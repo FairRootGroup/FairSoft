@@ -11,14 +11,14 @@ then
 fi
 
 if [ ! -d  $SIMPATH/transport/vgm ];
-then 
+then
   cd $SIMPATH/transport
   if [ ! -d vgm ];
   then
     echo "*** Downloading vgm sources with subversion***"
     svn co $VGM_LOCATION/$VGMVERSION vgm
   fi
-fi 
+fi
 
 
 install_prefix=$SIMPATH_INSTALL
@@ -27,7 +27,7 @@ checkfile=$install_prefix/lib/libBaseVGM.so
 if (not_there VGM $checkfile);
 then
   cd $SIMPATH/transport/vgm
- 
+
   mkdir build_cmake
   cd build_cmake
 
@@ -39,9 +39,9 @@ then
 
   make -j$number_of_processes
   make install -j$number_of_processes
- 
+
   if [ "$platform" = "macosx" ];
-  then 
+  then
       cd $install_prefix/lib
       create_links dylib so
   fi

@@ -6,19 +6,19 @@
 
 
 if [ ! -d  $SIMPATH/transport/geant4 ];
-then 
+then
   cd $SIMPATH/transport
   if [ ! -e $GEANT4VERSION.tar.gz ];
   then
     echo "*** Downloading geant4 sources ***"
     download_file $GEANT4_LOCATION/$GEANT4VERSION.tar.gz
   fi
-  untar geant4 $GEANT4VERSION.tar.gz 
-  if [ -d $GEANT4VERSION ]; 
+  untar geant4 $GEANT4VERSION.tar.gz
+  if [ -d $GEANT4VERSION ];
   then
-    ln -s $GEANT4VERSION geant4  
+    ln -s $GEANT4VERSION geant4
   fi
-fi 
+fi
 
 # Full output during compilation and linking to check for the
 # compile and link commands
@@ -33,7 +33,7 @@ if (not_there Geant4-lib $checkfile);
 then
 
   cd $SIMPATH/transport/geant4/
-  
+
   if [ -f ../${GEANT4VERSION}_c++11.patch ]; then
     mypatch ../${GEANT4VERSION}_c++11.patch | tee -a $logfile
   fi
@@ -45,13 +45,13 @@ then
   if [ "$platform" = "macosx" ]; then
     mypatch ../geant4.10.00_clang_osx.patch
   fi
-  
+
   if (not_there Geant4-build  build);
-  then 
+  then
     mkdir build
-  fi 
+  fi
   cd build
-  
+
   if [ "$geant4_download_install_data_automatic" = "yes" ];
   then
     install_data="-DGEANT4_INSTALL_DATA=ON"
@@ -86,7 +86,7 @@ then
   # copy the env.sh script to the bin directorry
   mkdir -p $install_prefix/bin
  # cp $G4WORKDIR/env.sh $install_prefix/bin
-  
+
   if [ "$platform" = "macosx" ];
   then
     cd $install_prefix/lib
@@ -95,7 +95,7 @@ then
 
   if [ "$geant4_download_install_data_automatic" = "yes" ];
   then
-    # create unique links which is independent of the Geant4 version  
+    # create unique links which is independent of the Geant4 version
     if [ ! -L $install_prefix/share/Geant4 ]; then
       ln -s $install_prefix/share/$GEANT4VERSIONp $install_prefix/share/Geant4
     fi
@@ -131,19 +131,19 @@ then
     if [ ! -L $install_prefix/share/Geant4/data/RealSurface ]; then
       ln -s $install_prefix/share/Geant4/data/${RealSurface_VERSION} $install_prefix/share/Geant4/data/RealSurface
     fi
-    
+
   fi
-              
+
   . $install_prefix/share/$GEANT4VERSIONp/geant4make/geant4make.sh
-  
+
   check_success geant4 $checkfile
   check=$?
 
 else
-   
+
   . $install_prefix/share/$GEANT4VERSIONp/geant4make/geant4make.sh
 
 fi
-  
+
 cd  $SIMPATH
 return 1

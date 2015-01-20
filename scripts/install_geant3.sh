@@ -11,8 +11,6 @@ if [ ! -d  $SIMPATH/transport/geant3 ]; then
 
 fi
 
-cd $SIMPATH/transport/geant3
-
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/lib/libgeant321.so
 
@@ -24,17 +22,16 @@ then
   cp gdalet.F geant3/gphys
   cp gdalitzcbm.F geant3/gphys
 
-  cd geant3 
-
+  cd geant3
   # add support for gcalor. Remove files with dummy functions which are implemented in gcalor.F
   mkdir gcalor
   cp ../gcalor.F gcalor
   rm added/dummies_gcalor.c
 
-  # patches needed to compile gcalor and for changes in geane 
+  # patches needed to compile gcalor and for changes in geane
   mypatch ../geant3_geane.patch | tee -a $logfile
   mypatch ../Geant3_CMake.patch | tee -a $logfile
- 
+
   if [ ! -f data/xsneut.dat ];
   then
     cp ../xsneut.dat.bz2 data

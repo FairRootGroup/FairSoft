@@ -1,19 +1,19 @@
 #!/bin/bash
 
 if [ ! -d  $SIMPATH/basics/zeromq ];
-then 
+then
   cd $SIMPATH/basics
   if [ ! -e zeromq-$ZEROMQVERSION.tar.gz ];
   then
     echo "*** Downloading zeromq sources ***"
     download_file $ZEROMQ_LOCATION/zeromq-$ZEROMQVERSION.tar.gz
   fi
-  untar zeromq zeromq-$ZEROMQVERSION.tar.gz 
-  if [ -d zeromq-$ZEROMQDIR ]; 
+  untar zeromq zeromq-$ZEROMQVERSION.tar.gz
+  if [ -d zeromq-$ZEROMQDIR ];
   then
-    ln -s zeromq-$ZEROMQDIR zeromq  
+    ln -s zeromq-$ZEROMQDIR zeromq
   fi
-fi 
+fi
 
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/lib/libzmq.a
@@ -32,7 +32,7 @@ then
 
     check_success zeromq $checkfile
     check=$?
-    
+
 
     if [ "$platform" = "macosx" ];
     then
@@ -41,7 +41,7 @@ then
     fi
 fi
 
-cp $SIMPATH/basics/zmq.hpp  $install_prefix/include/zmq.hpp 
+cp $SIMPATH/basics/zmq.hpp  $install_prefix/include/zmq.hpp
 cd $SIMPATH
 
 return 1

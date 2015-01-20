@@ -127,6 +127,8 @@ clean_gsl() {
       make uninstall
       cd $SIMPATH_INSTALL/lib
       rm -f libgsl*.so
+      cd $SIMPATH_INSTALL/share/info
+      rm -f dir
     fi  
   fi
 
@@ -295,10 +297,10 @@ clean_xrootd() {
     rm -rf xrootd
     cd $SIMPATH_INSTALL/lib
     rm -f libXrd*
-    cd $SIMPATH_INSTALL/share/man/man1
+    cd $SIMPATH_INSTALL/man/man1
     rm -f xrd*
     rm -f xprep*
-    cd $SIMPATH_INSTALL/share/man/man8
+    cd $SIMPATH_INSTALL/man/man8
     rm -f cmsd* cns* frm* mpx* Xrd* xr*
     cd $SIMPATH_INSTALL/share
     rm -rf xrootd
@@ -310,19 +312,31 @@ clean_xrootd() {
 clean_root() {
 
   if [ ! $root_cleaned ]; then
-    if [ "$rm_installed_files" = "true" ]; then
+    if [ "$rm_installed_files" = "true" -a -e $SIMPATH/tools/root ]; then
       echo "Remove installed files from package root" 
-      cd $SIMPATH/tools/root
-      make uninstall
       cd $SIMPATH_INSTALL
       rm -rf lib/root
+      rm -f lib/libVc.a
       rm -rf include/root
+      rm -rf share/root
+      rm -rf share/doc/root
+      rm -f share/emacs/site-lisp/root-help.el
+      rm -rf share/aclocal/root.m4    
+      cd $SIMPATH_INSTALL/bin
+      rm -f root* thisroot.sh thisroot.csh genreflex-rootcint g2root h2root xproofd setxrd.sh setxrd.csh setenvwrap.csh
+      rm -f proofserv memprobe genreflex rlibmap rmkdepend proofd ssh2rpd proofserv.exe hadd hist2workspace prepareHistFactory
+      cd $SIMPATH_INSTALL/share/man/man1
+      rm -f cint.1 h2root.1 pq2-cache.1 pq2-redistribute.1 proofserv.1 root.exe.1 setup-pq2.1 g2root.1 hadd.1 pq2-info-server.1
+      rm -f pq2-rm.1 proofserva.1 roota.1 ssh2rpd.1 g2rootold.1 hist2workspace.1 pq2-ls-files-server.1 pq2-verify.1 rlibmap.1
+      rm -f rootcint.1 system.rootdaemonrc.1 genmap.1 makecint.1 pq2-ls-files.1 pq2.1 rmkdepend.1 rootd.1 xpdtest.1              
+      rm -f genreflex-rootcint.1 memprobe.1 pq2-ls.1 prepareHistFactory.1 root-config.1 rootn.exe.1 xproofd.1 genreflex.1
+      rm -f pq2-ana-dist.1 pq2-put.1 proofd.1 root.1 roots.exe.1
     fi
 
     echo "Remove temporary files from package root" 
     if [ -e $SIMPATH/tools/root ]; then  
       cd $SIMPATH/tools/root
-      make clean
+      rm -rf build_for_fair
     fi
 
     clean_pluto
@@ -381,16 +395,15 @@ clean_geant3() {
 
   if [ ! $geant3_cleaned ]; then
     echo "Remove temporary files from package geant3" 
-    if [ -e $SIMPATH/transport/geant3/lib ]; then
-      rm -rf $SIMPATH/transport/geant3/lib
-      rm -rf $SIMPATH/transport/geant3/tgt_*
+    if [ -e $SIMPATH/transport/geant3/build ]; then
+      rm -rf $SIMPATH/transport/geant3/build
     fi
     if [ "$rm_installed_files" = "true" ]; then
       echo "Remove installed files from package geant3" 
       if [ -e $SIMPATH_INSTALL/lib/libgeant321.so ]; then  
-        rm -f $SIMPATH_INSTALL/lib/libgeant321.so
+        rm -f $SIMPATH_INSTALL/lib/libgeant321*
         rm -rf $SIMPATH_INSTALL/include/TGeant3
-        rm -rf $SIMPATH_INSTALL/share/geant3
+        rm -rf $SIMPATH_INSTALL/lib/Geant3-2.0.0
       fi
     fi
     geant3_cleaned=true
@@ -407,7 +420,9 @@ clean_vgm() {
       echo "Remove installed files from package vgm" 
       if [ -e $SIMPATH_INSTALL/lib/libBaseVGM.so ]; then  
         rm -f $SIMPATH_INSTALL/lib/lib*GM.*
+        rm -rf $SIMPATH_INSTALL/lib/VGM-4.2.0
         rm -rf $SIMPATH_INSTALL/include/*GM
+        rm -rf $SIMPATH_INSTALL/share/VGM-4.2.0
       fi
     fi
     clean_geant4_vmc
@@ -419,19 +434,34 @@ clean_geant4_vmc() {
 
   if [ ! $geant4_vmc_cleaned ]; then
     echo "Remove temporary files from package geant4_vmc" 
-    if [ -e $SIMPATH/transport/geant4_vmc/tmp ]; then
-      rm -rf $SIMPATH/transport/geant4_vmc/tmp
-      rm -rf $SIMPATH/transport/geant4_vmc/lib
-      rm -rf $SIMPATH/transport/geant4_vmc/include
+    if [ -e $SIMPATH/transport/geant4_vmc/build ]; then
+      rm -rf $SIMPATH/transport/geant4_vmc/build
     fi
 
     if [ "$rm_installed_files" = "true" ]; then
       echo "Remove installed files from package geant4_vmc" 
       if [ -e $SIMPATH_INSTALL/lib/libg4root.so ]; then  
-        rm -f $SIMPATH_INSTALL/lib/libg4root.*
-        rm -f $SIMPATH_INSTALL/lib/libgeant4vmc.*
         rm -rf $SIMPATH_INSTALL/include/geant4vmc
+        rm -rf $SIMPATH_INSTALL/include/mtroot
+        rm -rf $SIMPATH_INSTALL/include/g4root
+
         rm -rf $SIMPATH_INSTALL/share/geant4_vmc
+        rm -rf $SIMPATH_INSTALL/share/VGM-4.2.0
+        rm -rf $SIMPATH_INSTALL/share/Geant4VMC-3.1.1
+
+        rm -rf $SIMPATH_INSTALL/lib/MTRoot-3.1.1
+        rm -rf $SIMPATH_INSTALL/lib/Geant4VMC-3.1.1
+        rm -rf $SIMPATH_INSTALL/lib/G4Root-3.1.1
+        rm -f $SIMPATH_INSTALL/lib/libvmc_*
+        rm -f $SIMPATH_INSTALL/lib/libmtroot*
+        rm -f $SIMPATH_INSTALL/lib/libg4root*
+        rm -f $SIMPATH_INSTALL/lib/libgeant4vmc*
+        rm -f $SIMPATH_INSTALL/lib/libgeant4_*
+
+        rm -f $SIMPATH_INSTALL/bin/exampleE0*
+        rm -f $SIMPATH_INSTALL/bin/g4vmc_test*
+        rm -f $SIMPATH_INSTALL/bin/g4vmc_example*
+        rm -f $SIMPATH_INSTALL/bin/g4root_OpNovice
       fi
     fi
     geant4_vmc_cleaned=true

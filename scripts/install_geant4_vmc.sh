@@ -9,8 +9,6 @@ if [ ! -d  $SIMPATH/transport/geant4_vmc ]; then
   git checkout -b $GEANT4VMCBRANCH $GEANT4VMCBRANCH
 fi
 
-cd $SIMPATH/transport/geant4_vmc
-    
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/lib/libgeant4vmc.so
 
@@ -28,7 +26,7 @@ then
 
   make -j$number_of_processes
   make install
- 
+
   if [ "$platform" = "macosx" ];
   then
     cd $install_prefix/lib

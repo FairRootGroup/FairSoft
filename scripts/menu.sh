@@ -84,6 +84,29 @@ done
 
 clear
 echo
+echo "Would you like to install ROOT6 for testing purposes. The default is 'no' which builds the well tested package ROOT5."
+echo "If you choose 'yes' only ROOT6 ist build. If you chosse 'no' only ROOT5 is build"
+PS3='Please enter a choice from the above menu: '
+
+select CHOICE in "Yes" "No" Quit
+do
+case "$CHOICE" in
+Quit) exit
+;;
+"Yes") build_root6=yes
+break
+;;
+"No")  build_root6=no
+break
+;;
+"") echo This value is not valid. Hit Enter to see menu again!
+continue
+;;
+esac
+done
+
+clear
+echo
 echo "Would you like to install Simulation engines and event generators?"
 PS3='Please enter a choice from the above menu: '
 
@@ -136,33 +159,32 @@ then
                         ;;
        esac
     done
-
-    clear
-    echo
-    echo "Would you like to install the python bindings for Geant4 and Root"
-    PS3='Please enter a choice from the above menu: '
-
-    select CHOICE in "Yes" "No" Quit
-    do
-      case "$CHOICE" in
-                  Quit) exit
-                        ;;
-                 "Yes") build_python=yes
-                        break
-                        ;;
-                 "No") build_python=no
-                        break
-                        ;;
-                   "") echo This value is not valid. Hit Enter to see menu again!
-                       continue
-                       ;;
-       esac
-    done
 else
   geant4_download_install_data_automatic=no
   geant4_install_data_from_dir=no
-  build_python=no
 fi
+
+clear
+echo
+echo "Would you like to install the python bindings for Root and Geant4 (only if simulation engines are installed)"
+PS3='Please enter a choice from the above menu: '
+
+select CHOICE in "Yes" "No" Quit
+do
+  case "$CHOICE" in
+              Quit) exit
+                    ;;
+             "Yes") build_python=yes
+                    break
+                    ;;
+              "No") build_python=no
+                    break
+                    ;;
+                "") echo This value is not valid. Hit Enter to see menu again!
+                    continue
+                       ;;
+  esac
+done
 
 clear
 

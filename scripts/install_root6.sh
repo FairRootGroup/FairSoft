@@ -11,27 +11,19 @@ then
   export CXXFLAGS
 fi
 
-checkfile=$install_prefix/bin/root.exe
-
 if [ ! -d  $SIMPATH/tools/root ];
 then
   cd $SIMPATH/tools
   git clone $ROOT_LOCATION
-  if [ -e $checkfile ];
-  then
-    # always build if new clone
-    rm $checkfile
-  fi
 
   cd $SIMPATH/tools/root
-  git checkout $ROOTVERSION
-
+  git checkout -b $ROOTVERSION $ROOTVERSION
 fi
-
-cd $SIMPATH/tools/root
 
 install_prefix=$SIMPATH_INSTALL
 libdir=$install_prefix/lib/root
+
+checkfile=$install_prefix/bin/root.exe
 
 if [ "$platform" = "macosx" ];
 then
@@ -45,12 +37,14 @@ fi
 # TODO: Check if the installation was done already
 if (not_there xrootd $install_prefix/bin/xrd);
 then
+  cd $SIMPATH/tools/root
   build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
 fi
 
 if (not_there root $checkfile);
 then
   cd $SIMPATH/tools/root
+  mkdir build_for_fair
 
   # special patch for Fedora 16 on 32bit
   # This should go into root
@@ -76,10 +70,10 @@ then
 
   if [ "$build_for_grid" = "yes" ]
   then
-    cp ../rootconfig_grid.sh  rootconfig.sh
+    cp ../rootconfig_grid.sh  build_for_fair/rootconfig.sh
     echo "Copied rootconfig_grid.sh ......................" | tee -a $logfile
   else
-    cp ../rootconfig.sh  .
+    cp ../rootconfig.sh  build_for_fair/
     echo "Copied rootconfig.sh ......................" | tee -a $logfile
   fi
   echo "Configure Root .........................................." | tee -a $logfile
@@ -119,12 +113,13 @@ then
   # needed to solve problem with the TGeoManger for some CBM and Panda geometries
   mypatch ../root_TGeoShape.patch
 
-  # needed to solve a problem with VMC, TGeoManager and Geant4. This fix should be only needed for root 5.34.25
-  mypatch ../root5_34_25_TGeo.patch
-
   # needed due to some problem with the ALICE HLT code
   mypatch ../root5_34_19_hlt.patch
 
+  # needed to compile root6 with newer versions of xrootd
+  mypatch ../root6_xrootd.patch
+
+  cd build_for_fair/
   . rootconfig.sh
 
   #This workaround  to run make in a loop is
@@ -189,7 +184,7 @@ then
     fi
   fi
 
-  cd $SIMPATH/tools/root
+  cd $SIMPATH/tools/root/build_for_fair/
 
   $MAKE_command install
 
