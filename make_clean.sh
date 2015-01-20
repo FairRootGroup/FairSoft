@@ -20,13 +20,15 @@ if [ -d geant3 ]; then
 fi
 
 # vgm - remove build directory
-cd $SIMPATH/transport/vgm
-if [ -d build_cmake ]; then
-  rm -rf build_cmake
+cd $SIMPATH/transport
+if [ -d vgm ]; then
+  cd $SIMPATH/transport/vgm
+  if [ -d build_cmake ]; then
+    rm -rf build_cmake
+  fi
 fi
 
 # geant4_vmc - remove tmp, lib and include directories
-# vgm - remove build directory
 cd $SIMPATH/transport
 if [ -d geant4_vmc ]; then
   rm -rf geant4_vmc
@@ -123,14 +125,16 @@ if [ -h zeromq ]; then
 fi
 
 # millepede
-cd $SIMPATH/basics/MillepedeII
-if [ -d  build ]; then
-  rm -rf build
+cd $SIMPATH/basics
+if [ -d  MillepedeII ]; then
+  cd $SIMPATH/basics/MillepedeII
+  if [ -d  build ]; then
+    rm -rf build
+  fi
+  rm -f pede
+  rm -f *.mod
+  rm -f *.o
 fi
-rm -f pede
-rm -f *.mod
-rm -f *.o
-
 
 # Root - remove all unneeded files
 cd $SIMPATH/tools
