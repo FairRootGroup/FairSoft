@@ -37,7 +37,10 @@ export MESAVERSION=MesaLib-7.10.3
 
 #export ROOT_LOCATION="https://github.com/root-mirror/root/"
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
+# Root v5.34.25
 export ROOTVERSION=7f61de23d790479b053e47f718affb2725de9ab1
+# Root v5.34.24
+#export ROOTVERSION=3e7673472eedd975f9b5fcc1ced44ddbd8db476d
 
 export XROOTDVERSION=4.1.1
 
