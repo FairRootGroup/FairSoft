@@ -508,7 +508,7 @@ clean_nanomsg() {
 }
 
 clean_all() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg"
+  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg"
 
   for pack in $valid_packages
   do
