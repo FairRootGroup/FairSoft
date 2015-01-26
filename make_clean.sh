@@ -1,4 +1,5 @@
-#!/bin/bash
+
+	#!/bin/bash
 ####
 # Script to remove all temporary and installed files for the different packages.
 # The script also removes all temporary and installed file for dependent packages.
@@ -52,7 +53,7 @@ main() {
     rm bin/fairsoft-config
     rm include/FairSoftVersion.h
   fi
-  find $SIMPATH -type d -empty -delete
+  find $SIMPATH_INSTALL -type d -empty -delete
   
   exit 0
 
@@ -278,6 +279,28 @@ clean_geant4() {
   fi
 }
 
+clean_xrootd() {
+
+  if [ "$rm_installed_files" = "true" ]; then
+    echo "Remove installed files from package xrootd" 
+    cd $SIMPATH_INSTALL/bin
+    rm -f cconfig cmsd cns_ssi frm_admin frm_purged frm_xfragent frm_xfrd mpxstats wait41 xprep xrd xrdadler32 XrdCnsd xrdcopy xrdcp xrdcp-old xrdfs xrdgsiproxy xrdmapc xrdpwdadmin xrdsssadmin xrdstagetool xrootd xrootd-config
+    cd $SIMPATH_INSTALL/include
+    rm -rf xrootd
+    cd $SIMPATH_INSTALL/lib
+    rm -f libXrd*
+    cd $SIMPATH_INSTALL/share/man/man1
+    rm -f xrd*
+    rm -f xprep*
+    cd $SIMPATH_INSTALL/share/man/man8
+    rm -f cmsd* cns* frm* mpx* Xrd* xr*
+    cd $SIMPATH_INSTALL/share
+    rm -rf xrootd
+  fi
+  clean_root
+}
+
+
 clean_root() {
 
   if [ ! $root_cleaned ]; then
@@ -488,7 +511,7 @@ clean_all() {
 }
 
 check_package_exist() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg"
+  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg"
 
   if [ "$1" = "all" ]; then
     return
