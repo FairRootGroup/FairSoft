@@ -53,8 +53,14 @@ main() {
     rm bin/fairsoft-config
     rm include/FairSoftVersion.h
   fi
+
   find $SIMPATH_INSTALL -type d -empty -delete
   
+  # Remove symbolic link if libdir doesn't exist any longer
+  if [ ! -e lib -a -L lib64 ]; then
+    rm -f lib64
+  fi
+
   exit 0
 
 }
