@@ -41,7 +41,6 @@ fi
 # TODO: Check if the installation was done already
 if (not_there xrootd $install_prefix/bin/xrd);
 then           
-  ln -s $install_prefix/lib $install_prefix/lib64
   build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
 fi
 
