@@ -477,3 +477,16 @@ function check_all_libraries {
     fi
     cd $oldpwd
 }
+
+function create_installation_directories {
+    # This function creates the defined installation directory
+    # and all directories/links inside
+
+    mkdir -p $SIMPATH_INSTALL/bin
+    mkdir -p $SIMPATH_INSTALL/include
+    mkdir -p $SIMPATH_INSTALL/lib
+    mkdir -p $SIMPATH_INSTALL/share
+    if [ ! -e $SIMPATH_INSTALL/lib64 ]; then
+      ln -s $SIMPATH_INSTALL/lib $SIMPATH_INSTALL/lib64
+    fi
+}

@@ -161,6 +161,9 @@ check=1
 # set the versions of packages to be build
 source scripts/package_versions.sh
 
+# Create the installation directory and its substructure
+create_installation_directories
+
 # Now start compilations with checks
 
 ######################## CMake ################################
