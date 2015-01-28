@@ -122,14 +122,14 @@ if [ -h zeromq ]; then
   rm -rf zeromq
 fi
 
-# millepede 
+# millepede
 cd $SIMPATH/basics/MillepedeII
 if [ -d  build ]; then
   rm -rf build
 fi
-rm  pede
-rm *.mod
-rm *.o  
+rm -f pede
+rm -f *.mod
+rm -f *.o
 
 
 # Root - remove all unneeded files

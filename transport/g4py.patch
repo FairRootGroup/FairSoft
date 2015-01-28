@@ -10,7 +10,7 @@
  # debug mode
  set(DEBUG FALSE CACHE BOOL "Debug Mode (Debug On)")
  
-@@ -25,10 +24,17 @@
+@@ -25,10 +24,18 @@
  find_package(Geant4 REQUIRED)
  find_package(PythonInterp REQUIRED)
  find_package(PythonLibs REQUIRED)
@@ -24,6 +24,7 @@
 +if (CMAKE_SYSTEM_NAME MATCHES Darwin)
 +      SET(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS} -flat_namespace -single_module -undefined dynamic_lookup")
 +      SET(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -flat_namespace -single_module -undefined dynamic_lookup")
++      SET(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
 +endif()
 +
  #------------------------------------------------------------------------------
