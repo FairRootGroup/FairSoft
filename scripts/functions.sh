@@ -78,8 +78,32 @@ function check_success {
       return 0
     fi
 }
+
 #_____________________________________________________________________
-# scripts perform sed command differently on linux and on Mac Os X
+# function to do the patching. This should avoid problems with applying
+# the same patch again. In each package directory a apllied_patches.txt
+# file is created and the information about the aplied patches is
+# saved. When runing the script again it is checked if the patch
+# was already aplied. If this is the case no action is taken, else
+# the patch is applied 
+function mypatch {
+  patch_full_file=$1
+  patch_file=$(basename "$patch_full_file")
+  if [ ! -e applied_patches.txt ]; then
+    patch -p0 < $patch_full_file
+    echo $patch_file >> applied_patches.txt
+  else
+    if [ "$(grep -c $patch_file applied_patches.txt )" = "1" ]; then
+      echo "The patch $patch_file is already applied."
+    else
+      patch -p0 < $patch_full_file
+      echo $patch_file >> applied_patches.txt
+    fi
+  fi
+}
+
+#_____________________________________________________________________
+# function perform sed command differently on linux and on Mac Os X
 # return error code
 # first parameter is the text to search for, the second is the
 # replacement and the third one defines the filename
@@ -141,126 +165,117 @@ function mysed {
 }
 
 #_____________________________________________________________________
-function check_library {
-    # The function is inspired by the ROOT configure script and adapted
-    # to run on linux and Mac OS X
-    #
-    # This function will try to find out if a library [$1] contains 64 bit
-    # or 32 bit code. Currently works only for linux and Mac OS X.
-    # The result of the check is stored in lib_is, which should be 
-    # immediately copied or used , since the variable
-    # will be overwritten at next invocation of this function.
+# The function checks if all needed variables are defined in the input file and
+# if only valid values and value combinations are present in the input file.
+function check_variables {
 
-    chklibname=$1
-
-    lib_is=0
-
-    # Assert that we got enough arguments
-    if [ $# -ne 1 ]; 
-    then
-      echo "check_library: not 1 argument"
-      return 1
+  if [ "$compiler" = "" ]; then
+    echo "*** The compiler definition is not set in the input file."
+    echo "*** Please add the compiler definition in the input file."
+    echo "*** e.g.: compiler=gcc"
+    echo "*** possible values are gcc, Clang, intel" # CC, PGI
+    exit 1
+  else
+    if [ ! "$compiler" = "gcc" -a ! "$compiler" = "Clang" -a ! "$compiler" = "intel" ]; then
+      echo "*** The compiler definition $compiler is not known."
+      echo "*** possible values are gcc, Clang, intel" # CC, PGI
+      echo "*** Please correct the compiler definition in the input file."
+      echo "*** e.g.: compiler=gcc"
+      exit 1
     fi
+  fi
+  if [ "$debug" = "" ]; then
+    echo "*** The debug definition is not set in the input file."
+    echo "*** Please add the debug definition in the input file."
+    echo "*** e.g.: debug=no or debug=yes"
+    exit 1
+  else
+    check_yes_no debug
+  fi
+  if [ "$optimize" = "" ]; then
+    echo "*** The optimize definition is not set in the input file."
+    echo "*** Please add the optimize definition in the input file."
+    echo "*** e.g.: optimize=no or optimize=yes"
+    exit 1
+  else
+    check_yes_no optimize
+  fi
+  if [ "$geant4_download_install_data_automatic" = "" ]; then
+    echo "*** It is not defined in the input file if the geant4 data should be downloaded automatically."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: geant4_download_install_data_automatic=[no/yes]"
+    exit 1
+  else
+    check_yes_no geant4_download_install_data_automatic
+  fi
+  if [ "$geant4_install_data_from_dir" = "" ]; then
+    echo "*** It is not defined in the input file if the geant4 data should be installed from the directory."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: geant4_install_data_from_dir=[no/yes]"
+    exit 1
+  else
+    check_yes_no geant4_install_data_from_dir
+  fi
+  if [ "$build_python" = "" ]; then
+    echo "*** It is not defined in the input file if the python bindings should be installed."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: build_python=[no/yes]"
+    exit 1
+  else
+    check_yes_no build_python
+  fi
+  if [ "$install_sim" = "" ]; then
+    echo "*** It is not defined in the input file if all tools for simulation should be installed."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: install_sim=[no/yes]"
+    exit 1
+  else
+    check_yes_no install_sim
+  fi
+  if [ "$SIMPATH_INSTALL" = "" ]; then
+    echo "*** No installation directory is defined in the input file."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: SIMPATH_INSTALL=<installation directory>"
+    exit 1
+  else
+    # expand variables, which could be in the filepath. 
+    # A example is if $PWD is in the path
+    eval SIMPATH_INSTALL=$SIMPATH_INSTALL
+    #check if the user can write to the installation path
+    mkdir -p $SIMPATH_INSTALL
+    if [ $? -ne 0 ]; then
+      echo "Cannot write to the installation directory $SIMPATH_INSTALL."
+      exit 1
+    fi  
+  fi
+  if [ "$debug" = "yes" -a "$optimize" = "yes" ]; then
+    echo "*** The variables \"debug\" and \"otimize\" can't be set both to \"yes\" at the"
+    echo "*** same time. All other combinations yes/no, no/no, and no/yes are valid."
+    echo "*** Please change the definitions in the input file."
+    exit 1 
+  fi
+  if [ "$geant4_download_install_data_automatic" = "yes" -a "$geant4_install_data_from_dir" = "yes" ]; then
+    echo "*** The variables \"geant4_download_install_data_automatic\" and"
+    echo "*** \"geant4_install_data_from_dir\" can't be set both to \"yes\" at the"
+    echo "*** same time. All other combinations yes/no, no/no, and no/yes are valid."
+    echo "*** Please change the definitions in the input file."
+    exit 1 
+  fi
 
-    
-    if [ "x`basename $chklibname .a`" != "x`basename $chklibname`" ]; then
-        # we have an archive .a file
-        if [ "$platform" = "linux" ];
-        then
-          objdump -a $1 | grep 'x86-64' > /dev/null 2>& 1
-	  ret=$?
-        elif [ "$platform" = "macosx" ];
-        then
-          # 0xfeedfacf is the magic key for 64bit files
-          otool -h $1 | grep '0xfeedfacf' > /dev/null 2>& 1
-	  ret=$?
-        elif [ "$platform" = "solaris" ];
-        then
-          # Since I don't have a 64bit machine in can only test for 32bit
-          # because i don't now the result on a 64bit machine.
-          /usr/sfw/bin/gobjdump -a $1 | grep 'elf32-i386' > /dev/null 2>& 1
-	  ret1=$?
-          if [ $ret1 -eq 0 ];
-          then
-            ret=1
-          else
-            ret=0
-          fi        
-        fi
-    else
-        if [ "$platform" = "solaris" ]; 
-        then
-           file $1 | grep '64-Bit' > /dev/null 2>& 1
-   	   ret=$?
-           if [ $ret -eq 1 ];then
-             file $1 | grep '64-bit' > /dev/null 2>& 1
-   	     ret=$?
-           fi 
-        else        
-           file -L $1 | grep '64-bit' > /dev/null 2>& 1
-	   ret=$?
-        fi
-    fi
-    if [ $ret -eq 0 ]; 
-    then
-      lib_is=64bit
-    else
-      lib_is=32bit
-    fi
 }
 
 #_____________________________________________________________________
-function check_all_libraries {
-    # This function loops over all libraries in the given path and
-    # checks if the library contains code as given in $system.
-
-    # Assert that we got enough arguments
-    if [ $# -ne 1 ]; 
-    then
-      echo "check_all_libraries: not 1 argument"
-      return 1
-    fi
-
-    chkdirname=$1
-    echo "**** Checking libraries in $chkdirname ****" | tee -a $logfile_lib
-
-    if [ "$platform" = "linux" -o "$platform" = "solaris" ];
-     then
-       shared_ext=so
-     elif [ "$platform" = "macosx" ];
-     then
-       shared_ext=dylib
-     fi   
-
-    oldpwd=$(pwd)
-    cd $chkdirname
-    if [ "$(find . -name "lib*.$shared_ext" | wc -l)" != "0" ];
-    then
-	for file in $(ls *.$shared_ext);
-	do
-	  check_library $file
-	  if [ "$lib_is" != "$system" ];
-	      then
-	      echo "Library $file is $lib_is, but system is $system" | tee -a $logfile_lib
-#      else
-#        echo "Library $file is ok" | tee -a $logfile_lib
-	  fi
-	done
-    fi
-    if [ "$(find . -name "lib*.a" | wc -l)" != "0" ];
-    then
-	for file in $(ls lib*.a);
-	  do
-	  check_library $file
-	  if [ "$lib_is" != "$system" ];
-	      then
-	      echo "Library $file is $lib_is, but system is $system" | tee -a $logfile_lib
-#      else
-#        echo "Library $file is ok" | tee -a $logfile_lib
-	  fi
-	done
-    fi
-    cd $oldpwd
+# The function checks if the varibale has either yes or no as value.
+# In case any other value is given the script stops with an error message.
+check_yes_no() {
+  variable=$1
+  eval value=\$$1 #eval forces update of $a which is set to the value of $1
+  if [ ! "$value" = "yes" -a ! "$value" = "no" ]; then
+    echo "*** For the variable $variable only yes or no are allowed."
+    echo "*** Please correct the definition of \"$variable=$value\" in the input file."
+    echo "*** e.g.: $variable=no or $variable=yes"
+    exit 1
+  fi
 }
 
 #_____________________________________________________________________
@@ -296,7 +311,8 @@ function is_in_path {
       return 0
     fi
 }
-#------------------------------------
+
+#_____________________________________________________________________
 function create_links {
 
      # create symbolic links from files with suffix $2 to $1
@@ -310,6 +326,20 @@ function create_links {
       done
 
 }
+
+#_____________________________________________________________________
+function generate_config_cache {
+  echo compiler=$compiler > $cache_file
+  echo debug=$debug >> $cache_file
+  echo optimize=$optimize >> $cache_file
+  echo geant4_download_install_data_automatic=$geant4_download_install_data_automatic >> $cache_file
+  echo geant4_install_data_from_dir=$geant4_install_data_from_dir >> $cache_file
+  echo build_python=$build_python >> $cache_file
+  echo install_sim=$install_sim >> $cache_file
+  echo SIMPATH_INSTALL=$SIMPATH_INSTALL >> $cache_file
+  echo platform=$platform >> $cache_file
+}
+
 #_____________________________________________________________________
 function download_file {
       # download the file from the given location using either wget or 
@@ -325,364 +355,138 @@ function download_file {
         curl -O -L $url    
       fi
 }
-#_____________________________________________________________________
-check_lib() {
 
-    # copied from ROOT configure
-    # This function will try to locate a library [$1] in the specific
-    # directory [$3] or in a default path [$*].  If the second argument
-    # [$2] is not "no", then shared libraries are favoured.
-    # The result of the search is stored in found_lib and found_dir,
-    # which should be immediately copied, since the variables value will
-    # be overwritten at next invocation of this function.
-
-    # Assert that we got enough arguments
-    if test $# -lt 4 ; then
-        echo "check_library: Too few arguments"
-        return 1
-    fi
-
-    # Save arguments in local names
-    lib=$1       ; shift
-    shared=$1    ; shift
-    libdirl=$1   ; shift
-    libdirs="$*"
-
-    # Write a message
-    checking_msg $lib
-
-    # check if we got a specific argument as to where the library
-    # is to be found
-    if test ! "x$libdirl" = "x" ; then
-        libdirs=$libdirl
-    fi
-    found_lib=no
-    found_dir=no
-
-    # Make list of libraries to search for. The .lib extension is for
-    # Windoze - note $shared is always "no" on windoze, since we need
-    # the .lib export library to link.
-    libs=""
-    for i in $lib ; do
-        for ext in .a .lib "" ; do     # lib without extension for MacOS X
-            libs="$libs $i$ext"
-        done
-    done
-    slibs=""
-    for i in $lib ; do
-        for ext in .so .sl .dylib .dll.a ; do      # .dll.a for cygwin gcc
-            slibs="$slibs $i$ext"
-        done
-    done
-    if test ! "x$shared" = "xno" ; then
-        libs="$slibs $libs"
-    else
-        libs="$libs $slibs"
-    fi
-
-    logmsg "libraries to check for: $libs"
-    # Loop over the list of possible directories, and see if we can
-    # find any of the library files as determind above.
-    for i in $libdirs ; do
-        # look first in the lib32 directories
-        if test "x$checklib32" = "xyes" ; then
-            i32=`echo $i | sed -e 's|lib$|lib32|' -e 's|lib/|lib32/|'`
-            #i="$i32 $i"
-            i="$i32"
-        fi
-        # look first in the lib64 directories
-        if test "x$checklib64" = "xyes" ; then
-            i64=`echo $i | sed -e 's|lib$|lib64|' -e 's|lib/|lib64/|'`
-            i="$i64 $i"
-        fi
-        # look only in the lib64 directories
-        if test "x$checkonlylib64" = "xyes" ; then
-            i64=`echo $i | sed -e 's|lib$|lib64|' -e 's|lib/|lib64/|'`
-            i="$i64"
-        fi
-        # look only in the hpux64 directories
-        if test "x$checkhpux64" = "xyes" ; then
-            i64=`echo $i | sed 's|\(lib\)|\1/hpux64|'`
-            i="$i64"
-        fi
-        # look only in the amd64 directories
-        if test "x$checksolaris64" = "xyes" ; then
-            i64=`echo $i | sed 's|\(lib\)|\1/amd64|'`
-            i="$i64"
-        fi
-        logmsg " Checking in directories $i for $libs"
-        for l in $i ; do
-            l=`echo $l | sed 's,^//,/,'`
-            if test ! -d $l ; then
-                continue
-            fi
-            for j in ${libs} ; do
-                logmsg "  Checking for library $j in directory $i"
-                # if we found the file (it's readable by user), we set the
-                # logical variables and are on our way, otherwise we continue
-                liblist=`echo $l/$j`    # expands wildcard in $l/$j
-                for n in ${liblist} ; do
-                    logmsg "   Checking $n"
-                    if test -f $n ; then
-                        logmsg "   Found file $n"
-                        if test "x$checklib64" = "xyes" ; then
-                            check_lib64 $n
-                            if test $is_lib64 -eq 1 ; then
-                                found_dir=$l
-                                found_lib=$j
-                                break 4
-                            fi
-                        else
-                            found_dir=$l
-                            found_lib=$j
-                            if test "x$arch" = "linux"; then
-                               check_lib64 $n
-                            else
-                               is_lib64=0
-                            fi
-                            if test $is_lib64 -eq 1 ; then
-                                found_dir=no
-                                found_lib=no
-                            else
-                                # skip cygwin libraries when in pure Win32 mode
-                                if test "x$platform" = "xwin32"; then
-                                    case $found_dir in
-                                        /lib|/lib/*|/usr/*) found_dir=no ;;
-                                        *) break 4;;
-                                    esac
-                                else
-                                    break 4
-                                fi
-                            fi
-                        fi
-                    else
-                        logmsg "  $j not found in $j"
-                    fi
-                done
-            done
-        done
-    done
-
-    echo $found_dir
-    unset libs
-    unset libdirs
-
-    if test "x$found_dir" = "xno" || test "x$found_lib" = "xno" ; then
-        found_dir=""
-        found_lib=""
-        found_raw_lib=""
-        logmsg " library not found"
-    else
-        flib=""
-        maclib=""
-        for i in $lib ; do
-            for ext in .a .lib "" ; do     # lib without extension for MacOS X
-                if test "x$found_lib" = "x$i$ext" ; then
-                    flib=$i$ext
-                    if test "x$ext" = "x" ; then
-                        maclib="yes"
-                    fi
-                    break 2
-                fi
-            done
-        done
-
-        if (test "x$found_lib" = "x$flib" && test "x$shared" = "xno") || \
-           test "x$maclib" = "xyes" ; then
-                found_raw_lib=${found_lib}
-            found_lib=${found_dir}/${found_lib}
-            found_raw_dir=${found_dir}
-            found_dir=""
-        else
-            found_raw_lib=${found_lib}
-            found_lib=`echo $found_lib | sed 's|^lib\(.*\)\..*|-l\1|'`
-            found_raw_dir=${found_dir}
-            found_dir=-L${found_dir}
-            # Avoid inclusion of /usr/lib, which is always included anyway
-            if test "x$found_dir" = "x-L/usr/lib"   || \
-               test "x$found_dir" = "x-L/usr/lib32" || \
-               test "x$found_dir" = "x-L/usr/lib64" ; then
-                found_dir=""
-            fi
-        fi
-
-        # Correct path for win32
-        if test "x$platform" = "xwin32"; then
-            if test ! "x$found_lib" = "x" ; then
-                found_lib=`cygpath -m $found_lib`
-            fi
-            if test ! "x$found_dir" = "x" ; then
-               found_dir=`cygpath -m $found_dir`
-            fi
-        fi
-    fi
-    unset shared
-    unset slibs
-    unset lib
-    unset flib
-    unset maclib
-    unset libdirl
-}
-
-#_____________________________________________________________________
-logmsg() {
-    # copied from ROOT configure 
-    # Write a simple message to std out
-    if test $# -lt 1 ; then
-        echo "logmsg: Too few arguments"
-        return 1
-    fi
-    if test "x$1" = "x-n"; then
-       shift
-       echo -n "$*" >> $logfile
-    else
-       echo "$*" >> $logfile
-    fi
-}
-
-#_____________________________________________________________________
-checking_msg() {
-    # Write a simple "checking" message to std out.
-    if test $# -lt 1 ; then
-        echo "checking_msg: Too few arguments"
-        return 1
-    fi
-    echo $ac_n "Checking for$ac_c"
-    logmsg $ac_n "Checking for$ac_c"
-    while test $# -gt 1 ; do
-        echo $ac_n " $1,$ac_c"
-        logmsg $ac_n " $1,$ac_c"
-        shift
-        if test $# -eq 1 ; then
-            echo $ac_n " or$ac_c"
-            logmsg $ac_n " or$ac_c"
-        fi
-    done
-    echo $ac_n " $1 ... $ac_c"
-    logmsg " $1 ... "
-}
-
-#_____________________________________________________________________
-result() {
-    echo "$*"
-    logmsg "Result: $*"
-}
-#_____________________________________________________________________
-check_header()  {
-    # copied from ROOT
-    # This function will try to locate a header [$1] in the specific
-    # directory [$2] or in a default path [$*].
-    # The result of the search is stored in found_hdr and found_dir,
-    # which should be immediately copied, since the variables value will
-    # be overwritten at next invocation of this function.
-
-    # Assert that we got enough arguments
-    if test $# -lt 3 ; then
-        echo "check_header: Too few arguments"
-        return 1
-    fi
-
-    # Save arguments in logical names
-    hdrs=$1     ; shift
-    hdrdir=$1   ; shift
-    hdrdirs="$*"
-
-    # Write a message
-    checking_msg $hdrs
-
-    # Check if we got a specific argument as to where the library
-    # is to be found
-    if test ! "x$hdrdir" = "x" ; then
-        hdrdirs=$hdrdir
-    fi
-    found_hdr=no
-    found_dir=no
-
-    # Loop over the list of possible directories, and see if we can
-    # find any of the library files as determind above.
-
-    for i in $hdrdirs; do
-        logmsg " Checking in directory $i"
-        for j in ${hdrs} ; do
-            logmsg "  Checking for $j in directory $i"
-            # if we found the file (it's readable by user), we set the
-            # logical variables and are on our way, otherwise we continue
-            if test -r $i/$j ; then
-                logmsg "  $i/$j is read-able"
-                found_dir=$i
-                found_hdr=$j
-                # skip cygwin headers when in pure Win32 mode
-                if test "x$platform" = "xwin32"; then
-                    case $found_dir in
-                        /usr/*) found_dir="no" ;;
-                        *) break 2;;
-                    esac
-                else
-                    break 2
-                fi
-            fi
-        done
-    done
-
-    echo $found_dir
-
-    if test "x$found_hdr" = "xno" || test "x$found_dir" = "xno" ; then
-        found_hdr=""
-        found_dir=""
-    fi
-
-    # Avoid inclusion of /usr/include, which is always included anyway
-    #if test "x$found_dir" = "x/usr/include" ; then
-        # found_dir="include"
-    #fi
-
-    # Correct path for win32
-    if test "x$platform" = "xwin32"; then
-        if test ! "x$found_hdr" = "x" ; then
-           found_hdr=`cygpath -m $found_hdr`
-        fi
-        if test ! "x$found_dir" = "x" ; then
-           found_dir=`cygpath -m $found_dir`
-        fi
-    fi
-
-    unset hdrs
-    unset hdrdirs
-    unset hdrdir
-}
-
-#_____________________________________________________________________
-check_lib64() {
+function check_library {
+    # The function is inspired by the ROOT configure script and adapted
+    # to run on linux and Mac OS X
+    #
     # This function will try to find out if a library [$1] contains 64 bit
-    # or 32 bit code. Currently works only for linux.
-    # The result of the check is stored in is_lib64, 1 if true,
-    # 0 otherwise, which should be immediately copied, since the variable
+    # or 32 bit code. Currently works only for linux and Mac OS X.
+    # The result of the check is stored in lib_is, which should be 
+    # immediately copied or used , since the variable
     # will be overwritten at next invocation of this function.
 
-    is_lib64=0
+    chklibname=$1
+
+    lib_is=0
 
     # Assert that we got enough arguments
-    if test $# -ne 1 ; then
-        echo "check_lib64: not 1 argument"
-        return 1
+    if [ $# -ne 1 ];
+    then
+      echo "check_library: not 1 argument"
+      return 1
     fi
 
-    # Save arguments in logical names
-    chklib64=$1
-    logmsg "Checking if $chklib64 is a 64bit library"
-    if [ "x`basename $chklib64 .a`" != "x`basename $chklib64`" ]; then
+
+    if [ "x`basename $chklibname .a`" != "x`basename $chklibname`" ]; then
         # we have an archive .a file
-        logmsg " objdump -a $chklib64 | grep 'x86-64'"
-        objdump -a $chklib64 | grep 'x86-64' > /dev/null 2>& 1
-        ret=$?
+        if [ "$platform" = "linux" ];
+        then
+          objdump -a $1 | grep 'x86-64' > /dev/null 2>& 1
+          ret=$?
+        elif [ "$platform" = "macosx" ];
+        then
+          # 0xfeedfacf is the magic key for 64bit files
+          otool -h $1 | grep '0xfeedfacf' > /dev/null 2>& 1
+          ret=$?
+        elif [ "$platform" = "solaris" ];
+        then
+          # Since I don't have a 64bit machine in can only test for 32bit
+          # because i don't now the result on a 64bit machine.
+          /usr/sfw/bin/gobjdump -a $1 | grep 'elf32-i386' > /dev/null 2>& 1
+          ret1=$?
+          if [ $ret1 -eq 0 ];
+          then
+            ret=1
+          else
+            ret=0
+          fi
+        fi
     else
-        logmsg " file -L $chklib64 | grep '64-bit'"
-        file -L $chklib64 | grep '64-bit' > /dev/null 2>& 1
-        ret=$?
+        if [ "$platform" = "solaris" ];
+        then
+           file $1 | grep '64-Bit' > /dev/null 2>& 1
+           ret=$?
+           if [ $ret -eq 1 ];then
+             file $1 | grep '64-bit' > /dev/null 2>& 1
+             ret=$?
+           fi
+        else
+           file -L $1 | grep '64-bit' > /dev/null 2>& 1
+           ret=$?
+        fi
     fi
-    logmsg " result: $ret"
-    if test $ret -eq 0 ; then
-        is_lib64=1
-        logmsg " is a 64bit library"
+    if [ $ret -eq 0 ];
+    then
+      lib_is=64bit
+    else
+      lib_is=32bit
+    fi
+
+}
+
+function check_all_libraries {
+    # This function loops over all libraries in the given path and
+    # checks if the library contains code as given in $system.
+
+    # Assert that we got enough arguments
+    if [ $# -ne 1 ];
+    then
+      echo "check_all_libraries: not 1 argument"
+      return 1
+    fi
+
+    chkdirname=$1
+    echo "**** Checking libraries in $chkdirname ****" | tee -a $logfile_lib
+
+    if [ "$platform" = "linux" -o "$platform" = "solaris" ];
+     then
+       shared_ext=so
+     elif [ "$platform" = "macosx" ];
+     then
+       shared_ext=dylib
+     fi
+
+    oldpwd=$(pwd)
+    cd $chkdirname
+    if [ "$(find . -name "lib*.$shared_ext" | wc -l)" != "0" ];
+    then
+        for file in $(ls *.$shared_ext);
+        do
+          check_library $file
+          if [ "$lib_is" != "$system" ];
+              then
+              echo "Library $file is $lib_is, but system is $system" | tee -a $logfile_lib
+#      else
+#        echo "Library $file is ok" | tee -a $logfile_lib
+          fi
+        done
+    fi
+    if [ "$(find . -name "lib*.a" | wc -l)" != "0" ];
+    then
+        for file in $(ls lib*.a);
+          do
+          check_library $file
+          if [ "$lib_is" != "$system" ];
+              then
+              echo "Library $file is $lib_is, but system is $system" | tee -a $logfile_lib
+#      else
+#        echo "Library $file is ok" | tee -a $logfile_lib
+          fi
+        done
+    fi
+    cd $oldpwd
+}
+
+function create_installation_directories {
+    # This function creates the defined installation directory
+    # and all directories/links inside
+
+    mkdir -p $SIMPATH_INSTALL/bin
+    mkdir -p $SIMPATH_INSTALL/include
+    mkdir -p $SIMPATH_INSTALL/lib
+    mkdir -p $SIMPATH_INSTALL/share
+    if [ ! -e $SIMPATH_INSTALL/lib64 ]; then
+      ln -s $SIMPATH_INSTALL/lib $SIMPATH_INSTALL/lib64
     fi
 }

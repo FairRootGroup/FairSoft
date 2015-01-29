@@ -11,18 +11,23 @@ then
   export CXXFLAGS
 fi
 
+checkfile=$install_prefix/bin/root.exe
+
 if [ ! -d  $SIMPATH/tools/root ];
 then
   cd $SIMPATH/tools
   git clone $ROOT_LOCATION
+  if [ -e $checkfile ];
+  then
+    # always build if new clone
+    rm $checkfile
+  fi
 fi
 cd $SIMPATH/tools/root
 git checkout $ROOTVERSION
 
 install_prefix=$SIMPATH_INSTALL
 libdir=$install_prefix/lib/root
-
-checkfile=$install_prefix/bin/root.exe
 
 if [ "$platform" = "macosx" ];
 then
@@ -31,6 +36,13 @@ else
   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
 fi
 
+# install xrootd as prerequisit for root
+# since we use a script delivered with root we have to first unpack root to use the script
+# TODO: Check if the installation was done already
+if (not_there xrootd $install_prefix/bin/xrd);
+then           
+  build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
+fi
 
 if (not_there root $checkfile);
 then          
@@ -43,7 +55,7 @@ then
   if [ "$result" = "0" ];then
     if [ "$system" = "32bit" ]; then
       echo "*** Applying patch needed for Fedora 16 32bit " | tee -a $logfile
-      patch -p0 < ../root_fedora16_32bit.patch  
+      mypatch ../root_fedora16_32bit.patch  
     fi
   fi
   if [ "$debug" = "yes" ];
@@ -97,14 +109,14 @@ then
   fi
 
   # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
-#  patch -p0 < ../root5_34_17_LLVM51.patch | tee -a $logfile 
-#  patch -p0 < ../root5_34_17_linux_libc++.patch | tee -a $logfile 
+#  mypatch ../root5_34_17_LLVM51.patch | tee -a $logfile 
+  mypatch ../root5_34_17_linux_libc++.patch | tee -a $logfile 
 
   # needed to solve problem with the TGeoManger for some CBM and Panda geometries
-#  patch -p0 < ../root_TGeoShape.patch
+  mypatch ../root_TGeoShape.patch
 
   # needed due to some problem with the ALICE HLT code
-#  patch -p0 < ../root5_34_19_hlt.patch    
+  mypatch ../root5_34_19_hlt.patch    
 
   . rootconfig.sh
 
@@ -157,7 +169,7 @@ then
       if [ "$compiler" = "Clang" ]; then
         mysed 'CXXOPTS       = $(OPT)' "CXXOPTS       = ${CXXFLAGS_BAK}" Makefile.$arch
         cd $SIMPATH/tools/root
-        #patch -p0 < ../root_vmc_MakeMacros.diff
+        mypatch ../root_vmc_MakeMacros.diff
       fi   
     elif [ "$arch" = "linuxia64gcc" ];
     then 

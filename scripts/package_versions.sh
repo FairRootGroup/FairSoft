@@ -26,8 +26,8 @@ export PYTHIA8_LOCATION="http://home.thep.lu.se/~torbjorn/pythia8/"
 export PYTHIA8VERSION=pythia8183
 
 export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
-export GEANT4VERSION=geant4.10.00.p01
-export GEANT4VERSIONp=Geant4-10.0.1
+export GEANT4VERSION=geant4.10.00.p02
+export GEANT4VERSIONp=Geant4-10.0.2
 
 export XERCESC_LOCATION="http://mirror.serversupportforum.de/apache//xerces/c/3/sources/"
 export XERCESCVERSION=3.1.1
@@ -35,8 +35,14 @@ export XERCESCVERSION=3.1.1
 export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10.3/"
 export MESAVERSION=MesaLib-7.10.3
 
+#export ROOT_LOCATION="https://github.com/root-mirror/root/"
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
-export ROOTVERSION=f255544c8ee8369c67d7817ca0dbc8e3b7137c48
+# Root v5.34.25
+export ROOTVERSION=7f61de23d790479b053e47f718affb2725de9ab1
+# Root v5.34.24
+#export ROOTVERSION=3e7673472eedd975f9b5fcc1ced44ddbd8db476d
+
+export XROOTDVERSION=4.1.1
 
 export PLUTO_LOCATION="http://web-docs.gsi.de/%7Ehadeshyp/pluto/v5.37/"
 export PLUTOVERSION=pluto_v5.37
@@ -44,7 +50,7 @@ export PLUTOVERSION=pluto_v5.37
 export GEANT3_LOCATION="ftp://root.cern.ch/root/vmc/"
 export GEANT3VERSION=geant321+_vmc.1.15a
 
-export VGM_LOCATION="https://svn.code.sf.net/p/vgm/code/tags/"
+export VGM_LOCATION="http://svn.code.sf.net/p/vgm/code/tags/"
 export VGMVERSION=v3-06
 
 export GEANT4VMC_LOCATION="http://root.cern.ch/git/geant4_vmc.git"
@@ -92,3 +98,13 @@ export RadioactiveDecay_TAR=G4RadioactiveDecay.4.0.tar.gz
 
 export RealSurface_VERSION=RealSurface1.0
 export RealSurface_TAR=RealSurface.1.0.tar.gz
+
+export FAIRROOT_LOCATION="https://github.com/FairRootGroup/FairRoot.git"
+export FAIRROOTVERSION=dev
+
+export DDS_LOCATION="https://github.com/FairRootGroup/DDS.git"
+export DDSVERSION=master
+
+export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
+export ALIROOTVERSION=master
+

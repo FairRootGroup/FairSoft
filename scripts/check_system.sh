@@ -369,6 +369,25 @@ esac
 # Use CMake to do all the system checks
 # Creates also the version info fill
 
+is_in_path cmake
+result=$?
+if [ "$result" = "0" ]; then
+  echo "cmake not found in PATH" | tee -a $logfile
+  echo ""
+  echo "cmake is needed to run the system introspection." | tee -a $logfile
+  echo "Please install the CMake package either using your package manager or"
+  echo "get the source from cmake.org and install it yourself."
+  exit 1
+fi
+
+if [ "$install_alfasoft" = "yes" ];
+then
+  echo "----------------- Install AlFaSoft ---------------"
+else
+  echo "----------------- Install FairSoft ---------------"
+fi
+
+
 mkdir -p $SIMPATH/test/build
 cd $SIMPATH/test
 
@@ -395,6 +414,7 @@ hascxx11=$(grep HasCxx11 $SIMPATH/test/configure | cut -f2 -d:)
 haslibcxx=$(grep HasLibCxx $SIMPATH/test/configure | cut -f2 -d:)
 _hascurl=$(grep HasCurl $SIMPATH/test/configure | cut -f2 -d:)
 
+
 if [ ${_hascurl} ];
 then
   install_curl=no
@@ -408,6 +428,12 @@ if [ $hascxx11 ];
 then
   export CXXFLAGS="${CXXFLAGS} -std=c++11"
   export build_cpp11=yes
+else
+  if [ "$install_alfasoft" = "yes" ];
+  then
+     echo "AlFaSoft require C++11, please install a compiler that support C++11 "
+     exit
+  fi
 fi
 
 if [ $haslibcxx ];

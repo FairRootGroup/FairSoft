@@ -1,21 +1,19 @@
 #!/bin/bash
 
-cache="config.cache"
-
-if test -f $cache; then
+if test -f $cache_file; then
    use_cache=y
    clear
    echo
    echo "Use these cached settings: "
    echo
-   cat $cache
+   cat $cache_file
    echo
    read -p 'Ok [Y/n]: ' use_cache
    if test ! "x$use_cache" = "xn"; then
-      . $cache
+      . $cache_file
       return
    else
-      rm -f $cache
+      rm -f $cache_file
    fi
 fi
 
@@ -24,12 +22,12 @@ echo
 echo "Which compiler you want to use to compile the external packages?"
 PS3='Please enter a choice from the above menu: '
 
-select CHOICE in "GCC (Linux, Solaris and Mac OSX)" "Intel Compiler (Linux)" "CC (Solaris)" "Portland Compiler" "Clang" Quit
+select CHOICE in "GCC (Linux, and older versions of Mac OSX)" "Intel Compiler (Linux)" "CC (Solaris)" "Portland Compiler" "Clang (Mac OSX)" Quit
 do
   case "$CHOICE" in
                Quit) exit
                      ;;
-              "GCC (Linux, Solaris and Mac OSX)")
+              "GCC (Linux, and older versions of Mac OSX)") 
                      compiler=gcc
                      break
                      ;;
@@ -45,7 +43,7 @@ do
                      compiler=PGI
                      break
                      ;;
-                "Clang")
+                "Clang (Mac OSX)") 
                      compiler=Clang
                      break
                      ;;
@@ -54,8 +52,6 @@ do
                      ;;
    esac
 done
-
-echo compiler=$compiler >> $cache
 
 clear
 echo
@@ -85,9 +81,6 @@ do
                     ;;
    esac
 done
-
-echo debug=$debug >> $cache
-echo optimize=$optimize >> $cache
 
 clear
 echo
@@ -144,9 +137,6 @@ then
        esac
     done
 
-    echo geant4_download_install_data_automatic=$geant4_download_install_data_automatic >> $cache
-    echo geant4_install_data_from_dir=$geant4_install_data_from_dir >> $cache
-
     clear
     echo
     echo "Would you like to install the python bindings for Geant4 and Root"
@@ -168,15 +158,11 @@ then
                        ;;
        esac
     done
-
-    echo build_python=$build_python >> $cache
 else
-  echo geant4_download_install_data_automatic=no >> $cache
-  echo geant4_install_data_from_dir=no >> $cache
-  echo build_python=no >> $cache
+  geant4_download_install_data_automatic=no
+  geant4_install_data_from_dir=no 
+  build_python=no
 fi
-
-echo install_sim=$install_sim >> $cache
 
 clear
 
@@ -219,11 +205,5 @@ while $question; do
   if [ $? -ne 0 ]; then
       question=true
       writable_dir=false
-  fi
+  fi  
 done
-
-
-echo SIMPATH_INSTALL=$SIMPATH_INSTALL >> $cache
-echo export SIMPATH_INSTALL >> $cache
-
-export SIMPATH_INSTALL

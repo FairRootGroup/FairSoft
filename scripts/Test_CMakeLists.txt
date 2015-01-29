@@ -5,15 +5,28 @@
 # so it should work also with all versions in between 
 CMake_Minimum_Required(VERSION 2.6 FATAL_ERROR)
 
-Project(TestEnvironment C CXX Fortran)
+Project(TestEnvironment C CXX)
 
-Set(FairSoft_Version "jul14p1")
+Enable_Language(Fortran OPTIONAL)
+
+Set(FairSoft_Version "jul14")
+
+Set(Build_batch $ENV{BUILD_BATCH})
+Set(fc_needed $ENV{Fortran_Needed})
 
 # Check if all needed compileres are installed
-If(CMAKE_CXX_COMPILER AND CMAKE_C_COMPILER AND CMAKE_Fortran_COMPILER)
-  Message(STATUS "Found all necessary compilers.")
-  Set(ALL_COMPILER_FOUND TRUE)
-  get_filename_component(_FC ${CMAKE_Fortran_COMPILER} NAME)
+If( fc_needed )
+  If(CMAKE_CXX_COMPILER AND CMAKE_C_COMPILER AND CMAKE_Fortran_COMPILER)
+    Message(STATUS "Found all necessary compilers.")
+    Set(ALL_COMPILER_FOUND TRUE)
+    get_filename_component(_FC ${CMAKE_Fortran_COMPILER} NAME)
+  EndIf()
+Else()
+  If(CMAKE_CXX_COMPILER AND CMAKE_C_COMPILER)
+    Message(STATUS "Found all necessary compilers.")
+    Message(STATUS "No Fortran compiler needed when building without simulation engines.")
+    Set(ALL_COMPILER_FOUND TRUE)
+  EndIf()
 EndIf()
 
 #Check for X11 which is mandatory for building ROOT
@@ -27,17 +40,19 @@ Else()
   Set(COMPLETE_X11_FOUND FALSE)
 EndIf()
 
-#Check for OpenGL and GLU installation
+if (NOT Build_batch)
 
-find_package(OpenGL)
+  #Check for OpenGL and GLU installation
+  find_package(OpenGL)
+ 
+  If(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+    Message(STATUS "Found all necessary OpenGL features.")
+    Set(COMPLETE_OPENGL_FOUND TRUE)
+  Else()
+    Set(COMPLETE_OPENGL_FOUND FALSE)
+  EndIf()
 
-If(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-  Message(STATUS "Found all necessary OpenGL features.")
-  Set(COMPLETE_OPENGL_FOUND TRUE)
-Else()
-  Set(COMPLETE_OPENGL_FOUND FALSE)
 EndIf()
-
 
 #---Check for needed programs
 
@@ -112,12 +127,16 @@ Else()
     Message(STATUS "X11_Xext_LIB: ${X11_Xext_LIB}")
     Message(STATUS "libXext and Xext headers must be installed.")
   EndIf()
-  If(NOT OPENGL_FOUND) 
-    Message(STATUS "OpenGL must be installed ")
+  
+  if (NOT Build_batch)
+    If(NOT OPENGL_FOUND) 
+      Message(STATUS "OpenGL must be installed ")
+    EndIf()
+    If(NOT OPENGL_GLU_FOUND)
+      Message(STATUS "Mesa GLU must be installed ")
+    EndIf()
   EndIf()
-  If(NOT OPENGL_GLU_FOUND)
-    Message(STATUS "Mesa GLU must be installed ")
-  EndIf()
+
   If(NOT DOWNLOADER_FOUND)
     Message(STATUS "Neither wget nor curl found in PATH. You need to install one of them")
   EndIf()
@@ -145,14 +164,16 @@ Else()
   If(NOT PATCH_FOUND)
     Message(STATUS "patch is not found in PATH. You need to install it")
   EndIf()
-  If(NOT MAKEDEP_FOUND)
-    Message(STATUS "makedep is not found in PATH. You need to install it")
-  EndIf()
-  If(NOT FLEX_FOUND)
-    Message(STATUS "flex is not found in PATH. You need to install it")
-  EndIf()
-  If(NOT BISON_FOUND)
-    Message(STATUS "bison is not found in PATH. You need to install it")
+  If( SPECIAL_LINUX_CLANG_FOUND )
+    If(NOT MAKEDEP_FOUND)
+      Message(STATUS "makedep is not found in PATH. You need to install it")
+    EndIf()
+    If(NOT FLEX_FOUND)
+      Message(STATUS "flex is not found in PATH. You need to install it")
+    EndIf()
+    If(NOT BISON_FOUND)
+      Message(STATUS "bison is not found in PATH. You need to install it")
+    EndIf()
   EndIf()
   Message(FATAL_ERROR "Please install the needed software. You can find a list with the package names for different Linux flavors in the file DEPENDENCIES.")
 EndIf()
