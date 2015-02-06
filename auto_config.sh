@@ -1,13 +1,16 @@
 #!/bin/bash 
 
-export SHIPSOFT=/opt/_temp/ShipSoft
+FORCE=false
+export SHIPSOFT=/opt/xocean
 export SIMPATH=$SHIPSOFT/FairSoftInst
 export FAIRROOTPATH=$SHIPSOFT/FairRootInst
 export FAIRSHIP=$SHIPSOFT/FairShip
 export FAIRSHIPRUN=$SHIPSOFT/FairShipRun
 
-[ ! -d $SHIPSOFT ] && mkdir $SHIPSOFT
-[ ! -d $SHIPSOFT/FairSoftInst ] && mkdir $SHIPSOFT/FairSoftInst
+[ "$1" == "true" ] && FORCE=true
+[ -d $SHIPSOFT && ! $FORCE ] && echo "$SHIPSOFT already exists" && exit 1
+[ ! -d $SHIPSOFT ] && mkdir -p $SHIPSOFT
+[ ! -d $SHIPSOFT/FairSoftInst ] && mkdir -p $SHIPSOFT/FairSoftInst
 [ -f config.cache ] && rm config.cache
 
 cat > answers.txt << EOT
