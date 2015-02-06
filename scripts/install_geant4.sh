@@ -45,10 +45,6 @@ then
   if [ "$platform" = "macosx" ]; then
     mypatch ../geant4.10.00_clang_osx.patch
   fi
-
-  if [ "$platform" = "macosx" ]; then
-    patch -p0 < ../geant4.10.00_clang_osx.patch
-  fi
   
   if (not_there Geant4-build  build);
   then 
