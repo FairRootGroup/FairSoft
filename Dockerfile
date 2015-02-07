@@ -13,3 +13,4 @@ RUN mkdir /tmp/FairShip
 COPY . /tmp/FairShip
 WORKDIR /tmp/FairShip
 RUN ./auto_config.sh
+RUN rm -rf /tmp/FairShip
