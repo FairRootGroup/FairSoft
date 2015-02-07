@@ -25,3 +25,4 @@ EOT
 
 ./configure.sh < answers.txt
 ./make_clean.sh all false
+rm -rf basics/*zip basics/build
