@@ -12,5 +12,5 @@ RUN yum -y install which tar subversion file
 RUN mkdir /tmp/FairShip
 COPY . /tmp/FairShip
 WORKDIR /tmp/FairShip
-RUN ./auto_config.sh
-RUN rm -rf /tmp/FairShip
+RUN ./auto_build.sh
+# RUN rm -rf /tmp/FairShip

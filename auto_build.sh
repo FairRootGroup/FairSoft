@@ -24,6 +24,6 @@ $SHIPSOFT/FairSoftInst
 EOT
 
 ./configure.sh < answers.txt
-./make_clean.sh all
+#./make_clean.sh all
 rm -rf basics/*zip basics/build
 rm answers.txt
