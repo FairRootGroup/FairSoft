@@ -18,6 +18,9 @@ ENV FAIRSHIP /opt/ship/FairShip
 ENV FAIRSHIP_BLD $FAIRSHIP/build
 ENV PYTHONPATH $FAIRSHIP/python:$FAIRSHIP_BLD/python:$SIMPATH/lib:$SIMPATH/lib/Geant4
 
+#export FAIRSHIP=$SHIPSOFT/FairShip
+#export FAIRSHIPRUN=$SHIPSOFT/FairShipRun
+
 RUN mkdir /tmp/FairShip
 COPY . /tmp/FairShip
 WORKDIR /tmp/FairShip
