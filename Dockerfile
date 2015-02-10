@@ -1,5 +1,7 @@
 FROM hepsw/slc-base:6.5
 MAINTAINER Andrey Ustyuzhanin andrey.ustyuzhanin@cern.ch
+ENTRYPOINT ["/bin/sh", "-c", "-l"]
+CMD ["bash"]
 
 RUN echo nameserver 8.8.8.8 >> /etc/resolv.conf
 RUN cat /etc/resolv.conf
@@ -8,7 +10,14 @@ RUN rm /usr/lib/gcc/x86_64-redhat-linux/3.4.6/libgcc_s_32.so  # references non-e
 RUN cp /usr/lib/gcc/x86_64-redhat-linux/3.4.6/lib* /usr/local/lib
 # VNC server
 RUN yum -y install x11vnc libpng xterm twm
-RUN yum -y install which tar subversion file
+RUN yum -y install which tar subversion file bc
+ENV SHIPSOFT /opt/xocean
+ENV FAIRROOTPATH $SHIPSOFT/FairRootInst
+ENV SIMPATH $SHIPSOFT/FairSoftInst
+ENV FAIRSHIP /opt/ship/FairShip
+ENV FAIRSHIP_BLD $FAIRSHIP/build
+ENV PYTHONPATH $FAIRSHIP/python:$FAIRSHIP_BLD/python:$SIMPATH/lib:$SIMPATH/lib/Geant4
+
 RUN mkdir /tmp/FairShip
 COPY . /tmp/FairShip
 WORKDIR /tmp/FairShip
