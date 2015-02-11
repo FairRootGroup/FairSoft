@@ -7,9 +7,14 @@ FORCE=false
 #export FAIRSHIP=$SHIPSOFT/FairShip
 #export FAIRSHIPRUN=$SHIPSOFT/FairShipRun
 
+function halt() {
+  echo $1
+  exit 1
+}
+
 [ "$1" == "true" ] && FORCE=true
-[ -d $SHIPSOFT && ! $FORCE ] && echo "$SHIPSOFT already exists" && exit 1
-[ ! -d $SHIPSOFT ] && mkdir -p $SHIPSOFT
+[ -z "$SIMPATH" ] && echo "SIMPATH is not defined" && exit 1
+[ -d $SIMPATH && ! $FORCE ] && echo "$SIMPATH already exists" && exit 1
 [ ! -d $SIMPATH ] && mkdir -p $SIMPATH
 [ -f config.cache ] && rm config.cache
 
@@ -23,7 +28,7 @@ $SIMPATH
 2
 EOT
 
-./configure.sh < answers.txt
-./make_clean.sh all
+./configure.sh < answers.txt || halt "Error running configure.sh"
+./make_clean.sh all || halt "Error running make_clean.sh"
 rm -rf basics/*zip basics/build tools/root
 rm answers.txt
