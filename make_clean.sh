@@ -341,11 +341,12 @@ clean_g4py() {
       if [ -e $SIMPATH/transport/geant4/build_g4py ]; then  
         rm -rf $SIMPATH/transport/geant4/build_g4py
       fi
-    
-      echo "Remove installed files from package g4py" 
-      if [ -e $SIMPATH_INSTALL/lib/g4py ]; then  
-        rm -rf $SIMPATH_INSTALL/lib/g4py
-        rm -rf $SIMPATH_INSTALL/lib/Geant4
+      if [ "$rm_installed_files" = "true" ]; then
+        echo "Remove installed files from package g4py" 
+        if [ -e $SIMPATH_INSTALL/lib/g4py ]; then  
+          rm -rf $SIMPATH_INSTALL/lib/g4py
+          rm -rf $SIMPATH_INSTALL/lib/Geant4
+        fi
       fi
     else
       echo "g4py was not build for the current settings"
