@@ -1,11 +1,6 @@
 #!/bin/bash 
 
 FORCE=false
-#export SHIPSOFT=/opt/xocean
-#export SIMPATH=$SHIPSOFT/FairSoftInst
-#export FAIRROOTPATH=$SHIPSOFT/FairRootInst
-#export FAIRSHIP=$SHIPSOFT/FairShip
-#export FAIRSHIPRUN=$SHIPSOFT/FairShipRun
 
 function halt() {
   echo $1
@@ -13,8 +8,8 @@ function halt() {
 }
 
 [ "$1" == "true" ] && FORCE=true
-[ -z "$SIMPATH" ] && echo "SIMPATH is not defined" && exit 1
-[ -d $SIMPATH && ! $FORCE ] && echo "$SIMPATH already exists" && exit 1
+[ -z "$SIMPATH" ] && halt "SIMPATH is not defined"
+[ -d $SIMPATH && ! $FORCE ] && halt "$SIMPATH directory already exists"
 [ ! -d $SIMPATH ] && mkdir -p $SIMPATH
 [ -f config.cache ] && rm config.cache
 
@@ -30,5 +25,5 @@ EOT
 
 ./configure.sh < answers.txt || halt "Error running configure.sh"
 ./make_clean.sh all || halt "Error running make_clean.sh"
-rm -rf basics/*zip basics/build tools/root
+cat .gitignore | xargs rm -rf
 rm answers.txt
