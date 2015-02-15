@@ -101,7 +101,7 @@ void g4libs_global()
 /// Macro function for loading Geant4 global libraries, Geant4 VMC library 
 /// and external packages: CLHEP, graphics drivers, .. used by Geant4
 
-  cout << "Loading Geant4 global libraries ...Our Macro" << endl;
+  cout << "Loading Geant4 global libraries ...Our Macro ???" << endl;
  
    // CLHEP
   if(isLibrary("libCLHEP"))gSystem->Load("libCLHEP");
@@ -120,7 +120,7 @@ void g4libs_global()
     str=objstr->String();
     str->Replace(0,2,"lib");
     gSystem->Load(str->Data());
-   printf(" Loading Library %s \n",  str->Data());
+   //printf(" Loading Library %s \n",  str->Data());
    }
 
    gSystem->Load("libG3toG4");
