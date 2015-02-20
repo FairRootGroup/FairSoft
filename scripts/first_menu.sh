@@ -8,7 +8,7 @@ PS3='Please enter a choice from the above menu: '
 select CHOICE in "Custom installation (You will choose more options later)" "Automatic (debug no optimization no python binding no Data for G4)" "Grid (NO Graphics)" "Reconstruction only (NO Simulation no event generators)"   Quit
 do
   case "$CHOICE" in
-               Quit) exit			
+               Quit) exit
                      ;;
                "Automatic (debug no optimization no python binding no Data for G4)")
                      installation_type=automatic

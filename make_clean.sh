@@ -348,7 +348,7 @@ clean_g4py() {
           rm -rf $SIMPATH_INSTALL/lib/g4py
           rm -rf $SIMPATH_INSTALL/lib/Geant4
         fi
-      fi  
+      fi
     else
       echo "g4py was not build for the current settings"
     fi

@@ -8,7 +8,7 @@ if test -f $cache_file; then
    echo
    cat $cache_file
    echo
-   read -p 'Ok [Y/n]: ' use_cache 
+   read -p 'Ok [Y/n]: ' use_cache
    if test ! "x$use_cache" = "xn"; then
       . $cache_file
       return
@@ -25,9 +25,9 @@ PS3='Please enter a choice from the above menu: '
 select CHOICE in "GCC (Linux, and older versions of Mac OSX)" "Intel Compiler (Linux)" "CC (Solaris)" "Portland Compiler" "Clang (Mac OSX)" Quit
 do
   case "$CHOICE" in
-               Quit) exit			
+               Quit) exit
                      ;;
-              "GCC (Linux, and older versions of Mac OSX)") 
+              "GCC (Linux, and older versions of Mac OSX)")
                      compiler=gcc
                      break
                      ;;
@@ -35,15 +35,15 @@ do
                      compiler=intel
                      break
                      ;;
-                "CC (Solaris)") 
+                "CC (Solaris)")
                      compiler=CC
                      break
                      ;;
-                "Portland Compiler") 
+                "Portland Compiler")
                      compiler=PGI
                      break
                      ;;
-                "Clang (Mac OSX)") 
+                "Clang (Mac OSX)")
                      compiler=Clang
                      break
                      ;;
@@ -62,7 +62,7 @@ PS3='Please enter a choice from the above menu: '
 select CHOICE in "No Debug Info" "Debug Info" "Optimize" Quit
 do
   case "$CHOICE" in
-              Quit) exit			
+              Quit) exit
                     ;;
    "No Debug Info") debug=no
                     optimize=no
@@ -117,18 +117,18 @@ then
     select CHOICE in "Don't install" "Internet" "Directory" Quit
     do
       case "$CHOICE" in
-                  Quit) exit			
+                  Quit) exit
                         ;;
-       "Don't install") geant4_download_install_data_automatic=no 
-                geant4_install_data_from_dir=no   
+       "Don't install") geant4_download_install_data_automatic=no
+                geant4_install_data_from_dir=no
                         break
                         ;;
           "Internet")   geant4_download_install_data_automatic=yes
-                        geant4_install_data_from_dir=no   
+                        geant4_install_data_from_dir=no
                         break
                         ;;
            "Directory") geant4_download_install_data_automatic=no
-                        geant4_install_data_from_dir=yes   
+                        geant4_install_data_from_dir=yes
                         break
                         ;;
                     "") echo This value is not valid. Hit Enter to see menu again!
@@ -145,12 +145,12 @@ then
     select CHOICE in "Yes" "No" Quit
     do
       case "$CHOICE" in
-                  Quit) exit			
+                  Quit) exit
                         ;;
-                 "Yes") build_python=yes 
+                 "Yes") build_python=yes
                         break
                         ;;
-                 "No") build_python=no 
+                 "No") build_python=no
                         break
                         ;;
                    "") echo This value is not valid. Hit Enter to see menu again!
@@ -160,7 +160,7 @@ then
     done
 else
   geant4_download_install_data_automatic=no
-  geant4_install_data_from_dir=no 
+  geant4_install_data_from_dir=no
   build_python=no
 fi
 
@@ -172,19 +172,19 @@ while $question; do
   clear
   if ! $writable_dir; then
     echo "You don't have write permissions for $SIMPATH_INSTALL"
-  fi  
+  fi
   echo 'Please define a directory for the installation of the external packages.'
   echo 'An installation in the source directory is not possible any longer.'
-  echo 'Please enter the full path of the installation directory'     
+  echo 'Please enter the full path of the installation directory'
   echo ''
-  read -p 'path: ' SIMPATH_INSTALL 
+  read -p 'path: ' SIMPATH_INSTALL
   clear
     # expand variables, which could be in the filepath. A example is if $PWD is in the path
   eval SIMPATH_INSTALL=$SIMPATH_INSTALL
   echo "Is $SIMPATH_INSTALL the correct path?"
   PS3='Please enter a choice from the above menu: '
-  
-  select CHOICE in "No" "Yes" Quit                            
+
+  select CHOICE in "No" "Yes" Quit
   do
   case "$CHOICE" in
       Quit) exit
@@ -205,5 +205,5 @@ while $question; do
   if [ $? -ne 0 ]; then
       question=true
       writable_dir=false
-  fi  
+  fi
 done
