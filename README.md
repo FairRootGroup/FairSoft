@@ -4,10 +4,11 @@ This repository contain the installation routines of all the external software n
 to compile and use FairRoot.
 To simplify the installation procedure of all these packages we provide a set of 
 scripts which will automatically download, unpack, configure, build‚ and install 
-all packages.
+all required software.
 
 The scripts work on most Linux flavors and on Mac OSX. If you encounter any problems 
-please create an issue at https://github.com/FairRootGroup/FairSoft/issues.
+please create an issue at https://fairroot-redmine.gsi.de . To do this you have to
+register and/or login first.
 
 ##Prerequisites
 
@@ -61,9 +62,9 @@ be installed. If unsure choose _No_.
 
 In the last menu one has to define the installation directory. All the programs will be
 installed into this directory. One shouldn't use as installation directory a directory 
-with is used by the system (e.g. /usr or /usr/local). Since it is possible to install 
+which is used by the system (e.g. /usr or /usr/local). Since it is possible to install 
 several version of "FairSoft" in parallel it is advisable to use a name tag in the 
-directory name (e.g. <install_dir>/fairsoft_dec13)
+directory name (e.g. <install_dir>/fairsoft_mar15)
 
 After passing all menus the installation process will check if all needed system
 packages are installed. If one or more packages are missing the installation process
@@ -93,16 +94,22 @@ directory of FairSoft.
 * Pythia6 416
 * HepMC 2.06.09
 * Pythia8 183
-* Geant4 10.00.p01
-* ROOT v5.34.19
+* Geant4 10.00.p02
+* xrootd 4.1.1
+* ROOT v5.34.25
 * Pluto v5.37
 * Geant321+_vmc 1.15a
 * VGM v3-06
-* G4VMC 2.15
+* G4VMC 2.15 from patch branch
 * MillePede V04-01-01
 * ZeroMQ 3.2.4
 * Protocoll Buffers 2.5.0
 * Nano Message  0.4-beta
+
+In case the python bindings are build the following additional packages will be installed
+
+* XercesC 3.1.1
+* G4Py Version which comes with Geant4
 
 ##Installation of ALFA (Alice-FAIR software)
 
@@ -115,11 +122,6 @@ three more packages:
 
   FairSoft> ./alfaconfig.sh
 
-The script will get the source code of all the packages from there own repostories, 
-compile and install tme. The versions and the urls of the different repostories used
+The script will get the source code of all the packages from their own repostories, 
+compile and install them. The versions and the urls of the different repositories used
 are specified in the file "scripts/package_versions.sh" 
-
-
-
-
-
