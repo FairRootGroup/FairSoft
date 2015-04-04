@@ -29,8 +29,8 @@ export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
 export GEANT4VERSION=geant4.10.00.p02
 export GEANT4VERSIONp=Geant4-10.0.2
 
-export XERCESC_LOCATION="http://mirror.serversupportforum.de/apache//xerces/c/3/sources/"
-export XERCESCVERSION=3.1.1
+export XERCESC_LOCATION="http://apache-mirror.rbc.ru/pub/apache//xerces/c/3/sources/"
+export XERCESCVERSION=3.1.2
 
 export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10.3/"
 export MESAVERSION=MesaLib-7.10.3
@@ -108,3 +108,15 @@ export DDSVERSION=master
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
 export ALIROOTVERSION=master
 
+export LHAPDF_LOCATION="http://www.hepforge.org/archive/lhapdf/"
+export LHAPDF_VERSION=5.9.1
+export LHAPDF_TAR=lhapdf-${LHAPDF_VERSION}.tar.gz
+
+export LOG4CPP_LOCATION="https://downloads.sourceforge.net/project/log4cpp/log4cpp-1.1.x%20%28new%29/log4cpp-1.1/"
+export LOG4CPP_VERSION=1.1.1
+export LOG4CPP_TAR=log4cpp-${LOG4CPP_VERSION}.tar.gz
+
+export GENIE_LOCATION="http://genie.hepforge.org/svn/branches/"
+export GENIE_VERSION=2.8.6
+export GENIE_BRANCH=R-2_8_6
+export GENIE_TAR=genie-${GENIE_VERSION}.tar.gz

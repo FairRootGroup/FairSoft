@@ -329,6 +329,34 @@ then
   source scripts/install_nanomsg.sh
 fi
 
+##################### LHAPDF ##################################################
+
+if [ "$check" = "1" ]; then
+  source scripts/install_lhapdf.sh
+fi
+
+##################### PDFSET ##################################################
+
+if [ "$check" = "1" ]; then
+  source scripts/install_pdfset.sh
+fi
+
+##################### LOG4CPP ##################################################
+
+if [ "$check" = "1" ]; then
+  source scripts/install_log4cpp.sh
+fi
+
+##################### libxml2 ##################################################
+#system
+
+##################### genie ##################################################
+
+if [ "$check" = "1" ]; then
+  source scripts/install_genie.sh
+fi
+
+
 if [ "$check" = "1" ];
 then
     echo "*** End installation of external packages without Errors***"  | tee -a $logfile
