@@ -116,7 +116,7 @@ export LOG4CPP_LOCATION="https://downloads.sourceforge.net/project/log4cpp/log4c
 export LOG4CPP_VERSION=1.1.1
 export LOG4CPP_TAR=log4cpp-${LOG4CPP_VERSION}.tar.gz
 
-export GENIE_LOCATION="http://genie.hepforge.org/svn/branches/"
+export GENIE_LOCATION="http://genie.hepforge.org/svn/generator/branches/"
 export GENIE_VERSION=2.8.6
 export GENIE_BRANCH=R-2_8_6
 export GENIE_TAR=genie-${GENIE_VERSION}.tar.gz
