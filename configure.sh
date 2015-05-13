@@ -105,6 +105,15 @@ then
    export Fortran_Needed=FALSE
 fi
 
+if [ "$build_root6" = "yes" ]
+then
+  pluto=0
+elif [ "$build_root6" = "no" ]
+then
+  pluto=0
+fi
+
+
 if [ "$installation_type" = "grid" ];
 then
   export BUILD_BATCH=TRUE
@@ -274,9 +283,9 @@ fi
 
 ##################### Pluto #############################################
 
-if [ "$check" = "1" -a "$onlyreco" = "0" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" -a "$pluto" = "1" ];
 then
-  source scripts/install_pluto.sh
+     source scripts/install_pluto.sh
 fi
 
 ##################### Geant 3 VMC #############################################
