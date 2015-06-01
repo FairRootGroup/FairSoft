@@ -7,6 +7,8 @@ CMake_Minimum_Required(VERSION 2.6 FATAL_ERROR)
 
 Project(TestEnvironment C CXX Fortran)
 
+Set(FairSoft_Version "jul14p1")
+
 # Check if all needed compileres are installed
 If(CMAKE_CXX_COMPILER AND CMAKE_C_COMPILER AND CMAKE_Fortran_COMPILER)
   Message(STATUS "Found all necessary compilers.")
@@ -161,6 +163,7 @@ Include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" HAS_CXX11)
 If(HAS_CXX11)
   Message(STATUS "Current compiler does suppport -std=c++11 option.")
+  Set(FAIRSOFT_CXX_FLAGS "${FAIRSOFT_CXX_FLAGS} -std=c++11")
 Else()
   Message(STATUS "Current compiler does not suppport -std=c++11 option.")
 EndIf()
@@ -169,9 +172,12 @@ EndIf()
 CHECK_CXX_COMPILER_FLAG("-std=c++11 -stdlib=libc++" HAS_LIBCXX)
 If(HAS_LIBCXX)
   Message(STATUS "Current compiler does suppport -stdlib=libc++")
+  Set(FAIRSOFT_CXX_FLAGS "${FAIRSOFT_CXX_FLAGS} -stdlib=libc++")
 Else()
   Message(STATUS "Current compiler does not suppport -stdlib=libc++")
 EndIf()
+
+String(STRIP ${FAIRSOFT_CXX_FLAGS} FAIRSOFT_CXX_FLAGS)
 
 Set(Build_Python $ENV{BUILD_PYTHON})
 
@@ -187,6 +193,7 @@ If(Build_Python)
 EndIf()
 
 Configure_File($ENV{SIMPATH}/test/configure.in $ENV{SIMPATH}/test/configure @ONLY)
+Configure_File($ENV{SIMPATH}/scripts/fairsoft-config.in $ENV{SIMPATH_INSTALL}/bin/fairsoft-config @ONLY)
 
 #---Create the file with version info
 set(CMAKE_MODULE_PATH "$ENV{SIMPATH}/test")
