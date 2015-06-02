@@ -118,6 +118,11 @@ then
   # needed due to some problem with the ALICE HLT code
   mypatch ../root5_34_19_hlt.patch    
 
+  # there is a bug in ROOT which destroy our parameter handling. This bug has to be fixed by us
+  # Please find a more detailed description at https://fairroot-redmine.gsi.de/issues/69
+
+  mypatch ../root_TKey.patch
+  
   . rootconfig.sh
 
   #This workaround  to run make in a loop is

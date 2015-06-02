@@ -9,7 +9,7 @@ Project(TestEnvironment C CXX)
 
 Enable_Language(Fortran OPTIONAL)
 
-Set(FairSoft_Version "jul14")
+Set(FairSoft_Version "mar15p2")
 
 Set(Build_batch $ENV{BUILD_BATCH})
 Set(fc_needed $ENV{Fortran_Needed})
