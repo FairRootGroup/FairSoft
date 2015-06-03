@@ -57,14 +57,7 @@
       PYTHONBUILD=" "
    fi
    
-   if [ "$install_alfasoft" = "yes" ];
-   then
-      VCBUILD="-Dvc=OFF"
-   else
-      VCBUILD="-Dvc=ON"
-   fi
-
-   
+     
    #######################################################
       
      etc_string="-DCMAKE_INSTALL_SYSCONFDIR=$SIMPATH_INSTALL/share/root/etc"
@@ -80,7 +73,7 @@
                     -Dglobus=OFF \
                     -Dreflex=OFF \
                     -Dcintex=OFF \
-                    $VCBUILD -Dhttp=ON \
+                    -Dvc=ON -Dhttp=ON \
                     -DGSL_DIR=$SIMPATH_INSTALL \
                     -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string \
                     $etc_string -Dgnuinstall=ON $debugstring
