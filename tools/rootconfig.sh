@@ -74,9 +74,9 @@
                     -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
 		    -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
                     -Dbuiltin-freetype=ON $OPENGL \
-		    -Dmysql=ON -Dpgsql=ON \
-		    -DPYTHIA6_DIR=$SIMPATH_INSTALL \
-		    -DPYTHIA8_DIR=$SIMPATH_INSTALL \
+                    -Dmysql=ON -Dpgsql=ON  -Dasimage=ON \
+                    -DPYTHIA6_DIR=$SIMPATH_INSTALL \
+                    -DPYTHIA8_DIR=$SIMPATH_INSTALL \
                     -Dglobus=OFF \
                     -Dreflex=OFF \
                     -Dcintex=OFF \
