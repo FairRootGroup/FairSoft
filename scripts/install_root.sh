@@ -198,6 +198,18 @@ then
 
   $MAKE_command install
 
+  ####Work sround for VC snd AliRoot ###
+   echo " create a symbolic linking for  Vc library ...."
+   if [ -e $install_prefix/lib/libVc.a ];
+   then
+     cd $install_prefix/lib/root
+     ln -s ../libVc.a
+     echo "---link created --- "
+   else
+     echo "libVc.a not found in lib dirctory " 
+   fi
+  #####################################
+
   check_all_libraries $install_prefix/lib
 
   check_success root $checkfile
