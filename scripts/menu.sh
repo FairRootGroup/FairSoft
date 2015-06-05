@@ -84,8 +84,9 @@ done
 
 clear
 echo
-echo "Would you like to install ROOT6 for testing purposes. The default is 'no' which builds the well tested package ROOT5."
-echo "If you choose 'yes' only ROOT6 ist build. If you chosse 'no' only ROOT5 is build"
+echo "Would you like to install ROOT 6 instead of ROOT 5?"
+echo "Choosing 'Yes' will build ROOT 6 for testing purposes"
+echo "The default option is 'No' which builds the well tested ROOT 5 package."
 PS3='Please enter a choice from the above menu: '
 
 select CHOICE in "Yes" "No" Quit
@@ -132,8 +133,8 @@ then
     clear
     echo
     echo "Would you like to install the additionally available data files"
-    echo "the GEANT4 package?"
-    echo "To do so you need either a internet conection (Internet) or you"
+    echo "for the Geant4 package?"
+    echo "To do so you either need an internet conection (Internet) or you"
     echo "have to provide the files in the transport subdirectory (Directory)."
     PS3='Please enter a choice from the above menu: '
 
@@ -166,7 +167,7 @@ fi
 
 clear
 echo
-echo "Would you like to install the python bindings for Root and Geant4 (only if simulation engines are installed)"
+echo "Would you like to install the python bindings for ROOT and Geant4 (only if simulation engines are installed)"
 PS3='Please enter a choice from the above menu: '
 
 select CHOICE in "Yes" "No" Quit
