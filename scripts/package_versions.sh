@@ -13,8 +13,8 @@ export GSLVERSION=gsl-1.16
 export ICU_LOCATION="http://download.icu-project.org/files/icu4c/53.1/"
 export ICUVERSION=icu4c-53_1
 
-export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.57.0/"
-export BOOSTVERSION=boost_1_57_0
+export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.58.0/"
+export BOOSTVERSION=boost_1_58_0
 
 export PYTHIA6_LOCATION="ftp://root.cern.ch/root/"
 export PYTHIA6VERSION=pythia6
@@ -37,11 +37,11 @@ export GEANT4VERSIONp=Geant4-10.1.0
 
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 if [ "$build_root6" = "yes" ]; then
-  # Root v6.03.04
+  # Root v6.04.00
   export ROOTVERSION=v6-04-00
 else
-  # Root v5.34.26
-  export ROOTVERSION=v5-34-26
+  # Root v5.34.32
+  export ROOTVERSION=v5-34-32
 fi
 
 export XROOTDVERSION=4.1.1
