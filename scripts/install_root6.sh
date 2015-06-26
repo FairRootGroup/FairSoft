@@ -39,6 +39,15 @@ if (not_there xrootd $install_prefix/bin/xrd);
 then
   cd $SIMPATH/tools/root
   build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
+
+  if [ "$platform" = "macosx" ];
+  then
+      cd $install_prefix/lib
+      for file in $(ls libXrd*.dylib); do
+         install_name_tool -id $install_prefix/lib/$file $file
+      done
+      create_links dylib so
+  fi
 fi
 
 if (not_there root $checkfile);

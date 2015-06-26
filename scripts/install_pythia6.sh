@@ -36,6 +36,9 @@ then
   then
       cp libPythia6.dylib $install_prefix/lib
       cd  $install_prefix/lib
+      for file in $(ls libPythia6.dylib); do
+         install_name_tool -id $install_prefix/lib/$file $file
+      done
       create_links dylib so
   fi
 
