@@ -47,6 +47,9 @@ then
   if [ "$platform" = "macosx" ];
   then
     cd $install_prefix/lib
+    for file in $(ls libMille*.dylib); do
+      install_name_tool -id $install_prefix/lib/$file $file
+    done
     create_links dylib so
   fi
 

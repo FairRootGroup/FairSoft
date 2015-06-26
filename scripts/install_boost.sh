@@ -24,9 +24,6 @@ then
   then
     cd $SIMPATH/basics/boost
 
-    # patch file toavoid problems with newer versions of glibc
-    mypatch ../boost_glibc.patch | tee -a $logfile
-
     # boost only support up to 64 parallel processes
     tmp_nop=$number_of_processes
     if [ $number_of_processes -gt 64 ];then
@@ -73,6 +70,9 @@ then
     if [ "$platform" = "macosx" ];
     then
       cd  $install_prefix/lib
+      for file in $(ls libboost*.dylib); do
+         install_name_tool -id $install_prefix/lib/$file $file
+      done
       create_links dylib so
     fi
 

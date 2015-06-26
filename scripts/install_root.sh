@@ -46,6 +46,16 @@ fi
 if (not_there xrootd $install_prefix/bin/xrd);
 then
   build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
+
+  if [ "$platform" = "macosx" ];
+  then
+      cd $install_prefix/lib
+      for file in $(ls libXrd*.dylib); do
+         install_name_tool -id $install_prefix/lib/$file $file
+      done
+      create_links dylib so
+  fi
+
 fi
 
 if (not_there root $checkfile);
@@ -125,11 +135,6 @@ then
   # needed due to some problem with the ALICE HLT code
   mypatch ../root5_34_19_hlt.patch
 
-  # there is a bug in ROOT which destroy our parameter handling. This bug has to be fixed by us
-  # Please find a more detailed description at https://fairroot-redmine.gsi.de/issues/69
-
-  mypatch ../root_TKey.patch
-  
   . rootconfig.sh
 
   #This workaround  to run make in a loop is

@@ -90,25 +90,25 @@ directory of FairSoft.
 * cmake 2.8.12.2 (only installed if installed version is to old)
 * gtest  1.7.0
 * gsl 1.16
-* boost 1_54_0
+* boost 1_58_0
 * Pythia6 416
 * HepMC 2.06.09
 * Pythia8 183
 * Geant4 10.00.p02
 * xrootd 4.1.1
-* ROOT v5.34.25
+* ROOT v5.34.32 or v6.04.00
 * Pluto v5.37
 * Geant321+_vmc 1.15a
 * VGM v3-06
 * G4VMC 2.15 from patch branch
 * MillePede V04-01-01
-* ZeroMQ 3.2.4
-* Protocoll Buffers 2.5.0
-* Nano Message  0.4-beta
+* ZeroMQ 4.1.0
+* Protocoll Buffers 2.6.1
+* Nano Message  0.5-beta
 
 In case the python bindings are build the following additional packages will be installed
 
-* XercesC 3.1.1
+* XercesC 3.1.2
 * G4Py Version which comes with Geant4
 
 ##Installation of ALFA (Alice-FAIR software)
