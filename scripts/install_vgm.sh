@@ -44,7 +44,10 @@ then
   then
       cd $install_prefix/lib
       for file in $(ls lib*GM.dylib); do
-         install_name_tool -id $install_prefix/lib/$file $file
+        install_name_tool -id $install_prefix/lib/$file $file
+        for file1 in $(ls lib*GM.dylib); do
+          install_name_tool -change $file1 $install_prefix/lib/$file1 $file
+        done
       done
       create_links dylib so
   fi

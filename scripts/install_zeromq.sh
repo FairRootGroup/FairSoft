@@ -41,7 +41,7 @@ then
     fi
 fi
 
-cp $SIMPATH/basics/zmq.hpp  $install_prefix/include/zmq.hpp
+#cp $SIMPATH/basics/zmq.hpp  $install_prefix/include/zmq.hpp
 cd $SIMPATH
 
 return 1

@@ -30,20 +30,11 @@ then
   if [ "$platform" = "macosx" ];
   then
     cd $install_prefix/lib
-    for file in $(ls libvmc_*.dylib); do
-       install_name_tool -id $install_prefix/lib/$file $file
-    done
-    for file in $(ls libgeant4_*.dylib); do
-       install_name_tool -id $install_prefix/lib/$file $file
-    done
-    for file in $(ls libgeant4vmc.dylib); do
-       install_name_tool -id $install_prefix/lib/$file $file
-    done
-    for file in $(ls libg4root.dylib); do
-       install_name_tool -id $install_prefix/lib/$file $file
-    done
-    for file in $(ls libmtroot.dylib); do
-       install_name_tool -id $install_prefix/lib/$file $file
+    for file in $(ls libvmc_*.dylib libgeant4_*.dylib libgeant4vmc.dylib libg4root.dylib libmtroot.dylib); do
+      install_name_tool -id $install_prefix/lib/$file $file
+      for file1 in $(ls libvmc_*.dylib libgeant4_*.dylib libgeant4vmc.dylib libg4root.dylib libmtroot.dylib); do
+        install_name_tool -change $file1 $install_prefix/lib/$file1 $file
+      done
     done
     create_links dylib so
   fi
