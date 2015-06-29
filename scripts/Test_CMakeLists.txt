@@ -112,6 +112,8 @@ Find_Program(GIT_FOUND NAMES git)
 
 Find_Program(PATCH_FOUND NAMES patch) 
 
+Find_Package(OpenSSL)
+
 # If we build with clang on linux also icu and mesa has to be build
 # Mesa needs some additional programs, so we have to theck for them
 Set(SPECIAL_CLANG_LINUX_FOUND TRUE)
@@ -126,7 +128,7 @@ Endif()
 
 If(DOWNLOADER_FOUND AND SVN_FOUND AND GIT_FOUND AND PATCH_FOUND AND MAKE_FOUND
    AND UNPACKER_FOUND AND COMPLETE_X11_FOUND AND COMPLETE_OPENGL_FOUND
-   AND ALL_COMPILER_FOUND AND SPECIAL_CLANG_LINUX_FOUND)
+   AND ALL_COMPILER_FOUND AND OPENSSL_FOUND AND SPECIAL_CLANG_LINUX_FOUND)
   Message(STATUS "Found all necessary programs in PATH.")
 Else()
   If(NOT CMAKE_CXX_COMPILER)
@@ -157,6 +159,11 @@ Else()
     Message(STATUS "X11_Xext_INCLUDE_PATH: ${X11_Xext_INCLUDE_PATH}")
     Message(STATUS "X11_Xext_LIB: ${X11_Xext_LIB}")
     Message(STATUS "libXext and Xext headers must be installed.")
+  EndIf()
+  If(NOT OPENSSL_FOUND)
+    Message(STATUS "OPENSSL_INCLUDE_DIR: ${OPENSSL_INCLUDE_DIR}")
+    Message(STATUS "OPENSSL_LIBRARIES: ${OPENSSL_LIBRARIES}")
+    Message(STATUS "libssl and ssl headers must be installed.")
   EndIf()
   
   if (NOT Build_batch)
