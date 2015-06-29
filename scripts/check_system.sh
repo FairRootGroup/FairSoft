@@ -413,7 +413,8 @@ fi
 hascxx11=$(grep HasCxx11 $SIMPATH/test/configure | cut -f2 -d:)
 haslibcxx=$(grep HasLibCxx $SIMPATH/test/configure | cut -f2 -d:)
 _hascurl=$(grep HasCurl $SIMPATH/test/configure | cut -f2 -d:)
-
+_cxxflags=$(grep FAIRSOFT_CXX_FLAGS $SIMPATH/test/configure | cut -f2 -d:)
+isMacOsx108=$(grep isMacOsx108 $SIMPATH/test/configure | cut -f2 -d:)
 
 if [ ${_hascurl} ];
 then
@@ -439,6 +440,11 @@ fi
 if [ $haslibcxx ];
 then
   export CXXFLAGS="${CXXFLAGS} -stdlib=libc++"
+fi
+
+if [ ${isMacOsx108} ];
+then
+  export CXXFLAGS="${CFLAGS} ${_cxxflags}"
 fi
 
 export FC=$(grep FortranCompiler $SIMPATH/test/configure | cut -f2 -d:)
