@@ -238,7 +238,7 @@ If(CMAKE_SYSTEM_NAME MATCHES Darwin)
     Message(STATUS "Current compiler has problems with libc++ support. Switch it off and build FairSoft using c++98.")
     UnSet(HAS_LIBCXX CACHE)
     UnSet(HAS_CXX11 CACHE)
-    Set(FAIRSOFT_CXX_FLAGS ${FAIRSOFT_CXX_FLAGS_BAK})
+    Set(FAIRSOFT_CXX_FLAGS "${FAIRSOFT_CXX_FLAGS_BAK} -std=c++98 -stdlib=libstdc++")
   EndIf()
 EndIf()
 
