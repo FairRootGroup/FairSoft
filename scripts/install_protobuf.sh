@@ -24,6 +24,10 @@ if (not_there protobuf $checkfile);
 then
     cd $SIMPATH/basics/protobuf
 
+    if [ $isMacOsx108 ]; then
+      export LIBS="-lc++"
+    fi
+
     ./configure --prefix=$install_prefix
 
     make -j$number_of_processes
@@ -35,6 +39,7 @@ then
     check_success protobuf $checkfile
     check=$?
 
+    unset LIBS
 fi
 
 cd $SIMPATH

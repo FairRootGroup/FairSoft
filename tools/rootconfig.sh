@@ -35,6 +35,10 @@
      fi
 
    fi
+
+   if [ $isMacOsx108 ]; then
+     XROOTD="-Dxrootd=OFF"
+   fi
    #######################################################
 
    OPENGL=" "
