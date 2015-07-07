@@ -102,8 +102,8 @@ then
     mypatch ../root6_xrootd.patch
   fi
   
-  if [ "$build_root6" = "yes" ]; then
-    mypatch ../ root5_34_find_xrootd.patch   
+  if [ "$build_root6" = "no" ]; then
+    mypatch ../root5_34_find_xrootd.patch
   fi
     
   cd build_for_fair/
