@@ -58,16 +58,6 @@ then
   cd $SIMPATH/tools/root
   mkdir build_for_fair
 
-  # special patch for Fedora 16 on 32bit
-  # This should go into root
-  cat /etc/issue | grep "Fedora release 16 (Verne)"
-  result=$?
-  if [ "$result" = "0" ];then
-    if [ "$system" = "32bit" ]; then
-      echo "*** Applying patch needed for Fedora 16 32bit " | tee -a $logfile
-      mypatch ../root_fedora16_32bit.patch
-    fi
-  fi
   if [ "$debug" = "yes" ];
   then
     echo "*** Building ROOT with debug information"  | tee -a $logfile
@@ -89,28 +79,7 @@ then
     echo "Copied rootconfig.sh ......................" | tee -a $logfile
   fi
   echo "Configure Root .........................................." | tee -a $logfile
-  if [ "$platform" = "solaris" ];
-  then
-    mysed "awk" "gawk" configure
-    chmod a+x configure
-    cp ../makelib.sh build/unix
-    if [ "$compiler" = "gcc" ];
-    then
-      cp ../Makefile.solarisgcc config
-      if [ "$system" = "64bit" ];
-      then
-        mysed '-fPIC' '-fPIC -m64' config/Makefile.solarisgcc
-        mysed '$(EXTRA_LDFLAGS)' '$(EXTRA_LDFLAGS) -m64' config/Makefile.solarisgcc
-     fi
-    else
-      cp ../Makefile.solarisCC5 config
-      if [ "$system" = "64bit" ];
-      then
-        mysed '-KPIC' '-KPIC -m64' config/Makefile.solarisCC5
-        mysed '$(EXTRA_LDFLAGS)' '$(EXTRA_LDFLAGS) -m64' config/Makefile.solarisCC5
-      fi
-    fi
-  fi
+
   # actualy one should check for mac os x 10.8
   if [ "$platform" = "macosx" -a "$compiler" = "Clang" ];
   then
@@ -129,8 +98,14 @@ then
   mypatch ../root5_34_19_hlt.patch
 
   # needed to compile root6 with newer versions of xrootd
-  mypatch ../root6_xrootd.patch
-
+  if [ "$build_root6" = "yes" ]; then
+    mypatch ../root6_xrootd.patch
+  fi
+  
+  if [ "$build_root6" = "yes" ]; then
+    mypatch ../ root5_34_find_xrootd.patch   
+  fi
+    
   cd build_for_fair/
   . rootconfig.sh
 
