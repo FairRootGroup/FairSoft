@@ -114,9 +114,11 @@ then
     mypatch ../root6_00_find_xrootd.patch
     mypatch ../root6_lzma.patch
   fi
+
   
   if [ "$build_root6" = "no" ]; then
     mypatch ../root5_34_find_xrootd.patch
+    mypatch ../root5_lzma.patch
   fi
     
   cd build_for_fair/
