@@ -111,6 +111,8 @@ then
   # needed to compile root6 with newer versions of xrootd
   if [ "$build_root6" = "yes" ]; then
     mypatch ../root6_xrootd.patch
+    mypatch ../root6_00_find_xrootd.patch
+    mypatch ../root6_lzma.patch
   fi
   
   if [ "$build_root6" = "no" ]; then
