@@ -28,7 +28,7 @@ then
     then
       git checkout 6c5ee53c9df9a5f50ae2b2d7b1fda680342e28b4
     fi
-  fi  
+  fi
 fi
 
 install_prefix=$SIMPATH_INSTALL
@@ -115,12 +115,12 @@ then
     mypatch ../root6_lzma.patch
   fi
 
-  
+
   if [ "$build_root6" = "no" ]; then
     mypatch ../root5_34_find_xrootd.patch
     mypatch ../root5_lzma.patch
   fi
-    
+
   cd build_for_fair/
   . rootconfig.sh
 
@@ -203,7 +203,7 @@ then
      ln -s ../libVc.a
      echo "---link created --- "
    else
-     echo "libVc.a not found in lib dirctory " 
+     echo "libVc.a not found in lib dirctory "
    fi
    #####################################
 

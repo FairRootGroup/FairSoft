@@ -3,7 +3,7 @@ flavors. This dependencies are needed to be able to install FairSoft.
 
 The following programs/compiler are needed:
 
-cmake gcc g++ gfortran make patch sed curl 
+cmake gcc g++ gfortran make patch sed curl
 bzip2 gzip unzip tar subversion git
 
 The following development packages are needed
@@ -57,7 +57,7 @@ yum install cmake gcc gcc-c++ gcc-gfortran make patch sed \
   subversion git flex bison imake redhat-lsb-core \
   python-devel libxml2-devel wget openssl-devel
 
-Fedora22 
+Fedora22
 
 dnf install cmake gcc gcc-c++ gcc-gfortran make patch sed \
   libX11-devel libXft-devel libXpm-devel libXext-devel \

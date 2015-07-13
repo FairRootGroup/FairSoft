@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #
 # AlFa package installation script
 # m.al-turany@gsi.de, Sept. 2014

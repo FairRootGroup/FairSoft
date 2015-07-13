@@ -2,7 +2,7 @@
 # and the existence of the new standard template library libc++
 
 # The script is working with cmake 2.6.4 and 2.8.10,
-# so it should work also with all versions in between 
+# so it should work also with all versions in between
 CMake_Minimum_Required(VERSION 2.6 FATAL_ERROR)
 
 Project(TestEnvironment C CXX)
@@ -26,7 +26,7 @@ If( fc_needed )
         Set(ALL_COMPILER_FOUND TRUE)
       Else()
         Message(WARNING "Found GCC Version < 4.8")
-        Message(WARNING "At least GCC 4.8 is needed.") 
+        Message(WARNING "At least GCC 4.8 is needed.")
       EndIf()
     ElseIf("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
       Execute_process(COMMAND ${CMAKE_C_COMPILER} --version
@@ -47,7 +47,7 @@ If( fc_needed )
         Set(ALL_COMPILER_FOUND TRUE)
       Else()
         Message(WARNING "Found Clang Version < 3.4")
-        Message(WARNING "At least Clang 3.4 is needed.") 
+        Message(WARNING "At least Clang 3.4 is needed.")
       EndIf()
     EndIf()
     Get_Filename_Component(_FC ${CMAKE_Fortran_COMPILER} NAME)
@@ -75,7 +75,7 @@ if (NOT Build_batch)
 
   #Check for OpenGL and GLU installation
   find_package(OpenGL)
- 
+
   If(OPENGL_FOUND AND OPENGL_GLU_FOUND)
     Message(STATUS "Found all necessary OpenGL features.")
     Set(COMPLETE_OPENGL_FOUND TRUE)
@@ -87,7 +87,7 @@ EndIf()
 
 #---Check for needed programs
 
-Find_Program(WGET_FOUND NAMES wget) 
+Find_Program(WGET_FOUND NAMES wget)
 Find_Program(CURL_FOUND NAMES curl)
 If(WGET_FOUND OR CURL_FOUND)
   Set(DOWNLOADER_FOUND TRUE)
@@ -96,21 +96,21 @@ If(WGET_FOUND OR CURL_FOUND)
   EndIf()
 EndIf()
 
-Find_Program(MAKE_FOUND NAMES make) 
+Find_Program(MAKE_FOUND NAMES make)
 
-Find_Program(BZIP2_FOUND NAMES bzip2) 
-Find_Program(GZIP_FOUND NAMES gzip) 
-Find_Program(UNZIP_FOUND NAMES unzip) 
-Find_Program(TAR_FOUND NAMES tar)     
+Find_Program(BZIP2_FOUND NAMES bzip2)
+Find_Program(GZIP_FOUND NAMES gzip)
+Find_Program(UNZIP_FOUND NAMES unzip)
+Find_Program(TAR_FOUND NAMES tar)
 
 If(TAR_FOUND AND UNZIP_FOUND AND GZIP_FOUND AND BZIP2_FOUND)
-  Set(UNPACKER_FOUND TRUE)  
+  Set(UNPACKER_FOUND TRUE)
 Endif()
 
-Find_Program(SVN_FOUND NAMES svn) 
-Find_Program(GIT_FOUND NAMES git) 
+Find_Program(SVN_FOUND NAMES svn)
+Find_Program(GIT_FOUND NAMES git)
 
-Find_Program(PATCH_FOUND NAMES patch) 
+Find_Program(PATCH_FOUND NAMES patch)
 
 Find_Package(OpenSSL)
 
@@ -118,11 +118,11 @@ Find_Package(OpenSSL)
 # Mesa needs some additional programs, so we have to theck for them
 Set(SPECIAL_CLANG_LINUX_FOUND TRUE)
 If(CMAKE_CXX_COMPILER MATCHES "clang\\+\\+" AND CMAKE_SYSTEM_NAME MATCHES "Linux")
-  Find_Program(MAKEDEP_FOUND NAMES makedepend) 
-  Find_Program(FLEX_FOUND NAMES flex) 
-  Find_Program(BISON_FOUND NAMES bison) 
+  Find_Program(MAKEDEP_FOUND NAMES makedepend)
+  Find_Program(FLEX_FOUND NAMES flex)
+  Find_Program(BISON_FOUND NAMES bison)
   If(NOT MAKEDEP_FOUND OR NOT FLEX_FOUND OR NOT BISON_FOUND)
-    Set(SPECIAL_CLANG_LINUX_FOUND FALSE)  
+    Set(SPECIAL_CLANG_LINUX_FOUND FALSE)
   Endif()
 Endif()
 
@@ -165,9 +165,9 @@ Else()
     Message(STATUS "OPENSSL_LIBRARIES: ${OPENSSL_LIBRARIES}")
     Message(STATUS "libssl and ssl headers must be installed.")
   EndIf()
-  
+
   if (NOT Build_batch)
-    If(NOT OPENGL_FOUND) 
+    If(NOT OPENGL_FOUND)
       Message(STATUS "OpenGL must be installed ")
     EndIf()
     If(NOT OPENGL_GLU_FOUND)
@@ -190,8 +190,8 @@ Else()
   If(NOT UNZIP_FOUND)
     Message(STATUS "unzip is not found in PATH. You need to install it")
   EndIf()
-  If(NOT TAR_FOUND)  
-    Message(STATUS "tar is not found in PATH. You need to install it")  
+  If(NOT TAR_FOUND)
+    Message(STATUS "tar is not found in PATH. You need to install it")
   EndIf()
   If(NOT SVN_FOUND)
     Message(STATUS "svn is not found in PATH. You need to install it")

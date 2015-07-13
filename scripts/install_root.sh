@@ -212,7 +212,7 @@ then
      ln -s ../libVc.a
      echo "---link created --- "
    else
-     echo "libVc.a not found in lib dirctory " 
+     echo "libVc.a not found in lib dirctory "
    fi
   #####################################
 
