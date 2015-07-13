@@ -257,6 +257,8 @@ If(Build_Python)
   EndIf()
 EndIf()
 
+Set(ROOT_VERSION $ENV{Root_Version})
+
 Configure_File($ENV{SIMPATH}/test/configure.in $ENV{SIMPATH}/test/configure @ONLY)
 Configure_File($ENV{SIMPATH}/scripts/fairsoft-config.in $ENV{SIMPATH_INSTALL}/bin/fairsoft-config @ONLY)
 
