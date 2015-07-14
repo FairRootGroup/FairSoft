@@ -1,0 +1,25 @@
+--- cmake/Geant3BuildLibrary.cmake
++++ cmake/Geant3BuildLibrary.cmake
+@@ -26,6 +26,7 @@ include_directories(
+   ${PROJECT_SOURCE_DIR}
+   ${PROJECT_SOURCE_DIR}/minicern
+   ${PROJECT_SOURCE_DIR}/TGeant3 
++  ${CMAKE_INSTALL_PREFIX}/include/TGeant3
+   ${CMAKE_CURRENT_BINARY_DIR})
+ 
+ #-------------------------------------------------------------------------------
+--- cmake/Geant3BuildProject.cmake
++++ cmake/Geant3BuildProject.cmake
+@@ -40,6 +40,12 @@ install(DIRECTORY
+   COMPONENT Development
+ )
+ 
++# Install the data directory which is needed at runtime
++install(DIRECTORY
++  ${PROJECT_SOURCE_DIR}/data
++  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/geant3
++)
++
+ #
+ # Install the Geant3Config, Geant3ConfigVersion
+ #

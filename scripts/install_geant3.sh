@@ -39,6 +39,10 @@ then
   fi
   cp ../chetc.dat data
 
+  if [ "$build_root6" = "yes" ]; then
+    mypatch ../geant3_root6.patch
+  fi  
+
   mkdir build
   cd build
   cmake .. -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
@@ -46,10 +50,6 @@ then
 
   make -j$number_of_processes
   make install
-
-  # copy all the data files needed at runtim
-  mkdir -p $install_prefix/share/geant3
-  cp -r $SIMPATH/transport/geant3/data $install_prefix/share/geant3
 
   if [ "$platform" = "macosx" ];
   then
