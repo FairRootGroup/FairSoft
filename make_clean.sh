@@ -404,6 +404,7 @@ clean_geant3() {
         rm -f $SIMPATH_INSTALL/lib/libgeant321*
         rm -rf $SIMPATH_INSTALL/include/TGeant3
         rm -rf $SIMPATH_INSTALL/lib/Geant3-2.0.0
+        rm -rf $SIMPATH_INSTALL/share/geant3
       fi
     fi
     geant3_cleaned=true

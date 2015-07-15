@@ -17,6 +17,8 @@ checkfile=$install_prefix/lib/libgeant321.so
 if (not_there Geant3 $checkfile);
 then
 
+  mkdir -p $install_prefix/include/TGeant3
+
   cd $SIMPATH/transport
   cp gdecay.F geant3/gphys
   cp gdalet.F geant3/gphys
