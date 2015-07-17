@@ -111,7 +111,7 @@ then
   export Root_Version=6
 elif [ "$build_root6" = "no" ]
 then
-  pluto=0
+  pluto=1
   export Root_Version=5
 fi
 
