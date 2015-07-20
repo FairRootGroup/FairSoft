@@ -49,8 +49,8 @@ fi
 if (not_there xrootd $install_prefix/bin/xrd);
 then
   cd $SIMPATH/tools/root
+  mypatch ../xrootd_cmake.patch
   build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
-
   if [ "$platform" = "macosx" ];
   then
       cd $install_prefix/lib

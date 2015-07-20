@@ -31,10 +31,10 @@ then
   cmake .. -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL -DGeant4VMC_USE_VGM=ON \
   	-DGeant4VMC_USE_GEANT4_UI=Off -DGeant4VMC_USE_GEANT4_VIS=Off \
   	-DGeant4VMC_USE_GEANT4_G3TOG4=On -DGeant4_DIR=$SIMPATH_INSTALL \
-  	-DROOT_DIR==$SIMPATH_INSTALL -DVGM_DIR=$SIMPATH_INSTALL/lib/$VGMDIR
+  	-DROOT_DIR=$SIMPATH_INSTALL -DVGM_DIR=$SIMPATH_INSTALL/lib/$VGMDIR \
+        -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC
 
-  make -j$number_of_processes
-  make install
+  make install -j$number_of_processes
 
   if [ "$platform" = "macosx" ];
   then

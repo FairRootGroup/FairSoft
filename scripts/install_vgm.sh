@@ -35,9 +35,9 @@ then
   # located. In this file all needed variables are defined.
   cmake .. -DGeant4_DIR=$SIMPATH_INSTALL/lib/$GEANT4VERSIONp \
   	-DROOT_DIR=$SIMPATH_INSTALL -DWITH_TEST=OFF \
-   	-DCMAKE_INSTALL_PREFIX=$install_prefix
+   	-DCMAKE_INSTALL_PREFIX=$install_prefix \
+   	-DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC
 
-  make -j$number_of_processes
   make install -j$number_of_processes
 
   if [ "$platform" = "macosx" ];

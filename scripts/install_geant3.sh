@@ -48,10 +48,10 @@ then
   mkdir build
   cd build
   cmake .. -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
+           -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
            -DROOT_DIR=$SIMPATH_INSTALL
 
-  make -j$number_of_processes
-  make install
+  make install -j$number_of_processes
 
   if [ "$platform" = "macosx" ];
   then
