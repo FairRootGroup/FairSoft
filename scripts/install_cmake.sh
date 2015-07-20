@@ -70,7 +70,6 @@ then
   install_prefix=$SIMPATH_INSTALL
 
   checkfile=$install_prefix/bin/cmake
-  export PATH=$install_prefix/bin:$PATH:
 
   if (not_there CMake $checkfile)
   then
@@ -79,12 +78,18 @@ then
     ln -s $CMAKEVERSION cmake
     cd cmake
     ./bootstrap --prefix=$install_prefix --docdir=/share/doc/CMake --mandir=/share/man
+    # Build CMake curl version with openssl support
+    # needed for upload to CDash server
+    mysed "CMAKE_USE_OPENSSL:BOOL=OFF" "CMAKE_USE_OPENSSL:BOOL=ON" CMakeCache.txt
     $MAKE_command -j $number_of_processes
     $MAKE_command install -j $number_of_processes
     check_success CMake $checkfile
 
     check=$?
   fi
+
+  export PATH=$install_prefix/bin:$PATH:
+
 fi
 
 if [ "$check" = "1" ];
