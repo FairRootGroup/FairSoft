@@ -88,13 +88,16 @@ EndIf()
 #---Check for needed programs
 
 Find_Program(WGET_FOUND NAMES wget)
-Find_Program(CURL_FOUND NAMES curl)
-If(WGET_FOUND OR CURL_FOUND)
+Find_Program(CURL_EXE_FOUND NAMES curl)
+If(WGET_FOUND OR CURL_EXE_FOUND)
   Set(DOWNLOADER_FOUND TRUE)
-  If(CURL_FOUND)
+  If(CURL_EXE_FOUND)
     Set(HAS_CURL TRUE)
   EndIf()
 EndIf()
+
+# Need the library and headers for cmake
+Find_Package(CURL)
 
 Find_Program(MAKE_FOUND NAMES make)
 
@@ -126,7 +129,7 @@ If(CMAKE_CXX_COMPILER MATCHES "clang\\+\\+" AND CMAKE_SYSTEM_NAME MATCHES "Linux
   Endif()
 Endif()
 
-If(DOWNLOADER_FOUND AND SVN_FOUND AND GIT_FOUND AND PATCH_FOUND AND MAKE_FOUND
+If(DOWNLOADER_FOUND AND CURL_FOUND AND SVN_FOUND AND GIT_FOUND AND PATCH_FOUND AND MAKE_FOUND
    AND UNPACKER_FOUND AND COMPLETE_X11_FOUND AND COMPLETE_OPENGL_FOUND
    AND ALL_COMPILER_FOUND AND OPENSSL_FOUND AND SPECIAL_CLANG_LINUX_FOUND)
   Message(STATUS "Found all necessary programs in PATH.")
@@ -175,6 +178,9 @@ Else()
     EndIf()
   EndIf()
 
+  If(NOT CURL_FOUND)
+    Message(STATUS "libcurl and curl headers must be installed")
+  EndIF()
   If(NOT DOWNLOADER_FOUND)
     Message(STATUS "Neither wget nor curl found in PATH. You need to install one of them")
   EndIf()
