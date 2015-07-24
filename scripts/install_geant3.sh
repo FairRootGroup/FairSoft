@@ -17,6 +17,14 @@ checkfile=$install_prefix/lib/libgeant321.so
 if (not_there Geant3 $checkfile);
 then
 
+  echo "Switching off optimization when compiling Geant3. Optimization introduces some errors with newer gfortran versions." | tee -a $logfile
+  CXXFLAGS_BAK=$CXXFLAGS
+  CFLAGS_BAK=$CFLAGS
+  FFLAGS_BAK=$FFLAGS
+  export CXXFLAGS="-g -O0"
+  export CFLAGS="-g -O0"
+  export FFLAGS="-g -O0"
+
   mkdir -p $install_prefix/include/TGeant3
 
   cd $SIMPATH/transport
@@ -66,6 +74,10 @@ then
 
   check_success Geant3 $checkfile
   check=$?
+
+  export CXXFLAGS=$CXXFLAGS_BAK
+  export CFLAGS=$CFLAGS_BAK
+  export FFLAGS=$FFLAGS_BAK
 
 fi
 
