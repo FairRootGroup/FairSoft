@@ -397,7 +397,7 @@ cp $SIMPATH/scripts/Test_CMakeLists.txt CMakeLists.txt
 cp $SIMPATH/scripts/configure.in .
 
 cd build
-cmake ..
+cmake .. -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC
 ret_val=$?
 
 if [ $ret_val -ne 0 ];
