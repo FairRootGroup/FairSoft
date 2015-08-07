@@ -124,33 +124,7 @@ then
   cd build_for_fair/
   . rootconfig.sh
 
-  #This workaround  to run make in a loop is
-  #needed because of problems with the intel compiler.
-  #Due to some internal problems of icc (my interpretation)
-  #there are crashes of the compilation process. After
-  #restarting the make process the compilation passes the
-  #problematic file and may crash at a differnt point.
-  #If there are more than 10 crashes the script is stoped
-
-  if [ "$compiler" = "intel" ];
-  then
-    counter=0
-    until [ -e $checkfile ];
-    do
-      counter=$[$counter+1]
-      touch run_$counter
-      if [ $counter -gt 10 ];
-      then
-        echo "There is a problem compiling root"  | tee -a $logfile
-        echo "This is the " $counter " try to compile"  | tee -a $logfile
-        echo "Stop the script now"  | tee -a $logfile
-        exit 1
-      fi
-      $MAKE_command -j$number_of_processes
-    done
-  else
-    $MAKE_command -j$number_of_processes
-  fi
+  $MAKE_command -j$number_of_processes
 
   cd $SIMPATH/tools/root/etc/vmc
 
