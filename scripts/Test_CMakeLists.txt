@@ -124,6 +124,12 @@ Find_Program(GIT_FOUND NAMES git)
 Find_Program(PATCH_FOUND NAMES patch)
 
 Find_Package(OpenSSL)
+# For Mac OSX 10.11 Apple remove the ssl header files
+# If OpenSSL is not found search for ssl in brew installation path
+If(NOT OPENSSL_FOUND)
+ Set(OPENSSL_ROOT_DIR /usr/local)
+ Find_package(OpenSSL)
+EndIf()
 
 # If we build with clang on linux also icu and mesa has to be build
 # Mesa needs some additional programs, so we have to theck for them
