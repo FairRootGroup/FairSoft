@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export CMAKE_LOCATION="http://www.cmake.org/files/v3.1/"
+export CMAKE_LOCATION="http://www.cmake.org/files/v3.3/"
 export CMAKEVERSION_REQUIRED=cmake-3.1.0
-export CMAKEVERSION=cmake-3.1.0
+export CMAKEVERSION=cmake-3.3.2
 
 export GTEST_LOCATION="http://googletest.googlecode.com/files/"
 export GTESTVERSION=gtest-1.7.0
@@ -13,8 +13,8 @@ export GSLVERSION=gsl-1.16
 export ICU_LOCATION="http://download.icu-project.org/files/icu4c/53.1/"
 export ICUVERSION=icu4c-53_1
 
-export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.58.0/"
-export BOOSTVERSION=boost_1_58_0
+export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.59.0/"
+export BOOSTVERSION=boost_1_59_0
 
 export PYTHIA6_LOCATION="ftp://root.cern.ch/root/"
 export PYTHIA6VERSION=pythia6
@@ -23,7 +23,7 @@ export HEPMC_LOCATION="http://lcgapp.cern.ch/project/simu/HepMC/download/"
 export HEPMCVERSION=2.06.09
 
 export PYTHIA8_LOCATION="http://home.thep.lu.se/~torbjorn/pythia8/"
-export PYTHIA8VERSION=pythia8183
+export PYTHIA8VERSION=pythia8212
 
 export XERCESC_LOCATION="http://mirror.serversupportforum.de/apache/xerces/c/3/sources/"
 export XERCESCVERSION=3.1.2
@@ -32,16 +32,16 @@ export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10
 export MESAVERSION=MesaLib-7.10.3
 
 export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
-export GEANT4VERSION=geant4.10.01
-export GEANT4VERSIONp=Geant4-10.1.0
+export GEANT4VERSION=geant4.10.01.p02
+export GEANT4VERSIONp=Geant4-10.1.2
 
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 if [ "$build_root6" = "yes" ]; then
   # Root v6.04.00
-  export ROOTVERSION=v6-04-00
+  export ROOTVERSION=v6-04-02
 else
   # Root v5.34.32
-  export ROOTVERSION=v5-34-32
+  export ROOTVERSION=v5-34-34
 fi
 
 export XROOTDVERSION=4.1.1
@@ -53,24 +53,26 @@ export GEANT3_LOCATION="http://root.cern.ch/git/geant3.git"
 export GEANT3BRANCH=v2-0
 
 export VGM_LOCATION="http://svn.code.sf.net/p/vgm/code/tags/"
-export VGMVERSION=v4-2
-export VGMDIR=VGM-4.2.0
+export VGMVERSION=v4-3
+export VGMDIR=VGM-4.3.0
 
 export GEANT4VMC_LOCATION="http://root.cern.ch/git/geant4_vmc.git"
-export GEANT4VMCBRANCH=v3-1-p1
+export GEANT4VMCBRANCH=v3-2
 
 export MILLEPEDE_LOCATION="http://svnsrv.desy.de/public/MillepedeII/tags/"
-export MILLEPEDE_VERSION=V04-01-01
+export MILLEPEDE_VERSION=V04-03-01
 
 export ZEROMQ_LOCATION="http://download.zeromq.org/"
-export ZEROMQVERSION=4.1.0-rc1
-export ZEROMQDIR=4.1.0
+#export ZEROMQVERSION=4.1.0-rc1
+#export ZEROMQDIR=4.1.0
+export ZEROMQVERSION=4.1.3
+export ZEROMQDIR=4.1.3
 
 export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v2.6.1"
 export PROTOBUF_VERSION=protobuf-2.6.1
 
 export NANOMSG_LOCATION="http://download.nanomsg.org/"
-export NANOMSG_VERSION=nanomsg-0.5-beta
+export NANOMSG_VERSION=nanomsg-0.6-beta
 
 export G4ABLA_VERSION=G4ABLA3.0
 export G4ABLA_TAR=G4ABLA3.0.tar.gz
