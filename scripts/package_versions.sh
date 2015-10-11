@@ -62,6 +62,9 @@ export GEANT4VMCBRANCH=v3-2
 export MILLEPEDE_LOCATION="http://svnsrv.desy.de/public/MillepedeII/tags/"
 export MILLEPEDE_VERSION=V04-03-01
 
+export SODIUM_LOCATION="https://github.com/jedisct1/libsodium"
+export SODIUMBRANCH=1.0.3
+
 export ZEROMQ_LOCATION="http://download.zeromq.org/"
 #export ZEROMQVERSION=4.1.0-rc1
 #export ZEROMQDIR=4.1.0
@@ -71,7 +74,8 @@ export ZEROMQDIR=4.1.3
 export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v2.6.1"
 export PROTOBUF_VERSION=protobuf-2.6.1
 
-export NANOMSG_LOCATION="http://download.nanomsg.org/"
+export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/releases/download/0.6-beta/"
+#export NANOMSG_LOCATION="http://download.nanomsg.org/"
 export NANOMSG_VERSION=nanomsg-0.6-beta
 
 export G4ABLA_VERSION=G4ABLA3.0
