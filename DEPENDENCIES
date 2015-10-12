@@ -28,7 +28,8 @@ apt-get install  cmake cmake-data g++ gcc gfortran \
   libxext-dev libxpm-dev libxmu-dev libglu1-mesa-dev \
   libgl1-mesa-dev ncurses-dev curl bzip2 gzip unzip tar \
   subversion git xutils-dev flex bison lsb-release \
-  python-dev libc6-dev-i386 libxml2-dev wget libssl-dev
+  python-dev libc6-dev-i386 libxml2-dev wget libssl-dev \
+  libcurl-dev
 
 Debian, Ubuntu and other Debian based systems (32bit).
 
