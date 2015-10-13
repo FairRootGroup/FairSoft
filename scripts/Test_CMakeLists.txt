@@ -143,8 +143,18 @@ If(CMAKE_CXX_COMPILER MATCHES "clang\\+\\+" AND CMAKE_SYSTEM_NAME MATCHES "Linux
   Endif()
 Endif()
 
+Find_Program(AUTOCONF_FOUND NAMES autoconf)
+Find_Program(AUTOMAKE_FOUND NAMES automake)
+Find_Program(LIBTOOLIZE_FOUND NAMES libtoolize glibtoolize)
+Find_Program(ACLOCAL_FOUND NAMES aclocal)
+
+If(AUTOCONF_FOUND AND AUTOMAKE_FOUND AND LIBTOOLIZE_FOUND AND ACLOCAL_FOUND)
+  Set(AUTOTOOLS_FOUND TRUE)
+Endif()
+
+
 If(DOWNLOADER_FOUND AND CURL_FOUND AND SVN_FOUND AND GIT_FOUND AND PATCH_FOUND AND MAKE_FOUND
-   AND UNPACKER_FOUND AND COMPLETE_X11_FOUND AND COMPLETE_OPENGL_FOUND
+   AND UNPACKER_FOUND AND COMPLETE_X11_FOUND AND COMPLETE_OPENGL_FOUND AND AUTOTOOLS_FOUND
    AND ALL_COMPILER_FOUND AND OPENSSL_FOUND AND SPECIAL_CLANG_LINUX_FOUND)
   Message(STATUS "Found all necessary programs in PATH.")
 Else()
@@ -222,7 +232,19 @@ Else()
   If(NOT PATCH_FOUND)
     Message(STATUS "patch is not found in PATH. You need to install it")
   EndIf()
-  If(NOT SPECIAL_CLANG_LINUX_FOUND )
+ If(NOT AUTOMAKE_FOUND)
+    Message(STATUS "automake is not found in PATH. You need to install it")
+  EndIf()
+  If(NOT AUTOCONF_FOUND)
+    Message(STATUS "autoconf is not found in PATH. You need to install it")
+  EndIf()
+  If(NOT LIBTOOLIZE_FOUND)
+    Message(STATUS "libtoolize is not found in PATH. You need to install it")
+  EndIf()
+  If(NOT ACLOCAL_FOUND)
+    Message(STATUS "aclocal is not found in PATH. You need to install it")
+  EndIf()
+  If( SPECIAL_LINUX_CLANG_FOUND )
     If(NOT MAKEDEP_FOUND)
       Message(STATUS "makedep is not found in PATH. You need to install it")
     EndIf()
