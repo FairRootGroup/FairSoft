@@ -28,7 +28,8 @@ apt-get install  cmake cmake-data g++ gcc gfortran \
   libxext-dev libxpm-dev libxmu-dev libglu1-mesa-dev \
   libgl1-mesa-dev ncurses-dev curl bzip2 gzip unzip tar \
   subversion git xutils-dev flex bison lsb-release \
-  python-dev libc6-dev-i386 libxml2-dev wget libssl-dev libcurl3-dev
+  python-dev libc6-dev-i386 libxml2-dev wget libssl-dev \
+  libcurl4-openssl-dev automake autoconf libtool
 
 Debian, Ubuntu and other Debian based systems (32bit).
 
@@ -37,7 +38,8 @@ apt-get install  cmake cmake-data g++ gcc gfortran \
   libxext-dev libxpm-dev libxmu-dev libglu1-mesa-dev \
   libgl1-mesa-dev ncurses-dev curl bzip2 gzip unzip tar \
   subversion git xutils-dev flex bison lsb-release \
-  python-dev libxml2-dev wget libssl-dev libcurl3-dev
+  python-dev libxml2-dev wget libssl-dev \
+  libcurl4-openssl-dev automake autoconf libtool
 
 Suse, OpenSuse and other Suse based systems
 
