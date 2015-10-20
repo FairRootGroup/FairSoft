@@ -16,8 +16,10 @@ export ICUVERSION=icu4c-53_1
 export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.54.0/"
 export BOOSTVERSION=boost_1_54_0
 
-export PYTHIA6_LOCATION="ftp://root.cern.ch/root/"
-export PYTHIA6VERSION=pythia6
+#export PYTHIA6_LOCATION="ftp://root.cern.ch/root/"
+#export PYTHIA6VERSION=pythia6
+export PYTHIA6_LOCATION="http://www.hepforge.org/archive/pythia6/"
+export PYTHIA6VERSION=pythia-6.4.28
 
 export HEPMC_LOCATION="http://lcgapp.cern.ch/project/simu/HepMC/download/"
 export HEPMCVERSION=2.06.09
@@ -37,10 +39,8 @@ export MESAVERSION=MesaLib-7.10.3
 
 #export ROOT_LOCATION="https://github.com/root-mirror/root/"
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
-# Root v5.34.25
-export ROOTVERSION=7f61de23d790479b053e47f718affb2725de9ab1
-# Root v5.34.24
-#export ROOTVERSION=3e7673472eedd975f9b5fcc1ced44ddbd8db476d
+# Root v5.34.34
+export ROOTVERSION=86269c0b8a0e1fc499cbe900474dce4ba22c5f40
 
 export XROOTDVERSION=4.1.1
 

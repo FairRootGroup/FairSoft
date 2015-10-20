@@ -1,16 +1,21 @@
 
 #!/bin/bash
 
-
 if [ ! -d  $SIMPATH/generators/pythia6 ];
 then 
   cd $SIMPATH/generators
-  if [ ! -e $PYTHIA6VERSION.tar.gz ];
+  if [ ! -e pythia6.tar.gz ];
   then
     echo "*** Downloading pythia6 sources ***"
-    download_file $PYTHIA6_LOCATION/$PYTHIA6VERSION.tar.gz
+    download_file ftp://root.cern.ch/root/pythia6.tar.gz
+    download_file $PYTHIA6_LOCATION/$PYTHIA6VERSION.f.gz
   fi
-  untar pythia6 $PYTHIA6VERSION.tar.gz
+  untar pythia6 pythia6.tar.gz
+  gunzip $PYTHIA6VERSION.f.gz
+  mysed "SUBROUTINE PDFSET" "SUBROUTINE PDFSETX" $PYTHIA6VERSION.f
+  mysed "SUBROUTINE STRUCTM" "SUBROUTINE STRUCTMX" $PYTHIA6VERSION.f
+  mysed "SUBROUTINE STRUCTP" "SUBROUTINE STRUCTPX" $PYTHIA6VERSION.f
+  mv $PYTHIA6VERSION.f $SIMPATH/generators/pythia6
 fi 
 
 install_prefix=$SIMPATH_INSTALL

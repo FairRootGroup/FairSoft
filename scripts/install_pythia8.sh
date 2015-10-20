@@ -56,7 +56,7 @@ then
   cp -r include/Pythia8 $install_prefix/include
  
   mkdir -p $install_prefix/share/pythia8
-  cp -r xmldoc $install_prefix/share/pythia8
+  cp -r share/xmldoc $install_prefix/share/pythia8
  
   if [ "$platform" = "macosx" ];
   then
