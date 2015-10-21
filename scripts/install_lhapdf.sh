@@ -6,7 +6,7 @@
 # If not download it a from the lhapdf web server and unpack it
 
 soft="lhapdf-${LHAPDF_VERSION}"
-echo "*** DEBUG $soft sources ***"
+echo "*** Install $soft sources in $SIMPATH and copy to $SIMPATH_INSTALL ***"
 if [ ! -d  $SIMPATH/tools/$soft ]; then 
   cd $SIMPATH/tools
   if [ ! -e $SIMPATH/tools/$LHAPDF_TAR ]; then
@@ -19,11 +19,9 @@ fi
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/lib/libLHAPDF.so
 
-
 if (not_there $soft $checkfile); then
-
-  mkdir $SIMPATH/build_soft/build_$soft
-  cd $SIMPATH/build_soft/build_$soft
+  mkdir $SIMPATH/tools/build_$soft
+  cd $SIMPATH/tools/build_$soft
 
   debug_=""
   if [ "$debug" = "yes" ]; then
@@ -42,4 +40,12 @@ if (not_there $soft $checkfile); then
 fi
 
 cd  $SIMPATH
+
+# temporary hack, since I don't understand what is going wrong
+checkfile=$install_prefix/bin/lhapdf-getdata
+if (not_there $soft $checkfile); then
+  cp $SIMPATH/tools/$soft/bin/lhapdf-getdata $install_prefix/bin/
+  cp $SIMPATH/tools/$soft/bin/lhapdf-query $install_prefix/bin/
+fi
+
 return 1
