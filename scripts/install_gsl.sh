@@ -11,7 +11,7 @@ then
 fi
 
 if [ ! -d  $SIMPATH/basics/gsl ];
-then 
+then
   cd $SIMPATH/basics
   if [ ! -e $GSLVERSION.tar.gz ];
   then
@@ -19,11 +19,11 @@ then
     download_file $GSL_LOCATION/$GSLVERSION.tar.gz
   fi
   untar gsl $GSLVERSION.tar.gz
-  if [ -d  $GSLVERSION ]; 
+  if [ -d  $GSLVERSION ];
   then
     ln -s $GSLVERSION gsl
   fi
-fi 
+fi
 
 
 install_prefix=$SIMPATH_INSTALL
@@ -39,7 +39,7 @@ then
       CFLAGS_BAK=$CFLAGS
       CFLAGS="$CFLAGS -DGSL_C99_INLINE"
       export CFLAGS
-    fi 
+    fi
     ./configure --prefix=$install_prefix  --with-pic --libdir=$install_prefix/lib
     if [ "$arch" == "solarisCC5" ];then
       CFLAGS=$CFLAGS_BAK
@@ -57,12 +57,12 @@ then
       cd  $install_prefix/lib
       create_links dylib so
     fi
-    
+
     check_all_libraries  $install_prefix/lib
 
     check_success gsl $checkfile
     check=$?
-    
+
 fi
 
 if [ "$system" = "64bit" ];

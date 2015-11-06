@@ -8,7 +8,7 @@
      if [ "$compiler" = "Clang" -a "$arch" = "linux" ]; then
        debugstring=""
      else
-       debugstring="--build=debug"
+       debugstring="-DCMAKE_BUILD_TYPE=Debug"
      fi
    else
      debugstring=""
@@ -16,8 +16,9 @@
 
    ########### Xrootd has problems with gcc4.3.0 and 4.3.1 
    ########### Roofit has problems with gcc3.3.5  
-   XROOTD="--with-xrootd=$SIMPATH_INSTALL"
-   ROOFIT="--enable-roofit"
+   XROOTD="-Dxrootd=ON"
+   export XRDSYS=$SIMPATH_INSTALL
+   ROOFIT="-Droofit=ON"
    if [ "$compiler" = "gcc" ]; then
      gcc_major_version=$(gcc -dumpversion | cut -c 1)
      gcc_minor_version=$(gcc -dumpversion | cut -c 3)
@@ -25,7 +26,7 @@
 
      if [ $gcc_major_version -eq 4 -a $gcc_minor_version -eq 3 ];
      then
-       XROOTD="--disable-xrootd"
+       XROOTD="-Dxrootd=OFF"
      fi
 
      if [ $gcc_major_version -eq 3 -a $gcc_minor_version -eq 3 -a $gcc_sub_version -eq 5 ];
@@ -34,58 +35,51 @@
      fi
 
    fi
+
+   if [ $isMacOsx108 ]; then
+     XROOTD="-Dxrootd=OFF"
+   fi
    #######################################################
 
    OPENGL=" "
    if [ "$compiler" = "Clang" ]; then
-     root_comp_flag="--with-clang"
+     root_comp_flag="-DCMAKE_C_COMPILER=clang -DCMAKE_CXXCOMPILER=clang"
      if [ $haslibcxx ]; then
-       root_comp_flag="--with-clang --enable-cxx11 --enable-libcxx"
+       root_comp_flag="-DCMAKE_C_COMPILER=clang -DCMAKE_CXXCOMPILER=clang -Dcxx11=ON -Dlibcxx=ON"
      fi
      if [ "$platform" = "linux" ]; then
-       OPENGL="--with-opengl-incdir=$SIMPATH_INSTALL/include --with-opengl-libdir=$SIMPATH_INSTALL/lib"
+       OPENGL="-DOPENGL_INCLUDE_DIR=$SIMPATH_INSTALL/include -DOPENGL_gl_LIBRARY=$SIMPATH_INSTALL/lib"
      fi
    else
-     root_comp_flag="--with-cc=$CC --with-cxx=$CXX --with-ld=$CXX"   
+     root_comp_flag="-DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_LINKER=$CXX"   
    fi
 
    if [ "$build_python" = "yes" ];
    then
-      PYTHONBUILD="--enable-python"
+      PYTHONBUILD="-Dpython=ON"
    else   
       PYTHONBUILD=" "
    fi
    
-   if [ "$install_alfasoft" = "yes" ];
-   then
-      VCBUILD=" "
-   else
-      VCBUILD="--enable-vc"
-   fi
-
-   
+     
    #######################################################
       
-     pythia6_libdir=$SIMPATH_INSTALL/lib
-     pythia8_libdir=$SIMPATH_INSTALL/lib
-     pythia8_incdir=$SIMPATH_INSTALL/include
-     gsl_dir=$SIMPATH_INSTALL
-     etc_string="--etcdir=$SIMPATH_INSTALL/share/root/etc"
-     prefix_string="--prefix=$install_prefix"
+     etc_string="-DCMAKE_INSTALL_SYSCONFDIR=$SIMPATH_INSTALL/share/root/etc"
+     prefix_string="-DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL"
  
-   ./configure $arch  --enable-soversion $PYTHONBUILD $XROOTD  $ROOFIT \
-                    --enable-minuit2  --enable-gdml --enable-xml \
-		    --enable-builtin-ftgl --enable-builtin-glew \
-                    --enable-builtin-freetype $OPENGL \
-		    --with-pythia6-libdir=$pythia6_libdir \
-		    --with-pythia8-libdir=$pythia8_libdir \
-		    --with-pythia8-incdir=$pythia8_incdir \
-		    --enable-mysql --enable-pgsql \
-                    --disable-globus \
-                    --disable-reflex \
-                    --disable-cintex \
-                    $VCBUILD --enable-http \
-                    --with-gsl-incdir=$gsl_dir/include \
-                    --with-gsl-libdir=$gsl_dir/lib \
-                    --with-f77=$FC $root_comp_flag $prefix_string \
-                    $etc_string $debugstring 
+     cmake ../ -Dsoversion=ON $PYTHONBUILD $XROOTD  $ROOFIT \
+                    -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
+		    -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
+                    -Dbuiltin-freetype=ON $OPENGL \
+                    -Dmysql=ON -Dpgsql=ON  -Dasimage=ON \
+                    -DPYTHIA6_DIR=$SIMPATH_INSTALL \
+                    -DPYTHIA8_DIR=$SIMPATH_INSTALL \
+                    -Dglobus=OFF \
+                    -Dreflex=OFF \
+                    -Dcintex=OFF \
+                    -Dvc=ON -Dhttp=ON \
+                    -DGSL_DIR=$SIMPATH_INSTALL \
+                    -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
+                    -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string \
+                    $etc_string -Dgnuinstall=ON $debugstring
+

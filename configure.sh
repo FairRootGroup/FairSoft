@@ -1,21 +1,20 @@
-#!/bin/bash 
+#!/bin/bash
 #
 # CBM package compilation script
 # m.al-turany@gsi.de, June 2006
 # protopop@jlab.org, June 2006
 # update of the script
-# include debug version and 
+# include debug version and
 # intel compiler switches
 # f.uhlig@gsi.de, July 2007
 
 # debug options on :set -xv
 # debug options off:set +xv
-# 
+#
 set +xv
 
 # unset ROOTSYS. If it is set this can make problems when compiling Geant3
 unset ROOTSYS
-
 
 #Clean the enviroment
 unset ROOTBUILD
@@ -106,6 +105,17 @@ then
    export Fortran_Needed=FALSE
 fi
 
+if [ "$build_root6" = "yes" ]
+then
+  pluto=0
+  export Root_Version=6
+elif [ "$build_root6" = "no" ]
+then
+  pluto=1
+  export Root_Version=5
+fi
+
+
 if [ "$installation_type" = "grid" ];
 then
   export BUILD_BATCH=TRUE
@@ -168,7 +178,7 @@ create_installation_directories
 
 ######################## CMake ################################
 # This is only for safety reasons. If we find a machine where
-# cmake is not installed, we install cmake and add the path 
+# cmake is not installed, we install cmake and add the path
 # to the environment variable PATH
 
 if [ "$check" = "1" ];
@@ -180,54 +190,54 @@ fi
 
 if [ "$check" = "1" ];
 then
-  source scripts/install_gtest.sh 
+  source scripts/install_gtest.sh
 fi
 
 ############ GNU scientific library ###############################
 
 if [ "$check" = "1" ];
 then
-  source scripts/install_gsl.sh 
+  source scripts/install_gsl.sh
 fi
 
 ############ ICU libraries ###############################
 
 if [ "$check" = "1" -a "$compiler" = "Clang" -a "$platform" = "linux" ];
 then
-  source scripts/install_icu.sh 
+  source scripts/install_icu.sh
 fi
 
 ############ Boost libraries ###############################
 
 if [ "$check" = "1" ];
 then
-  source scripts/install_boost.sh 
+  source scripts/install_boost.sh
 fi
 
 ##################### Pythia 6 #############################################
 
 if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
-  source scripts/install_pythia6.sh 
+  source scripts/install_pythia6.sh
 fi
 
 ##################### HepMC ## #############################################
 
 if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
-  source scripts/install_hepmc.sh 
+  source scripts/install_hepmc.sh
 fi
 
 ##################### Pythia 8 #############################################
 
 if [ "$check" = "1" -a "$onlyreco" = "0" ];
 then
-  source scripts/install_pythia8.sh 
+  source scripts/install_pythia8.sh
 fi
 
 ##################### XercesC #############################################
 
-if [ "$build_python" = "yes" ]; 
+if [ "$build_python" = "yes" ];
 then
   if [ "$check" = "1" -a "$onlyreco" = "0" ];
   then
@@ -239,7 +249,7 @@ fi
 
 if [ "$check" = "1" -a "$compiler" = "Clang" -a "$platform" = "linux" ];
 then
-  source scripts/install_mesa.sh 
+  source scripts/install_mesa.sh
 fi
 
 ##################### GEANT 4 #############################################
@@ -260,12 +270,12 @@ fi
 
 if [ "$check" = "1" ];
 then
-  source scripts/install_root.sh
+  source scripts/install_root6.sh
 fi
 
 ##################### G4Py #############################################
 
-if [ "$build_python" = "yes" ]; 
+if [ "$build_python" = "yes" ];
 then
   if [ "$check" = "1" -a "$onlyreco" = "0" ];
   then
@@ -275,9 +285,9 @@ fi
 
 ##################### Pluto #############################################
 
-if [ "$check" = "1" -a "$onlyreco" = "0" ];
+if [ "$check" = "1" -a "$onlyreco" = "0" -a "$pluto" = "1" ];
 then
-  source scripts/install_pluto.sh
+     source scripts/install_pluto.sh
 fi
 
 ##################### Geant 3 VMC #############################################

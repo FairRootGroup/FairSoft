@@ -11,7 +11,7 @@ install_data=$SIMPATH_INSTALL/share/$GEANT4VERSIONp/data
 data_source=$SIMPATH/transport
 
 mkdir -p $install_data
-# create unique links which is independent of the Geant4 version  
+# create unique links which is independent of the Geant4 version
 if [ ! -L $install_prefix/share/Geant4 ]; then
   ln -s $install_prefix/share/$GEANT4VERSIONp $install_prefix/share/Geant4
 fi
@@ -21,11 +21,11 @@ echo "**** Installing the Geant4 data files ****" | tee -a $logfile
 
 cd $install_data
 
-if [ ! -d $G4ABLA_VERSION ]; 
-then 
-  if [ -e $data_source/$G4ABLA_TAR ]; 
-  then 
-    cp $data_source/$G4ABLA_TAR . 
+if [ ! -d $G4ABLA_VERSION ];
+then
+  if [ -e $data_source/$G4ABLA_TAR ];
+  then
+    cp $data_source/$G4ABLA_TAR .
     untar G4ABLA $G4ABLA_TAR
     ln -s $G4ABLAVERSION G4ABLA
     rm $G4ABLA_TAR
@@ -34,14 +34,14 @@ then
   fi
 else
  echo "Package $G4ABLA_VERSION already installed." | tee -a $logfile
-fi  
+fi
 
 
-if [ ! -d $G4EMLOW_VERSION ]; 
-then 
-  if [ -e $data_source/$G4EMLOW_TAR ]; 
-  then 
-    cp $data_source/$G4EMLOW_TAR . 
+if [ ! -d $G4EMLOW_VERSION ];
+then
+  if [ -e $data_source/$G4EMLOW_TAR ];
+  then
+    cp $data_source/$G4EMLOW_TAR .
     untar G4EMLOW $G4EMLOW_TAR
     ln -s $G4EMLOW_VERSION G4EMLOW
     rm $G4EMLOW_TAR
@@ -50,13 +50,13 @@ then
   fi
 else
  echo "Package $G4EMLOW_VERSION already installed." | tee -a $logfile
-fi  
-  
-if [ ! -d $G4ENSDFSTATE_VERSION ]; 
-then 
-  if [ -e $data_source/$G4ENSDFSTATE_TAR ]; 
-  then 
-    cp $data_source/$G4ENSDFSTATE_TAR . 
+fi
+
+if [ ! -d $G4ENSDFSTATE_VERSION ];
+then
+  if [ -e $data_source/$G4ENSDFSTATE_TAR ];
+  then
+    cp $data_source/$G4ENSDFSTATE_TAR .
     untar G4ENSDFSTATE $G4ENSDFSTATE_TAR
     ln -s $G4ENSDFSTATEVERSION G4ENSDFSTATE
     rm $G4ENSDFSTATE_TAR
@@ -65,13 +65,13 @@ then
   fi
 else
  echo "Package $G4ENSDFSTATE_VERSION already installed." | tee -a $logfile
-fi  
-  
-  
-if [ ! -d $G4NDL_VERSION  ]; 
-then 
-  if [ -e $data_source/$G4NDL_TAR ]; 
-  then 
+fi
+
+
+if [ ! -d $G4NDL_VERSION  ];
+then
+  if [ -e $data_source/$G4NDL_TAR ];
+  then
     cp $data_source/$G4NDL_TAR .
     untar G4NDL $G4NDL_TAR
     ln -s $G4NDL_VERSION G4NDL
@@ -83,29 +83,29 @@ else
  echo "Package $G4NDL_VERSION already installed." | tee -a $logfile
 fi
 
-if [ ! -d $G4NEUTRONXS_VERSION ]; 
-then 
-  if [ -e $data_source/$G4NEUTRONXS_TAR ]; 
-  then 
+if [ ! -d $G4NEUTRONXS_VERSION ];
+then
+  if [ -e $data_source/$G4NEUTRONXS_TAR ];
+  then
     cp $data_source/$G4NEUTRONXS_TAR .
     untar G4NEUTRONXS  $G4NEUTRONXS_TAR
-    ln -s $G4NEUTRONXS_VERSION G4NEUTRONXS 
-    rm $G4NEUTRONXS_TAR 
+    ln -s $G4NEUTRONXS_VERSION G4NEUTRONXS
+    rm $G4NEUTRONXS_TAR
   else
-    echo "Could not find file $G4NEUTRONXS_TAR in $data_source" | tee -a $logfile 
+    echo "Could not find file $G4NEUTRONXS_TAR in $data_source" | tee -a $logfile
   fi
 else
  echo "Package $G4NEUTRONXS_VERSION already installed." | tee -a $logfile
 fi
 
-if [ ! -d $G4PII_VERSION ]; 
-then 
-  if [ -e $data_source/$G4PII_TAR ]; 
-  then 
+if [ ! -d $G4PII_VERSION ];
+then
+  if [ -e $data_source/$G4PII_TAR ];
+  then
     cp $data_source/$G4PII_TAR .
     untar G4PII  $G4PII_TAR
-    ln -s $G4PII_VERSION G4PII 
-    rm $G4PII_TAR 
+    ln -s $G4PII_VERSION G4PII
+    rm $G4PII_TAR
   else
     echo "Could not find file $G4PII_TAR in $data_source" | tee -a $logfile
   fi
@@ -113,10 +113,10 @@ else
  echo "Package $G4PII_VERSION already installed." | tee -a $logfile
 fi
 
-if [ ! -d $G4SAIDDATA_VERSION ]; 
-then 
-  if [ -e $data_source/$G4SAIDDATA_TAR ]; 
-  then 
+if [ ! -d $G4SAIDDATA_VERSION ];
+then
+  if [ -e $data_source/$G4SAIDDATA_TAR ];
+  then
     cp $data_source/$G4SAIDDATA_TAR .
     untar G4SAID  $G4SAIDDATA_TAR
     ln -s $G4SAIDDATA_VERSION G4SAIDDATA
@@ -128,10 +128,10 @@ else
  echo "Package $G4SAIDDATA_VERSION already installed." | tee -a $logfile
 fi
 
-if [ ! -d $PhotonEvaporation_VERSION ]; 
-then 
-  if [ -e $data_source/$PhotonEvaporation_TAR ]; 
-  then 
+if [ ! -d $PhotonEvaporation_VERSION ];
+then
+  if [ -e $data_source/$PhotonEvaporation_TAR ];
+  then
     cp $data_source/$PhotonEvaporation_TAR .
     untar PhotonEvaporation $PhotonEvaporation_TAR
     ln -s $PhotonEvaporation_VERSION  PhotonEvaporation
@@ -142,11 +142,11 @@ then
 else
  echo "Package $PhotonEvaporation_VERSION already installed." | tee -a $logfile
 fi
-  
-if [ ! -d $RadioactiveDecay_VERSION ]; 
-then 
-  if [ -e $data_source/$RadioactiveDecay_TAR ]; 
-  then 
+
+if [ ! -d $RadioactiveDecay_VERSION ];
+then
+  if [ -e $data_source/$RadioactiveDecay_TAR ];
+  then
     cp $data_source/$RadioactiveDecay_TAR .
     untar RadioactiveDecay $RadioactiveDecay_TAR
     ln -s $RadioactiveDecay_VERSION RadioactiveDecay
@@ -158,13 +158,13 @@ else
  echo "Package $RadioactiveDecay_VERSION already installed." | tee -a $logfile
 fi
 
-if [ ! -d $RealSurface_VERSION ]; 
-then 
-  if [ -e $data_source/$RealSurface_TAR ]; 
-  then 
+if [ ! -d $RealSurface_VERSION ];
+then
+  if [ -e $data_source/$RealSurface_TAR ];
+  then
     cp $data_source/$RealSurface_TAR .
     untar RealSurface $RealSurface_TAR
-    ln -s $RealSurface_VERSION RealSurface 
+    ln -s $RealSurface_VERSION RealSurface
     rm $RealSurface_TAR
   else
     echo "Could not find file $RealSurface_TAR in $data_source" | tee -a $logfile

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Uses the tool uname to check on which system
-# the script is run 
+# the script is run
 # The script is inspired by the configure script
 # from ROOT
 
@@ -12,7 +12,7 @@ arch=`uname -s | tr '[A-Z]' '[a-z]'`
 chip=`uname -m | tr '[A-Z]' '[a-z]'`
 
 # get the number of processors
-#work around for using icecc 
+#work around for using icecc
 ncpu=`echo $NCPU`
 if [ "$ncpu" != "" ];
 then
@@ -32,70 +32,70 @@ fi
 number_of_processes=$number_of_processors
 
 case "$arch:$chip:$compiler" in
-    linux:ia64:gcc)          
-        arch=linuxia64gcc    
+    linux:ia64:gcc)
+        arch=linuxia64gcc
         platform=linux
         PLATFORM=$platform
         system=64bit
         MAKE_command=make
-	checklib64="yes" 
+	checklib64="yes"
         ;;
-    linux:ia64:intel) 
+    linux:ia64:intel)
         echo "The Intel compiler is not supported for Itanium"
-        exit 1         
-        #arch=linuxia64gcc    
+        exit 1
+        #arch=linuxia64gcc
         #platform=linux
         #PLATFORM=$platform
         #system=64bit
         #MAKE_command=make
         ;;
-    linux:x86_64:gcc)        
-        arch=linuxx8664gcc   
+    linux:x86_64:gcc)
+        arch=linuxx8664gcc
         platform=linux
         PLATFORM=$platform
         system=64bit
         MAKE_command=make
-	checklib64="yes" 
+	checklib64="yes"
         ;;
-    linux:x86_64:intel)        
-        arch=linuxx8664icc   
+    linux:x86_64:intel)
+        arch=linuxx8664icc
         platform=linux
         PLATFORM=$platform
         system=64bit
         MAKE_command=make
-	checklib64="yes" 
+	checklib64="yes"
         ;;
-    linux:i*86:gcc)          
-        arch=linux           
+    linux:i*86:gcc)
+        arch=linux
         platform=linux
         PLATFORM=$platform
         system=32bit
         MAKE_command=make
         ;;
-    linux:i*86:intel)          
-        arch=linuxicc           
+    linux:i*86:intel)
+        arch=linuxicc
         platform=linux
         PLATFORM=$platform
         system=32bit
         MAKE_command=make
         ;;
-    linux:x86_64:Clang)         
-        arch=linuxx8664gcc      
+    linux:x86_64:Clang)
+        arch=linuxx8664gcc
         platform=linux
         PLATFORM=$platform
         system=64bit
         MAKE_command=make
-	checklib64="yes" 
+	checklib64="yes"
         ;;
-    darwin:*86*:gcc)         
-        arch=macosx          
+    darwin:*86*:gcc)
+        arch=macosx
         platform=macosx
         PLATFORM=$platform
         system=32bit
         MAKE_command=make
         ;;
-    darwin:*86*:Clang)         
-        arch=macosx          
+    darwin:*86*:Clang)
+        arch=macosx
         platform=macosx
         PLATFORM=$platform
         system=64bit
@@ -107,26 +107,26 @@ case "$arch:$chip:$compiler" in
         PLATFORM=$platform
         system=64bit
         MAKE_command=gmake
-	checklib64="yes" 
-        ;;      
+	checklib64="yes"
+        ;;
     sunos:*86*:gcc)
         arch=solarisgcc
         platform=solaris
         PLATFORM=$platform
         system=64bit
         MAKE_command=gmake
-	checklib64="yes"    
+	checklib64="yes"
         ;;
-    linux:x86_64:PGI)        
-        arch=linuxx8664gcc   
+    linux:x86_64:PGI)
+        arch=linuxx8664gcc
         platform=linux
         PLATFORM=$platform
         system=64bit
         MAKE_command=make
-	checklib64="yes" 
+	checklib64="yes"
         ;;
-    linux:i*86:PGI)          
-        arch=linux           
+    linux:i*86:PGI)
+        arch=linux
         platform=linux
         PLATFORM=$platform
         system=32bit
@@ -152,7 +152,7 @@ if [ "$arch" = "macosx" ]; then
          PLATFORM=$platform
          system=64bit
          MAKE_command=make
-	 checklib64="yes" 
+	 checklib64="yes"
       fi
    fi
 fi
@@ -191,7 +191,7 @@ case "$platform:$compiler:$debug:$optimize" in
     echo "*** Compiling the external packages with the Intel compiler" | tee -a $logfile
     echo "*** Building the libraries with debug information" | tee -a $logfile
     ;;
-  linux:intel:no:no)  
+  linux:intel:no:no)
     export CXX=icpc
     export CC=icc
     export CFLAGS="-O2"
@@ -199,14 +199,14 @@ case "$platform:$compiler:$debug:$optimize" in
     echo "*** Compiling the external packages with the Intel Compiler" | tee -a $logfile
     echo "*** Building the libraries with optimization" | tee -a $logfile
     ;;
-  linux:intel:no:yes) 
+  linux:intel:no:yes)
     export CXX=icpc
     export CC=icc
     export CFLAGS="-O3 -mtune=pentium4 -xN -axN"
     geant4_system=Linux-icc
     echo "*** Compiling the external packages with the Intel Compiler" | tee -a $logfile
     echo "*** Building the libraries with best optimization" | tee -a $logfile
-    ;;  
+    ;;
   linux:Clang:yes:no)
     export CXX=clang++
     export CC=clang
@@ -283,7 +283,7 @@ case "$platform:$compiler:$debug:$optimize" in
     echo "The Intel compilers are not supported for Mac OS X up to now"
     echo "Please choose a different compiler"
     echo "Stop the script now"
-    exit 
+    exit
     ;;
   solaris:CC:yes:no)
     export CXX=CC
@@ -308,7 +308,7 @@ case "$platform:$compiler:$debug:$optimize" in
     geant4_system=SUN-CC
     echo "*** Compiling the external packages with the CC compiler" | tee -a $logfile
     echo "*** Building the libraries with best optimization" | tee -a $logfile
-    ;;  
+    ;;
   solaris:gcc:yes:no)
     export CXX=g++
     export CC=gcc
@@ -332,7 +332,7 @@ case "$platform:$compiler:$debug:$optimize" in
     geant4_system=SUN-gcc
     echo "*** Compiling the external packages with the GCC compiler" | tee -a $logfile
     echo "*** Building the libraries with best optimization" | tee -a $logfile
-    ;;    
+    ;;
   linux:PGI:yes:no)
     export CXX=pgCC
     export CC=pgcc
@@ -360,12 +360,12 @@ case "$platform:$compiler:$debug:$optimize" in
   *)
     echo "This platform or the compiler are not supported"
     echo "Stop the script now"
-    exit 
+    exit
     ;;
 esac
 
 #------------------------------------------------------------------
-# Check if the required programs are already installed on the system 
+# Check if the required programs are already installed on the system
 # Use CMake to do all the system checks
 # Creates also the version info fill
 
@@ -397,10 +397,10 @@ cp $SIMPATH/scripts/Test_CMakeLists.txt CMakeLists.txt
 cp $SIMPATH/scripts/configure.in .
 
 cd build
-cmake ..
+cmake .. -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC
 ret_val=$?
 
-if [ $ret_val -ne 0 ]; 
+if [ $ret_val -ne 0 ];
 then
   echo ""
   echo "There have been problems found. Please check the output above."
@@ -408,12 +408,12 @@ then
   cd $SIMPATH
   rm -rf test
   exit
-fi  
+fi
 
 hascxx11=$(grep HasCxx11 $SIMPATH/test/configure | cut -f2 -d:)
 haslibcxx=$(grep HasLibCxx $SIMPATH/test/configure | cut -f2 -d:)
 _hascurl=$(grep HasCurl $SIMPATH/test/configure | cut -f2 -d:)
-
+isMacOsx108=$(grep isMacOsx108 $SIMPATH/test/configure | cut -f2 -d:)
 
 if [ ${_hascurl} ];
 then
@@ -441,21 +441,23 @@ then
   export CXXFLAGS="${CXXFLAGS} -stdlib=libc++"
 fi
 
+export isMacOsx108
+
 export FC=$(grep FortranCompiler $SIMPATH/test/configure | cut -f2 -d:)
 # On Linux systems f95 in many cases is only a link to gfortran
-# If there are many links 'readlink -f' returns the link to the final source 
+# If there are many links 'readlink -f' returns the link to the final source
 if [ "$FC" = "f95" ]; then
   export FC=$(readlink -f `which f95`)
 fi
 export F77=$FC
 
-# actualy one should check for mac os x 10.8 
-if [ "$platform" = "macosx" -a "$compiler" = "Clang" ]; 
+# actualy one should check for mac os x 10.8
+if [ "$platform" = "macosx" -a "$compiler" = "Clang" ];
 then
   # remove debug flag from list of flags if present
   FFLAGS=$(echo ${CFLAGS} | sed -e 's/-g//g')
   export FFLAGS
-else  
+else
   export FFLAGS=${CFLAGS}
 fi
 

@@ -2,14 +2,14 @@
 # and the existence of the new standard template library libc++
 
 # The script is working with cmake 2.6.4 and 2.8.10,
-# so it should work also with all versions in between 
+# so it should work also with all versions in between
 CMake_Minimum_Required(VERSION 2.6 FATAL_ERROR)
 
 Project(TestEnvironment C CXX)
 
 Enable_Language(Fortran OPTIONAL)
 
-Set(FairSoft_Version "jul14")
+Set(FairSoft_Version "Nov15")
 
 Set(Build_batch $ENV{BUILD_BATCH})
 Set(fc_needed $ENV{Fortran_Needed})
@@ -17,9 +17,40 @@ Set(fc_needed $ENV{Fortran_Needed})
 # Check if all needed compileres are installed
 If( fc_needed )
   If(CMAKE_CXX_COMPILER AND CMAKE_C_COMPILER AND CMAKE_Fortran_COMPILER)
-    Message(STATUS "Found all necessary compilers.")
-    Set(ALL_COMPILER_FOUND TRUE)
-    get_filename_component(_FC ${CMAKE_Fortran_COMPILER} NAME)
+    If (CMAKE_COMPILER_IS_GNUCC)
+      Execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
+                      OUTPUT_VARIABLE GCC_VERSION)
+      If (GCC_VERSION VERSION_GREATER 4.8 OR GCC_VERSION VERSION_EQUAL 4.8)
+        Message(STATUS "Found GCC Version >= 4.8")
+        Message(STATUS "Found all necessary compilers.")
+        Set(ALL_COMPILER_FOUND TRUE)
+      Else()
+        Message(WARNING "Found GCC Version < 4.8")
+        Message(WARNING "At least GCC 4.8 is needed.")
+      EndIf()
+    ElseIf("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+      Execute_process(COMMAND ${CMAKE_C_COMPILER} --version
+                      COMMAND grep version
+                      OUTPUT_VARIABLE CLANG_VERSION_INFO
+      )
+      If(CLANG_VERSION_INFO MATCHES "^.*based on LLVM.*")
+        String(REGEX REPLACE "^.*based on LLVM[ ]([0-9]+)\\.[0-9]+.*" "\\1" CLANG_MAJOR "${CLANG_VERSION_INFO}")
+        String(REGEX REPLACE "^.*based on LLVM[ ][0-9]+\\.([0-9]+).*" "\\1" CLANG_MINOR "${CLANG_VERSION_INFO}")
+      Else()
+        String(REGEX REPLACE "^.*[ ]version[ ]([0-9]+)\\.[0-9]+.*" "\\1" CLANG_MAJOR "${CLANG_VERSION_INFO}")
+        String(REGEX REPLACE "^.*[ ]version[ ][0-9]+\\.([0-9]+).*" "\\1" CLANG_MINOR "${CLANG_VERSION_INFO}")
+      EndIf()
+      Set(CLANG_VERSION "${CLANG_MAJOR}.${CLANG_MINOR}")
+      If (CLANG_VERSION VERSION_GREATER 3.4 OR CLANG_VERSION VERSION_EQUAL 3.4)
+        Message(STATUS "Found Clang Version >= 3.4")
+        Message(STATUS "Found all necessary compilers.")
+        Set(ALL_COMPILER_FOUND TRUE)
+      Else()
+        Message(WARNING "Found Clang Version < 3.4")
+        Message(WARNING "At least Clang 3.4 is needed.")
+      EndIf()
+    EndIf()
+    Get_Filename_Component(_FC ${CMAKE_Fortran_COMPILER} NAME)
   EndIf()
 Else()
   If(CMAKE_CXX_COMPILER AND CMAKE_C_COMPILER)
@@ -44,7 +75,7 @@ if (NOT Build_batch)
 
   #Check for OpenGL and GLU installation
   find_package(OpenGL)
- 
+
   If(OPENGL_FOUND AND OPENGL_GLU_FOUND)
     Message(STATUS "Found all necessary OpenGL features.")
     Set(COMPLETE_OPENGL_FOUND TRUE)
@@ -56,46 +87,57 @@ EndIf()
 
 #---Check for needed programs
 
-Find_Program(WGET_FOUND NAMES wget) 
-Find_Program(CURL_FOUND NAMES curl)
-If(WGET_FOUND OR CURL_FOUND)
+Find_Program(WGET_FOUND NAMES wget)
+Find_Program(CURL_EXE_FOUND NAMES curl)
+If(WGET_FOUND OR CURL_EXE_FOUND)
   Set(DOWNLOADER_FOUND TRUE)
-  If(CURL_FOUND)
+  If(CURL_EXE_FOUND)
     Set(HAS_CURL TRUE)
   EndIf()
 EndIf()
 
-Find_Program(MAKE_FOUND NAMES make) 
+# Need the library and headers for cmake
+Find_Package(CURL)
 
-Find_Program(BZIP2_FOUND NAMES bzip2) 
-Find_Program(GZIP_FOUND NAMES gzip) 
-Find_Program(UNZIP_FOUND NAMES unzip) 
-Find_Program(TAR_FOUND NAMES tar)     
+Find_Program(MAKE_FOUND NAMES make)
+
+Find_Program(BZIP2_FOUND NAMES bzip2)
+Find_Program(GZIP_FOUND NAMES gzip)
+Find_Program(UNZIP_FOUND NAMES unzip)
+Find_Program(TAR_FOUND NAMES tar)
 
 If(TAR_FOUND AND UNZIP_FOUND AND GZIP_FOUND AND BZIP2_FOUND)
-  Set(UNPACKER_FOUND TRUE)  
+  Set(UNPACKER_FOUND TRUE)
 Endif()
 
-Find_Program(SVN_FOUND NAMES svn) 
-Find_Program(GIT_FOUND NAMES git) 
+Find_Program(SVN_FOUND NAMES svn)
+Find_Program(GIT_FOUND NAMES git)
 
-Find_Program(PATCH_FOUND NAMES patch) 
+Find_Program(PATCH_FOUND NAMES patch)
+
+Find_Package(OpenSSL)
+# For Mac OSX 10.11 Apple remove the ssl header files
+# If OpenSSL is not found search for ssl in brew installation path
+If(NOT OPENSSL_FOUND)
+ Set(OPENSSL_ROOT_DIR /usr/local)
+ Find_package(OpenSSL)
+EndIf()
 
 # If we build with clang on linux also icu and mesa has to be build
 # Mesa needs some additional programs, so we have to theck for them
 Set(SPECIAL_CLANG_LINUX_FOUND TRUE)
 If(CMAKE_CXX_COMPILER MATCHES "clang\\+\\+" AND CMAKE_SYSTEM_NAME MATCHES "Linux")
-  Find_Program(MAKEDEP_FOUND NAMES makedepend) 
-  Find_Program(FLEX_FOUND NAMES flex) 
-  Find_Program(BISON_FOUND NAMES bison) 
+  Find_Program(MAKEDEP_FOUND NAMES makedepend)
+  Find_Program(FLEX_FOUND NAMES flex)
+  Find_Program(BISON_FOUND NAMES bison)
   If(NOT MAKEDEP_FOUND OR NOT FLEX_FOUND OR NOT BISON_FOUND)
-    Set(SPECIAL_CLANG_LINUX_FOUND FALSE)  
+    Set(SPECIAL_CLANG_LINUX_FOUND FALSE)
   Endif()
 Endif()
 
-If(DOWNLOADER_FOUND AND SVN_FOUND AND GIT_FOUND AND PATCH_FOUND AND MAKE_FOUND
+If(DOWNLOADER_FOUND AND CURL_FOUND AND SVN_FOUND AND GIT_FOUND AND PATCH_FOUND AND MAKE_FOUND
    AND UNPACKER_FOUND AND COMPLETE_X11_FOUND AND COMPLETE_OPENGL_FOUND
-   AND ALL_COMPILER_FOUND AND SPECIAL_CLANG_LINUX_FOUND)
+   AND ALL_COMPILER_FOUND AND OPENSSL_FOUND AND SPECIAL_CLANG_LINUX_FOUND)
   Message(STATUS "Found all necessary programs in PATH.")
 Else()
   If(NOT CMAKE_CXX_COMPILER)
@@ -127,9 +169,14 @@ Else()
     Message(STATUS "X11_Xext_LIB: ${X11_Xext_LIB}")
     Message(STATUS "libXext and Xext headers must be installed.")
   EndIf()
-  
+  If(NOT OPENSSL_FOUND)
+    Message(STATUS "OPENSSL_INCLUDE_DIR: ${OPENSSL_INCLUDE_DIR}")
+    Message(STATUS "OPENSSL_LIBRARIES: ${OPENSSL_LIBRARIES}")
+    Message(STATUS "libssl and ssl headers must be installed.")
+  EndIf()
+
   if (NOT Build_batch)
-    If(NOT OPENGL_FOUND) 
+    If(NOT OPENGL_FOUND)
       Message(STATUS "OpenGL must be installed ")
     EndIf()
     If(NOT OPENGL_GLU_FOUND)
@@ -137,6 +184,9 @@ Else()
     EndIf()
   EndIf()
 
+  If(NOT CURL_FOUND)
+    Message(STATUS "libcurl and curl headers must be installed")
+  EndIF()
   If(NOT DOWNLOADER_FOUND)
     Message(STATUS "Neither wget nor curl found in PATH. You need to install one of them")
   EndIf()
@@ -152,8 +202,8 @@ Else()
   If(NOT UNZIP_FOUND)
     Message(STATUS "unzip is not found in PATH. You need to install it")
   EndIf()
-  If(NOT TAR_FOUND)  
-    Message(STATUS "tar is not found in PATH. You need to install it")  
+  If(NOT TAR_FOUND)
+    Message(STATUS "tar is not found in PATH. You need to install it")
   EndIf()
   If(NOT SVN_FOUND)
     Message(STATUS "svn is not found in PATH. You need to install it")
@@ -199,6 +249,12 @@ Else()
   Message(STATUS "Current compiler does not suppport -stdlib=libc++")
 EndIf()
 
+If(CMAKE_SYSTEM_NAME MATCHES Darwin)
+  Exec_Program("sw_vers -productVersion | cut -d . -f1-2" OUTPUT_VARIABLE MAC_OS_VERSION)
+  If(MAC_OS_VERSION MATCHES 10.8)
+    Set(IsMacOsx108 TRUE)
+  EndIf()
+EndIf()
 
 Set(Build_Python $ENV{BUILD_PYTHON})
 
@@ -212,6 +268,8 @@ If(Build_Python)
     Message(FATAL_ERROR "You request to build the python bindings but you one of the above dependencies couldn't be found")
   EndIf()
 EndIf()
+
+Set(ROOT_VERSION $ENV{Root_Version})
 
 Configure_File($ENV{SIMPATH}/test/configure.in $ENV{SIMPATH}/test/configure @ONLY)
 Configure_File($ENV{SIMPATH}/scripts/fairsoft-config.in $ENV{SIMPATH_INSTALL}/bin/fairsoft-config @ONLY)

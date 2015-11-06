@@ -11,14 +11,14 @@ then
 fi
 
 if [ ! -d  $SIMPATH/transport/vgm ];
-then 
+then
   cd $SIMPATH/transport
   if [ ! -d vgm ];
   then
     echo "*** Downloading vgm sources with subversion***"
-    svn co $VGM_LOCATION/$VGMVERSION/vgm vgm
+    svn co $VGM_LOCATION/$VGMVERSION vgm
   fi
-fi 
+fi
 
 
 install_prefix=$SIMPATH_INSTALL
@@ -31,14 +31,24 @@ then
   mkdir build_cmake
   cd build_cmake
 
-  cmake ../  -DCLHEP_DIR=$SIMPATH_INSTALL -DWITH_GEANT4=TRUE -DGEANT4_INCLUDE_DIR=$G4INCLUDE -DGEANT4_LIB_DIR=$SIMPATH_INSTALL/lib -DWITH_ROOT=TRUE -DROOT_DIR=$SIMPATH_INSTALL -DCMAKE_INSTALL_PREFIX=$install_prefix -DWITH_TEST=OFF
+  # the Geant4_DIR points to the directory where the Geant4Config.cmake script is
+  # located. In this file all needed variables are defined.
+  cmake .. -DGeant4_DIR=$SIMPATH_INSTALL/lib/$GEANT4VERSIONp \
+  	-DROOT_DIR=$SIMPATH_INSTALL -DWITH_TEST=OFF \
+   	-DCMAKE_INSTALL_PREFIX=$install_prefix \
+   	-DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC
 
-  make -j$number_of_processes
   make install -j$number_of_processes
- 
+
   if [ "$platform" = "macosx" ];
-  then 
+  then
       cd $install_prefix/lib
+      for file in $(ls lib*GM.dylib); do
+        install_name_tool -id $install_prefix/lib/$file $file
+        for file1 in $(ls lib*GM.dylib); do
+          install_name_tool -change $file1 $install_prefix/lib/$file1 $file
+        done
+      done
       create_links dylib so
   fi
 

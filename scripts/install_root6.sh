@@ -11,27 +11,30 @@ then
   export CXXFLAGS
 fi
 
-checkfile=$install_prefix/bin/root.exe
-
 if [ ! -d  $SIMPATH/tools/root ];
 then
   cd $SIMPATH/tools
   git clone $ROOT_LOCATION
-  if [ -e $checkfile ];
-  then
-    # always build if new clone
-    rm $checkfile
-  fi
 
   cd $SIMPATH/tools/root
-  git checkout $ROOTVERSION
+  git checkout -b $ROOTVERSION $ROOTVERSION
 
+  # version from patches branch needed when using gcc5
+  # with the next root release this is not needed any longer
+  if [ "$compiler" = "gcc" -a "$build_root6" = "no" ]; then
+    gcc_major_version=$(gcc -dumpversion | cut -c 1)
+    gcc_minor_version=$(gcc -dumpversion | cut -c 3)
+    if [ $gcc_major_version -ge 5 ];
+    then
+      git checkout 6c5ee53c9df9a5f50ae2b2d7b1fda680342e28b4
+    fi
+  fi
 fi
-
-cd $SIMPATH/tools/root
 
 install_prefix=$SIMPATH_INSTALL
 libdir=$install_prefix/lib/root
+
+checkfile=$install_prefix/bin/root.exe
 
 if [ "$platform" = "macosx" ];
 then
@@ -45,34 +48,27 @@ fi
 # TODO: Check if the installation was done already
 if (not_there xrootd $install_prefix/bin/xrd);
 then
-
+  cd $SIMPATH/tools/root
+  mypatch ../xrootd_cmake.patch
   build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
-
   if [ "$platform" = "macosx" ];
   then
       cd $install_prefix/lib
       for file in $(ls libXrd*.dylib); do
-         install_name_tool -id $install_prefix/lib/$file $file
+        install_name_tool -id $install_prefix/lib/$file $file
+        for file1 in $(ls libXrd*.dylib); do
+          install_name_tool -change  $file1 $install_prefix/lib/$file1 $file
+        done
       done
       create_links dylib so
   fi
-
 fi
 
 if (not_there root $checkfile);
 then
   cd $SIMPATH/tools/root
+  mkdir build_for_fair
 
-  # special patch for Fedora 16 on 32bit
-  # This should go into root
-  cat /etc/issue | grep "Fedora release 16 (Verne)"
-  result=$?
-  if [ "$result" = "0" ];then
-    if [ "$system" = "32bit" ]; then
-      echo "*** Applying patch needed for Fedora 16 32bit " | tee -a $logfile
-      mypatch ../root_fedora16_32bit.patch
-    fi
-  fi
   if [ "$debug" = "yes" ];
   then
     echo "*** Building ROOT with debug information"  | tee -a $logfile
@@ -87,35 +83,14 @@ then
 
   if [ "$build_for_grid" = "yes" ]
   then
-    cp ../rootconfig_grid.sh  rootconfig.sh
+    cp ../rootconfig_grid.sh  build_for_fair/rootconfig.sh
     echo "Copied rootconfig_grid.sh ......................" | tee -a $logfile
   else
-    cp ../rootconfig.sh  .
+    cp ../rootconfig.sh  build_for_fair/
     echo "Copied rootconfig.sh ......................" | tee -a $logfile
   fi
   echo "Configure Root .........................................." | tee -a $logfile
-  if [ "$platform" = "solaris" ];
-  then
-    mysed "awk" "gawk" configure
-    chmod a+x configure
-    cp ../makelib.sh build/unix
-    if [ "$compiler" = "gcc" ];
-    then
-      cp ../Makefile.solarisgcc config
-      if [ "$system" = "64bit" ];
-      then
-        mysed '-fPIC' '-fPIC -m64' config/Makefile.solarisgcc
-        mysed '$(EXTRA_LDFLAGS)' '$(EXTRA_LDFLAGS) -m64' config/Makefile.solarisgcc
-     fi
-    else
-      cp ../Makefile.solarisCC5 config
-      if [ "$system" = "64bit" ];
-      then
-        mysed '-KPIC' '-KPIC -m64' config/Makefile.solarisCC5
-        mysed '$(EXTRA_LDFLAGS)' '$(EXTRA_LDFLAGS) -m64' config/Makefile.solarisCC5
-      fi
-    fi
-  fi
+
   # actualy one should check for mac os x 10.8
   if [ "$platform" = "macosx" -a "$compiler" = "Clang" ];
   then
@@ -130,12 +105,23 @@ then
   # needed to solve problem with the TGeoManger for some CBM and Panda geometries
   mypatch ../root_TGeoShape.patch
 
-  # needed to solve a problem with VMC, TGeoManager and Geant4. This fix should be only needed for root 5.34.25
-  mypatch ../root5_34_25_TGeo.patch
-
   # needed due to some problem with the ALICE HLT code
   mypatch ../root5_34_19_hlt.patch
 
+  # needed to compile root6 with newer versions of xrootd
+  if [ "$build_root6" = "yes" ]; then
+    mypatch ../root6_xrootd.patch
+    mypatch ../root6_00_find_xrootd.patch
+    mypatch ../root6_lzma.patch
+  fi
+
+
+  if [ "$build_root6" = "no" ]; then
+    mypatch ../root5_34_find_xrootd.patch
+    mypatch ../root5_lzma.patch
+  fi
+
+  cd build_for_fair/
   . rootconfig.sh
 
   #This workaround  to run make in a loop is
@@ -200,12 +186,17 @@ then
     fi
   fi
 
-  cd $SIMPATH/tools/root
+  cd $SIMPATH/tools/root/build_for_fair/
 
   $MAKE_command install
 
-  ####Work sround for VC snd AliRoot ###
-   echo " create a symbolic linking for  Vc library ...."
+  check_all_libraries $install_prefix/lib
+
+  check_success root $checkfile
+  check=$?
+
+   ####Work sround for VC snd AliRoot ###
+   echo " create a symbolic linking for  Vc library .... "
    if [ -e $install_prefix/lib/libVc.a ];
    then
      cd $install_prefix/lib/root
@@ -214,12 +205,9 @@ then
    else
      echo "libVc.a not found in lib dirctory "
    fi
-  #####################################
+   #####################################
 
-  check_all_libraries $install_prefix/lib
 
-  check_success root $checkfile
-  check=$?
 
   export PATH=${install_prefix}/bin:${PATH}
 

@@ -24,8 +24,8 @@ for (( t=$START; t<$END; t++ )); do
     echo $pdf already installed
    else
     tt=$($SIMPATH_INSTALL/bin/lhapdf-getdata $pdf --dest=$install_data)
-    if [ "$tt" -eq "0" ]; then
-      echo cannot find $pdf 
+    if [ "$tt" ]; then
+      echo cannot find $pdf $tt
     fi
    fi
   fi 
