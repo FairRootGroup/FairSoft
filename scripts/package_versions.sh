@@ -18,7 +18,7 @@ export BOOSTVERSION=boost_1_58_0
 
 #export PYTHIA6_LOCATION="ftp://root.cern.ch/root/"
 #export PYTHIA6VERSION=pythia6
-export PYTHIA6_LOCATION="http://www.hepforge.org/downloads/pythia6"
+export PYTHIA6_LOCATION="http://www.hepforge.org/archive/pythia6"
 export PYTHIA6VERSION=pythia-6.4.28
 
 export HEPMC_LOCATION="http://lcgapp.cern.ch/project/simu/HepMC/download/"
