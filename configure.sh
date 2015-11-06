@@ -74,9 +74,9 @@ echo "The build process for the external packages for the FairRoot Project was s
 source scripts/functions.sh
 
 # if on lxplus
-if [ -d  /afs/cern.ch/sw/lcg/external/gcc/4.9/x86_64-slc6 ]
- source /afs/cern.ch/sw/lcg/external/gcc/4.9/x86_64-slc6/setup.sh
-fi
+case $HOSTNAME in 
+ (cern) source /afs/cern.ch/sw/lcg/external/gcc/4.9/x86_64-slc6/setup.sh
+esac
 
 # check if there was a parameter given to the script.
 # if yes then use some standard parameters and don't

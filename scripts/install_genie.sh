@@ -38,6 +38,10 @@ fi
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/lib/libGNuGamma-${GENIE_VERSION}.so
 
+if [ ! -d  $SIMPATH_INSTALL/share/genie/data ]; then
+ mkdir $SIMPATH_INSTALL/share/genie/data
+fi
+
 if (not_there $soft $checkfile); then
 
   cd $SIMPATH/generators/$soft
@@ -61,6 +65,8 @@ if (not_there $soft $checkfile); then
 
   $MAKE_command
   $MAKE_command install
+  # make command does not work, do it by hand
+  cp $SIMPATH/generators/$soft/lib/* $install_prefix/lib
 
   check_all_libraries $install_prefix/lib
   check_success $soft $checkfile
@@ -71,9 +77,6 @@ if [ ! -d  $SIMPATH_INSTALL/share/lhapdf/data ]; then
 fi
 cp $SIMPATH/generators/$soft/data/evgen/pdfs/GRV98lo_patched.LHgrid $SIMPATH_INSTALL/share/lhapdf/data/
 
-if [ ! -d  $SIMPATH_INSTALL/share/genie/data ]; then
- mkdir $SIMPATH_INSTALL/share/genie/data
-fi
 cp -r $SIMPATH/generators/$soft/data $SIMPATH_INSTALL/share/genie
 cp $SIMPATH/generators/$soft/src/*/*.pcm $SIMPATH_INSTALL/lib/
 
