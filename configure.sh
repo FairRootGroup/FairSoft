@@ -62,6 +62,14 @@ unset PLATFORM
 
 export SIMPATH=$PWD
 
+# if on lxplus
+if [[ $HOSTNAME == *"cern"* ]] 
+then
+ source /afs/cern.ch/sw/lcg/external/gcc/4.9/x86_64-slc6/setup.sh;
+ echo "discovered lxplus: take gcc4.9 from lcg" ;
+fi
+
+
 # Set the cache file name
 cache_file="config.cache"
 
@@ -72,11 +80,6 @@ logfile_lib=$PWD/libraries_$datum.log
 echo "The build process for the external packages for the FairRoot Project was started at" $datum | tee -a $logfile
 
 source scripts/functions.sh
-
-# if on lxplus
-case $HOSTNAME in 
- (cern) source /afs/cern.ch/sw/lcg/external/gcc/4.9/x86_64-slc6/setup.sh
-esac
 
 # check if there was a parameter given to the script.
 # if yes then use some standard parameters and don't

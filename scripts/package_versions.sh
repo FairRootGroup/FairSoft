@@ -34,8 +34,8 @@ export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10
 export MESAVERSION=MesaLib-7.10.3
 
 export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
-export GEANT4VERSION=geant4.10.01
-export GEANT4VERSIONp=Geant4-10.1.0
+export GEANT4VERSION=geant4.10.01.p02
+export GEANT4VERSIONp=Geant4-10.1.2
 
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 if [ "$build_root6" = "yes" ]; then
