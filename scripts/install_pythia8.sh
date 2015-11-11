@@ -56,8 +56,12 @@ then
   cp -r include/Pythia8 $install_prefix/include
  
   mkdir -p $install_prefix/share/pythia8
-  cp -r share/xmldoc $install_prefix/share/pythia8
- 
+  if [-d share/xmldoc ];
+  then
+   cp -r share/xmldoc $install_prefix/share/pythia8
+  else
+   cp -r xmldoc $install_prefix/share/pythia8
+  fi
   if [ "$platform" = "macosx" ];
   then
     cp lib/libpythia8.dylib $install_prefix/lib
