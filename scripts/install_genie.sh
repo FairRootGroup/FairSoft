@@ -38,10 +38,6 @@ fi
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/lib/libGNuGamma-${GENIE_VERSION}.so
 
-if [ ! -d  $SIMPATH_INSTALL/share/genie/data ]; then
- mkdir $SIMPATH_INSTALL/share/genie/data
-fi
-
 if (not_there $soft $checkfile); then
 
   cd $SIMPATH/generators/$soft
@@ -77,8 +73,12 @@ if [ ! -d  $SIMPATH_INSTALL/share/lhapdf/data ]; then
 fi
 cp $SIMPATH/generators/$soft/data/evgen/pdfs/GRV98lo_patched.LHgrid $SIMPATH_INSTALL/share/lhapdf/data/
 
+if [ ! -d  $SIMPATH_INSTALL/share/genie/data ]; then
+ mkdir $SIMPATH_INSTALL/share/genie/data
+fi
 cp -r $SIMPATH/generators/$soft/data $SIMPATH_INSTALL/share/genie
-cp $SIMPATH/generators/$soft/src/*/*.pcm $SIMPATH_INSTALL/lib/
-
+if [ -f $SIMPATH/generators/$soft/src/Algorithm/_ROOT_DICT_Algorithm_rdict.pcm ]; then
+ cp $SIMPATH/generators/$soft/src/*/*.pcm $SIMPATH_INSTALL/lib/
+fi
 cd  $SIMPATH
 return 1

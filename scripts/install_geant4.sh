@@ -88,6 +88,7 @@ then
         -DGEANT4_BUILD_VERBOSE_CODE=ON \
         $geant4_opengl \
         $install_data  $geant4_cpp ../
+        # -DCMAKE_BUILD_TYPE=Debug\
 
   $MAKE_command -j$number_of_processes  install
 
