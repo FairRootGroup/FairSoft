@@ -75,12 +75,6 @@ then
     export ROOTBUILD=debug
   fi
 
-  if [ "$compiler" = "intel" -a "$icc_version" = "10" ];
-  then
-    echo "*** Patching Makfiles.linuxicc " | tee -a $logfile
-    cp ../Makefile.linuxicc config
-  fi
-
   if [ "$build_for_grid" = "yes" ]
   then
     cp ../rootconfig_grid.sh  build_for_fair/rootconfig.sh
@@ -100,7 +94,7 @@ then
 
   # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
 #  mypatch ../root5_34_17_LLVM51.patch | tee -a $logfile
-  mypatch ../root5_34_17_linux_libc++.patch | tee -a $logfile
+#  mypatch ../root5_34_17_linux_libc++.patch | tee -a $logfile
 
   # needed to solve problem with the TGeoManger for some CBM and Panda geometries
   mypatch ../root_TGeoShape.patch
@@ -112,13 +106,11 @@ then
   if [ "$build_root6" = "yes" ]; then
     mypatch ../root6_xrootd.patch
     mypatch ../root6_00_find_xrootd.patch
-    mypatch ../root6_lzma.patch
   fi
 
 
   if [ "$build_root6" = "no" ]; then
     mypatch ../root5_34_find_xrootd.patch
-    mypatch ../root5_lzma.patch
   fi
 
   cd build_for_fair/
