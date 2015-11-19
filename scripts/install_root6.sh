@@ -18,17 +18,6 @@ then
 
   cd $SIMPATH/tools/root
   git checkout -b $ROOTVERSION $ROOTVERSION
-
-  # version from patches branch needed when using gcc5
-  # with the next root release this is not needed any longer
-  if [ "$compiler" = "gcc" -a "$build_root6" = "no" ]; then
-    gcc_major_version=$(gcc -dumpversion | cut -c 1)
-    gcc_minor_version=$(gcc -dumpversion | cut -c 3)
-    if [ $gcc_major_version -ge 5 ];
-    then
-      git checkout 6c5ee53c9df9a5f50ae2b2d7b1fda680342e28b4
-    fi
-  fi
 fi
 
 install_prefix=$SIMPATH_INSTALL
