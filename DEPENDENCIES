@@ -49,7 +49,7 @@ zypper install cmake gcc gcc-c++ gcc-fortran make patch sed \
   curl bzip2 gzip unzip tar libexpat-devel subversion git \
   flex bison makedepend lsb-release python-devel \
   libxml2-devel libopenssl-devel krb5-devel wget \
-  libcurl-devel
+  libcurl-devel automake autoconf libtool
 
 Fedora, Redhat, Scientific Linuc and other Redhat based systems
 
@@ -58,14 +58,15 @@ yum install cmake gcc gcc-c++ gcc-gfortran make patch sed \
   libXmu-devel mesa-libGLU-devel mesa-libGL-devel ncurses-devel \
   curl bzip2 libbz2-dev gzip unzip tar expat-devel \
   subversion git flex bison imake redhat-lsb-core \
-  python-devel libxml2-devel wget openssl-devel curl-devel
+  python-devel libxml2-devel wget openssl-devel curl-devel \
+  automake autoconf libtool
 
-Fedora22
+Fedora22/23
 
 dnf install cmake gcc gcc-c++ gcc-gfortran make patch sed \
   libX11-devel libXft-devel libXpm-devel libXext-devel \
   libXmu-devel mesa-libGLU-devel mesa-libGL-devel ncurses-devel \
   curl bzip2 bzip2-devel gzip unzip tar expat-devel \
   subversion git flex bison imake redhat-lsb-core \
-  python-devel libxml2-devel wget openssl-devel curl-devel
-
+  python-devel libxml2-devel wget openssl-devel curl-devel \
+  automake autoconf libtool
