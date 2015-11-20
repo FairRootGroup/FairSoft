@@ -42,6 +42,8 @@ then
   mypatch ../geant3_geane.patch | tee -a $logfile
   mypatch ../Geant3_CMake.patch | tee -a $logfile
 
+  mypatch ../geant3_structs.patch | tee -a $logfile
+
   if [ ! -f data/xsneut.dat ];
   then
     cp ../xsneut.dat.bz2 data
