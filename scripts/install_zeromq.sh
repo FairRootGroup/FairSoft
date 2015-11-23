@@ -24,7 +24,15 @@ then
 
 #    mypatch ../zeromq_clang_c++11.patch
 
-    PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
+    distribution=$(lsb_release -is)
+    version=$(lsb_release -rs | cut -f1 -d.)     
+
+    if [ "$distribution$version" = "ScientificCERNSLC6" ]; then
+      PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static --without-libsodium
+    else
+      PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
+    fi
+    
     make
     make install
 
