@@ -4,7 +4,8 @@ flavors. This dependencies are needed to be able to install FairSoft.
 The following programs/compiler are needed:
 
 cmake gcc g++ gfortran make patch sed curl
-bzip2 gzip unzip tar subversion git
+bzip2 gzip unzip tar subversion git lsb_release
+automake autoconf libtool
 
 The following development packages are needed
 
