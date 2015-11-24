@@ -67,6 +67,7 @@ if (not_there $soft $checkfile); then
   $MAKE_command install
   # make command does not work, do it by hand
   cp $SIMPATH/generators/$soft/lib/* $install_prefix/lib
+  cp $SIMPATH/generators/$soft/bin/* $install_prefix/bin
 
   check_all_libraries $install_prefix/lib
   check_success $soft $checkfile
