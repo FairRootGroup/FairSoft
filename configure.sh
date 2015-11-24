@@ -326,6 +326,13 @@ then
   source scripts/install_millepede.sh
 fi
 
+##################### LibSodium ##################################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_sodium.sh
+fi
+
 ##################### ZeroMQ ##################################################
 
 if [ "$check" = "1" ];

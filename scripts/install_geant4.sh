@@ -47,7 +47,7 @@ then
     mypatch ../geant4.10.00.p02_cmake.patch
     if [ "$compiler" = "Clang" ]; then
       if clang --version | grep -q "version 7" ; then
-        patch cmake/Modules/Geant4MakeRules_cxx.cmake ../geant4.10.00_clang7_osx.patch
+        mypatch ../geant4.10.00_clang7_osx.patch
       fi
     fi
   fi
@@ -88,7 +88,6 @@ then
         -DGEANT4_BUILD_VERBOSE_CODE=ON \
         $geant4_opengl \
         $install_data  $geant4_cpp ../
-        # -DCMAKE_BUILD_TYPE=Debug\
 
   $MAKE_command -j$number_of_processes  install
 

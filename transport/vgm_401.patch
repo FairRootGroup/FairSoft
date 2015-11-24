@@ -1,0 +1,22 @@
+--- ../vgm-4.01_new/cmake/./FindROOT.cmake	2014-11-13 17:21:40.000000000 +0100
++++ cmake/FindROOT.cmake	2014-11-13 16:36:20.000000000 +0100
+@@ -34,7 +34,7 @@
+ # or path defined via ROOTSYS environment variable
+ 
+ find_program(ROOT_CONFIG_EXECUTABLE root-config PATHS
+-  $ROOT_DIR/bin
++  ${ROOT_DIR}/bin
+   $ENV{ROOTSYS}/bin
+   )
+ 
+--- ../vgm-4.01_new/packages/Geant4GM/CMakeLists.txt	2014-11-13 17:21:47.000000000 +0100
++++ packages/Geant4GM/CMakeLists.txt	2014-11-13 17:06:18.000000000 +0100
+@@ -28,7 +28,7 @@
+ #---Add library-----------------------------------------------------------------
+ file(GLOB sources source/*/*.cxx)
+ add_library(Geant4GM ${sources})
+-target_link_libraries(Geant4GM BaseVGM ClhepVGM)
++target_link_libraries(Geant4GM BaseVGM ClhepVGM ${Geant4_LIBRARIES})
+ 
+ #----Installation---------------------------------------------------------------
+ install(DIRECTORY include/ DESTINATION include  PATTERN ".svn" EXCLUDE)

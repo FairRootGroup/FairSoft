@@ -39,7 +39,7 @@ then
     _icu_path=""
     if [ "$compiler" = "intel" ];
     then
-      toolset=intel
+      toolset=intel-linux
     elif [ "$compiler" = "PGI" ];
     then
       toolset=pgi

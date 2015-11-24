@@ -24,7 +24,7 @@ then
 
 #    mypatch ../zeromq_clang_c++11.patch
 
-    ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
+    PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
     make
     make install
 

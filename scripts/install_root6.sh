@@ -18,17 +18,6 @@ then
 
   cd $SIMPATH/tools/root
   git checkout -b $ROOTVERSION $ROOTVERSION
-
-  # version from patches branch needed when using gcc5
-  # with the next root release this is not needed any longer
-  if [ "$compiler" = "gcc" -a "$build_root6" = "no" ]; then
-    gcc_major_version=$(gcc -dumpversion | cut -c 1)
-    gcc_minor_version=$(gcc -dumpversion | cut -c 3)
-    if [ $gcc_major_version -ge 5 ];
-    then
-      git checkout 6c5ee53c9df9a5f50ae2b2d7b1fda680342e28b4
-    fi
-  fi
 fi
 
 install_prefix=$SIMPATH_INSTALL
@@ -75,12 +64,6 @@ then
     export ROOTBUILD=debug
   fi
 
-  if [ "$compiler" = "intel" -a "$icc_version" = "10" ];
-  then
-    echo "*** Patching Makfiles.linuxicc " | tee -a $logfile
-    cp ../Makefile.linuxicc config
-  fi
-
   if [ "$build_for_grid" = "yes" ]
   then
     cp ../rootconfig_grid.sh  build_for_fair/rootconfig.sh
@@ -100,7 +83,7 @@ then
 
   # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
 #  mypatch ../root5_34_17_LLVM51.patch | tee -a $logfile
-  mypatch ../root5_34_17_linux_libc++.patch | tee -a $logfile
+#  mypatch ../root5_34_17_linux_libc++.patch | tee -a $logfile
 
   # needed to solve problem with the TGeoManger for some CBM and Panda geometries
   mypatch ../root_TGeoShape.patch
@@ -112,45 +95,17 @@ then
   if [ "$build_root6" = "yes" ]; then
     mypatch ../root6_xrootd.patch
     mypatch ../root6_00_find_xrootd.patch
-    mypatch ../root6_lzma.patch
   fi
 
 
   if [ "$build_root6" = "no" ]; then
     mypatch ../root5_34_find_xrootd.patch
-    mypatch ../root5_lzma.patch
   fi
 
   cd build_for_fair/
   . rootconfig.sh
 
-  #This workaround  to run make in a loop is
-  #needed because of problems with the intel compiler.
-  #Due to some internal problems of icc (my interpretation)
-  #there are crashes of the compilation process. After
-  #restarting the make process the compilation passes the
-  #problematic file and may crash at a differnt point.
-  #If there are more than 10 crashes the script is stoped
-
-  if [ "$compiler" = "intel" ];
-  then
-    counter=0
-    until [ -e $checkfile ];
-    do
-      counter=$[$counter+1]
-      touch run_$counter
-      if [ $counter -gt 10 ];
-      then
-        echo "There is a problem compiling root"  | tee -a $logfile
-        echo "This is the " $counter " try to compile"  | tee -a $logfile
-        echo "Stop the script now"  | tee -a $logfile
-        exit 1
-      fi
-      $MAKE_command -j$number_of_processes
-    done
-  else
-    $MAKE_command -j$number_of_processes
-  fi
+  $MAKE_command -j$number_of_processes
 
   cd $SIMPATH/tools/root/etc/vmc
 

@@ -93,24 +93,24 @@ directory of FairSoft.
 
 ##Included Packages
 
-* cmake 3.1.0 (only installed if installed version is to old)
+* cmake 3.3.2 (only installed if installed version is to old)
 * gtest  1.7.0
 * gsl 1.16
-* boost 1_58_0
+* boost 1_59_0
 * Pythia6 416
 * HepMC 2.06.09
-* Pythia8 183
-* Geant4 10.01
+* Pythia8 212
+* Geant4 10.01.p2
 * xrootd 4.1.1
-* ROOT v5.34.32 or v6.04.00
+* ROOT v5.34.34 or v6.04.02
 * Pluto v5.37
 * Geant321+_vmc v2-0
-* VGM v4-2
-* G4VMC v3-1-p1
-* MillePede V04-01-01
-* ZeroMQ 4.1.0
+* VGM v4-3
+* G4VMC v3-2
+* MillePede V04-03-01
+* ZeroMQ 4.1.3
 * Protocoll Buffers 2.6.1
-* Nano Message  0.5-beta
+* Nano Message  0.6-beta
 
 In case the python bindings are build the following additional packages will be installed
 
