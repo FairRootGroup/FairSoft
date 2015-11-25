@@ -1,0 +1,23 @@
+--- cmake/Geant3BuildLibrary.cmake_orig	2015-11-25 16:02:33.018014755 +0100
++++ cmake/Geant3BuildLibrary.cmake	2015-11-25 16:08:30.814015982 +0100
+@@ -93,7 +93,7 @@
+ file(GLOB headers ${PROJECT_SOURCE_DIR}/TGeant3/*.h)
+ 
+ #---Add definitions-------------------------------------------------------------
+-add_definitions(-DCERNLIB_LXIA64 -DCERNLIB_BLDLIB -DCERNLIB_CZ)
++add_definitions(-DCERNLIB_BLDLIB -DCERNLIB_CZ)
+ # Architecture dependent not ported flags:
+ # -DCERNLIB_LINUX (linux, linuxx8664icc, linuxicc, macosx, macosxxlc, macosicc)
+ # -DCERNLIB_PPC (macosx64, macosxxlc, macosicc)
+@@ -101,6 +101,11 @@
+ # -DCERNLIB_DECS (alphagcc, alphacxx6)
+ # -DCERNLIB_SUN (solarisCC5)
+ # -DCERNLIB_HPUX (hpuxacc)
++if (CMAKE_SIZEOF_VOID_P EQUAL 8)
++  add_definitions(-DCERNLIB_LXIA64)
++else()
++  add_definitions(-DCERNLIB_LINUX)
++endif()
+ if (${CMAKE_Fortran_COMPILER} MATCHES gfortran+)
+   add_definitions(-DCERNLIB_GFORTRAN)
+ endif()
