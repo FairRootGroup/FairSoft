@@ -72,7 +72,7 @@ then
  export PYTHON_EXECUTABLE=/afs/cern.ch/sw/lcg/releases/LCG_79/Python/2.7.9.p1/x86_64-slc6-gcc49-opt/bin/python2.7 
  echo "discovered lxplus: take gcc4.9 from lcg" ;
 else
- PYTHON_LIBRARY=default
+ export PYTHON_LIBRARY=default
 fi
 
 

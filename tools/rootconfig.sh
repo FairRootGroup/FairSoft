@@ -66,7 +66,7 @@
       
      etc_string="-DCMAKE_INSTALL_SYSCONFDIR=$SIMPATH_INSTALL/share/root/etc"
      prefix_string="-DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL"
-     if [ "PYTHON_LIBRARY" = "default" ];
+     if [ $PYTHON_LIBRARY == "default" ];
       then
        non_default_python_loc=""
       else   
@@ -74,8 +74,6 @@
      fi
      cmake ../ -Dsoversion=ON $PYTHONBUILD $XROOTD  $ROOFIT \
                      $non_default_python_loc \
-                    -DPYTHON_LIBRARY=$PYTHON_LIBRARY \
-                    -DPYTHON_EXECUTABLE=$PYTHON_EXECUTABLE \
                     -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
 		    -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
                     -Dbuiltin-freetype=ON $OPENGL \
