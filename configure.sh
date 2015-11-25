@@ -68,7 +68,7 @@ then
  unset LD_LIBRARY_PATH 
  source /afs/cern.ch/sw/lcg/external/gcc/4.9/x86_64-slc6/setup.sh;
  export PYTHON_LIBRARY=/afs/cern.ch/sw/lcg/releases/LCG_79/Python/2.7.9.p1/x86_64-slc6-gcc49-opt/lib
- export PYTHON_INCLUDE_DIR=/afs/cern.ch/sw/lcg/releases/LCG_79/Python/2.7.9.p1/x86_64-slc6-gcc49-opt/include
+ export PYTHON_INCLUDE_DIR=/afs/cern.ch/sw/lcg/releases/LCG_79/Python/2.7.9.p1/x86_64-slc6-gcc49-opt/include/python2.7
  export PYTHON_EXECUTABLE=/afs/cern.ch/sw/lcg/releases/LCG_79/Python/2.7.9.p1/x86_64-slc6-gcc49-opt/bin/python2.7 
  echo "discovered lxplus: take gcc4.9 from lcg" ;
 else
