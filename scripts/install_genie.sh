@@ -74,8 +74,8 @@ if [ ! -d  $SIMPATH_INSTALL/share/lhapdf/data ]; then
 fi
 cp $SIMPATH/generators/$soft/data/evgen/pdfs/GRV98lo_patched.LHgrid $SIMPATH_INSTALL/share/lhapdf/data/
 
-if [ ! -d  $SIMPATH_INSTALL/share/genie/data ]; then
- mkdir $SIMPATH_INSTALL/share/genie/data
+if [ ! -d  $SIMPATH_INSTALL/share/genie ]; then
+ mkdir $SIMPATH_INSTALL/share/genie
 fi
 cp -r $SIMPATH/generators/$soft/data $SIMPATH_INSTALL/share/genie
 if [ -f $SIMPATH/generators/$soft/src/Algorithm/_ROOT_DICT_Algorithm_rdict.pcm ]; then

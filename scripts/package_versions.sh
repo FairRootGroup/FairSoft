@@ -66,6 +66,9 @@ export GEANT4VMCBRANCH=v3-2
 export MILLEPEDE_LOCATION="http://svnsrv.desy.de/public/MillepedeII/tags/"
 export MILLEPEDE_VERSION=V04-03-01
 
+export SODIUM_LOCATION="https://github.com/jedisct1/libsodium"
+export SODIUMBRANCH=1.0.3
+
 export ZEROMQ_LOCATION="http://download.zeromq.org/"
 export ZEROMQVERSION=4.1.3
 export ZEROMQDIR=4.1.3
