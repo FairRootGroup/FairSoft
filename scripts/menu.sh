@@ -84,9 +84,7 @@ done
 
 clear
 echo
-echo "Would you like to install ROOT 6 instead of ROOT 5?"
-echo "Choosing 'Yes' will build ROOT 6 for testing purposes"
-echo "The default option is 'No' which builds the well tested ROOT 5 package."
+echo "Choosing 'Yes' will build ROOT 6 'No' will build old ROOT 5"
 PS3='Please enter a choice from the above menu: '
 
 select CHOICE in "Yes" "No" Quit

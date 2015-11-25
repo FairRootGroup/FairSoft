@@ -56,7 +56,10 @@ fi
 if (not_there root $checkfile);
 then
   cd $SIMPATH/tools/root
-  mkdir build_for_fair
+  if [ ! -d  build_for_fair ];
+  then
+   mkdir build_for_fair
+  fi
 
   if [ "$debug" = "yes" ];
   then
@@ -101,7 +104,6 @@ then
   if [ "$build_root6" = "no" ]; then
     mypatch ../root5_34_find_xrootd.patch
   fi
-
   cd build_for_fair/
   . rootconfig.sh
 
