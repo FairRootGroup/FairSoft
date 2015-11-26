@@ -63,7 +63,7 @@ then
            -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
            -DROOT_DIR=$SIMPATH_INSTALL
 
-  make install -j$number_of_processes VERBOSE=1
+  make install -j$number_of_processes
 
   if [ "$platform" = "macosx" ];
   then
