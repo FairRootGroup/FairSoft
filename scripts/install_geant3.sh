@@ -42,6 +42,8 @@ then
   mypatch ../geant3_geane.patch | tee -a $logfile
   mypatch ../Geant3_CMake.patch | tee -a $logfile
 
+  mypatch ../geant3_structs.patch | tee -a $logfile
+
   if [ ! -f data/xsneut.dat ];
   then
     cp ../xsneut.dat.bz2 data
@@ -53,13 +55,15 @@ then
     mypatch ../geant3_root6.patch
   fi  
 
+  mypatch ../Geant3_32bit.patch
+  
   mkdir build
   cd build
   cmake .. -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
            -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
            -DROOT_DIR=$SIMPATH_INSTALL
 
-  make install -j$number_of_processes
+  make install -j$number_of_processes VERBOSE=1
 
   if [ "$platform" = "macosx" ];
   then
