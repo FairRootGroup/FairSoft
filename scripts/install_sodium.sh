@@ -16,7 +16,7 @@ if (not_there LibSodium $checkfile);
 then
 
   cd $SIMPATH/basics/libsodium
-
+  mypatch ../libsodium.patch
   mkdir build
   
   autoreconf -i
