@@ -108,7 +108,7 @@ then
   . rootconfig.sh
 
   $MAKE_command -j$number_of_processes
-
+  echo "make finished" 
   cd $SIMPATH/tools/root/etc/vmc
 
   if [ "$arch" = "linuxx8664icc" ];
@@ -144,7 +144,7 @@ then
   fi
 
   cd $SIMPATH/tools/root/build_for_fair/
-
+  echo "start install"
   $MAKE_command install
 
   check_all_libraries $install_prefix/lib

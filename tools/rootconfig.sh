@@ -85,7 +85,15 @@
                     -Dcintex=OFF \
                     -Dvc=ON -Dhttp=ON \
                     -DGSL_DIR=$SIMPATH_INSTALL \
+                    -DCMAKE_BUILD_TYPE=Optimized \
                     -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
                     -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string \
+                    -DCMAKE_INSTALL_MACRODIR=$SIMPATH_INSTALL/share/root/macros \
+                    -DCMAKE_INSTALL_ICONDIR=$SIMPATH_INSTALL/share/root/icons \
+                    -DCMAKE_INSTALL_FONTDIR=$SIMPATH_INSTALL/share/root/fonts \
+                    -DCMAKE_INSTALL_CMAKEDIR=$SIMPATH_INSTALL/share/root/cmake \
+                    -DCMAKE_INSTALL_INCLUDEDIR=$SIMPATH_INSTALL/include/root \
+                    -DCMAKE_INSTALL_LIBDIR=$SIMPATH_INSTALL/lib/root \
+                    -DCMAKE_INSTALL_BINDIR=$SIMPATH_INSTALL/bin \
                     $etc_string -Dgnuinstall=ON $debugstring
 

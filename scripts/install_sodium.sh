@@ -1,5 +1,12 @@
 #!/bin/bash
 
+distribution=$(lsb_release -is)
+version=$(lsb_release -rs | cut -f1 -d.)
+
+if [ "$distribution$version" = "ScientificCERNSLC6" ]; then
+  return 1
+fi
+
 
 if [ ! -d  $SIMPATH/basics/libsodium ]; then
   cd $SIMPATH/basics
@@ -16,7 +23,6 @@ if (not_there LibSodium $checkfile);
 then
 
   cd $SIMPATH/basics/libsodium
-  mypatch ../libsodium.patch
   mkdir build
   
   autoreconf -i
