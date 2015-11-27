@@ -1,0 +1,78 @@
+--- cmake/modules/FindXROOTD.cmake_orig	2015-07-09 11:30:30.533194689 +0200
++++ cmake/modules/FindXROOTD.cmake	2015-07-09 11:33:23.273521898 +0200
+@@ -21,6 +21,7 @@
+ find_path(XROOTD_INCLUDE_DIR NAMES XrdVersion.hh
+   HINTS ${searchpath}
+   PATH_SUFFIXES include include/xrootd
++  NO_DEFAULT_PATH
+ )
+ 
+ if (XROOTD_INCLUDE_DIR)
+@@ -64,6 +65,7 @@
+      find_path (XROOTD_INC_PRIV_DIR NAMES XrdClientConn.hh
+         HINTS ${searchpath}
+         PATH_SUFFIXES include/private/XrdClient include/xrootd/private/XrdClient
++        NO_DEFAULT_PATH
+      )
+      if (XROOTD_INC_PRIV_DIR)
+         set(XROOTD_INCLUDE_DIRS ${XROOTD_INCLUDE_DIR} ${XROOTD_INCLUDE_DIR}/private)
+@@ -81,7 +83,8 @@
+       find_library(XROOTD_${l}_LIBRARY
+          NAMES ${l}
+          HINTS ${searchpath}
+-         PATH_SUFFIXES lib)
++         PATH_SUFFIXES lib
++         NO_DEFAULT_PATH)
+       list(APPEND XROOTD_LIBRARIES ${XROOTD_${l}_LIBRARY})
+     endforeach()
+ 
+@@ -89,7 +92,8 @@
+       find_library(XROOTD_XrdNetUtil_LIBRARY
+         NAMES XrdNetUtil
+         HINTS ${searchpath}
+-        PATH_SUFFIXES lib)
++        PATH_SUFFIXES lib
++        NO_DEFAULT_PATH)
+       list(APPEND XROOTD_LIBRARIES ${XROOTD_XrdNetUtil_LIBRARY})
+     endif ()
+   else()
+@@ -98,7 +102,8 @@
+     find_library(XROOTD_XrdMain_LIBRARY
+        NAMES XrdMain
+        HINTS ${searchpath}
+-       PATH_SUFFIXES lib)
++       PATH_SUFFIXES lib
++       NO_DEFAULT_PATH)
+     if (XROOTD_XrdMain_LIBRARY)
+        list(APPEND XROOTD_LIBRARIES ${XROOTD_XrdMain_LIBRARY})
+     else ()
+@@ -112,7 +117,8 @@
+     find_library(XROOTD_XrdUtils_LIBRARY
+        NAMES XrdUtils
+        HINTS ${searchpath}
+-       PATH_SUFFIXES lib)
++       PATH_SUFFIXES lib
++       NO_DEFAULT_PATH)
+     if (XROOTD_XrdUtils_LIBRARY)
+        list(APPEND XROOTD_LIBRARIES ${XROOTD_XrdUtils_LIBRARY})
+     endif ()
+@@ -121,7 +127,8 @@
+     find_library(XROOTD_XrdClient_LIBRARY
+        NAMES XrdClient
+        HINTS ${searchpath}
+-       PATH_SUFFIXES lib)
++       PATH_SUFFIXES lib
++       NO_DEFAULT_PATH)
+     if (XROOTD_XrdClient_LIBRARY)
+        list(APPEND XROOTD_LIBRARIES ${XROOTD_XrdClient_LIBRARY})
+     else ()
+@@ -136,7 +143,8 @@
+        find_library(XROOTD_XrdCl_LIBRARY
+           NAMES XrdCl
+           HINTS ${searchpath}
+-          PATH_SUFFIXES lib)
++          PATH_SUFFIXES lib
++          NO_DEFAULT_PATH)
+        if (XROOTD_XrdCl_LIBRARY)
+           list(APPEND XROOTD_LIBRARIES ${XROOTD_XrdCl_LIBRARY})
+        endif ()

@@ -6,7 +6,7 @@ then
   cd $SIMPATH/basics
   if [ ! -e $PROTOBUF_VERSION.tar.gz ];
   then
-    echo "*** Downloading gtest sources ***"
+    echo "*** Downloading protobuf sources ***"
     download_file $PROTOBUF_LOCATION/$PROTOBUF_VERSION.tar.gz
   fi
   untar protobuf $PROTOBUF_VERSION.tar.gz
@@ -23,7 +23,11 @@ checkfile=$install_prefix/bin/protoc
 if (not_there protobuf $checkfile);
 then
     cd $SIMPATH/basics/protobuf
-    
+
+    if [ $isMacOsx108 ]; then
+      export LIBS="-lc++"
+    fi
+
     ./configure --prefix=$install_prefix
 
     make -j$number_of_processes
@@ -35,6 +39,7 @@ then
     check_success protobuf $checkfile
     check=$?
 
+    unset LIBS
 fi
 
 cd $SIMPATH

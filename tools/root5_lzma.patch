@@ -1,0 +1,11 @@
+--- cmake/modules/SearchInstalledSoftware.cmake.orig	2015-07-09 19:33:58.170147693 +0200
++++ cmake/modules/SearchInstalledSoftware.cmake	2015-07-09 19:34:48.210104854 +0200
+@@ -108,7 +108,7 @@
+       URL ${CMAKE_SOURCE_DIR}/core/lzma/src/xz-${lzma_version}.tar.gz 
+       URL_MD5 858405e79590e9b05634c399497f4ba7
+       INSTALL_DIR ${CMAKE_BINARY_DIR}
+-      CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix <INSTALL_DIR> --with-pic --disable-shared CFLAGS=${LZMA_CFLAGS}
++      CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix <INSTALL_DIR> --libdir <INSTALL_DIR>/lib --with-pic --disable-shared CFLAGS=${LZMA_CFLAGS}
+       BUILD_IN_SOURCE 1)
+     set(LZMA_LIBRARIES ${CMAKE_BINARY_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}lzma${CMAKE_STATIC_LIBRARY_SUFFIX})
+     set(LZMA_INCLUDE_DIR ${CMAKE_BINARY_DIR}/include)

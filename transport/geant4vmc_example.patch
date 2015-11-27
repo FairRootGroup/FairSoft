@@ -1,0 +1,13 @@
+--- examples/A01/src/A01RootDetectorConstruction.cxx
++++ examples/A01/src/A01RootDetectorConstruction.cxx
+@@ -23,6 +23,10 @@
+ #include "A01RootDetectorConstruction.h"
+ #include "A01LocalMagField.h"
+ 
++using std::cout;
++using std::cerr;
++using std::endl;
++
+ /// \cond CLASSIMP
+ ClassImp(A01RootDetectorConstruction)
+ /// \endcond

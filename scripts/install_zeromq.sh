@@ -1,19 +1,19 @@
 #!/bin/bash
 
 if [ ! -d  $SIMPATH/basics/zeromq ];
-then 
+then
   cd $SIMPATH/basics
   if [ ! -e zeromq-$ZEROMQVERSION.tar.gz ];
   then
     echo "*** Downloading zeromq sources ***"
     download_file $ZEROMQ_LOCATION/zeromq-$ZEROMQVERSION.tar.gz
   fi
-  untar zeromq zeromq-$ZEROMQVERSION.tar.gz 
-  if [ -d zeromq-$ZEROMQVERSION ]; 
+  untar zeromq zeromq-$ZEROMQVERSION.tar.gz
+  if [ -d zeromq-$ZEROMQDIR ];
   then
-    ln -s zeromq-$ZEROMQVERSION zeromq  
+    ln -s zeromq-$ZEROMQDIR zeromq
   fi
-fi 
+fi
 
 install_prefix=$SIMPATH_INSTALL
 checkfile=$install_prefix/lib/libzmq.a
@@ -22,9 +22,18 @@ if (not_there zeromq $checkfile);
 then
     cd $SIMPATH/basics/zeromq
 
-    mypatch ../zeromq_clang_c++11.patch
+#    mypatch ../zeromq_clang_c++11.patch
 
-    ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
+    PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
+    distribution=$(lsb_release -is)
+    version=$(lsb_release -rs | cut -f1 -d.)     
+
+    if [ "$distribution$version" = "ScientificCERNSLC6" ]; then
+      PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static --without-libsodium
+    else
+      PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
+    fi    
+
     make
     make install
 
@@ -32,7 +41,7 @@ then
 
     check_success zeromq $checkfile
     check=$?
-    
+
 
     if [ "$platform" = "macosx" ];
     then
@@ -41,7 +50,7 @@ then
     fi
 fi
 
-cp $SIMPATH/basics/zmq.hpp  $install_prefix/include/zmq.hpp 
+#cp $SIMPATH/basics/zmq.hpp  $install_prefix/include/zmq.hpp
 cd $SIMPATH
 
 return 1

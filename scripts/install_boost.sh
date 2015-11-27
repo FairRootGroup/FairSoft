@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -d  $SIMPATH/basics/boost ];
-then 
+then
   cd $SIMPATH/basics
   if [ ! -e $BOOSTVERSION.tar.bz2 ];
   then
@@ -9,11 +9,11 @@ then
     download_file $BOOST_LOCATION/$BOOSTVERSION.tar.bz2
   fi
   untar boost $BOOSTVERSION.tar.bz2
-  if [ -d  $BOOSTVERSION ]; 
+  if [ -d  $BOOSTVERSION ];
   then
     ln -s $BOOSTVERSION boost
   fi
-fi 
+fi
 
 if [ "$check" = "1" ];
 then
@@ -24,22 +24,25 @@ then
   then
     cd $SIMPATH/basics/boost
 
-    # patch file toavoid problems with newer versions of glibc
-    mypatch ../boost_glibc.patch | tee -a $logfile
-	
+    if [ "$platform" = "macosx" ];
+    then
+      mysed "-install_name \"" "-install_name \"$install_prefix/lib/" tools/build/src/tools/darwin.jam true
+      mysed "-install_name \"" "-install_name \"$install_prefix/lib/" tools/build/src/tools/clang-darwin.jam true
+    fi
+
     # boost only support up to 64 parallel processes
     tmp_nop=$number_of_processes
     if [ $number_of_processes -gt 64 ];then
       number_of_processes=64
     fi
-    
+
     _icu_path=""
     if [ "$compiler" = "intel" ];
     then
-      toolset=intel
+      toolset=intel-linux
     elif [ "$compiler" = "PGI" ];
     then
-      toolset=pgi 
+      toolset=pgi
     elif [ "$compiler" = "Clang" ];
     then
       toolset=clang
@@ -53,7 +56,7 @@ then
         toolset=darwin
       else
         toolset=gcc
-      fi  
+      fi
     fi
 
     if [ $hascxx11 ];
@@ -62,14 +65,14 @@ then
       if [ $haslibcxx ];
       then
          cxxflags="$cxxflags -stdlib=libc++"
-      fi   
+      fi
       ./bootstrap.sh cxxflags="$cxxflags" linkflags="$cxxflags" --with-toolset=$toolset
       ./b2 ${_icu_path} cxxflags="$cxxflags" linkflags="$cxxflags"  --build-dir=$PWD/tmp --build-type=minimal --toolset=$toolset --prefix=$install_prefix  --layout=system -j $number_of_processes install
     else
       ./bootstrap.sh --with-toolset=$toolset
       ./b2 --build-dir=$PWD/tmp --build-type=minimal --toolset=$toolset --prefix=$install_prefix  --layout=system -j $number_of_processes install
     fi
-     
+
     if [ "$platform" = "macosx" ];
     then
       cd  $install_prefix/lib
@@ -82,7 +85,7 @@ then
     check=$?
 
     number_of_processes=$tmp_nop
-		
+
   fi
 fi
 

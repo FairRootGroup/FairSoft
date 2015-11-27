@@ -11,8 +11,8 @@ function not_there {
     files=$*
     retval=0
     for file in $files;do
-      if [ -e $file ];     
-      then 
+      if [ -e $file ];
+      then
         echo "*** Package $pack is OK ***" | tee -a $logfile
         return 1
       fi
@@ -29,7 +29,7 @@ function untar {
     pack=$1
     tarf=$2
     if [ -d $pack ];
-    then 
+    then
        echo "*** Package $pack already unpacked ***" | tee -a $logfile
     else
        echo "*** Unpacking $tarf .............." | tee -a $logfile
@@ -46,18 +46,18 @@ function untar {
            unzip $tarf
          else
 	   echo "--E-- Cannot unpack package $pack"
-           exit 
+           exit
          fi
        else
          if [ "$(file $tarf | grep -c gzip)" = "1" ];
          then
-            /usr/sfw/bin/gtar xzf $tarf 
+            /usr/sfw/bin/gtar xzf $tarf
          elif [ "$(file $tarf | grep -c bzip2)" = "1" ];
          then
-            /usr/sfw/bin/gtar xjf $tarf 
+            /usr/sfw/bin/gtar xjf $tarf
          else
 	   echo "--E-- Cannot unpack package $pack"
-           exit 
+           exit
          fi
        fi
     fi
@@ -85,7 +85,7 @@ function check_success {
 # file is created and the information about the aplied patches is
 # saved. When runing the script again it is checked if the patch
 # was already aplied. If this is the case no action is taken, else
-# the patch is applied 
+# the patch is applied
 function mypatch {
   patch_full_file=$1
   patch_file=$(basename "$patch_full_file")
@@ -107,12 +107,12 @@ function mypatch {
 # return error code
 # first parameter is the text to search for, the second is the
 # replacement and the third one defines the filename
-# with the fourth on defines if the the string 
+# with the fourth on defines if the the string
 # contains a /
 function mysed {
 
     # Assert that we got enough arguments
-    if [ $# -lt 3 ]; 
+    if [ $# -lt 3 ];
     then
       echo "mysed: 3 or 4 arguments needed"
       echo "Script was called only with $# arguments"
@@ -121,7 +121,7 @@ function mysed {
       echo "Filename    : $3"
       if [ $# -eq 4 ];
       then
-        echo "Option    : $4"       
+        echo "Option    : $4"
       fi
       return 1
     fi
@@ -134,19 +134,19 @@ function mysed {
       has_slash=yes
     fi
 
- 
+
    if [ "$platform" = "linux" ];
     then
       if [ "$has_slash" = "yes" ];
-      then 
-        sed -e "s#$old#$new#g" -i'' $change_file 
+      then
+        sed -e "s#$old#$new#g" -i'' $change_file
       else
         sed -e "s/$old/$new/g" -i'' $change_file
       fi
     elif [ "$platform" = "macosx" ];
     then
       if [ "$has_slash" = "yes" ];
-      then 
+      then
         sed -e "s#$old#$new#g" -i '' $change_file
       else
         sed -e "s/$old/$new/g" -i '' $change_file
@@ -155,12 +155,12 @@ function mysed {
     then
       mv $change_file tmpfile
       if [ "$has_slash" = "yes" ];
-      then 
+      then
         sed -e "s#$old#$new#g" tmpfile > $change_file
       else
         sed -e "s/$old/$new/g" tmpfile > $change_file
       fi
-      rm tmpfile     
+      rm tmpfile
     fi
 }
 
@@ -224,6 +224,14 @@ function check_variables {
   else
     check_yes_no build_python
   fi
+  if [ "$build_root6" = "" ]; then
+    echo "*** It is not defined in the input file if root6 should be installed."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: build_root6=[no/yes]"
+    exit 1
+  else
+    check_yes_no build_root6
+  fi
   if [ "$install_sim" = "" ]; then
     echo "*** It is not defined in the input file if all tools for simulation should be installed."
     echo "*** Please add the missing definition in the input file."
@@ -238,7 +246,7 @@ function check_variables {
     echo "*** e.g.: SIMPATH_INSTALL=<installation directory>"
     exit 1
   else
-    # expand variables, which could be in the filepath. 
+    # expand variables, which could be in the filepath.
     # A example is if $PWD is in the path
     eval SIMPATH_INSTALL=$SIMPATH_INSTALL
     #check if the user can write to the installation path
@@ -246,20 +254,20 @@ function check_variables {
     if [ $? -ne 0 ]; then
       echo "Cannot write to the installation directory $SIMPATH_INSTALL."
       exit 1
-    fi  
+    fi
   fi
   if [ "$debug" = "yes" -a "$optimize" = "yes" ]; then
     echo "*** The variables \"debug\" and \"otimize\" can't be set both to \"yes\" at the"
     echo "*** same time. All other combinations yes/no, no/no, and no/yes are valid."
     echo "*** Please change the definitions in the input file."
-    exit 1 
+    exit 1
   fi
   if [ "$geant4_download_install_data_automatic" = "yes" -a "$geant4_install_data_from_dir" = "yes" ]; then
     echo "*** The variables \"geant4_download_install_data_automatic\" and"
     echo "*** \"geant4_install_data_from_dir\" can't be set both to \"yes\" at the"
     echo "*** same time. All other combinations yes/no, no/no, and no/yes are valid."
     echo "*** Please change the definitions in the input file."
-    exit 1 
+    exit 1
   fi
 
 }
@@ -285,7 +293,7 @@ function is_in_path {
     # There are several versions of which available with different
     # return values. Either it is "" or "no searched program in PATH" or
     # "/usr/bin/which: no <searched file>".
-    # To check for all differnt versions check if the return statement is 
+    # To check for all differnt versions check if the return statement is
     # not "".
     # If it is not "" check if the return value starts with no or have
     # the string "no <searched file> in the return string. If so set
@@ -322,9 +330,10 @@ function create_links {
 
       for file in $(ls *.$ext1);
       do
-         ln -s $file ${file%.*}.$ext2
+         if [ ! -L ${file%.*}.$ext2 ]; then
+           ln -s $file ${file%.*}.$ext2
+         fi
       done
-
 }
 
 #_____________________________________________________________________
@@ -334,6 +343,7 @@ function generate_config_cache {
   echo optimize=$optimize >> $cache_file
   echo geant4_download_install_data_automatic=$geant4_download_install_data_automatic >> $cache_file
   echo geant4_install_data_from_dir=$geant4_install_data_from_dir >> $cache_file
+  echo build_root6=$build_root6 >> $cache_file
   echo build_python=$build_python >> $cache_file
   echo install_sim=$install_sim >> $cache_file
   echo SIMPATH_INSTALL=$SIMPATH_INSTALL >> $cache_file
@@ -342,17 +352,17 @@ function generate_config_cache {
 
 #_____________________________________________________________________
 function download_file {
-      # download the file from the given location using either wget or 
+      # download the file from the given location using either wget or
       # curl depending which one is available
 
       url=$1
-      
+
       if [ "$install_curl" = "yes" ]; # no curl but wget
       then
         wget $url
-      else 
+      else
         # -L follow redirections which is needed for boost
-        curl -O -L $url    
+        curl -O -L $url
       fi
 }
 
@@ -362,7 +372,7 @@ function check_library {
     #
     # This function will try to find out if a library [$1] contains 64 bit
     # or 32 bit code. Currently works only for linux and Mac OS X.
-    # The result of the check is stored in lib_is, which should be 
+    # The result of the check is stored in lib_is, which should be
     # immediately copied or used , since the variable
     # will be overwritten at next invocation of this function.
 
@@ -449,7 +459,7 @@ function check_all_libraries {
 
     oldpwd=$(pwd)
     cd $chkdirname
-    if [ "$(find . -name "lib*.$shared_ext" | wc -l)" != "0" ];
+    if [ "$(find . -name "lib*.$shared_ext" | wc -l)" -ne 0 ];
     then
         for file in $(ls *.$shared_ext);
         do
@@ -457,12 +467,10 @@ function check_all_libraries {
           if [ "$lib_is" != "$system" ];
               then
               echo "Library $file is $lib_is, but system is $system" | tee -a $logfile_lib
-#      else
-#        echo "Library $file is ok" | tee -a $logfile_lib
           fi
         done
     fi
-    if [ "$(find . -name "lib*.a" | wc -l)" != "0" ];
+    if [ "$(find . -name "lib*.a" | wc -l)" -ne "0" ];
     then
         for file in $(ls lib*.a);
           do
@@ -470,8 +478,6 @@ function check_all_libraries {
           if [ "$lib_is" != "$system" ];
               then
               echo "Library $file is $lib_is, but system is $system" | tee -a $logfile_lib
-#      else
-#        echo "Library $file is ok" | tee -a $logfile_lib
           fi
         done
     fi

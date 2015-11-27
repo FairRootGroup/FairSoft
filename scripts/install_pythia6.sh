@@ -8,6 +8,7 @@ then
   then
     echo "*** Downloading pythia6 sources ***"
     download_file ftp://root.cern.ch/root/pythia6.tar.gz
+    echo "*** Downloading $PYTHIA6_LOCATION/$PYTHIA6VERSION.f.gz ***"
     download_file $PYTHIA6_LOCATION/$PYTHIA6VERSION.f.gz
   fi
   untar pythia6 pythia6.tar.gz

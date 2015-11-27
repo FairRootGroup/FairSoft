@@ -1,19 +1,19 @@
-#!/bin/bash 
+#!/bin/bash
 
 if [ ! -d  $SIMPATH/generators/pluto ];
-then 
+then
   cd $SIMPATH/generators
   if [ ! -e $PLUTOVERSION.tar.gz ];
   then
     echo "*** Downloading pluto sources ***"
     download_file $PLUTO_LOCATION/$PLUTOVERSION.tar.gz
   fi
-  untar pluto $PLUTOVERSION.tar.gz 
-  if [ -d $PLUTOVERSION ]; 
+  untar pluto $PLUTOVERSION.tar.gz
+  if [ -d $PLUTOVERSION ];
   then
-    ln -s $PLUTOVERSION pluto  
+    ln -s $PLUTOVERSION pluto
   fi
-fi 
+fi
 
 if [ "$check" = "1" ];
 then
@@ -25,9 +25,9 @@ then
   then
     GCC_MAJOR=$(gcc -dumpversion | cut -c 1)
     GCC_MINOR=$(gcc -dumpversion | cut -c 3)
-    if [ "$GCC_MAJOR" = "4" ]; 
+    if [ "$GCC_MAJOR" = "4" ];
     then
-      if [ "$GCC_MINOR" != "0" ]; 
+      if [ "$GCC_MINOR" != "0" ];
       then
         export FRIENDFLAG="-ffriend-injection"
       fi
@@ -59,23 +59,24 @@ then
 	    mypatch ../pluto_v537.patch | tee -a $logfile
             # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
             mypatch ../pluto_friend.patch | tee -a $logfile
+            mypatch ../pluto_v537_root6.patch | tee -a $logfile
             ;;
 	*5.4*)  echo Compiling v5.4x Pluto Version
             cp Makefile.fairsoft Makefile
             ;;
 	*CVS*)  echo Compiling CVS Pluto Version
 	    cp Makefile.fairsoft Makefile
-	    ;; 
+	    ;;
     esac
 
     if [ "$compiler" = "intel" ];
     then
-      mysed 'g++' 'icpc' Makefile 
+      mysed 'g++' 'icpc' Makefile
     fi
     if [ "$compiler" = "Clang" ];
     then
-      mysed 'g++' 'clang++' Makefile 
-      mysed '-rdynamic' '' Makefile 
+      mysed 'g++' 'clang++' Makefile
+      mysed '-rdynamic' '' Makefile
     fi
     mysed "CXXFLAGS      = -Wall" "CXXFLAGS      = -Wall ${CXXFLAGS}"  Makefile
     mysed "SOFLAGS       =" "SOFLAGS       = ${CXXFLAGS}" Makefile
@@ -89,15 +90,18 @@ then
       mysed 'SOFLAGS       =' 'SOFLAGS       = -m64' Makefile
       mysed 'CXXFLAGS      = -Wall' 'CXXFLAGS      = -Wall -m64' Makefile
     fi
-  
+
     make
-    
+
     # fake make install
     mkdir -p $install_prefix/lib
     cp libPluto.a $install_prefix/lib
+    if [ -f lib/PlutoCint_rdict.pcm ]; then
+      cp lib/PlutoCint_rdict.pcm  $install_prefix/lib
+    fi
     mkdir -p $install_prefix/include/pluto
     cp src/*.h $install_prefix/include/pluto
-    find plugins -name "*.h" -exec cp "{}" $install_prefix/include/pluto ";" 
+    find plugins -name "*.h" -exec cp "{}" $install_prefix/include/pluto ";"
     if [ "$platform" = "macosx" ];
     then
       cp libPluto.dylib $install_prefix/lib

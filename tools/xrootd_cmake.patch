@@ -1,0 +1,11 @@
+--- build/unix/installXrootd.sh
++++ build/unix/installXrootd.sh
+@@ -302,7 +302,7 @@ if test -f CMakeLists.txt ; then
+    cd build
+ 
+    # Configure
+-   $XCMK -DCMAKE_INSTALL_PREFIX=$TGTDIR $DBGOPT $XRDOPTS ..
++   $XCMK -DCMAKE_INSTALL_PREFIX=$TGTDIR $DBGOPT $XRDOPTS -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC ..
+ 
+    # Get the '-j' setting if not specified
+    if test "x$MAKEMJ" = "x" ; then
