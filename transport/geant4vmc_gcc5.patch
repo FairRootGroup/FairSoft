@@ -1,0 +1,15 @@
+--- cmake/FindROOT.cmake_orig	2015-07-09 13:41:33.114000000 +0200
++++ cmake/FindROOT.cmake	2015-07-09 13:49:17.653000000 +0200
+@@ -201,4 +201,12 @@
+     COMMAND ${ROOTCINT_EXECUTABLE} -cint -f ${libname}_dict.cxx ${EXTRA_DICT_PARAMETERS}
+       -c ${ARG_OPTIONS} ${definitions} ${includedirs} ${rheaderfiles} ${_linkdef}
+       DEPENDS ${headerfiles} ${_linkdef} ${ROOTCINTDEP})
++
++  if (CMAKE_COMPILER_IS_GNUCXX)
++    exec_program(${CMAKE_C_COMPILER} ARGS "-dumpversion" OUTPUT_VARIABLE _gcc_version_info)
++    string(REGEX REPLACE "^([0-9]+).*$"                   "\\1" GCC_MAJOR ${_gcc_version_info})
++    if(${GCC_MAJOR} GREATER 4)
++      set_source_files_properties( ${libname}_dict.cxx PROPERTIES COMPILE_DEFINITIONS R__ACCESS_IN_SYMBOL)
++    endif()
++  endif()
+ endfunction()

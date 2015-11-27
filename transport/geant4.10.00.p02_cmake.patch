@@ -1,0 +1,11 @@
+--- cmake/Modules/Geant4MakeRules_cxx.cmake_orig	2015-04-11 00:48:37.000000000 -0700
++++ cmake/Modules/Geant4MakeRules_cxx.cmake	2015-04-11 00:49:25.000000000 -0700
+@@ -80,7 +80,7 @@
+   # and if so extract the original LLVM version which should appear as
+   # "based on LLVM X.Ysvn"
+   if(APPLE AND "${_clangcxx_version}" MATCHES ".*Apple LLVM version.*")
+-    string(REGEX REPLACE ".*based on LLVM ([0-9]\\.[0-9]+)svn.*" "\\1" _clangcxx_version ${_clangcxx_version})
++    string(REGEX REPLACE ".*based on LLVM ([0-9][.0-9]+)svn.*" "\\1" _clangcxx_version ${_clangcxx_version})
+   endif()
+   message(STATUS "Clang version : ${_clangcxx_version}")
+ 

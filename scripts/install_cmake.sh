@@ -19,7 +19,7 @@ if [ "$cmake_installed_patch_version" == "" ]; then
 fi
 
 if [ $cmake_installed_major_version -gt $cmake_required_major_version ]; then
-  install_cmake=no       
+  install_cmake=no
   echo "Found cmake version $cmake_version which is newer than the"| tee -a $logfile
   echo "required version $cmake_required_version in PATH"| tee -a $logfile
   echo "This version is okay. Don't install cmake as external package."| tee -a $logfile
@@ -27,28 +27,33 @@ elif [ "$cmake_installed_major_version" -eq "$cmake_required_major_version" -a  
     "$cmake_installed_minor_version" -ge "$cmake_required_minor_version" ]; then
   if [ "$cmake_installed_patch_version" -ge "$cmake_required_patch_version" -o \
       "$cmake_installed_minor_version" -gt "$cmake_required_minor_version" ]; then
-    install_cmake=no       
+    install_cmake=no
     echo "Found cmake version $cmake_version which is newer than the"| tee -a $logfile
     echo "required version $cmake_required_version in PATH"| tee -a $logfile
     echo "This version is okay. Don't install cmake as external package."| tee -a $logfile
   else
-      install_cmake=yes    
-      echo "Found cmake version $cmake_version which is older than the"| tee -a $logfile  
+      install_cmake=yes
+      echo "Found cmake version $cmake_version which is older than the"| tee -a $logfile
       echo "required version $cmake_required_version in PATH"| tee -a $logfile
       echo "This version is to old"| tee -a $logfile
       echo "install cmake as external package"| tee -a $logfile
   fi
 else
-  install_cmake=yes    
-  echo "Found cmake version older than $cmake_required_version PATH"| tee -a $logfile
-  echo "This version is to old"| tee -a $logfile
-  echo "install cmake as external package"| tee -a $logfile
+  if [ -e $SIMPATH_INSTALL/bin/cmake ]; then
+    install_cmake=no
+    check_success CMake $checkfile
+  else
+    install_cmake=yes
+    echo "Found cmake version older than $cmake_required_version in PATH"| tee -a $logfile
+    echo "This version is to old"| tee -a $logfile
+    echo "install cmake as external package"| tee -a $logfile
+  fi
 fi
 
 if [ "$install_cmake" = "yes" ];
 then
   if [ ! -d  $SIMPATH/basics/cmake ];
-  then 
+  then
     cd $SIMPATH/basics
     if [ ! -e $CMAKEVERSION.tar.gz ];
     then
@@ -56,30 +61,29 @@ then
       download_file $CMAKE_LOCATION/$CMAKEVERSION.tar.gz
     fi
     untar cmake $CMAKEVERSION.tar.gz
-    if [ -d  $CMAKEVERSION ]; 
+    if [ -d  $CMAKEVERSION ];
     then
       ln -s $CMAKEVERSION cmake
     fi
-  fi 
+  fi
 
   install_prefix=$SIMPATH_INSTALL
 
-  checkfile=$install_prefix/bin/cmake    
-  export PATH=$install_prefix/bin:$PATH:
+  checkfile=$install_prefix/bin/cmake
 
-  if (not_there CMake $checkfile)   
+  if (not_there CMake $checkfile)
   then
-    cd $SIMPATH/basics
-    untar CMake $CMAKEVERSION.tar.gz
-    ln -s $CMAKEVERSION cmake
-    cd cmake
-    ./bootstrap --prefix=$install_prefix --docdir=/share/doc/CMake --mandir=/share/man
-    $MAKE_command -j $number_of_processes
+    cd $SIMPATH/basics/cmake
+    ./bootstrap --prefix=$install_prefix --docdir=/share/doc/CMake --mandir=/share/man \
+                --no-system-libs --system-curl --parallel=$number_of_processes
     $MAKE_command install -j $number_of_processes
     check_success CMake $checkfile
 
-    check=$? 
+    check=$?
   fi
+
+  export PATH=$install_prefix/bin:$PATH:
+
 fi
 
 if [ "$check" = "1" ];
@@ -87,7 +91,7 @@ then
   export PATH=$install_prefix/bin:$PATH
 else
   echo "There was a problem installing cmake"
-  echo "Stop the script at this point"    
+  echo "Stop the script at this point"
   exit
 fi
 

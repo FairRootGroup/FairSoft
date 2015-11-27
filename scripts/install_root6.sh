@@ -11,27 +11,19 @@ then
   export CXXFLAGS
 fi
 
-checkfile=$install_prefix/bin/root.exe
-
 if [ ! -d  $SIMPATH/tools/root ];
 then
   cd $SIMPATH/tools
   git clone $ROOT_LOCATION
-  if [ -e $checkfile ];
-  then
-    # always build if new clone
-    rm $checkfile
-  fi
 
   cd $SIMPATH/tools/root
-  git checkout $ROOTVERSION
-
+  git checkout -b $ROOTVERSION $ROOTVERSION
 fi
-
-cd $SIMPATH/tools/root
 
 install_prefix=$SIMPATH_INSTALL
 libdir=$install_prefix/lib/root
+
+checkfile=$install_prefix/bin/root.exe
 
 if [ "$platform" = "macosx" ];
 then
@@ -45,77 +37,46 @@ fi
 # TODO: Check if the installation was done already
 if (not_there xrootd $install_prefix/bin/xrd);
 then
-
+  cd $SIMPATH/tools/root
+  mypatch ../xrootd_cmake.patch
   build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
-
   if [ "$platform" = "macosx" ];
   then
       cd $install_prefix/lib
       for file in $(ls libXrd*.dylib); do
-         install_name_tool -id $install_prefix/lib/$file $file
+        install_name_tool -id $install_prefix/lib/$file $file
+        for file1 in $(ls libXrd*.dylib); do
+          install_name_tool -change  $file1 $install_prefix/lib/$file1 $file
+        done
       done
       create_links dylib so
   fi
-
 fi
 
 if (not_there root $checkfile);
 then
   cd $SIMPATH/tools/root
-
-  # special patch for Fedora 16 on 32bit
-  # This should go into root
-  cat /etc/issue | grep "Fedora release 16 (Verne)"
-  result=$?
-  if [ "$result" = "0" ];then
-    if [ "$system" = "32bit" ]; then
-      echo "*** Applying patch needed for Fedora 16 32bit " | tee -a $logfile
-      mypatch ../root_fedora16_32bit.patch
-    fi
+  if [ ! -d  build_for_fair ];
+  then
+   mkdir build_for_fair
   fi
+
   if [ "$debug" = "yes" ];
   then
     echo "*** Building ROOT with debug information"  | tee -a $logfile
     export ROOTBUILD=debug
   fi
 
-  if [ "$compiler" = "intel" -a "$icc_version" = "10" ];
-  then
-    echo "*** Patching Makfiles.linuxicc " | tee -a $logfile
-    cp ../Makefile.linuxicc config
-  fi
-
   if [ "$build_for_grid" = "yes" ]
   then
-    cp ../rootconfig_grid.sh  rootconfig.sh
+    cp ../rootconfig_grid.sh  build_for_fair/rootconfig.sh
     echo "Copied rootconfig_grid.sh ......................" | tee -a $logfile
   else
-    cp ../rootconfig.sh  .
+    cp ../rootconfig.sh  build_for_fair/
     echo "Copied rootconfig.sh ......................" | tee -a $logfile
   fi
   echo "Configure Root .........................................." | tee -a $logfile
-  if [ "$platform" = "solaris" ];
-  then
-    mysed "awk" "gawk" configure
-    chmod a+x configure
-    cp ../makelib.sh build/unix
-    if [ "$compiler" = "gcc" ];
-    then
-      cp ../Makefile.solarisgcc config
-      if [ "$system" = "64bit" ];
-      then
-        mysed '-fPIC' '-fPIC -m64' config/Makefile.solarisgcc
-        mysed '$(EXTRA_LDFLAGS)' '$(EXTRA_LDFLAGS) -m64' config/Makefile.solarisgcc
-     fi
-    else
-      cp ../Makefile.solarisCC5 config
-      if [ "$system" = "64bit" ];
-      then
-        mysed '-KPIC' '-KPIC -m64' config/Makefile.solarisCC5
-        mysed '$(EXTRA_LDFLAGS)' '$(EXTRA_LDFLAGS) -m64' config/Makefile.solarisCC5
-      fi
-    fi
-  fi
+
   # actualy one should check for mac os x 10.8
   if [ "$platform" = "macosx" -a "$compiler" = "Clang" ];
   then
@@ -125,47 +86,29 @@ then
 
   # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
 #  mypatch ../root5_34_17_LLVM51.patch | tee -a $logfile
-  mypatch ../root5_34_17_linux_libc++.patch | tee -a $logfile
+#  mypatch ../root5_34_17_linux_libc++.patch | tee -a $logfile
 
   # needed to solve problem with the TGeoManger for some CBM and Panda geometries
   mypatch ../root_TGeoShape.patch
 
-  # needed to solve a problem with VMC, TGeoManager and Geant4. This fix should be only needed for root 5.34.25
-  mypatch ../root5_34_25_TGeo.patch
-
   # needed due to some problem with the ALICE HLT code
   mypatch ../root5_34_19_hlt.patch
 
-  . rootconfig.sh
-
-  #This workaround  to run make in a loop is
-  #needed because of problems with the intel compiler.
-  #Due to some internal problems of icc (my interpretation)
-  #there are crashes of the compilation process. After
-  #restarting the make process the compilation passes the
-  #problematic file and may crash at a differnt point.
-  #If there are more than 10 crashes the script is stoped
-
-  if [ "$compiler" = "intel" ];
-  then
-    counter=0
-    until [ -e $checkfile ];
-    do
-      counter=$[$counter+1]
-      touch run_$counter
-      if [ $counter -gt 10 ];
-      then
-        echo "There is a problem compiling root"  | tee -a $logfile
-        echo "This is the " $counter " try to compile"  | tee -a $logfile
-        echo "Stop the script now"  | tee -a $logfile
-        exit 1
-      fi
-      $MAKE_command -j$number_of_processes
-    done
-  else
-    $MAKE_command -j$number_of_processes
+  # needed to compile root6 with newer versions of xrootd
+  if [ "$build_root6" = "yes" ]; then
+    mypatch ../root6_xrootd.patch
+    mypatch ../root6_00_find_xrootd.patch
   fi
 
+
+  if [ "$build_root6" = "no" ]; then
+    mypatch ../root5_34_find_xrootd.patch
+  fi
+  cd build_for_fair/
+  . rootconfig.sh
+
+  $MAKE_command -j$number_of_processes
+  echo "make finished" 
   cd $SIMPATH/tools/root/etc/vmc
 
   if [ "$arch" = "linuxx8664icc" ];
@@ -200,12 +143,17 @@ then
     fi
   fi
 
-  cd $SIMPATH/tools/root
-
+  cd $SIMPATH/tools/root/build_for_fair/
+  echo "start install"
   $MAKE_command install
 
-  ####Work sround for VC snd AliRoot ###
-   echo " create a symbolic linking for  Vc library ...."
+  check_all_libraries $install_prefix/lib
+
+  check_success root $checkfile
+  check=$?
+
+   ####Work sround for VC snd AliRoot ###
+   echo " create a symbolic linking for  Vc library .... "
    if [ -e $install_prefix/lib/libVc.a ];
    then
      cd $install_prefix/lib/root
@@ -214,12 +162,9 @@ then
    else
      echo "libVc.a not found in lib dirctory "
    fi
-  #####################################
+   #####################################
 
-  check_all_libraries $install_prefix/lib
 
-  check_success root $checkfile
-  check=$?
 
   export PATH=${install_prefix}/bin:${PATH}
 

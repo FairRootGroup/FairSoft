@@ -27,7 +27,7 @@ do
   case "$CHOICE" in
                Quit) exit
                      ;;
-              "GCC (Linux, and older versions of Mac OSX)") 
+              "GCC (Linux, and older versions of Mac OSX)")
                      compiler=gcc
                      break
                      ;;
@@ -43,7 +43,7 @@ do
                      compiler=PGI
                      break
                      ;;
-                "Clang (Mac OSX)") 
+                "Clang (Mac OSX)")
                      compiler=Clang
                      break
                      ;;
@@ -84,6 +84,28 @@ done
 
 clear
 echo
+echo "Choosing 'Yes' will build ROOT 6 'No' will build old ROOT 5"
+PS3='Please enter a choice from the above menu: '
+
+select CHOICE in "Yes" "No" Quit
+do
+case "$CHOICE" in
+Quit) exit
+;;
+"Yes") build_root6=yes
+break
+;;
+"No")  build_root6=no
+break
+;;
+"") echo This value is not valid. Hit Enter to see menu again!
+continue
+;;
+esac
+done
+
+clear
+echo
 echo "Would you like to install Simulation engines and event generators?"
 PS3='Please enter a choice from the above menu: '
 
@@ -109,8 +131,8 @@ then
     clear
     echo
     echo "Would you like to install the additionally available data files"
-    echo "the GEANT4 package?"
-    echo "To do so you need either a internet conection (Internet) or you"
+    echo "for the Geant4 package?"
+    echo "To do so you either need an internet conection (Internet) or you"
     echo "have to provide the files in the transport subdirectory (Directory)."
     PS3='Please enter a choice from the above menu: '
 
@@ -136,33 +158,32 @@ then
                         ;;
        esac
     done
-
-    clear
-    echo
-    echo "Would you like to install the python bindings for Geant4 and Root"
-    PS3='Please enter a choice from the above menu: '
-
-    select CHOICE in "Yes" "No" Quit
-    do
-      case "$CHOICE" in
-                  Quit) exit
-                        ;;
-                 "Yes") build_python=yes
-                        break
-                        ;;
-                 "No") build_python=no
-                        break
-                        ;;
-                   "") echo This value is not valid. Hit Enter to see menu again!
-                       continue
-                       ;;
-       esac
-    done
 else
   geant4_download_install_data_automatic=no
-  geant4_install_data_from_dir=no 
-  build_python=no
+  geant4_install_data_from_dir=no
 fi
+
+clear
+echo
+echo "Would you like to install the python bindings for ROOT and Geant4 (only if simulation engines are installed)"
+PS3='Please enter a choice from the above menu: '
+
+select CHOICE in "Yes" "No" Quit
+do
+  case "$CHOICE" in
+              Quit) exit
+                    ;;
+             "Yes") build_python=yes
+                    break
+                    ;;
+              "No") build_python=no
+                    break
+                    ;;
+                "") echo This value is not valid. Hit Enter to see menu again!
+                    continue
+                       ;;
+  esac
+done
 
 clear
 
@@ -205,5 +226,5 @@ while $question; do
   if [ $? -ne 0 ]; then
       question=true
       writable_dir=false
-  fi  
+  fi
 done

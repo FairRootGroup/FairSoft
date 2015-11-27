@@ -1,14 +1,15 @@
 #!/bin/bash
 
-_version=jul14p1
+_version=nov15
 _cc=@CMAKE_C_COMPILER@
 _cxx=@CMAKE_CXX_COMPILER@
 _f77=@CMAKE_Fortran_COMPILER@
 _cxxflags="@FAIRSOFT_CXX_FLAGS@"
+_root_version=@ROOT_VERSION@
 
 usage="\
 Usage: fairsoft-config [--version] [--cc] [--cxx] [--f77] \
- [--cxxflags] [--help]"
+ [--cxxflags] [--root-version] [--help]"
 
 if [ $# -eq 0 -o $# -gt 1 ]; then
    echo "${usage}" 1>&2
@@ -39,6 +40,10 @@ case $1 in
       ### Output the full path of used fortran compiler
       out="$out ${_f77}"
       ;;
+    --root-version)
+      ### Output the major version of root
+      out="$out ${_root_version}"
+      ;;
     --help)
       ### Print a help message
       echo "Usage: `basename $0` [options]"
@@ -48,6 +53,7 @@ case $1 in
       echo "  --cxx                Print the full path of the used cxx compiler"
       echo "  --f77                Print the full path of the used fortran compiler"
       echo "  --cxxflags           Print the used special cxx compiler flags"
+      echo "  --root-version       Print the major version of ROOT (5 or 6)"
       exit 0
       ;;
     *)
@@ -60,4 +66,4 @@ esac
 
 ### Output the stuff
 echo $out
-                                                                                                          
+

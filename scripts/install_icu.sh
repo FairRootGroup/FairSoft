@@ -6,7 +6,7 @@ then
   cd $SIMPATH/basics
   if [ ! -e $ICUVERSION-src.tgz ];
   then
-    echo "*** Downloading gtest sources ***"
+    echo "*** Downloading icu sources ***"
     download_file $ICU_LOCATION/$ICUVERSION-src.tgz
   fi
   untar icu $ICUVERSION-src.tgz
@@ -20,7 +20,7 @@ if (not_there icu $checkfile);
 then
     cd $SIMPATH/basics
     cd icu/source
-    
+
     LDFLAGS_BAK=$LDFLAGS
     LDFLAGS=$CXXFLAGS
 
@@ -36,7 +36,7 @@ then
     check=$?
 
     LDFLAGS=$LDFLAGS_BAK
-    
+
 fi
 
 cd $SIMPATH
