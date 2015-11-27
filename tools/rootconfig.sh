@@ -66,14 +66,8 @@
       
      etc_string="-DCMAKE_INSTALL_SYSCONFDIR=$SIMPATH_INSTALL/share/root/etc"
      prefix_string="-DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL"
-     if [ $PYTHON_LIBRARY == "default" ];
-      then
-       non_default_python_loc=""
-      else   
-       non_default_python_loc="-DPYTHON_INCLUDE_DIR=$PYTHON_INCLUDE_DIR -DPYTHON_LIBRARY=$PYTHON_LIBRARY -DPYTHON_EXECUTABLE=$PYTHON_EXECUTABLE"
-     fi
+ 
      cmake ../ -Dsoversion=ON $PYTHONBUILD $XROOTD  $ROOFIT \
-                     $non_default_python_loc \
                     -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
 		    -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
                     -Dbuiltin-freetype=ON $OPENGL \
@@ -85,15 +79,7 @@
                     -Dcintex=OFF \
                     -Dvc=ON -Dhttp=ON \
                     -DGSL_DIR=$SIMPATH_INSTALL \
-                    -DCMAKE_BUILD_TYPE=Optimized \
                     -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
                     -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string \
-                    -DCMAKE_INSTALL_MACRODIR=$SIMPATH_INSTALL/share/root/macros \
-                    -DCMAKE_INSTALL_ICONDIR=$SIMPATH_INSTALL/share/root/icons \
-                    -DCMAKE_INSTALL_FONTDIR=$SIMPATH_INSTALL/share/root/fonts \
-                    -DCMAKE_INSTALL_CMAKEDIR=$SIMPATH_INSTALL/share/root/cmake \
-                    -DCMAKE_INSTALL_INCLUDEDIR=$SIMPATH_INSTALL/include/root \
-                    -DCMAKE_INSTALL_LIBDIR=$SIMPATH_INSTALL/lib/root \
-                    -DCMAKE_INSTALL_BINDIR=$SIMPATH_INSTALL/bin \
                     $etc_string -Dgnuinstall=ON $debugstring
 

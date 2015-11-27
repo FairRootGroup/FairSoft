@@ -67,14 +67,8 @@ version=$(lsb_release -rs | cut -f1 -d.)
 
 if [ "$distribution$version" = "ScientificCERNSLC6" ]; then
  # operating system of last century
- unset LD_LIBRARY_PATH
- source /afs/cern.ch/sw/lcg/external/gcc/4.9/x86_64-slc6/setup.sh;
- export PYTHON_LIBRARY=/afs/cern.ch/sw/lcg/releases/LCG_79/Python/2.7.9.p1/x86_64-slc6-gcc49-opt/lib/libpython2.7.so
- export PYTHON_INCLUDE_DIR=/afs/cern.ch/sw/lcg/releases/LCG_79/Python/2.7.9.p1/x86_64-slc6-gcc49-opt/include/python2.7
- export PYTHON_EXECUTABLE=/afs/cern.ch/sw/lcg/releases/LCG_79/Python/2.7.9.p1/x86_64-slc6-gcc49-opt/bin/python2.7 
- echo "discovered lxplus: take gcc4.9 from lcg" ;
-else
- export PYTHON_LIBRARY=default
+  source scl_source enable python27
+  source scl_source enable devtoolset-3
 fi
 
 # Set the cache file name
@@ -361,34 +355,6 @@ then
   source scripts/install_nanomsg.sh
 fi
 
-##################### LHAPDF ##################################################
-
-if [ "$check" = "1" ]; then
-  source scripts/install_lhapdf.sh
-fi
-
-##################### PDFSET ##################################################
-
-if [ "$check" = "1" ]; then
-  source scripts/install_pdfset.sh
-fi
-
-##################### LOG4CPP ##################################################
-
-if [ "$check" = "1" ]; then
-  source scripts/install_log4cpp.sh
-fi
-
-##################### libxml2 ##################################################
-#system
-
-##################### genie ##################################################
-
-if [ "$check" = "1" ]; then
-  source scripts/install_genie.sh
-fi
-
-
 if [ "$check" = "1" ];
 then
     echo "*** End installation of external packages without Errors***"  | tee -a $logfile
@@ -406,4 +372,4 @@ then
 else
     echo "*** End installation of external packages with Errors***"  | tee -a $logfile
     exit 42
-fi	
+fi
