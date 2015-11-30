@@ -18,6 +18,38 @@ if test -f $cache_file; then
 fi
 
 clear
+
+# ship default values
+compiler=gcc  # Mac OS: compiler=Clang
+debug=no
+optimize=yes
+build_root6=yes
+install_sim=yes
+geant4_download_install_data_automatic=yes
+geant4_install_data_from_dir=no
+build_python=yes
+SIMPATH_INSTALL="${PWD/FairSoft/FairSoftInst}"
+echo "Accept default SHIP configuration?"
+PS3='Please enter a choice from the above menu: '
+shipDefault=false
+select CHOICE in "Yes" "No" Quit
+do
+  case "$CHOICE" in
+               Quit) exit
+                     ;;
+              "Yes")
+                     mkdir -p $SIMPATH_INSTALL
+                     shipDefault=true
+                     break
+                     ;;
+               "No")
+                     break
+                     ;;
+   esac
+done
+
+if !shipDefault
+then
 echo
 echo "Which compiler you want to use to compile the external packages?"
 PS3='Please enter a choice from the above menu: '
@@ -228,3 +260,4 @@ while $question; do
       writable_dir=false
   fi
 done
+fi
