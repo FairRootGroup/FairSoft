@@ -59,8 +59,14 @@ then
   if [-d share/xmldoc ];
   then
    cp -r share/xmldoc $install_prefix/share/pythia8
-  else
+  elif [-d share/Pythia8/xmldoc ];
+  then
+   cp -r share/Pythia8/xmldoc $install_prefix/share/pythia8
+  elif [-d xmldoc ];
+  then
    cp -r xmldoc $install_prefix/share/pythia8
+  else
+   echo "Pythia8 data not found"
   fi
   if [ "$platform" = "macosx" ];
   then

@@ -20,7 +20,13 @@ fi
 clear
 
 # ship default values
-compiler=gcc  # Mac OS: compiler=Clang
+compiler=gcc  
+unamestr=`uname`
+if [[ "$unamestr" != 'Linux' ]]; then
+ echo "MAC OS ?" # Mac OS: compiler=Clang
+ compiler=Clang
+fi
+
 debug=no
 optimize=yes
 build_root6=yes
