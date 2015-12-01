@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 if [ ! -d  $SIMPATH/generators/pythia6 ];

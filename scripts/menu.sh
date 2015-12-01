@@ -53,8 +53,7 @@ do
                      ;;
    esac
 done
-
-if !shipDefault
+if [ ! $shipDefault ]
 then
 echo
 echo "Which compiler you want to use to compile the external packages?"
