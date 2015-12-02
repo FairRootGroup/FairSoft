@@ -30,8 +30,7 @@ then
 
   # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
   mypatch ../pythia8_friend.patch | tee -a $logfile
-
-  USRLDFLAGSSHARED="$CXXFLAGS" ./configure  --enable-shared --with-hepmc=$HEPINSTALLDIR --with-hepmcversion=$HEPMCVERSION
+  USRLDFLAGSSHARED="$CXXFLAGS" ./configure  --enable-shared --with-hepmc3-lib=$HEPINSTALLDIR/lib --with-hepmc3-include=$HEPINSTALLDIR/include  --with-hepmc3-version=$HEPMCVERSION
 
   if [ "$compiler" = "PGI" ];
   then
@@ -56,18 +55,22 @@ then
   cp -r include/Pythia8 $install_prefix/include
 
   mkdir -p $install_prefix/share/pythia8
-  if [-d share/xmldoc ];
+  if [ -d share/xmldoc ];
   then
    cp -r share/xmldoc $install_prefix/share/pythia8
-  elif [-d share/Pythia8/xmldoc ];
+  elif [ -d share/Pythia8/xmldoc ];
   then
    cp -r share/Pythia8/xmldoc $install_prefix/share/pythia8
-  elif [-d xmldoc ];
+  elif [ -d xmldoc ];
   then
    cp -r xmldoc $install_prefix/share/pythia8
   else
    echo "Pythia8 data not found"
   fi
+  if [ ! -d $install_prefix/share/pythia8/xmldoc ]
+  then
+    echo "Unexpected error occurred when trying to create the data directory for Pythia8"
+  fi 
   if [ "$platform" = "macosx" ];
   then
     cp lib/libpythia8.dylib $install_prefix/lib
