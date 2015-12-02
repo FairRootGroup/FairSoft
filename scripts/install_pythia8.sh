@@ -30,7 +30,7 @@ then
 
   # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
   mypatch ../pythia8_friend.patch | tee -a $logfile
-  USRLDFLAGSSHARED="$CXXFLAGS" ./configure  --enable-shared --with-hepmc3-lib=$HEPINSTALLDIR/lib --with-hepmc3-include=$HEPINSTALLDIR/include  --with-hepmc3-version=$HEPMCVERSION
+  USRLDFLAGSSHARED="$CXXFLAGS" ./configure  --enable-shared  --with-hepmc3-lib=$HEPINSTALLDIR/lib --with-hepmc3-include=$HEPINSTALLDIR/include  --with-hepmc3-version=$HEPMCVERSION  --with-lhapdf5-lib=$HEPINSTALLDIR/lib --with-lhapdf5-include=$HEPINSTALLDIR/include --with-lhapdf5-version=$LHAPDF_VERSION
 
   if [ "$compiler" = "PGI" ];
   then
@@ -86,7 +86,8 @@ then
     create_links dylib so
   else
     cp lib/libpythia8.so $install_prefix/lib
-    cp lib/liblhapdfdummy.so $install_prefix/lib
+    #cp lib/liblhapdfdummy.so $install_prefix/lib
+    cp lib/libpythia8lhapdf5.so $install_prefix/lib
     cp lib/libpythia8tohepmc.so $install_prefix/lib
   fi
 

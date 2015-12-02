@@ -237,6 +237,12 @@ then
   source scripts/install_hepmc.sh
 fi
 
+##################### LHAPDF ##################################################
+
+if [ "$check" = "1" ]; then
+  source scripts/install_lhapdf.sh
+fi
+
 ##################### Pythia 8 #############################################
 
 if [ "$check" = "1" -a "$onlyreco" = "0" ];
@@ -355,11 +361,6 @@ then
   source scripts/install_nanomsg.sh
 fi
 
-##################### LHAPDF ##################################################
-
-if [ "$check" = "1" ]; then
-  source scripts/install_lhapdf.sh
-fi
 
 ##################### PDFSET ##################################################
 
