@@ -239,8 +239,27 @@ fi
 
 ##################### LHAPDF ##################################################
 
-if [ "$check" = "1" ]; then
+if [ "$check" = "1" -a "$onlyreco" = "0" ]; then
   source scripts/install_lhapdf.sh
+fi
+
+##################### tauola ##################################################
+
+if [ "$check" = "1" -a "$onlyreco" = "0" ]; then
+  source scripts/install_tauola.sh
+fi
+
+##################### photos ##################################################
+
+if [ "$check" = "1" -a "$onlyreco" = "0" ]; then
+  source scripts/install_photos.sh
+fi
+
+
+##################### evtgen ##################################################
+
+if [ "$check" = "1" -a "$onlyreco" = "0" ]; then
+  source scripts/install_evtgen.sh
 fi
 
 ##################### Pythia 8 #############################################
@@ -364,13 +383,13 @@ fi
 
 ##################### PDFSET ##################################################
 
-if [ "$check" = "1" ]; then
+if [ "$check" = "1" -a "$onlyreco" = "0" ]; then
   source scripts/install_pdfset.sh
 fi
 
 ##################### LOG4CPP ##################################################
 
-if [ "$check" = "1" ]; then
+if [ "$check" = "1" -a "$onlyreco" = "0" ]; then
   source scripts/install_log4cpp.sh
 fi
 
@@ -379,7 +398,7 @@ fi
 
 ##################### genie ##################################################
 
-if [ "$check" = "1" ]; then
+if [ "$check" = "1" -a "$onlyreco" = "0" ]; then
   source scripts/install_genie.sh
 fi
 

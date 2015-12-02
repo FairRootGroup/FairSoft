@@ -86,3 +86,8 @@ basics/protobuf-2.6.1/
 AliRoot
 FairRoot
 DDS
+generators/EvtGen
+generators/PHOTOS.3.61.tar.gz
+generators/PHOTOS
+generators/TAUOLA.1.1.5.tar.gz
+generators/TAUOLA

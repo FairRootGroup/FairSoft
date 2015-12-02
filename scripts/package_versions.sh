@@ -130,3 +130,14 @@ export GENIE_LOCATION="http://genie.hepforge.org/svn/generator/branches/"
 export GENIE_VERSION=2.10.0
 export GENIE_BRANCH=R-2_10_0
 export GENIE_TAR=genie-${GENIE_VERSION}.tar.gz
+
+export PHOTOS_LOCATION="http://photospp.web.cern.ch/photospp/resources/"
+export PHOTOS_VERSION="3.61"
+
+export TAUOLA_LOCATION="http://tauolapp.web.cern.ch/tauolapp/resources/"
+export TAUOLA_VERSION="1.1.5"
+
+export EVTGEN_LOCATION="http://svn.cern.ch/guest/evtgen/tags/"
+export EVTGEN_VERSION="R01-05-00"
+
+
