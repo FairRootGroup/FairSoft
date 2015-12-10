@@ -80,5 +80,7 @@ fi
 if [ -f $SIMPATH/generators/$soft/src/Algorithm/_ROOT_DICT_Algorithm_rdict.pcm ]; then
  cp $SIMPATH/generators/$soft/src/*/*.pcm $SIMPATH_INSTALL/lib/
 fi
+# don't know any better solution but we need the charm decaying in Genie for the moment
+cp $SIMPATH/generators/UserPhysicsOptions.xml $SIMPATH/generators/$soft/config/
 cd  $SIMPATH
 return 1
