@@ -100,6 +100,8 @@ then
     mypatch ../root6_00_find_xrootd.patch
   fi
 
+  # add python command history to ROOT.py
+  mypatch ../root_pythonhistory.patch
 
   if [ "$build_root6" = "no" ]; then
     mypatch ../root5_34_find_xrootd.patch

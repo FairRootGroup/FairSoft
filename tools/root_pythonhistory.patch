@@ -1,0 +1,15 @@
+--- root/build_for_fair/lib/root/ROOT.py	2015-11-27 18:33:24.000000000 +0100
++++ /media/ShipSoft/FairShip/../FairSoftInst/lib/root/ROOT.py	2015-12-10 10:04:51.430022701 +0100
+@@ -83,6 +83,12 @@
+ 
+    readline.parse_and_bind( 'tab: complete' )
+    readline.parse_and_bind( 'set show-all-if-ambiguous On' )
++# history file 
++   histfile = os.path.join(os.environ['HOME'], '.pythonhistory') 
++   try: 
++    readline.read_history_file(histfile) 
++   except IOError: 
++    pass 
+ except:
+  # module readline typically doesn't exist on non-Unix platforms
+    pass
