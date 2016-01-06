@@ -65,6 +65,14 @@ case "$arch:$chip:$compiler" in
         MAKE_command=make
 	checklib64="yes"
         ;;
+    linux:ppc64le:gcc)
+        arch=ppc64le
+        platform=linux
+        PLATFORM=$platform
+        system=64bit
+        MAKE_command=make
+        checklib64="yes"
+        ;;
     linux:i*86:gcc)
         arch=linux
         platform=linux
