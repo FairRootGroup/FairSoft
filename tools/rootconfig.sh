@@ -77,7 +77,7 @@
                     -Dglobus=OFF \
                     -Dreflex=OFF \
                     -Dcintex=OFF \
-                    -Dvc=ON -Dhttp=ON \
+                    -Dvc=OFF -Dhttp=ON \
                     -DGSL_DIR=$SIMPATH_INSTALL \
                     -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
                     -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string \
