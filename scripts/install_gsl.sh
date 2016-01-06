@@ -35,6 +35,9 @@ then
     cd $SIMPATH/basics
 
     cd gsl
+    if [ "$arch" == "ppc64le" ];then
+    ./autogen.sh
+    fi
     if [ "$arch" == "solarisCC5" ];then
       CFLAGS_BAK=$CFLAGS
       CFLAGS="$CFLAGS -DGSL_C99_INLINE"
