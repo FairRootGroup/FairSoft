@@ -23,7 +23,9 @@ checkfile=$install_prefix/bin/nanocat
 if (not_there nanomsg $checkfile);
 then
     cd $SIMPATH/basics/nanomsg
-
+    if [ "$arch" == "ppc64le" ];then
+       autoreconf -i -f -v
+    fi
     ./configure --prefix=$install_prefix
 
     make -j$number_of_processes
