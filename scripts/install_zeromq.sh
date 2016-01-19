@@ -27,6 +27,10 @@ then
     distribution=$(lsb_release -is)
     version=$(lsb_release -rs | cut -f1 -d.)     
 
+    if [ "$arch" == "ppc64le" ];then
+     ./autogen.sh
+    fi
+
     if [ "$distribution$version" = "ScientificCERNSLC6" ]; then
       PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static --without-libsodium
     else
