@@ -24,11 +24,11 @@ then
   then
     cd $SIMPATH/basics/boost
 
-    if [ "$platform" = "macosx" ];
-    then
-      mysed "-install_name \"" "-install_name \"$install_prefix/lib/" tools/build/src/tools/darwin.jam true
-      mysed "-install_name \"" "-install_name \"$install_prefix/lib/" tools/build/src/tools/clang-darwin.jam true
-    fi
+#    if [ "$platform" = "macosx" ];
+#    then
+#      mysed "-install_name \"" "-install_name \"$install_prefix/lib/" tools/build/src/tools/darwin.jam true
+#      mysed "-install_name \"" "-install_name \"$install_prefix/lib/" tools/build/src/tools/clang-darwin.jam true
+#    fi
 
     # boost only support up to 64 parallel processes
     tmp_nop=$number_of_processes
