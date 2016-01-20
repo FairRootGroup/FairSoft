@@ -60,8 +60,14 @@
    else   
       PYTHONBUILD=" "
    fi
-   
-     
+
+   if [ "$arch" = "ppc64le" ];
+   then
+     VC="-Dvc=OFF"
+   else
+     VC="-Dvc=ON"
+   fi
+
    #######################################################
       
      etc_string="-DCMAKE_INSTALL_SYSCONFDIR=$SIMPATH_INSTALL/share/root/etc"
@@ -77,7 +83,8 @@
                     -Dglobus=OFF \
                     -Dreflex=OFF \
                     -Dcintex=OFF \
-                    -Dvc=OFF -Dhttp=ON \
+                     $VC \
+                    -Dhttp=ON \
                     -DGSL_DIR=$SIMPATH_INSTALL \
                     -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
                     -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string \
