@@ -53,6 +53,7 @@ basics/nanomsg-0.6-beta/
 basics/protobuf
 basics/protobuf-2.6.1.tar.gz
 basics/protobuf-2.6.1/
+basics/flatbuffers/
 AliRoot
 FairRoot
 DDS
