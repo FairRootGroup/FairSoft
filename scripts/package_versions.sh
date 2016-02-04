@@ -74,6 +74,9 @@ export ZEROMQDIR=4.1.3
 export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v2.6.1"
 export PROTOBUF_VERSION=protobuf-2.6.1
 
+export FLATBUFFERS_LOCATION="https://github.com/google/flatbuffers"
+export FLATBUFFERS_BRANCH=v1.3.0
+
 export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/releases/download/0.6-beta/"
 #export NANOMSG_LOCATION="http://download.nanomsg.org/"
 export NANOMSG_VERSION=nanomsg-0.6-beta
