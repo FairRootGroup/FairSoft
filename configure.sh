@@ -339,6 +339,13 @@ then
   source scripts/install_protobuf.sh
 fi
 
+##################### FlatBuffers ##############################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_flatbuffers.sh
+fi
+
 ##################### NanoMSG ##################################################
 
 if [ "$check" = "1" ];
