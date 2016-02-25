@@ -29,7 +29,7 @@ export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
 export GEANT4VERSION=geant4.10.00.p02
 export GEANT4VERSIONp=Geant4-10.0.2
 
-export XERCESC_LOCATION="http://mirror.serversupportforum.de/apache/xerces/c/3/sources/"
+export XERCESC_LOCATION="https://archive.apache.org/dist/xerces/c/3/sources/"
 export XERCESCVERSION=3.1.2
 
 export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10.3/"
