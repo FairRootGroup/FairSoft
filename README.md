@@ -110,7 +110,7 @@ directory of FairSoft.
 * MillePede V04-03-01
 * ZeroMQ 4.1.3
 * Protocoll Buffers 2.6.1
-* Nano Message  0.6-beta
+* Nano Message  0.8-beta
 
 In case the python bindings are build the following additional packages will be installed
 
