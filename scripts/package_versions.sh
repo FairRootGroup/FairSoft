@@ -38,7 +38,7 @@ export GEANT4VERSIONp=Geant4-10.1.2
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 if [ "$build_root6" = "yes" ]; then
   # Root v6.04.00
-  export ROOTVERSION=v6-04-02
+  export ROOTVERSION=v6-06-00
 else
   # Root v5.34.32
   export ROOTVERSION=v5-34-34
@@ -74,9 +74,12 @@ export ZEROMQDIR=4.1.3
 export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v2.6.1"
 export PROTOBUF_VERSION=protobuf-2.6.1
 
-export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/releases/download/0.6-beta/"
+export FLATBUFFERS_LOCATION="https://github.com/google/flatbuffers"
+export FLATBUFFERS_BRANCH=v1.3.0
+
+export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/releases/download/0.8-beta/"
 #export NANOMSG_LOCATION="http://download.nanomsg.org/"
-export NANOMSG_VERSION=nanomsg-0.6-beta
+export NANOMSG_VERSION=nanomsg-0.8-beta
 
 export G4ABLA_VERSION=G4ABLA3.0
 export G4ABLA_TAR=G4ABLA3.0.tar.gz
