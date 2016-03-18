@@ -346,6 +346,13 @@ then
   source scripts/install_flatbuffers.sh
 fi
 
+##################### MessagePack ##############################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_msgpack.sh
+fi
+
 ##################### NanoMSG ##################################################
 
 if [ "$check" = "1" ];
