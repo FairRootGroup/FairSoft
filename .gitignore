@@ -54,6 +54,7 @@ basics/protobuf
 basics/protobuf-2.6.1.tar.gz
 basics/protobuf-2.6.1/
 basics/flatbuffers/
+basics/msgpack/
 AliRoot
 FairRoot
 DDS
