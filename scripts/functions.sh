@@ -256,12 +256,6 @@ function check_variables {
       exit 1
     fi
   fi
-  if [ "$debug" = "yes" -a "$optimize" = "yes" ]; then
-    echo "*** The variables \"debug\" and \"otimize\" can't be set both to \"yes\" at the"
-    echo "*** same time. All other combinations yes/no, no/no, and no/yes are valid."
-    echo "*** Please change the definitions in the input file."
-    exit 1
-  fi
   if [ "$geant4_download_install_data_automatic" = "yes" -a "$geant4_install_data_from_dir" = "yes" ]; then
     echo "*** The variables \"geant4_download_install_data_automatic\" and"
     echo "*** \"geant4_install_data_from_dir\" can't be set both to \"yes\" at the"
