@@ -59,26 +59,30 @@ echo "Do you want to compile the external packages with or without debug"
 echo "information or with optimization?"
 PS3='Please enter a choice from the above menu: '
 
-select CHOICE in "No Debug Info" "Debug Info" "Optimize" Quit
+select CHOICE in "No Debug Info" "Debug Info" "Optimize" "Optimize with Debug Info" Quit
 do
   case "$CHOICE" in
-              Quit) exit
-                    ;;
-   "No Debug Info") debug=no
-                    optimize=no
-                    break
-                    ;;
-      "Debug Info") debug=yes
-                    optimize=no
-                    break
-                    ;;
-        "Optimize") debug=no
-                    optimize=yes
-                    break
-                    ;;
-                "") echo This value is not valid. Hit Enter to see menu again!
-                    continue
-                    ;;
+                      Quit) exit
+                            ;;
+           "No Debug Info") debug=no
+                            optimize=no
+                            break
+                            ;;
+              "Debug Info") debug=yes
+                            optimize=no
+                            break
+                            ;;
+                "Optimize") debug=no
+                            optimize=yes
+                            break
+                            ;;
+"Optimize with Debug Info") debug=yes
+                            optimize=yes
+                            break
+                            ;;
+                        "") echo This value is not valid. Hit Enter to see menu again!
+                            continue
+                            ;;
    esac
 done
 

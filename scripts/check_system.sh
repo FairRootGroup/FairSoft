@@ -191,6 +191,14 @@ case "$platform:$compiler:$debug:$optimize" in
     echo "*** Compiling the external packages with the GCC compiler" | tee -a $logfile
     echo "*** Building the libraries with best optimization" | tee -a $logfile
     ;;
+  linux:gcc:yes:yes)
+    export CXX=g++
+    export CC=gcc
+    export CFLAGS="-g -O3" # -march=native"
+    geant4_system=Linux-g++
+    echo "*** Compiling the external packages with the GCC compiler" | tee -a $logfile
+    echo "*** Building the libraries with best optimization and debug information" | tee -a $logfile
+    ;;
   linux:intel:yes:no)
     export CXX=icpc
     export CC=icc
@@ -214,6 +222,14 @@ case "$platform:$compiler:$debug:$optimize" in
     geant4_system=Linux-icc
     echo "*** Compiling the external packages with the Intel Compiler" | tee -a $logfile
     echo "*** Building the libraries with best optimization" | tee -a $logfile
+    ;;
+  linux:intel:yes:yes)
+    export CXX=icpc
+    export CC=icc
+    export CFLAGS="-g -O3 -mtune=pentium4 -xN -axN"
+    geant4_system=Linux-icc
+    echo "*** Compiling the external packages with the Intel Compiler" | tee -a $logfile
+    echo "*** Building the libraries with best optimization and debug information" | tee -a $logfile
     ;;
   linux:Clang:yes:no)
     export CXX=clang++
@@ -239,6 +255,14 @@ case "$platform:$compiler:$debug:$optimize" in
     echo "*** Compiling the external packages with the Clang compiler" | tee -a $logfile
     echo "*** Building the libraries with best optimization" | tee -a $logfile
     ;;
+  linux:Clang:yes:yes)
+    export CXX=clang++
+    export CC=clang
+    export CFLAGS="-g -O3"  #-march=pentium4"
+    geant4_system=Linux-g++
+    echo "*** Compiling the external packages with the Clang compiler" | tee -a $logfile
+    echo "*** Building the libraries with best optimization and debug information" | tee -a $logfile
+    ;;
   macosx:gcc:yes:no)
     export CXX=g++
     export CC=gcc
@@ -263,6 +287,14 @@ case "$platform:$compiler:$debug:$optimize" in
     echo "*** Compiling the external packages with the GCC compiler" | tee -a $logfile
     echo "*** Building the libraries with best optimization" | tee -a $logfile
     ;;
+  macosx:gcc:yes:yes)
+    export CXX=g++
+    export CC=gcc
+    export CFLAGS="-g -O3"  #-march=pentium4"
+    geant4_system=Darwin-g++
+    echo "*** Compiling the external packages with the GCC compiler" | tee -a $logfile
+    echo "*** Building the libraries with best optimization and debug information" | tee -a $logfile
+    ;;
   macosx:Clang:yes:no)
     export CXX=clang++
     export CC=clang
@@ -286,6 +318,14 @@ case "$platform:$compiler:$debug:$optimize" in
     geant4_system=Darwin-g++
     echo "*** Compiling the external packages with the Clang compiler" | tee -a $logfile
     echo "*** Building the libraries with best optimization" | tee -a $logfile
+    ;;
+  macosx:Clang:yes:yes)
+    export CXX=clang++
+    export CC=clang
+    export CFLAGS="-g -O3"  #-march=pentium4"
+    geant4_system=Darwin-g++
+    echo "*** Compiling the external packages with the Clang compiler" | tee -a $logfile
+    echo "*** Building the libraries with best optimization and debug information" | tee -a $logfile
     ;;
   macosx:intel:*:*)
     echo "The Intel compilers are not supported for Mac OS X up to now"
