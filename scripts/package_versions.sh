@@ -16,7 +16,7 @@ export ICUVERSION=icu4c-53_1
 export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.59.0/"
 export BOOSTVERSION=boost_1_59_0
 
-export PYTHIA6_LOCATION="ftp://root.cern.ch/root/"
+export PYTHIA6_LOCATION="https://root.cern.ch/download/"
 export PYTHIA6VERSION=pythia6
 
 export HEPMC_LOCATION="http://lcgapp.cern.ch/project/simu/HepMC/download/"
