@@ -1,6 +1,6 @@
 #!/bin/bash
 
-_version=dec14p1
+_version=dec14p2
 _cc=@CMAKE_C_COMPILER@
 _cxx=@CMAKE_CXX_COMPILER@
 _f77=@CMAKE_Fortran_COMPILER@
