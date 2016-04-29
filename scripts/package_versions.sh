@@ -7,7 +7,7 @@ export CMAKEVERSION=cmake-3.3.2
 export GTEST_LOCATION="http://googletest.googlecode.com/files/"
 export GTESTVERSION=gtest-1.7.0
 
-export GSL_LOCATION="ftp://ftp.gnu.org/gnu/gsl/"
+export GSL_LOCATION="http://ftpmirror.gnu.org/gsl/"
 export GSLVERSION=gsl-1.16
 
 export ICU_LOCATION="http://download.icu-project.org/files/icu4c/53.1/"
