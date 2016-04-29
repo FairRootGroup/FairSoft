@@ -32,8 +32,8 @@ export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10
 export MESAVERSION=MesaLib-7.10.3
 
 export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
-export GEANT4VERSION=geant4.10.01.p02
-export GEANT4VERSIONp=Geant4-10.1.2
+export GEANT4VERSION=geant4.10.02.p01
+export GEANT4VERSIONp=Geant4-10.2.1
 
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 if [ "$build_root6" = "yes" ]; then
@@ -85,11 +85,11 @@ export NANOMSG_VERSION=nanomsg-0.8-beta
 export G4ABLA_VERSION=G4ABLA3.0
 export G4ABLA_TAR=G4ABLA3.0.tar.gz
 
-export G4EMLOW_VERSION=G4EMLOW6.41
-export G4EMLOW_TAR=G4EMLOW.6.41.tar.gz
+export G4EMLOW_VERSION=G4EMLOW6.48
+export G4EMLOW_TAR=G4EMLOW.6.48.tar.gz
 
-export G4ENSDFSTATE_VERSION=G4ENSDFSTATE1.0
-export G4ENSDFSTATE_TAR=G4ENSDFSTATE.1.0.tar.gz
+export G4ENSDFSTATE_VERSION=G4ENSDFSTATE1.2.1
+export G4ENSDFSTATE_TAR=G4ENSDFSTATE.1.2.1.tar.gz
 
 export G4NDL_VERSION=G4NDL4.5
 export G4NDL_TAR=G4NDL.4.5.tar.gz
@@ -103,11 +103,11 @@ export G4PII_TAR=G4PII.1.3.tar.gz
 export G4SAIDDATA_VERSION=G4SAIDDATA1.1
 export G4SAIDDATA_TAR=G4SAIDDATA.1.1.tar.gz
 
-export PhotonEvaporation_VERSION=PhotonEvaporation3.1
-export PhotonEvaporation_TAR=G4PhotonEvaporation.3.1.tar.gz
+export PhotonEvaporation_VERSION=PhotonEvaporation3.2
+export PhotonEvaporation_TAR=G4PhotonEvaporation.3.2.tar.gz
 
-export RadioactiveDecay_VERSION=RadioactiveDecay4.2
-export RadioactiveDecay_TAR=G4RadioactiveDecay.4.2.tar.gz
+export RadioactiveDecay_VERSION=RadioactiveDecay4.3.1
+export RadioactiveDecay_TAR=G4RadioactiveDecay.4.3.1.tar.gz
 
 export RealSurface_VERSION=RealSurface1.0
 export RealSurface_TAR=RealSurface.1.0.tar.gz
