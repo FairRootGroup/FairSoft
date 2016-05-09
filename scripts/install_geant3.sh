@@ -17,13 +17,13 @@ checkfile=$install_prefix/lib/libgeant321.so
 if (not_there Geant3 $checkfile);
 then
 
-  echo "Switching off optimization when compiling Geant3. Optimization introduces some errors with newer gfortran versions." | tee -a $logfile
-  CXXFLAGS_BAK=$CXXFLAGS
-  CFLAGS_BAK=$CFLAGS
-  FFLAGS_BAK=$FFLAGS
-  export CXXFLAGS="-g -O0"
-  export CFLAGS="-g -O0"
-  export FFLAGS="-g -O0"
+#  echo "Switching off optimization when compiling Geant3. Optimization introduces some errors with newer gfortran versions." | tee -a $logfile
+#  CXXFLAGS_BAK=$CXXFLAGS
+#  CFLAGS_BAK=$CFLAGS
+#  FFLAGS_BAK=$FFLAGS
+#  export CXXFLAGS="-g -O0"
+#  export CFLAGS="-g -O0"
+#  export FFLAGS="-g -O0"
 
   mkdir -p $install_prefix/include/TGeant3
 
@@ -59,9 +59,12 @@ then
   
   mkdir build
   cd build
-  cmake .. -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
-           -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
-           -DROOT_DIR=$SIMPATH_INSTALL
+  cmake -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
+        -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+        -DCMAKE_CXX_COMPILER=$CXX \
+        -DCMAKE_C_COMPILER=$CC \
+        -DROOT_DIR=$SIMPATH_INSTALL \
+        ..
 
   make install -j$number_of_processes
 

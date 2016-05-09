@@ -31,8 +31,13 @@ then
   mkdir build_HepMC
   cd build_HepMC
 
-  cmake -DCMAKE_INSTALL_PREFIX=$install_prefix -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
-        -Dmomentum:STRING=GEV -Dlength:STRING=CM ../HepMC
+  cmake -DCMAKE_INSTALL_PREFIX=$install_prefix \
+        -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+        -DCMAKE_CXX_COMPILER=$CXX \
+        -DCMAKE_C_COMPILER=$CC \
+        -Dmomentum:STRING=GEV \
+        -Dlength:STRING=CM \
+        ../HepMC
 
   make install -j$number_of_processes
 

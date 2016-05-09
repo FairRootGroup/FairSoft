@@ -33,10 +33,14 @@ then
 
   # the Geant4_DIR points to the directory where the Geant4Config.cmake script is
   # located. In this file all needed variables are defined.
-  cmake .. -DGeant4_DIR=$SIMPATH_INSTALL/lib/$GEANT4VERSIONp \
-  	-DROOT_DIR=$SIMPATH_INSTALL -DWITH_TEST=OFF \
-   	-DCMAKE_INSTALL_PREFIX=$install_prefix \
-   	-DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC
+  cmake -DCMAKE_INSTALL_PREFIX=$install_prefix \
+        -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+        -DCMAKE_CXX_COMPILER=$CXX \
+        -DCMAKE_C_COMPILER=$CC \
+        -DGeant4_DIR=$SIMPATH_INSTALL/lib/$GEANT4VERSIONp \
+        -DROOT_DIR=$SIMPATH_INSTALL \
+        -DWITH_TEST=OFF \
+        ..
 
   make install -j$number_of_processes
 

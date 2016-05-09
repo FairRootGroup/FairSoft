@@ -148,6 +148,7 @@ echo "Fortran compiler    : " $FC | tee -a $logfile
 echo "CXXFLAGS            : " $CXXFLAGS | tee -a $logfile
 echo "CFLAGS              : " $CFLAGS | tee -a $logfile
 echo "FFLAGS              : " $FFLAGS | tee -a $logfile
+echo "CMAKE BUILD TYPE    : " $BUILD_TYPE | tee -a $logfile
 echo "Compiler            : " $compiler | tee -a $logfile
 echo "Fortran compiler    : " $FC
 echo "Debug               : " $debug | tee -a $logfile

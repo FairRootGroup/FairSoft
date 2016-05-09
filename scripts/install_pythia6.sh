@@ -29,7 +29,13 @@ then
   cp ../CMakeLists.txt_pythia6 CMakeLists.txt
   mkdir build
   cd build
-  cmake .. -DCMAKE_INSTALL_PREFIX=$install_prefix -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC
+
+  cmake -DCMAKE_INSTALL_PREFIX=$install_prefix \
+        -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+        -DCMAKE_CXX_COMPILER=$CXX \
+        -DCMAKE_C_COMPILER=$CC \
+        ..
+
   make install
 
   if [ "$platform" = "macosx" ];

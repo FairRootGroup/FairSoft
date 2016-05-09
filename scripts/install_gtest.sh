@@ -27,7 +27,10 @@ then
     cd gtest
     mkdir build
     cd build
-    cmake .. -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC
+    cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+          -DCMAKE_CXX_COMPILER=$CXX \
+          -DCMAKE_C_COMPILER=$CC \
+          ..
     make
     # fake the installation process
     mkdir -p $install_prefix/lib

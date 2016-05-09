@@ -512,6 +512,16 @@ fi
 #restore the default langauge
 export LANG=${default_lang}
 
+# Define the corresponding CMake build type
+if [[ $CXXFLAGS == *"-g"* ]]; then
+  if [[ $CXXFLAGS == *"O0"* ]]; then
+    export BUILD_TYPE=Debug
+  else
+    export BUILD_TYPE=RelWithDebInfo
+  fi
+else
+  export BUILD_TYPE=Release
+fi
 
 cd $SIMPATH
 rm -rf test

@@ -16,7 +16,16 @@ if (not_there MessagePack $checkfile);
 then
     cd $SIMPATH/basics/msgpack
 
-    cmake -DMSGPACK_CXX11=ON -DMSGPACK_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$install_prefix .
+    mkdir -p build
+    cd build
+
+    cmake -DCMAKE_INSTALL_PREFIX=$install_prefix \
+          -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+          -DCMAKE_CXX_COMPILER=$CXX \
+          -DCMAKE_C_COMPILER=$CC \
+          -DMSGPACK_CXX11=ON \
+          -DMSGPACK_BUILD_TESTS=OFF
+          ..
 
     make -j$number_of_processes
 

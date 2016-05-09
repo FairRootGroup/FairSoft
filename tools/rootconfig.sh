@@ -88,5 +88,6 @@
                     -DGSL_DIR=$SIMPATH_INSTALL \
                     -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
                     -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string \
-                    $etc_string -Dgnuinstall=ON $debugstring
+                    $etc_string -Dgnuinstall=ON \
+                    -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 
