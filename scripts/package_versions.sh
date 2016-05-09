@@ -38,10 +38,10 @@ export GEANT4VERSIONp=Geant4-10.2.1
 export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 if [ "$build_root6" = "yes" ]; then
   # Root v6.04.00
-  export ROOTVERSION=v6-06-00
+  export ROOTVERSION=v6-06-02
 else
   # Root v5.34.32
-  export ROOTVERSION=v5-34-34
+  export ROOTVERSION=v5-34-36
 fi
 
 export XROOTDVERSION=4.1.1
@@ -50,7 +50,7 @@ export PLUTO_LOCATION="http://web-docs.gsi.de/%7Ehadeshyp/pluto/v5.37/"
 export PLUTOVERSION=pluto_v5.37
 
 export GEANT3_LOCATION="http://root.cern.ch/git/geant3.git"
-export GEANT3BRANCH=v2-0
+export GEANT3BRANCH=v2-1
 
 export VGM_LOCATION="http://svn.code.sf.net/p/vgm/code/tags/"
 export VGMVERSION=v4-3
@@ -60,7 +60,7 @@ export GEANT4VMC_LOCATION="http://root.cern.ch/git/geant4_vmc.git"
 export GEANT4VMCBRANCH=v3-3
 
 export MILLEPEDE_LOCATION="http://svnsrv.desy.de/public/MillepedeII/tags/"
-export MILLEPEDE_VERSION=V04-03-01
+export MILLEPEDE_VERSION=V04-03-04
 
 export SODIUM_LOCATION="https://github.com/jedisct1/libsodium"
 export SODIUMBRANCH=1.0.3
