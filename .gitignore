@@ -37,8 +37,8 @@ tools/root_v5.34.17.source.tar.gz
 transport/geant3/
 transport/geant321+_vmc.1.15a.tar.gz
 transport/geant4
-transport/geant4.10.01.p02.tar.gz
-transport/geant4.10.01.p02
+transport/geant4.10.02.p01.tar.gz
+transport/geant4.10.02.p01
 transport/geant4_vmc/
 transport/vgm/
 basics/xerces-c-3.1.2.tar.gz
@@ -48,8 +48,8 @@ basics/Mesa-7.10.3/
 basics/MesaLib-7.10.3.tar.bz2
 basics/mesa
 basics/nanomsg
-basics/nanomsg-0.6-beta.tar.gz
-basics/nanomsg-0.6-beta/
+basics/nanomsg-0.8-beta.tar.gz
+basics/nanomsg-0.8-beta/
 basics/protobuf
 basics/protobuf-2.6.1.tar.gz
 basics/protobuf-2.6.1/
