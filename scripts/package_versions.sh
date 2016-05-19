@@ -36,7 +36,7 @@ export GEANT4VERSION=geant4.10.02.p01
 export GEANT4VERSIONp=Geant4-10.2.1
 
 #export ROOT_LOCATION="http://root.cern.ch/git/root.git"
-export ROOT_LOCATION="http://github.com/root-mirror/root"
+export ROOT_LOCATION="https://github.com/root-mirror/root"
 if [ "$build_root6" = "yes" ]; then
   # Root v6.04.00
   export ROOTVERSION=v6-06-02
