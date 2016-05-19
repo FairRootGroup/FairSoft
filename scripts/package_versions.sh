@@ -13,8 +13,8 @@ export GSLVERSION=gsl-1.16
 export ICU_LOCATION="http://download.icu-project.org/files/icu4c/53.1/"
 export ICUVERSION=icu4c-53_1
 
-export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.59.0/"
-export BOOSTVERSION=boost_1_59_0
+export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.61.0/"
+export BOOSTVERSION=boost_1_61_0
 
 export PYTHIA6_LOCATION="https://root.cern.ch/download/"
 export PYTHIA6VERSION=pythia6
@@ -35,7 +35,8 @@ export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
 export GEANT4VERSION=geant4.10.02.p01
 export GEANT4VERSIONp=Geant4-10.2.1
 
-export ROOT_LOCATION="http://root.cern.ch/git/root.git"
+#export ROOT_LOCATION="http://root.cern.ch/git/root.git"
+export ROOT_LOCATION="http://github.com/root-mirror/root"
 if [ "$build_root6" = "yes" ]; then
   # Root v6.04.00
   export ROOTVERSION=v6-06-02
