@@ -28,10 +28,7 @@ then
 
   cd $SIMPATH/generators/pythia8
 
-  # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
-  mypatch ../pythia8_friend.patch | tee -a $logfile
-
-  USRLDFLAGSSHARED="$CXXFLAGS" ./configure  --enable-shared --with-hepmc=$HEPINSTALLDIR --with-hepmcversion=$HEPMCVERSION
+  USRLDFLAGSSHARED="$CXXFLAGS" ./configure  --enable-shared --with-hepmc2=$HEPINSTALLDIR
 
   if [ "$compiler" = "PGI" ];
   then
@@ -56,25 +53,19 @@ then
   cp -r include/Pythia8 $install_prefix/include
 
   mkdir -p $install_prefix/share/pythia8
-  cp -r xmldoc $install_prefix/share/pythia8
+  cp -r share/Pythia8/xmldoc $install_prefix/share/pythia8
+  ln -s $install_prefix/share/pythia8 $install_prefix/share/Pythia8
 
   if [ "$platform" = "macosx" ];
   then
     cp lib/libpythia8.dylib $install_prefix/lib
-    cp lib/liblhapdfdummy.dylib $install_prefix/lib
-    cp lib/libpythia8tohepmc.dylib $install_prefix/lib
     cd $install_prefix/lib
     for file in $(ls libpythia8*.dylib); do
-      install_name_tool -id $install_prefix/lib/$file $file
-    done
-    for file in $(ls liblhapdf*.dylib); do
       install_name_tool -id $install_prefix/lib/$file $file
     done
     create_links dylib so
   else
     cp lib/libpythia8.so $install_prefix/lib
-    cp lib/liblhapdfdummy.so $install_prefix/lib
-    cp lib/libpythia8tohepmc.so $install_prefix/lib
   fi
 
   check_all_libraries $install_prefix/lib
