@@ -42,15 +42,15 @@ then
     mypatch ../geant4.10.00_clang_linux.patch
   fi
 
-  if [ "$platform" = "macosx" ]; then
-    mypatch ../geant4.10.00_clang_osx.patch
-    mypatch ../geant4.10.00.p02_cmake.patch
-    if [ "$compiler" = "Clang" ]; then
-      if clang --version | grep -q "version 7" ; then
-        mypatch ../geant4.10.00_clang7_osx.patch
-      fi
-    fi
-  fi
+#  if [ "$platform" = "macosx" ]; then
+#    mypatch ../geant4.10.00_clang_osx.patch
+#    mypatch ../geant4.10.00.p02_cmake.patch
+#    if [ "$compiler" = "Clang" ]; then
+#      if clang --version | grep -q "version 7" ; then
+#        mypatch ../geant4.10.00_clang7_osx.patch
+#      fi
+#    fi
+#  fi
 
   if (not_there Geant4-build  build);
   then
