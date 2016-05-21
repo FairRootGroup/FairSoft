@@ -70,6 +70,7 @@
 
    if clang --version | grep -q "version 7" ; then
      VC="-Dvc=OFF"
+     XROOTD="-Dxrootd=OFF"
    fi
 
    #######################################################
