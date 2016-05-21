@@ -68,6 +68,10 @@
      VC="-Dvc=ON"
    fi
 
+   if clang --version | grep -q "version 7" ; then
+     VC="-Dvc=OFF"
+   fi
+
    #######################################################
       
      etc_string="-DCMAKE_INSTALL_SYSCONFDIR=$SIMPATH_INSTALL/share/root/etc"

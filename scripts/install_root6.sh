@@ -35,13 +35,17 @@ fi
 # install xrootd as prerequisit for root
 # since we use a script delivered with root we have to first unpack root to use the script
 # TODO: Check if the installation was done already
-if (not_there xrootd $install_prefix/bin/xrd);
-then
+# Compilation doesn't work with XCode 7
+if clang --version | grep -q "version 7" ; then
+  # don't do anything
   cd $SIMPATH/tools/root
-  mypatch ../xrootd_cmake.patch
-  build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
-  if [ "$platform" = "macosx" ];
+else
+  if (not_there xrootd $install_prefix/bin/xrd);
   then
+    cd $SIMPATH/tools/root
+    mypatch ../xrootd_cmake.patch
+    build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
+    if [ "$platform" = "macosx" ]; then
       cd $install_prefix/lib
       for file in $(ls libXrd*.dylib); do
         install_name_tool -id $install_prefix/lib/$file $file
@@ -50,7 +54,8 @@ then
         done
       done
       create_links dylib so
-  fi
+    fi
+  fi  
 fi
 
 if (not_there root $checkfile);
