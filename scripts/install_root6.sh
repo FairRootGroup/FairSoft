@@ -14,10 +14,10 @@ fi
 if [ ! -d  $SIMPATH/tools/root ];
 then
   cd $SIMPATH/tools
-  git clone $ROOT_LOCATION
+  git clone --depth 1 --branch $ROOTVERSION $ROOT_LOCATION
 
-  cd $SIMPATH/tools/root
-  git checkout -b $ROOTVERSION $ROOTVERSION
+#  cd $SIMPATH/tools/root
+#  git checkout -b $ROOTVERSION $ROOTVERSION
 fi
 
 install_prefix=$SIMPATH_INSTALL
