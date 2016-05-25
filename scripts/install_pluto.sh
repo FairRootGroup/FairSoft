@@ -1,5 +1,13 @@
 #!/bin/bash
 
+
+distribution=$(lsb_release -is)
+version=$(lsb_release -rs | cut -f1 -d.)
+if [ "$distribution$version" = "ScientificCERNSLC6" ]; then
+  cd $SIMPATH
+  return 1
+fi
+
 if [ ! -d  $SIMPATH/generators/pluto ];
 then
   cd $SIMPATH/generators
