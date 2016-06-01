@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -xv
-
 # check if the root source directory is already available
 # If it is not there get the source tar file from the
 # root web server and unpack it
@@ -21,8 +19,6 @@ then
 #  cd $SIMPATH/tools/root
 #  git checkout -b $ROOTVERSION $ROOTVERSION
 fi
-
-set +xv
 
 install_prefix=$SIMPATH_INSTALL
 libdir=$install_prefix/lib/root
