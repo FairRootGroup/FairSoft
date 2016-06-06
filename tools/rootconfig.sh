@@ -68,9 +68,11 @@
      VC="-Dvc=ON"
    fi
 
-   if clang --version | grep -q "version 7" ; then
-     VC="-Dvc=OFF"
-     XROOTD="-Dxrootd=OFF"
+   if [ "$platform" = "macosx" ]; then
+     if clang --version | grep -q "version 7.3" ; then
+       VC="-Dvc=OFF"
+       XROOTD="-Dxrootd=OFF"
+     fi
    fi
 
    #######################################################

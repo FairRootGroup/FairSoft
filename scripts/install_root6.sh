@@ -36,12 +36,20 @@ fi
 # since we use a script delivered with root we have to first unpack root to use the script
 # TODO: Check if the installation was done already
 # Compilation doesn't work with XCode 7
-if clang --version | grep -q "version 7" ; then
-  # don't do anything
-  cd $SIMPATH/tools/root
+if [ "$platform" = "macosx" ]; then
+  if clang --version | grep -q "version 7.3" ; then
+    # don't do anything
+    cd $SIMPATH/tools/root
+    _build_xrootd=no
+  else
+    _build_xrootd=yes
+  fi
 else
-  if (not_there xrootd $install_prefix/bin/xrd);
-  then
+  _build_xrootd=yes
+fi
+
+if [ "${_build_xrootd}" = "yes" ]; then
+  if (not_there xrootd $install_prefix/bin/xrd); then
     cd $SIMPATH/tools/root
     mypatch ../xrootd_cmake.patch
     build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
