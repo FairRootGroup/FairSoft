@@ -1,35 +1,29 @@
---- CMakeLists.txt_orig	2014-02-27 18:12:19.000000000 +0100
-+++ CMakeLists.txt	2014-05-06 16:46:20.000000000 +0200
-@@ -6,8 +6,7 @@
+--- CMakeLists.txt.orig	2016-06-06 06:46:57.000000000 -0700
++++ CMakeLists.txt	2016-06-06 06:48:16.000000000 -0700
+@@ -6,7 +6,7 @@
  project(Geant4Py)
  #------------------------------------------------------------------------------
  # installation prefixes for libraries
 -set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
--
 +set(CMAKE_INSTALL_PREFIX $ENV{SIMPATH_INSTALL})
+ 
  # debug mode
  set(DEBUG FALSE CACHE BOOL "Debug Mode (Debug On)")
- 
-@@ -25,10 +24,18 @@
- find_package(Geant4 REQUIRED)
- find_package(PythonInterp REQUIRED)
- find_package(PythonLibs REQUIRED)
--find_package(Boost 1.36.0)
-+find_package(Boost 1.54.0)
+@@ -31,6 +31,14 @@
  find_package(XercesC)
  find_package(ROOT)
  
 +set(BOOST_INCLUDE_DIRS ${Boost_INCLUDE_DIR})
 +
 +if (CMAKE_SYSTEM_NAME MATCHES Darwin)
-+      SET(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS} -flat_namespace -single_module -undefined dynamic_lookup")
-+      SET(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -flat_namespace -single_module -undefined dynamic_lookup")
++      SET(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_C_
++      SET(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_
 +      SET(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
 +endif()
 +
- #------------------------------------------------------------------------------
- # parameters for building
- message(STATUS "--------------------------------------------------------")
+ if(NOT GEANT4_FOUND)
+   message(FATAL_ERROR "NOT Found Geant4.")
+ endif()
 --- source/gdml/pyG4GDMLParser.cc_orig	2014-02-27 18:12:18.000000000 +0100
 +++ source/gdml/pyG4GDMLParser.cc	2014-05-06 16:26:53.000000000 +0200
 @@ -81,6 +81,7 @@
@@ -42,24 +36,13 @@
  
 --- source/geometry/pyG4LogicalVolume.cc_orig	2014-02-27 18:12:19.000000000 +0100
 +++ source/geometry/pyG4LogicalVolume.cc	2014-05-06 16:28:40.000000000 +0200
-@@ -147,5 +147,6 @@
+@@ -149,5 +149,6 @@
      // ---
      .def("SetBiasWeight",  &G4LogicalVolume::SetBiasWeight)
      .def("GetBiasWeight",  &G4LogicalVolume::GetBiasWeight)
 +    .def("SetSensitiveDetector", &G4LogicalVolume::SetSensitiveDetector)
      ;
  }
---- source/geometry/pyG4Polycone.cc_orig	2014-02-27 18:12:19.000000000 +0100
-+++ source/geometry/pyG4Polycone.cc	2014-05-06 16:28:40.000000000 +0200
-@@ -96,7 +96,7 @@
-     .def("GetStartPhi",    &G4Polycone::GetStartPhi)
-     .def("GetEndPhi",      &G4Polycone::GetEndPhi)
-     .def("IsOpen",         &G4Polycone::IsOpen)
--    .def("IsGeneric",      &G4Polycone::IsGeneric)
-+    //.def("IsGeneric",      &G4Polycone::IsGeneric)
-     .def("GetNumRZCorner", &G4Polycone::GetNumRZCorner)
- 
-     // operators
 --- source/geometry/pyG4VSolid.cc_orig	2014-02-27 18:12:19.000000000 +0100
 +++ source/geometry/pyG4VSolid.cc	2014-05-06 16:28:40.000000000 +0200
 @@ -32,7 +32,7 @@
@@ -71,24 +54,24 @@
  using namespace boost::python;
  
  // ====================================================================
---- source/particles/pyG4PrimaryVertex.cc_orig	2014-02-27 18:12:19.000000000 +0100
-+++ source/particles/pyG4PrimaryVertex.cc	2014-05-06 16:29:47.000000000 +0200
+--- source/particles/pyG4PrimaryVertex.cc.orig	2016-06-06 06:59:31.000000000 -0700
++++ source/particles/pyG4PrimaryVertex.cc	2016-06-06 06:58:18.000000000 -0700
 @@ -52,6 +52,8 @@
  {
    class_<G4PrimaryVertex, G4PrimaryVertex*>
      ("G4PrimaryVertex", "primary vertex")
-+    // constructors
++     // constructors
 +    .def(init<const G4ThreeVector&, const G4float&>())
-     // ---
-     .add_property("X0", &G4PrimaryVertex::GetX0)
-     .add_property("Y0", &G4PrimaryVertex::GetY0)
-@@ -69,6 +71,7 @@
- 	 return_internal_reference<>(), f_GetPrimary())
+     .def(init<>())
+     .def(init<G4double, G4double, G4double, G4double>())
+     .def(init<G4ThreeVector, G4double>())
+@@ -73,6 +75,7 @@
+     .def("SetPrimary",  &G4PrimaryVertex::SetPrimary)
      .def("GetWeight",   &G4PrimaryVertex::GetWeight)
      .def("SetWeight",   &G4PrimaryVertex::SetWeight)
 +    .def("SetPrimary",   &G4PrimaryVertex::SetPrimary)
      .def("Print", &G4PrimaryVertex::Print)
-      ;
+     ;
  }
 --- source/physics_lists/pyPhysicsLists.cc_orig	2014-02-27 18:12:19.000000000 +0100
 +++ source/physics_lists/pyPhysicsLists.cc	2014-05-06 16:30:46.000000000 +0200
@@ -138,7 +121,7 @@
    export_PhysicsLists();
 --- source/track/pyG4StepPoint.cc_orig	2014-02-27 18:12:19.000000000 +0100
 +++ source/track/pyG4StepPoint.cc	2014-05-06 16:32:37.000000000 +0200
-@@ -31,7 +31,7 @@
+@@ -32,7 +32,7 @@
  // ====================================================================
  #include <boost/python.hpp>
  #include "G4StepPoint.hh"
@@ -147,7 +130,7 @@
  using namespace boost::python;
  
  // ====================================================================
-@@ -64,5 +64,10 @@
+@@ -68,5 +68,10 @@
      .def("GetMass",               &G4StepPoint::GetMass)
      .def("GetCharge",             &G4StepPoint::GetCharge)
      .def("GetWeight",             &G4StepPoint::GetWeight)
@@ -218,30 +201,25 @@
      // ---
      .def("SetSold",             &G4EzVolume::SetSolid)
      .def("GetSold",             &G4EzVolume::GetSolid,
---- source/particles/pyG4PrimaryParticle.cc_orig	2014-07-15 12:54:54.000000000 +0200
-+++ source/particles/pyG4PrimaryParticle.cc	2014-07-15 12:56:21.000000000 +0200
+--- source/particles/pyG4PrimaryParticle.cc.orig	2016-06-06 06:43:27.000000000 -0700
++++ source/particles/pyG4PrimaryParticle.cc	2016-06-06 07:12:50.000000000 -0700
 @@ -42,6 +42,8 @@
  {
    class_<G4PrimaryParticle, G4PrimaryParticle*>
      ("G4PrimaryParticle", "primary particle")
 +    // constructors
 +    .def(init<const G4int&>())
+     .def(init<G4int>())
      // ---
      .add_property("Px", &G4PrimaryParticle::GetPx)
-     .add_property("Py", &G4PrimaryParticle::GetPy)
-@@ -71,6 +73,12 @@
+@@ -77,5 +79,7 @@
      .def("GetWeight",   &G4PrimaryParticle::GetWeight)
      .def("SetWeight",   &G4PrimaryParticle::SetWeight)
      .def("GetProperTime", &G4PrimaryParticle::GetProperTime)
-+    .def("Set4Momentum",   &G4PrimaryParticle::Set4Momentum)
-+    .def("SetMass",   &G4PrimaryParticle::SetMass)
-+    .def("SetMomentumDirection",   &G4PrimaryParticle::SetMomentumDirection)
-+    .def("SetCharge",   &G4PrimaryParticle::SetCharge)
 +    .def("GetParticleDefinition",   &G4PrimaryParticle::GetParticleDefinition,
 +          return_internal_reference<>())     ;
      ;
  }
- 
 --- site-modules/geometries/ezgeom/G4EzVolume.cc_orig	2014-07-15 14:05:45.000000000 +0200
 +++ site-modules/geometries/ezgeom/G4EzVolume.cc	2014-07-15 14:06:39.000000000 +0200
 @@ -31,11 +31,16 @@
