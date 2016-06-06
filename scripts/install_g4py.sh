@@ -19,7 +19,7 @@ then
           -DXERCESC_ROOT_DIR=${SIMPATH_INSTALL}  \
           -DBOOST_ROOT=${SIMPATH_INSTALL} \
           -DBoost_NO_SYSTEM_PATHS=TRUE \
-          -DBoost_NO_BOOST_CMAKE=TRUE
+          -DBoost_NO_BOOST_CMAKE=TRUE \
           ../environments/g4py
 
     $MAKE_command -j$number_of_processes
