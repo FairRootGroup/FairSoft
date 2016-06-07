@@ -62,9 +62,9 @@ export GEANT4VMCBRANCH=v3-1-p1
 export MILLEPEDE_LOCATION="http://svnsrv.desy.de/public/MillepedeII/tags/"
 export MILLEPEDE_VERSION=V04-01-01
 
-export ZEROMQ_LOCATION="http://download.zeromq.org/"
 export ZEROMQVERSION=4.1.0-rc1
 export ZEROMQDIR=4.1.0
+export ZEROMQ_LOCATION="https://archive.org/download/zeromq_$ZEROMQDIR"
 
 export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v2.6.1"
 export PROTOBUF_VERSION=protobuf-2.6.1
