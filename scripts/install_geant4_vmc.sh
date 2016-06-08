@@ -31,7 +31,7 @@ then
   cmake -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
         -DCMAKE_CXX_COMPILER=$CXX \
-        -DCMAKE_C_COMPILER=$CC
+        -DCMAKE_C_COMPILER=$CC \
         -DGeant4VMC_USE_VGM=ON \
         -DGeant4VMC_USE_GEANT4_UI=Off \
         -DGeant4VMC_USE_GEANT4_VIS=Off \

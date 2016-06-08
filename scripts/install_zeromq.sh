@@ -31,11 +31,11 @@ then
      ./autogen.sh
     fi
 
-    if [ "$distribution$version" = "ScientificCERNSLC6" ]; then
+#    if [ "$distribution$version" = "ScientificCERNSLC6" ]; then
       PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static --without-libsodium
-    else
-      PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
-    fi
+#    else
+#      PKG_CONFIG_PATH=$SIMPATH_INSTALL/lib/pkgconfig ./configure --prefix=$install_prefix --libdir=$install_prefix/lib --enable-static
+#    fi
     
     make
     make install

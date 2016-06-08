@@ -24,7 +24,7 @@ then
           -DCMAKE_CXX_COMPILER=$CXX \
           -DCMAKE_C_COMPILER=$CC \
           -DMSGPACK_CXX11=ON \
-          -DMSGPACK_BUILD_TESTS=OFF
+          -DMSGPACK_BUILD_TESTS=OFF \
           ..
 
     make -j$number_of_processes

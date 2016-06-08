@@ -82,9 +82,9 @@ then
   check_success Geant3 $checkfile
   check=$?
 
-  export CXXFLAGS=$CXXFLAGS_BAK
-  export CFLAGS=$CFLAGS_BAK
-  export FFLAGS=$FFLAGS_BAK
+#  export CXXFLAGS=$CXXFLAGS_BAK
+#  export CFLAGS=$CFLAGS_BAK
+#  export FFLAGS=$FFLAGS_BAK
 
 fi
 

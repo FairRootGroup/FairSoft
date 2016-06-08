@@ -321,10 +321,10 @@ fi
 
 ##################### LibSodium ##################################################
 
-if [ "$check" = "1" ];
-then
-  source scripts/install_sodium.sh
-fi
+#if [ "$check" = "1" ];
+#then
+#  source scripts/install_sodium.sh
+#fi
 
 ##################### ZeroMQ ##################################################
 
