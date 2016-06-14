@@ -36,8 +36,11 @@ fi
 # since we use a script delivered with root we have to first unpack root to use the script
 # TODO: Check if the installation was done already
 # Compilation doesn't work with XCode 7
+set -xv
 if [ "$platform" = "macosx" ]; then
-  if clang --version | grep -q "version 7.3" ; then
+  clang_version=$(clang --version | head -1 | cut -f 4 -d' ' | cut -f1,2 -d.)
+  clang_major_version=$(echo $clang_version | cut -f1 -d.)
+  if [ "$clang_version" = "7.3" -o $clang_major_version -ge 8 ]; then
     # don't do anything
     cd $SIMPATH/tools/root
     _build_xrootd=no
@@ -47,6 +50,7 @@ if [ "$platform" = "macosx" ]; then
 else
   _build_xrootd=yes
 fi
+set +xv
 
 if [ "${_build_xrootd}" = "yes" ]; then
   if (not_there xrootd $install_prefix/bin/xrd); then

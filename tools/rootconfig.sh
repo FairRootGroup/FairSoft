@@ -68,12 +68,16 @@
      VC="-Dvc=ON"
    fi
 
+set -xv
    if [ "$platform" = "macosx" ]; then
-     if clang --version | grep -q "version 7.3" ; then
+     clang_version=$(clang --version | head -1 | cut -f 4 -d' ' | cut -f1,2 -d.)
+     clang_major_version=$(echo $clang_version | cut -f1 -d.)
+     if [ "$clang_version" = "7.3" -o $clang_major_version -ge 8 ]; then
        VC="-Dvc=OFF"
        XROOTD="-Dxrootd=OFF"
      fi
    fi
+set +xv
 
    #######################################################
       
