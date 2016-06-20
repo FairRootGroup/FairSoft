@@ -79,9 +79,9 @@ export FLATBUFFERS_BRANCH=v1.3.0
 export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c.git"
 export MSGPACK_BRANCH=cpp-1.4.1
 
-export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/releases/download/0.8-beta/"
+export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/archive/"
 #export NANOMSG_LOCATION="http://download.nanomsg.org/"
-export NANOMSG_VERSION=nanomsg-0.8-beta
+export NANOMSG_VERSION=1.0.0
 
 export G4ABLA_VERSION=G4ABLA3.0
 export G4ABLA_TAR=G4ABLA3.0.tar.gz

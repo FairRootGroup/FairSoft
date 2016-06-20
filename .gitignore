@@ -48,8 +48,8 @@ basics/Mesa-7.10.3/
 basics/MesaLib-7.10.3.tar.bz2
 basics/mesa
 basics/nanomsg
-basics/nanomsg-0.8-beta.tar.gz
-basics/nanomsg-0.8-beta/
+basics/1.0.0.tar.gz
+basics/nanomsg-1.0.0/
 basics/protobuf
 basics/protobuf-2.6.1.tar.gz
 basics/protobuf-2.6.1/
