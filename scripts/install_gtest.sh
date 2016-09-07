@@ -7,12 +7,12 @@ then
   if [ ! -e $GTESTVERSION.zip ];
   then
     echo "*** Downloading gtest sources ***"
-    download_file $GTEST_LOCATION/$GTESTVERSION.zip
+    download_file $GTEST_LOCATION/$GTESTVERSION.tar.gz
   fi
-  untar gtest $GTESTVERSION.zip
-  if [ -d  $GTESTVERSION ];
+  untar gtest $GTESTVERSION.tar.gz
+  if [ -d  googletest-$GTESTVERSION ];
   then
-    ln -s $GTESTVERSION gtest
+    ln -s googletest-$GTESTVERSION gtest
   fi
 fi
 
