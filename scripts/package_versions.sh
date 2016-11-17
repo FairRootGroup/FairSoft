@@ -14,7 +14,7 @@ export ICU_LOCATION="http://download.icu-project.org/files/icu4c/53.1/"
 export ICUVERSION=icu4c-53_1
 
 export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.61.0/"
-export BOOSTVERSION=boost_1_61_0
+export BOOSTVERSION=boost_1_62_0
 
 export PYTHIA6_LOCATION="https://root.cern.ch/download/"
 export PYTHIA6VERSION=pythia6
@@ -39,13 +39,13 @@ export GEANT4VERSIONp=Geant4-10.2.1
 export ROOT_LOCATION="https://github.com/root-mirror/root"
 if [ "$build_root6" = "yes" ]; then
   # Root v6.04.00
-  export ROOTVERSION=v6-06-02
+  export ROOTVERSION=v6-06-08
 else
   # Root v5.34.32
   export ROOTVERSION=v5-34-36
 fi
 
-export XROOTDVERSION=4.1.1
+export XROOTDVERSION=4.5.0
 
 export PLUTO_LOCATION="http://web-docs.gsi.de/%7Ehadeshyp/pluto/v5.37/"
 export PLUTOVERSION=pluto_v5.37
@@ -74,10 +74,10 @@ export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v
 export PROTOBUF_VERSION=protobuf-2.6.1
 
 export FLATBUFFERS_LOCATION="https://github.com/google/flatbuffers"
-export FLATBUFFERS_BRANCH=v1.3.0
+export FLATBUFFERS_BRANCH=v1.4.0
 
 export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c.git"
-export MSGPACK_BRANCH=cpp-1.4.1
+export MSGPACK_BRANCH=cpp-2.0.0
 
 export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/archive/"
 #export NANOMSG_LOCATION="http://download.nanomsg.org/"
