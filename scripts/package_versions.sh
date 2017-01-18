@@ -39,7 +39,7 @@ export GEANT4VERSIONp=Geant4-10.2.1
 export ROOT_LOCATION="https://github.com/root-mirror/root"
 if [ "$build_root6" = "yes" ]; then
   # Root v6.04.00
-  export ROOTVERSION=v6-06-08
+  export ROOTVERSION=v6-08-04
 else
   # Root v5.34.32
   export ROOTVERSION=v5-34-36
