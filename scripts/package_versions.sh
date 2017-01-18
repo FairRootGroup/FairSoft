@@ -74,11 +74,10 @@ export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v
 export PROTOBUF_VERSION=protobuf-2.6.1
 
 export FLATBUFFERS_LOCATION="https://github.com/google/flatbuffers"
-export FLATBUFFERS_BRANCH=v1.4.0
+export FLATBUFFERS_BRANCH=v1.5.0
 
 export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c.git"
-export MSGPACK_BRANCH=cpp-2.0.0
-
+export MSGPACK_BRANCH=cpp-2.1.0
 export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/archive/"
 #export NANOMSG_LOCATION="http://download.nanomsg.org/"
 export NANOMSG_VERSION=1.0.0
