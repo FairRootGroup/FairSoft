@@ -4,15 +4,15 @@
 if [ ! -d  $SIMPATH/basics/protobuf ];
 then
   cd $SIMPATH/basics
-  if [ ! -e $PROTOBUF_VERSION.tar.gz ];
+  if [ ! -e protobuf-cpp-$PROTOBUF_VERSION.tar.gz ];
   then
     echo "*** Downloading protobuf sources ***"
-    download_file $PROTOBUF_LOCATION/$PROTOBUF_VERSION.tar.gz
+    download_file $PROTOBUF_LOCATION/protobuf-cpp-$PROTOBUF_VERSION.tar.gz
   fi
-  untar protobuf $PROTOBUF_VERSION.tar.gz
-  if [ -d $PROTOBUF_VERSION ];
+  untar protobuf protobuf-cpp-$PROTOBUF_VERSION.tar.gz
+  if [ -d protobuf-$PROTOBUF_VERSION ];
   then
-    ln -s $PROTOBUF_VERSION protobuf
+    ln -s protobuf-$PROTOBUF_VERSION protobuf
   fi
 fi
 

@@ -70,14 +70,14 @@ export ZEROMQVERSION=4.1.3
 export ZEROMQ_LOCATION="https://archive.org/download/zeromq_$ZEROMQVERSION"
 export ZEROMQDIR=4.1.3
 
-export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v2.6.1"
-export PROTOBUF_VERSION=protobuf-2.6.1
+export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v3.2.0"
+export PROTOBUF_VERSION=3.2.0
 
 export FLATBUFFERS_LOCATION="https://github.com/google/flatbuffers"
-export FLATBUFFERS_BRANCH=v1.5.0
+export FLATBUFFERS_BRANCH=v1.6.0
 
 export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c.git"
-export MSGPACK_BRANCH=cpp-2.0.0
+export MSGPACK_BRANCH=cpp-2.1.1
 
 export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/archive/"
 #export NANOMSG_LOCATION="http://download.nanomsg.org/"
