@@ -66,9 +66,9 @@ export MILLEPEDE_VERSION=V04-03-04
 export SODIUM_LOCATION="https://github.com/jedisct1/libsodium"
 export SODIUMBRANCH=1.0.3
 
-export ZEROMQVERSION=4.1.3
-export ZEROMQ_LOCATION="https://archive.org/download/zeromq_$ZEROMQVERSION"
-export ZEROMQDIR=4.1.3
+export ZEROMQVERSION=4.2.0
+export ZEROMQ_LOCATION="https://github.com/zeromq/libzmq/releases/download/v$ZEROMQVERSION"
+export ZEROMQDIR=4.2.0
 
 export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v3.2.0"
 export PROTOBUF_VERSION=3.2.0
