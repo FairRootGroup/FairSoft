@@ -93,7 +93,7 @@ directory of FairSoft.
 
 ##Included Packages
 
-* cmake 3.3.2 (only installed if installed version is to old)
+* cmake 3.7.2 (only installed if installed version is too old)
 * gtest  1.7.0
 * gsl 1.16
 * icu4c 53.1
