@@ -2,8 +2,8 @@ config.cache
 Install_*.log
 libraries_*.log
 basics/cmake
-basics/cmake-3.3.2.tar.gz
-basics/cmake-3.3.2/
+basics/cmake-3.7.2.tar.gz
+basics/cmake-3.7.2/
 basics/icu
 basics/icu4c-53_1-src.tgz
 basics/MillepedeII/
