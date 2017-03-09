@@ -46,6 +46,13 @@ then
          install_name_tool -id $install_prefix/lib/$file $file
       done
       create_links dylib so
+      if [ ! -e libpythia6.dylib ]; then
+        ln -s libPythia6.dylib libpythia6.dylib
+      fi
+  fi
+
+  if [ ! -e libpythia6.so ]; then
+    ln -s libPythia6.so libpythia6.so
   fi
 
   check_all_libraries $install_prefix/lib
