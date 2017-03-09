@@ -88,7 +88,7 @@ fi
 
 if [ "$check" = "1" ];
 then
-  export PATH=$install_prefix/bin:$PATH
+  export PATH=$SIMPATH_INSTALL/bin:$PATH
 else
   echo "There was a problem installing cmake"
   echo "Stop the script at this point"
