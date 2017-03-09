@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export CMAKE_LOCATION="http://www.cmake.org/files/v3.3/"
-export CMAKEVERSION_REQUIRED=cmake-3.3.0
-export CMAKEVERSION=cmake-3.3.2
+export CMAKE_LOCATION="http://www.cmake.org/files/v3.7/"
+export CMAKEVERSION_REQUIRED=cmake-3.7.2
+export CMAKEVERSION=cmake-3.7.2
 
 export GTEST_LOCATION="https://github.com/google/googletest/archive/"
 export GTESTVERSION=release-1.7.0
@@ -38,10 +38,10 @@ export GEANT4VERSIONp=Geant4-10.2.1
 #export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 export ROOT_LOCATION="https://github.com/root-mirror/root"
 if [ "$build_root6" = "yes" ]; then
-  # Root v6.04.00
+  # Root v6.08.04
   export ROOTVERSION=v6-08-04
 else
-  # Root v5.34.32
+  # Root v5.34.36
   export ROOTVERSION=v5-34-36
 fi
 
