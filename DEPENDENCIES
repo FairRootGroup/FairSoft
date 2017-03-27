@@ -64,7 +64,7 @@ yum install cmake gcc gcc-c++ gcc-gfortran make patch sed \
   libxml2-devel wget openssl-devel krb5-devel \
   automake autoconf libtool which
 
-Fedora22/23
+Fedora22-25
 
 dnf install cmake gcc gcc-c++ gcc-gfortran make patch sed \
   libX11-devel libXft-devel libXpm-devel libXext-devel \

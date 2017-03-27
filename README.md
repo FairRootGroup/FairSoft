@@ -93,7 +93,7 @@ directory of FairSoft.
 
 ##Included Packages
 
-* cmake 3.3.2 (only installed if installed version is to old)
+* cmake 3.7.2 (only installed if installed version is to old)
 * gtest  1.7.0
 * gsl 1.16
 * icu4c 53.1
@@ -104,12 +104,12 @@ directory of FairSoft.
 * Geant4 10.02.p1
 * xrootd 4.5.0
 * ROOT v5.34.36 or v6.08.04
-* Pluto v5.37
+* Pluto v5.37 (only when building root5)
 * Geant321+_vmc v2-1
 * VGM v4-3
 * G4VMC v3-3
 * MillePede V04-03-04
-* ZeroMQ 4.1.3
+* ZeroMQ 4.2.0
 * Protocoll Buffers 3.2.0
 * Nano Message 1.0.0
 * FlatBuffers 1.6.0
