@@ -6,6 +6,7 @@ _cxx=@CMAKE_CXX_COMPILER@
 _f77=@CMAKE_Fortran_COMPILER@
 _cxxflags="@FAIRSOFT_CXX_FLAGS@"
 _root_version=@ROOT_VERSION@
+_base_cxxflags="@CXXFLAGS@"
 
 usage="\
 Usage: fairsoft-config [--version] [--cc] [--cxx] [--f77] \
