@@ -25,11 +25,32 @@ EndIf (CMAKE_Fortran_COMPILER MATCHES "pgfortran")
 # create c source
 Execute_Process(COMMAND echo void MAIN() {} OUTPUT_FILE main.c)
 
+
 set(Pythia_CSRCS
 pythia6_common_address.c
 main.c
 )
 
 Add_Library(Pythia6 SHARED ${Pythia_FSRCS} ${Pythia_CSRCS})
+
+# Check if gfortran library has to specified explicit
+# This is needed so far on Mac OSX and gcc6
+If(CMAKE_SYSTEM_NAME MATCHES Darwin) 
+  Execute_Process(COMMAND gfortran -dumpversion
+                  OUTPUT_VARIABLE _gfortran_version
+                 )
+  String(SUBSTRING ${_gfortran_version} 0 1 _gfortran_major_version)
+  If(${_gfortran_major_version} EQUAL 6)
+    Execute_Process(COMMAND gfortran -print-file-name=libgfortran.dylib 
+                    OUTPUT_VARIABLE _gfortran_path
+                   )
+    Get_Filename_COMPONENT(_gfortran_libdir ${_gfortran_path} DIRECTORY)
+    Message("${_gfortran_libdir}")
+    Target_Link_Libraries(Pythia6 gfortran)
+    Link_Directories(${_gfortran_libdir})
+  EndIf()
+EndIf()
+
+
 Install(TARGETS Pythia6 DESTINATION LIBRARY DESTINATION lib)
 
