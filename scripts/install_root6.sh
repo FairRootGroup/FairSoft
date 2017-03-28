@@ -47,6 +47,14 @@ if [ "$platform" = "macosx" ]; then
   else
     _build_xrootd=yes
   fi
+  # fix problem when linking with gcc6
+  # libgfortran isn't found without the change
+  gcc_version=$(gfortran -dumpversion | cut -c1)
+  echo $gcc_version
+  if [ $gcc_version -eq 6 ]; then
+    mysed 'minicern gfortran' 'minicern' $SIMPATH/tools/root/main/CMakeLists.txt
+    mysed 'minicern' 'minicern gfortran' $SIMPATH/tools/root/main/CMakeLists.txt
+  fi
 else
   _build_xrootd=yes
 fi
