@@ -121,3 +121,6 @@ export DDSVERSION=master
 
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
 export ALIROOTVERSION=master
+
+export JSROOT_LOCATION="https://github.com/root-project/jsroot"
+export JSROOTVERSION=5.2.0

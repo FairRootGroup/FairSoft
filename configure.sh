@@ -354,6 +354,16 @@ then
   source scripts/install_msgpack.sh
 fi
 
+
+##################### JsROOT  ##################################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_jsroot.sh
+fi
+exit
+
+
 ##################### nanomsg ##################################################
 
 if [ "$check" = "1" ];
