@@ -31,8 +31,7 @@ then
 
     mkdir build
     cd build
-    cmake -DCMAKE_INSTALL_PREFIX=$install_prefix ..
-    cmake --build . # is this line really required?
+    cmake -DCMAKE_INSTALL_PREFIX=$install_prefix -DNN_ENABLE_DOC=OFF ..
     cmake --build . --target install
 
     ## old versions (pre cmake):

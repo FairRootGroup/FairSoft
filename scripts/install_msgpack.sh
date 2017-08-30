@@ -22,7 +22,9 @@ then
     cmake -DCMAKE_INSTALL_PREFIX=$install_prefix \
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
           -DCMAKE_CXX_COMPILER=$CXX \
+          -DCMAKE_CXX_FLAGS="-Wimplicit-fallthrough=0" \
           -DCMAKE_C_COMPILER=$CC \
+          -DCMAKE_C_FLAGS="-Wimplicit-fallthrough=0" \
           -DMSGPACK_CXX11=ON \
           -DMSGPACK_BUILD_TESTS=OFF \
           ..

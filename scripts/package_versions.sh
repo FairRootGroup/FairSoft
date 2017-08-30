@@ -13,8 +13,8 @@ export GSLVERSION=gsl-1.16
 export ICU_LOCATION="http://download.icu-project.org/files/icu4c/53.1/"
 export ICUVERSION=icu4c-53_1
 
-export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.62.0/"
-export BOOSTVERSION=boost_1_62_0
+export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.64.0/"
+export BOOSTVERSION=boost_1_64_0
 
 export PYTHIA6_LOCATION="https://root.cern.ch/download/"
 export PYTHIA6VERSION=pythia6
@@ -46,7 +46,7 @@ else
   export ROOTVERSION=v5-34-36
 fi
 
-export XROOTDVERSION=4.5.0
+export XROOTDVERSION=4.6.1
 
 export PLUTO_LOCATION="http://web-docs.gsi.de/%7Ehadeshyp/pluto/v5.37/"
 export PLUTOVERSION=pluto_v5.37
@@ -71,11 +71,11 @@ export ZEROMQVERSION=4.2.0
 export ZEROMQ_LOCATION="https://github.com/zeromq/libzmq/releases/download/v$ZEROMQVERSION"
 export ZEROMQDIR=4.2.0
 
-export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v3.2.0"
-export PROTOBUF_VERSION=3.2.0
+export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v3.4.0"
+export PROTOBUF_VERSION=3.4.0
 
 export FLATBUFFERS_LOCATION="https://github.com/google/flatbuffers"
-export FLATBUFFERS_BRANCH=v1.6.0
+export FLATBUFFERS_BRANCH=v1.7.1
 
 export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c.git"
 export MSGPACK_BRANCH=cpp-2.1.1
