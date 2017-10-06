@@ -14,7 +14,10 @@ fi
 if [ ! -d  $SIMPATH/tools/root ];
 then
   cd $SIMPATH/tools
-  git clone --depth 1 --branch $ROOTVERSION $ROOT_LOCATION
+  git clone --shallow-since=2017-09-25 --branch $ROOTVERSION $ROOT_LOCATION
+  cd $SIMPATH/tools/root
+  git checkout $ROOTHASHVALUE
+  cd $SIMPATH/tools
 
 #  cd $SIMPATH/tools/root
 #  git checkout -b $ROOTVERSION $ROOTVERSION
