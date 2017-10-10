@@ -87,28 +87,29 @@ do
 done
 
 clear
-echo
-echo "Would you like to install ROOT 6 instead of ROOT 5?"
-echo "Choosing 'Yes' will build ROOT 6 for testing purposes"
-echo "The default option is 'No' which builds the well tested ROOT 5 package."
-PS3='Please enter a choice from the above menu: '
+#echo
+#echo "Would you like to install ROOT 6 instead of ROOT 5?"
+#echo "Choosing 'Yes' will build ROOT 6 for testing purposes"
+#echo "The default option is 'No' which builds the well tested ROOT 5 package."
+#PS3='Please enter a choice from the above menu: '
 
-select CHOICE in "Yes" "No" Quit
-do
-case "$CHOICE" in
-Quit) exit
-;;
-"Yes") build_root6=yes
-break
-;;
-"No")  build_root6=no
-break
-;;
-"") echo This value is not valid. Hit Enter to see menu again!
-continue
-;;
-esac
-done
+#select CHOICE in "Yes" "No" Quit
+#do
+#case "$CHOICE" in
+#Quit) exit
+#;;
+#"Yes") build_root6=yes
+#break
+#;;
+#"No")  build_root6=no
+#break
+#;;
+#"") echo This value is not valid. Hit Enter to see menu again!
+build_root6=yes
+#continue
+#;;
+#esac
+#done
 
 clear
 echo
