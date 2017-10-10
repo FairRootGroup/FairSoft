@@ -78,7 +78,7 @@ export FLATBUFFERS_LOCATION="https://github.com/google/flatbuffers"
 export FLATBUFFERS_BRANCH=v1.7.1
 
 export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c.git"
-export MSGPACK_BRANCH=cpp-2.1.1
+export MSGPACK_BRANCH=cpp-2.1.5
 
 export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/archive/"
 #export NANOMSG_LOCATION="http://download.nanomsg.org/"
