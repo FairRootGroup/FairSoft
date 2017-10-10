@@ -14,7 +14,9 @@ fi
 if [ ! -d  $SIMPATH/tools/root ];
 then
   cd $SIMPATH/tools
-  git clone --shallow-since=2017-09-25 --branch $ROOTVERSION $ROOT_LOCATION
+  # git clone --shallow-since=2017-09-25 --branch $ROOTVERSION $ROOT_LOCATION
+  # older git versions dont support --shallow-since, but --depth 1000 will most probably work for the lifetime the root patch branch with almost same repo size
+  git clone --depth=1000 --branch $ROOTVERSION $ROOT_LOCATION
   cd $SIMPATH/tools/root
   git checkout $ROOTHASHVALUE
   cd $SIMPATH/tools
