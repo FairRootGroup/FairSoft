@@ -37,14 +37,14 @@ export GEANT4VERSIONp=Geant4-10.2.1
 
 #export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 export ROOT_LOCATION="https://github.com/root-project/root"
-if [ "$build_root6" = "yes" ]; then
+#if [ "$build_root6" = "yes" ]; then
   # Root v6.10.00 (commit b630f34)
-  export ROOTVERSION=v6-10-00-patches
-  export ROOTHASHVALUE=b630f342fdab71b7297d7bdb73ecfbefd71c884a
-else
+export ROOTVERSION=v6-10-08
+  #export ROOTHASHVALUE=b630f342fdab71b7297d7bdb73ecfbefd71c884a
+#else
   # Root v5.34.36
-  export ROOTVERSION=v5-34-36
-fi
+  # export ROOTVERSION=v5-34-36
+#fi
 
 export XROOTDVERSION=4.6.1
 
