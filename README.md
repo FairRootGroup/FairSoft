@@ -1,4 +1,4 @@
-#FairSoft
+# FairSoft
 
 This repository contain the installation routines of all the external software needed
 to compile and use FairRoot.
@@ -10,7 +10,7 @@ The scripts work on most Linux flavors and on Mac OSX. If you encounter any prob
 please create an issue at https://fairroot-redmine.gsi.de . To do this you have to
 register and/or login first.
 
-##Prerequisites
+## Prerequisites
 
 The script needs a complete build environment to compile all the source code. A list
 of all needed system packages can be found in the DEPENDENCIES file. All these system
@@ -19,7 +19,7 @@ complete command lines to install all packages in one go are also added in the
 DEPENDENCIES file, so one only has to cut-n-paste the appropriate command line to a
 terminal window and start the installation.
 
-##Guided Installation
+## Guided Installation
 
 To start the installation procedure one has to run the configure.sh script which is
 found in the main directory of FairSoft from within this directory. If the script is
@@ -82,7 +82,7 @@ installation procedure stops with an error it is save to start the script again.
 It will check which packages have been already compilled and installed successfully
 and will skip these packages.
 
-##Installation with configuration file
+## Installation with configuration file
 
 As an alternative for experienced users it is also possible to pass an input file to
 the script which defines all the needed information. The configure.sh script will
@@ -91,29 +91,28 @@ In case an error is found the script will stop with an error message. Three exam
 files (automatic.conf, grid.conf, and recoonly.conf) can be found in the main
 directory of FairSoft.
 
-##Included Packages
+## Included Packages
 
-* cmake 3.7.2 (only installed if installed version is to old)
+* cmake 3.9.4 (only installed if installed version is to old)
 * gtest  1.7.0
 * gsl 1.16
 * icu4c 53.1
-* boost 1_62_0
+* boost 1_64_0
 * Pythia6 416
 * HepMC 2.06.09
 * Pythia8 212
 * Geant4 10.02.p1
-* xrootd 4.5.0
-* ROOT v5.34.36 or v6.08.04
-* Pluto v5.37 (only when building root5)
+* xrootd 4.6.1
+* ROOT  6.10.08
 * Geant321+_vmc v2-1
 * VGM v4-3
 * G4VMC v3-3
 * MillePede V04-03-04
-* ZeroMQ 4.2.0
-* Protocoll Buffers 3.2.0
+* ZeroMQ 4.2.2
+* Protocoll Buffers 3.4.0
 * Nano Message 1.0.0
-* FlatBuffers 1.6.0
-* MessagePack 2.1.1
+* FlatBuffers 1.7.1
+* MessagePack 2.1.5
 
 In case the python bindings are build the following additional packages will be installed
 
@@ -121,7 +120,7 @@ In case the python bindings are build the following additional packages will be 
 * G4Py Version which comes with Geant4
 
 
-##Removal of packages
+## Removal of packages
 
 The installation script is mainly meant for one time installation of all packages.
 For developers we provide also another script which can remove the temporary files
@@ -138,4 +137,4 @@ to remove only the temporary files or with the second parameter _all_
 
   ./make_clean.sh root all
 
-which will also remove the files istalled into the installation directory.
+which will also remove the files installed into the installation directory.
