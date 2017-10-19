@@ -6,10 +6,6 @@ To simplify the installation procedure of all these packages we provide a set of
 scripts which will automatically download, unpack, configure, build‚ and install
 all required software.
 
-The scripts work on most Linux flavors and on Mac OSX. If you encounter any problems
-please create an issue at https://fairroot-redmine.gsi.de . To do this you have to
-register and/or login first.
-
 ## Prerequisites
 
 The script needs a complete build environment to compile all the source code. A list
@@ -18,6 +14,20 @@ packages are installed using the package manager of the used Linux flavor. A lis
 complete command lines to install all packages in one go are also added in the
 DEPENDENCIES file, so one only has to cut-n-paste the appropriate command line to a
 terminal window and start the installation.
+
+## Tested systems
+This Release was tested on following systems:
+
+| System | Version | Compiler|
+|---|---|---|
+|Debian | Jessie| gcc 4.9.2|
+|Ubuntu | 16.04| gcc 5.4|
+|Ubuntu | 17.04| gcc 6.3|
+|Fedora | 26|  gcc 7.2.1|
+|MacOs | El Capitan (10.11.6)| Clang 8.0.0|
+|MacOs | Sierra (10.12.6)| Clang 9.0.0|
+|MacOs | High Sierra (10.13)| Clang 9.0.0|
+
 
 ## Guided Installation
 
