@@ -122,3 +122,6 @@ export DDSVERSION=master
 
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
 export ALIROOTVERSION=master
+
+export FAIRLOGGER_LOCATION="https://github.com/FairRootGroup/FairLogger"
+export FAIRLOGGER_VERSION=v1.0.1
