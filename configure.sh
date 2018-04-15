@@ -368,6 +368,13 @@ then
   source scripts/install_fairlogger.sh
 fi
 
+##################### FairMQ ###############################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_fairmq.sh
+fi
+
 if [ "$check" = "1" ];
 then
     echo "*** End installation of external packages without Errors***"  | tee -a $logfile
