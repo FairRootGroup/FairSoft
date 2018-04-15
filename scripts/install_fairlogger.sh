@@ -1,8 +1,9 @@
 #!/bin/bash
 
-if [ ! -d  $SIMPATH/FairLogger ];
+cd $SIMPATH/basics
+
+if [ ! -d  $SIMPATH/basics/FairLogger ];
 then
-  cd $SIMPATH
   git clone $FAIRLOGGER_LOCATION
 fi
 
