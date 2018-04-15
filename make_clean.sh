@@ -540,8 +540,25 @@ clean_nanomsg() {
   fi
 }
 
+clean_fairlogger() {
+  echo "Remove temporary files from package fairlogger"
+  if [ -e $SIMPATH/FairLogger ]; then
+    rm -rf $SIMPATH/FairLogger
+  fi
+
+  if [ "$rm_installed_files" = "true" ]; then
+    echo "Remove installed files from package nanomsg"
+    if [ -e $SIMPATH_INSTALL/bin/loggerTest ]; then
+      rm -f $SIMPATH_INSTALL/bin/loggerTest
+      rm -rf $SIMPATH_INSTALL/lib/fairlogger
+      rm -rf $SIMPATH_INSTALL/lib/cmake/FairLogger*
+      rm -rf $SIMPATH_INSTALL/include/fairlogger
+    fi
+  fi
+}
+
 clean_all() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg"
+  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger"
 
   for pack in $valid_packages
   do
@@ -550,7 +567,7 @@ clean_all() {
 }
 
 check_package_exist() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg"
+  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger"
 
   if [ "$1" = "all" ]; then
     return

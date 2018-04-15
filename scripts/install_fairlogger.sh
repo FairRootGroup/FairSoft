@@ -6,20 +6,18 @@ then
   git clone $FAIRLOGGER_LOCATION
 fi
 
-install_prefix=$SIMPATH_INSTALL
-
-checkfile=$install_prefix/bin/loggerTest
+checkfile=$SIMPATH_INSTALL/bin/loggerTest
 
 if (not_there FairLogger $checkfile);
 then
   cd FairLogger
   git checkout $FAIRLOGGER_VERSION
-  if [ ! -d  build_for_alfa ];
+  if [ ! -d  build ];
   then
-    mkdir build_for_alfa
+    mkdir build
   fi
-  cd build_for_alfa
-  cmake -DCMAKE_INSTALL_PREFIX=$install_prefix ..
+  cd build
+  cmake -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL ..
   $MAKE_command -j$number_of_processes install
 fi
 
