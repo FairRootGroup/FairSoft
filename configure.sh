@@ -361,6 +361,13 @@ then
   source scripts/install_nanomsg.sh
 fi
 
+##################### DDS ###############################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_DDS.sh
+fi
+
 ##################### FairLogger ###############################################
 
 if [ "$check" = "1" ];
