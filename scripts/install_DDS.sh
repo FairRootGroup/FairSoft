@@ -23,5 +23,8 @@ then
   $MAKE_command -j$number_of_processes install
 fi
 
+check_success DDS $checkfile
+check=$?
+
 cd $SIMPATH
 return 1
