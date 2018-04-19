@@ -26,6 +26,8 @@ then
         ..
   $MAKE_command -j$number_of_processes install
 fi
+check_success FairMQ $checkfile
+check=$?
 
 cd $SIMPATH
 return 1
