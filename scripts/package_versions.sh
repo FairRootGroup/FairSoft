@@ -67,9 +67,8 @@ export MILLEPEDE_VERSION=V04-03-04
 export SODIUM_LOCATION="https://github.com/jedisct1/libsodium"
 export SODIUMBRANCH=1.0.3
 
-export ZEROMQVERSION=4.2.2
-export ZEROMQ_LOCATION="https://github.com/zeromq/libzmq/releases/download/v$ZEROMQVERSION"
-export ZEROMQDIR=4.2.2
+export ZEROMQ_LOCATION="https://github.com/zeromq/libzmq"
+export ZEROMQ_VERSION=v4.2.5
 
 export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v3.4.0"
 export PROTOBUF_VERSION=3.4.0
@@ -118,13 +117,13 @@ export FAIRROOT_LOCATION="https://github.com/FairRootGroup/FairRoot.git"
 export FAIRROOTVERSION=dev
 
 export DDS_LOCATION="https://github.com/FairRootGroup/DDS.git"
-export DDSVERSION=master
+export DDSVERSION=181b66a
 
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
 export ALIROOTVERSION=master
 
 export FAIRLOGGER_LOCATION="https://github.com/FairRootGroup/FairLogger"
-export FAIRLOGGER_VERSION=v1.0.5
+export FAIRLOGGER_VERSION=v1.0.6
 
 export FAIRMQ_LOCATION="https://github.com/FairRootGroup/FairMQ"
-export FAIRMQ_VERSION=v1.1.4
+export FAIRMQ_VERSION=v1.1.6
