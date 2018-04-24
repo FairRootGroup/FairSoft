@@ -335,6 +335,7 @@ function generate_config_cache {
   echo compiler=$compiler > $cache_file
   echo debug=$debug >> $cache_file
   echo optimize=$optimize >> $cache_file
+  echo build_MQOnly=$build_MQOnly >> $cache_file
   echo geant4_download_install_data_automatic=$geant4_download_install_data_automatic >> $cache_file
   echo geant4_install_data_from_dir=$geant4_install_data_from_dir >> $cache_file
   echo build_root6=$build_root6 >> $cache_file
