@@ -97,6 +97,8 @@ fi
 if [ "$build_MQOnly" = "yes" ]
 then
     mqonly=1
+else
+    mqonly=0
 fi
 
 if [ "$install_sim" = "yes" ]
