@@ -21,7 +21,7 @@ then
   cd build
 
   cmake .. \
-        -DWITH_PERF_TOOL=OFF \
+        -DWITH_PERF_TOOL=ON \
         -DZMQ_BUILD_TESTS=ON \
         -DENABLE_CPACK=OFF \
         -DCMAKE_BUILD_TYPE=Release \
