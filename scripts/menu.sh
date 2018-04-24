@@ -114,6 +114,11 @@ clear
 
 if [ "$build_MQOnly" = "no" ]
 then
+    echo "ROOT 6 will be build"
+    echo
+
+    build_root6=yes
+
     echo
     echo "Would you like to install Simulation engines and event generators?"
     PS3='Please enter a choice from the above menu: '
