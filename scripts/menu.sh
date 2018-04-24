@@ -87,33 +87,10 @@ do
 done
 
 clear
-#echo
-#echo "Would you like to install ROOT 6 instead of ROOT 5?"
-#echo "Choosing 'Yes' will build ROOT 6 for testing purposes"
-#echo "The default option is 'No' which builds the well tested ROOT 5 package."
-#PS3='Please enter a choice from the above menu: '
-
-#select CHOICE in "Yes" "No" Quit
-#do
-#case "$CHOICE" in
-#Quit) exit
-#;;
-#"Yes") build_root6=yes
-#break
-#;;
-#"No")  build_root6=no
-#break
-#;;
-#"") echo This value is not valid. Hit Enter to see menu again!
-build_root6=yes
-#continue
-#;;
-#esac
-#done
-
-clear
 echo
-echo "Would you like to install Simulation engines and event generators?"
+echo "Would you like to install FairMQ Only?"
+echo "Choosing 'Yes' will skip building ROOT, GEANT, etc"
+echo "The default option is 'No' "
 PS3='Please enter a choice from the above menu: '
 
 select CHOICE in "Yes" "No" Quit
@@ -121,10 +98,10 @@ do
 case "$CHOICE" in
 Quit) exit
 ;;
-"Yes") install_sim=yes
+"Yes") build_MQOnly=yes
 break
 ;;
-"No")  install_sim=no
+"No")  build_MQOnly=no
 break
 ;;
 "") echo This value is not valid. Hit Enter to see menu again!
@@ -132,6 +109,35 @@ continue
 ;;
 esac
 done
+
+clear
+
+if [ "$build_MQOnly" = "no" ]
+then
+    echo
+    echo "Would you like to install Simulation engines and event generators?"
+    PS3='Please enter a choice from the above menu: '
+
+    select CHOICE in "Yes" "No" Quit
+    do
+    case "$CHOICE" in
+    Quit) exit
+    ;;
+    "Yes") install_sim=yes
+    break
+    ;;
+    "No")  install_sim=no
+    break
+    ;;
+    "") echo This value is not valid. Hit Enter to see menu again!
+    continue
+    ;;
+    esac
+    done
+else
+    install_sim=no
+fi
+
 
 if [ "$install_sim" = "yes" ]
 then
@@ -171,26 +177,31 @@ else
 fi
 
 clear
-echo
-echo "Would you like to install the python bindings for ROOT and Geant4 (only if simulation engines are installed)"
-PS3='Please enter a choice from the above menu: '
 
-select CHOICE in "Yes" "No" Quit
-do
-  case "$CHOICE" in
-              Quit) exit
-                    ;;
-             "Yes") build_python=yes
-                    break
-                    ;;
-              "No") build_python=no
-                    break
-                    ;;
-                "") echo This value is not valid. Hit Enter to see menu again!
-                    continue
-                       ;;
-  esac
-done
+
+if [ "$build_MQOnly" = "no" ]
+then
+     echo
+     echo "Would you like to install the python bindings for ROOT and Geant4 (only if simulation engines are installed)"
+     PS3='Please enter a choice from the above menu: '
+
+     select CHOICE in "Yes" "No" Quit
+     do
+       case "$CHOICE" in
+                   Quit) exit
+                         ;;
+                  "Yes") build_python=yes
+                         break
+                         ;;
+                   "No") build_python=no
+                         break
+                         ;;
+                     "") echo This value is not valid. Hit Enter to see menu again!
+                         continue
+                            ;;
+       esac
+     done
+fi
 
 clear
 
