@@ -75,7 +75,7 @@ then
   then
     cd $SIMPATH/basics/cmake
     ./bootstrap --prefix=$install_prefix --docdir=/share/doc/CMake --mandir=/share/man \
-                --no-system-libs --system-curl --parallel=$number_of_processes
+                --no-system-libs --parallel=$number_of_processes
     $MAKE_command install -j $number_of_processes
     check_success CMake $checkfile
 
