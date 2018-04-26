@@ -547,12 +547,12 @@ if [ -e $SIMPATH/basics/msgpack/build ]; then
   cd $SIMPATH/basics/msgpack/build
   make clean
 fi
+
 if [ "$rm_installed_files" = "true" ]; then
   echo "Remove installed files from package Msgpack"
   rm -f $SIMPATH_INSTALL/lib/libmsgpackc.*
+fi
 }
-
-
 clean_fairlogger() {
   echo "Remove temporary files from package fairlogger"
   if [ -e $SIMPATH/basics/FairLogger ]; then
