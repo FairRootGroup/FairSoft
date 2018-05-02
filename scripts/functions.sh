@@ -240,6 +240,14 @@ function check_variables {
   else
     check_yes_no install_sim
   fi
+  if [ "$build_MQOnly" = "" ]; then
+    echo "*** It is not defined in the input file if only the FairMQ toolchain should be installed."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: build_MQOnly=[no/yes]"
+    exit 1
+  else
+    check_yes_no build_MQOnly
+  fi
   if [ "$SIMPATH_INSTALL" = "" ]; then
     echo "*** No installation directory is defined in the input file."
     echo "*** Please add the missing definition in the input file."
