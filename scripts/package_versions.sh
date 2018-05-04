@@ -84,8 +84,6 @@ export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/archive/"
 export NANOMSG_VERSION=1.0.0
 
 
-  G4TENDL:                  "$GEANT4_ROOT/share/Geant4-10.4.0/data/G4TENDL1.3.2"
-
 export G4TENDL_VERSION=G4TENDL1.3.2
 export G4TENDL_TAR=G4TENDL1.3.2.tar.gz
 
