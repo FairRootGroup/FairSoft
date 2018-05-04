@@ -15,8 +15,9 @@ then
   cd $SIMPATH/transport
   if [ ! -d vgm ];
   then
-    echo "*** Downloading vgm sources with subversion***"
-    svn co $VGM_LOCATION/$VGMVERSION vgm
+    git clone $VGM_LOCATION
+    cd $SIMPATH/transport/$VGMDIR
+    git checkout $VGMVERSION
   fi
 fi
 
