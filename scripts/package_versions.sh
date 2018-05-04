@@ -58,7 +58,7 @@ export VGM_LOCATION="https://github.com/vmc-project/vgm"
 export VGMVERSION=v4-4
 export VGMDIR=VGM-4.4.0
 
-export GEANT4VMC_LOCATION="http://root.cern.ch/git/geant4_vmc.git"
+export GEANT4VMC_LOCATION="https://github.com/vmc-project/geant4_vmc.git"
 export GEANT4VMCBRANCH=v3-6
 
 export MILLEPEDE_LOCATION="http://svnsrv.desy.de/public/MillepedeII/tags/"
