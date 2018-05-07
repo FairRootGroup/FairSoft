@@ -20,17 +20,9 @@ This Release was tested on following systems:
 
 | System | Version | Compiler|
 |---|---|---|
-|Debian  | Jessie  | gcc 4.9.2 |
-|Ubuntu  | 14.04   | gcc 4.8   |
+
 |Ubuntu  | 16.04   | gcc 5.4   |
-|Ubuntu  | 17.04   | gcc 6.3   |
-|Ubuntu  | 17.10   | gcc 7.2.0 |
-|Cent OS | 7       | gcc 4.8.5 |
-|Fedora  | 26      | gcc 7.2.1 |
-|MacOs   | El Capitan (10.11.6) | Clang 8.0.0|
-|MacOs   | Sierra (10.12.6)     | Clang 8.1.0|
-|MacOs   | Sierra (10.12.6)     | Clang 9.0.0|
-|MacOs   | High Sierra (10.13)  | Clang 9.0.0|
+|MacOs   | High Sierra (10.13)  | Clang 9.1.0|
 
 ## Guided Installation
 
