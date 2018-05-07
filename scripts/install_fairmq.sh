@@ -7,7 +7,7 @@ then
   git clone $FAIRMQ_LOCATION
 fi
 
-checkfile=$SIMPATH_INSTALL/bin/bsampler
+checkfile=$SIMPATH_INSTALL/bin/fairmq-bsampler
 
 if (not_there FairMQ $checkfile);
 then

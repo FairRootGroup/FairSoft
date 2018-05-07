@@ -33,7 +33,7 @@ export MESAVERSION=MesaLib-7.10.3
 
 export GEANT4_LOCATION="http://geant4.cern.ch/support/source/"
 export GEANT4VERSION=geant4.10.04.p01
-export GEANT4VERSIONp=Geant4-10.04.0
+export GEANT4VERSIONp=Geant4-10.04.1
 
 #export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 export ROOT_LOCATION="https://github.com/root-project/root"
