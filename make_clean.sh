@@ -595,7 +595,7 @@ clean_DDS() {
    fi
    if [ "$rm_installed_files" = "true" ]; then
      echo "Remove installed files from package DDS"
-     if [ -e $SIMPATH_INSTALL/bin/dds-server]; then
+     if [ -e $SIMPATH_INSTALL/bin/dds-server ]; then
        rm -f $SIMPATH_INSTALL/bin/dds*
        rm -f $SIMPATH_INSTALL/lib/libdds*
        rm -f $SIMPATH_INSTALL/include/dds*
