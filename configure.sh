@@ -297,7 +297,7 @@ fi
 
 ##################### Pluto #############################################
 
-if [ "$check" = "1" -a "$onlyreco" = "0" -a "$pluto" = "1"  -a "$mqonly" = "0"];
+if [ "$check" = "1" -a "$onlyreco" = "0" -a "$pluto" = "1"  -a "$mqonly" = "0" ];
 then
      source scripts/install_pluto.sh
 fi
