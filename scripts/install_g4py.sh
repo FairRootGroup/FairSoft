@@ -10,6 +10,11 @@ then
     cd $SIMPATH/transport/geant4/environments/g4py
     mypatch ../../../g4py.patch
 
+    if [ -f ${SIMPATH_INSTALL}/lib/libboost_python27.so ]
+      then
+        echo "*** Create a symbolic link for libboost_python27.so"
+        ln -s ${SIMPATH_INSTALL}/lib/libboost_python27.so ${SIMPATH_INSTALL}/lib/libboost_python.so
+    fi
 
     cd $SIMPATH/transport/geant4
     mkdir build_g4py

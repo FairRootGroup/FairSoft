@@ -259,7 +259,7 @@ fi
 
 ############ Mesa libraries ###############################
 
-if [ "$check" = "1" -a "$compiler" = "Clang" -a "$platform" = "linux" -a "$mqonly" = "0"];
+if [ "$check" = "1" -a "$compiler" = "Clang" -a "$platform" = "linux" -a "$mqonly" = "0" ];
 then
   source scripts/install_mesa.sh
 fi
