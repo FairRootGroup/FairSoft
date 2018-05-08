@@ -18,11 +18,11 @@ terminal window and start the installation.
 ## Tested systems
 This Release was tested on following systems:
 
-| System | Version | Compiler|
-|---|---|---|
-
-|Ubuntu  | 16.04   | gcc 5.4   |
-|MacOs   | High Sierra (10.13)  | Clang 9.1.0|
+| System  | Version              |  Compiler   |
+|---------|----------------------|-------------|
+| Ubuntu  | 16.04                | gcc 5.4     |
+| Ubuntu  | 18.04                | gcc 7.3.0   |
+| MacOs   | High Sierra (10.13)  | Clang 9.1.0 |
 
 ## Guided Installation
 
