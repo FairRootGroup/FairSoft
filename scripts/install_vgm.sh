@@ -1,22 +1,12 @@
 #!/bin/bash
 
-if [ "$system" = "64bit" ];
-then
-  CXXFLAGS_BAK=$CXXFLAGS
-  CXXFLAGS="$CXXFLAGS -m64"
-  CFLAGS_BAK=$CFLAGS
-  CFLAGS="$CFLAGS -m64"
-  export CXXFLAGS
-  export CFLAGS
-fi
-
 if [ ! -d  $SIMPATH/transport/vgm ];
 then
   cd $SIMPATH/transport
   if [ ! -d vgm ];
   then
     git clone $VGM_LOCATION
-    cd $SIMPATH/transport/$VGMDIR
+    cd $SIMPATH/transport/vgm
     git checkout $VGMVERSION
   fi
 fi
@@ -73,14 +63,6 @@ fi
 
 export USE_VGM=1
 export VGM_INSTALL=$install_prefix
-
-if [ "$system" = "64bit" ];
-then
-  CXXFLAGS=$CXXFLAGS_BAK
-  CFLAGS=$CFLAGS_BAK
-  export CXXFLAGS
-  export CFLAGS
-fi
 
 cd $SIMPATH
 
