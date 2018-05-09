@@ -17,15 +17,6 @@ then
 
   cd $SIMPATH/transport/geant4_vmc
 
-  # patch needed when using gcc5
-  if [ "$compiler" = "gcc" -a "$build_root6" = "no" ]; then
-    gcc_major_version=$(gcc -dumpversion | cut -c 1)
-    gcc_minor_version=$(gcc -dumpversion | cut -c 3)
-    if [ $gcc_major_version -ge 5 ]; then
-      mypatch ../geant4vmc_gcc5.patch
-    fi
-  fi
-
   mkdir build
   cd build
   cmake -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
