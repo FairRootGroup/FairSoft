@@ -1,6 +1,6 @@
 # FairSoft
 
-This repository contain the installation routines of all the external software needed
+This repository contains the installation routines of all the external software needed
 to compile and use FairRoot.
 To simplify the installation procedure of all these packages we provide a set of
 scripts which will automatically download, unpack, configure, build‚ and install
@@ -53,7 +53,7 @@ with ROOT6 has known problems on some Linux flavors, so please use this option
 not for your production setup. The new option ROOT6 is only for development and for
 testing purposes.
 
-In the forth menu one has to define if one need to install all packages to
+In the fourth menu one has to define if one needs to install all packages to
 run a simulation. If unsure choose _Yes_.
 
 If the previous choice was _Yes_ one has to define in the next menu how to handle the
@@ -82,12 +82,12 @@ directory name (e.g. <install_dir>/fairsoft_mar15)
 
 After passing all menus the installation process will check if all needed system
 packages are installed. If one or more packages are missing the installation process
-will stop with an detailed error message. In this case please install the missing
+will stop with a detailed error message. In this case please install the missing
 system packages and start the installation again.
 
 The installation procedure may take a long time depending on your computer. If the
-installation procedure stops with an error it is save to start the script again.
-It will check which packages have been already compilled and installed successfully
+installation procedure stops with an error it is safe to start the script again.
+It will check which packages have been already compiled and installed successfully
 and will skip these packages.
 
 ## Installation with configuration file
@@ -120,7 +120,7 @@ directory of FairSoft.
 | MillePede |V04-03-04|
 | ZeroMQ |4.2.5|
 | Protocoll Buffers| 3.4.0|
-| Nano Message |1.0.0|
+| nanomsg |1.0.0|
 | FlatBuffers |1.7.1|
 | MessagePack |2.1.5|
 | DDS |2.0|
@@ -141,7 +141,7 @@ The script takes care also to delete all other packages which depend on the
 package which is removed. As an example given if you remove root then also
 geant4, vgm and geant4_vmc will be removed since these packages depend on root.
 
-The skript is either called with one parameter which is the package name
+The script is either called with one parameter which is the package name
 
    ./make_clean.sh root
 
