@@ -9,7 +9,7 @@
  
  # debug mode
  set(DEBUG FALSE CACHE BOOL "Debug Mode (Debug On)")
-@@ -31,6 +31,14 @@
+@@ -33,6 +33,14 @@
  find_package(XercesC)
  find_package(ROOT)
  
@@ -73,17 +73,17 @@
      .def("Print", &G4PrimaryVertex::Print)
      ;
  }
---- source/physics_lists/pyPhysicsLists.cc_orig	2014-02-27 18:12:19.000000000 +0100
-+++ source/physics_lists/pyPhysicsLists.cc	2014-05-06 16:30:46.000000000 +0200
-@@ -49,6 +49,7 @@
- #include "QGSP_INCLXX.hh"
+--- source/physics_lists/pyPhysicsLists.cc_orig	2018-05-09 09:18:41.000000000 +0200
++++ source/physics_lists/pyPhysicsLists.cc	2018-05-09 09:21:33.000000000 +0200
+@@ -52,6 +52,7 @@
  #include "QGSP_INCLXX_HP.hh"
+ #include "QGS_BIC.hh"
  #include "Shielding.hh"
 +#include "G4PhysListFactory.hh"
  
+ 
  // macro for adding physics lists
- #define ADD_PHYSICS_LIST(plname) \
-@@ -76,8 +77,13 @@
+@@ -80,6 +81,12 @@
    }
  }
  
@@ -91,24 +91,22 @@
 +   G4PhysListFactory factory;
 +   G4VModularPhysicsList* test = factory.GetReferencePhysList(name);
 +   return test;
++}
++
  }
  
-+}
  using namespace pyPhysicsLists;
- 
- // ====================================================================
-@@ -85,8 +91,10 @@
+@@ -89,7 +96,10 @@
  // ====================================================================
  void export_PhysicsLists()
  {
 +  def("GetReferencePhysList", GetReferencePhysList,
-+         return_internal_reference<>());	 
++         return_internal_reference<>());
    def("ListPhysicsList",   ListPhysicsList);
--
-+  def("AddPhysicsList",    AddPhysicsList);     
-   ADD_PHYSICS_LIST(FTF_BIC);
++  def("AddPhysicsList",    AddPhysicsList);
+ 
    ADD_PHYSICS_LIST(FTFP_BERT);
-   ADD_PHYSICS_LIST(FTFP_BERT_HP);
+   ADD_PHYSICS_LIST(FTFP_BERT_ATL);
 --- source/physics_lists/pymodG4physicslists.cc_orig	2014-02-27 18:12:19.000000000 +0100
 +++ source/physics_lists/pymodG4physicslists.cc	2014-05-06 16:30:46.000000000 +0200
 @@ -37,7 +37,6 @@
@@ -119,17 +117,8 @@
  BOOST_PYTHON_MODULE(G4physicslists)
  {
    export_PhysicsLists();
---- source/track/pyG4StepPoint.cc_orig	2014-02-27 18:12:19.000000000 +0100
-+++ source/track/pyG4StepPoint.cc	2014-05-06 16:32:37.000000000 +0200
-@@ -32,7 +32,7 @@
- // ====================================================================
- #include <boost/python.hpp>
- #include "G4StepPoint.hh"
--
-+#include "G4VProcess.hh"
- using namespace boost::python;
- 
- // ====================================================================
+--- source/track/pyG4StepPoint.cc_orig 2014-02-27 18:12:19.000000000 +0100
++++ source/track/pyG4StepPoint.cc      2014-05-06 16:32:37.000000000 +0200
 @@ -68,5 +68,10 @@
      .def("GetMass",               &G4StepPoint::GetMass)
      .def("GetCharge",             &G4StepPoint::GetCharge)
