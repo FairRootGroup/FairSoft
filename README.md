@@ -125,7 +125,7 @@ directory of FairSoft.
 | MessagePack |2.1.5|
 | DDS |2.0|
 | FairMQ |1.2.0|
-| FairLogger |1.1.0|
+| FairLogger |1.2.0|
 In case the python bindings are build the following additional packages will be installed
 
 * XercesC 3.1.2
