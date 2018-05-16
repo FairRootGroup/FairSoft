@@ -46,7 +46,7 @@ export ROOTVERSION=v6-12-06
   # export ROOTVERSION=v5-34-36
 #fi
 
-export XROOTDVERSION=4.6.1
+export XROOTDVERSION=4.8.3
 
 export PLUTO_LOCATION="http://web-docs.gsi.de/%7Ehadeshyp/pluto/v5.37/"
 export PLUTOVERSION=pluto_v5.37
@@ -75,11 +75,11 @@ export ZEROMQ_VERSION=v4.2.5-fairroot
 export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v3.4.0"
 export PROTOBUF_VERSION=3.4.0
 
-export FLATBUFFERS_LOCATION="https://github.com/google/flatbuffers"
-export FLATBUFFERS_BRANCH=v1.7.1
+export FLATBUFFERS_LOCATION="https://github.com/FairRootGroup/flatbuffers.git"
+export FLATBUFFERS_BRANCH=v1.9.0-fairroot
 
 export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c.git"
-export MSGPACK_BRANCH=cpp-2.1.5
+export MSGPACK_BRANCH=cpp-3.0.1
 
 export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/archive/"
 #export NANOMSG_LOCATION="http://download.nanomsg.org/"
