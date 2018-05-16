@@ -24,6 +24,7 @@ This Release was tested on following systems:
 |Debian  | Jessie  | gcc 4.9.2 |
 | Ubuntu  | 16.04                | gcc 5.4     |
 | Ubuntu  | 18.04                | gcc 7.3.0   |
+| Ubuntu  | 18.04                | gcc 8.0.1   |
 |MacOs   | El Capitan (10.11.6) | Clang 8.0.0|
 | MacOs   | High Sierra (10.13)  | Clang 9.1.0 |
 
