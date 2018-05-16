@@ -491,15 +491,12 @@ clean_millipede() {
 clean_zeromq() {
   echo "Remove temporary files from package zeromq"
   if [ -e $SIMPATH/basics/zeromq ]; then
-    cd $SIMPATH/basics/zeromq
-    make clean
+    rm -rf $SIMPATH/basics/zeromq
   fi
 
   if [ "$rm_installed_files" = "true" ]; then
     echo "Remove installed files from package zeromq"
     if [ -e $SIMPATH_INSTALL/lib/libzmq.a ]; then
-      cd $SIMPATH/basics/zeromq
-      make uninstall
       cd $SIMPATH_INSTALL
       rm -f lib/libzmq.*
       rm -f include/zmq.hpp
@@ -578,9 +575,9 @@ clean_fairmq() {
 
   if [ "$rm_installed_files" = "true" ]; then
     echo "Remove installed files from package fairmq"
-    if [ -e $SIMPATH_INSTALL/bin/bsampler ]; then
-      rm -f $SIMPATH_INSTALL/bin/bsampler
-      rm -rf $SIMPATH_INSTALL/lib/fairmq
+    if [ -e $SIMPATH_INSTALL/bin/fairmq-bsampler ]; then
+      rm -f $SIMPATH_INSTALL/bin/fairmq-*
+      rm -rf $SIMPATH_INSTALL/lib/libFairMQ*
       rm -rf $SIMPATH_INSTALL/lib/cmake/FairMQ*
       rm -rf $SIMPATH_INSTALL/include/fairmq
       rm -rf $SIMPATH_INSTALL/share/fairmq
