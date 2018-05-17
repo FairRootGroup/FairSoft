@@ -49,10 +49,8 @@ should also define the correct optimization flags in the file
 scripts/check_system.sh, even if there are some default settings.
 If unsure don't use the optimization option.
 
-In the third menu you can choose between the usage of ROOT5 and ROOT6. FairRoot running
-with ROOT6 has known problems on some Linux flavors, so please use this option
-not for your production setup. The new option ROOT6 is only for development and for
-testing purposes.
+In the third menu you can choose to install FairMQ only components,
+if you choose _Yes_ then you just need to specify the installation directory. This installation will skip all the simulation stuff and ROOT 6 installation.
 
 In the fourth menu one has to define if one needs to install all packages to
 run a simulation. If unsure choose _Yes_.
@@ -70,6 +68,7 @@ Directory option.  In this case one has to put the files into the transport dire
 so that they can be installed. One can download the files from the following webpage.
 
 http://geant4.cern.ch/support/download.shtml
+
 
 In the next menu one has to decide if the python bindings for Geant4 and Root should
 be installed. The python bindings are only needed for the Ship experiment,
@@ -112,8 +111,9 @@ directory of FairSoft.
 | Pythia6 |416|
 | HepMC  |2.06.09|
 | Pythia8| 212|
+| Mesa | 7.10.3|
 | Geant4 |10.04.p01|
-| xrootd |4.6.1|
+| xrootd |4.8.3|
 | ROOT | 6.12.06|
 | Geant321+_vmc| v2-5|
 | VGM| v4-4|
@@ -122,7 +122,7 @@ directory of FairSoft.
 | ZeroMQ |4.2.5|
 | Protocoll Buffers| 3.4.0|
 | nanomsg |1.0.0|
-| FlatBuffers |1.7.1|
+| FlatBuffers |1.9.0|
 | MessagePack |2.1.5|
 | DDS |2.0|
 | FairMQ |1.2.0|
