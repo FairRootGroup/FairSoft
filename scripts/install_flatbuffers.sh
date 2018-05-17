@@ -20,7 +20,7 @@ then
     cd build_flatbuffers
     cmake -G "Unix Makefiles" \
           -DCMAKE_INSTALL_PREFIX=$install_prefix \
-          -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+          -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_CXX_COMPILER=$CXX \
           -DCMAKE_C_COMPILER=$CC \
           ..
