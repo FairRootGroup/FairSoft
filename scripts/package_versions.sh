@@ -78,8 +78,8 @@ export PROTOBUF_VERSION=3.4.0
 export FLATBUFFERS_LOCATION="https://github.com/FairRootGroup/flatbuffers.git"
 export FLATBUFFERS_BRANCH=v1.9.0-fairroot
 
-export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c.git"
-export MSGPACK_BRANCH=cpp-3.0.1
+export MSGPACK_LOCATION="https://github.com/FairRootGroup/msgpack-c.git"
+export MSGPACK_BRANCH=cpp-2.1.5-fairroot
 
 export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/archive/"
 #export NANOMSG_LOCATION="http://download.nanomsg.org/"
