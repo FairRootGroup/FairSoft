@@ -16,8 +16,8 @@ if (not_there FlatBuffers $checkfile);
 then
     cd $SIMPATH/basics/flatbuffers
 
-    mkdir -p build
-    cd build
+    mkdir -p build_flatbuffers
+    cd build_flatbuffers
     cmake -G "Unix Makefiles" \
           -DCMAKE_INSTALL_PREFIX=$install_prefix \
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
