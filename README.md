@@ -9,7 +9,7 @@ all required software.
 ## Prerequisites
 
 The script needs a complete build environment to compile all the source code. A list
-of all needed system packages can be found in the DEPENDENCIES file. All these system
+of all needed system packages can be found in the [DEPENDENCIES](dependencies.md) file. All these system
 packages are installed using the package manager of the used Linux flavor. A list of
 complete command lines to install all packages in one go are also added in the
 DEPENDENCIES file, so one only has to cut-n-paste the appropriate command line to a
@@ -22,6 +22,7 @@ This Release was tested on following systems:
 |---------|----------------------|-------------|
 | Cent OS | 7       | gcc 6.2.0 |
 | Debian  | Jessie  | gcc 4.9.2 |
+| Fedora | 27 | gcc 7.3.1 |
 | Ubuntu  | 16.04                | gcc 5.4     |
 | Ubuntu  | 18.04                | gcc 7.3.0   |
 | Ubuntu  | 18.04                | gcc 8.0.1   |
