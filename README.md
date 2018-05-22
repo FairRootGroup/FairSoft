@@ -20,13 +20,15 @@ This Release was tested on following systems:
 
 | System  | Version              |  Compiler   |
 |---------|----------------------|-------------|
-|Cent OS | 7       | gcc 6.2.0 |
-|Debian  | Jessie  | gcc 4.9.2 |
+| Cent OS | 7       | gcc 6.2.0 |
+| Debian  | Jessie  | gcc 4.9.2 |
 | Ubuntu  | 16.04                | gcc 5.4     |
 | Ubuntu  | 18.04                | gcc 7.3.0   |
 | Ubuntu  | 18.04                | gcc 8.0.1   |
-|MacOs   | El Capitan (10.11.6) | Clang 8.0.0|
+| MacOs   | El Capitan (10.11.6) | Clang 8.0.0 |
 | MacOs   | High Sierra (10.13)  | Clang 9.1.0 |
+
+
 
 ## Guided Installation
 
@@ -127,8 +129,8 @@ directory of FairSoft.
 | DDS |2.0|
 | FairMQ |1.2.0|
 | FairLogger |1.2.0|
-In case the python bindings are build the following additional packages will be installed
 
+In case the python bindings are build the following additional packages will be installed
 * XercesC 3.1.2
 * G4Py Version which comes with Geant4
 

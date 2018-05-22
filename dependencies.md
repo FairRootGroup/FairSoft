@@ -1,0 +1,100 @@
+In this file the dependencies of FairSoft are listed for different Linux
+flavors. For Mac Os please see the [dependencies_macos.md](dependencies_macos.md) file. This dependencies are needed to be able to install FairSoft.
+
+The following programs/compiler are needed:
+
+ * cmake
+ * gcc
+ * g++
+ * gfortran
+ * make
+ * patch
+ * sed
+ * curl
+ * bzip2
+ * gzip
+ * unzip
+ * tar
+ * subversion
+ * git
+ * lsb_release
+ * automake
+ * autoconf
+ * libtool
+
+The following development packages are needed
+
+ * x11-dev
+ * xft-dev
+ * xext-dev
+ * xpm-dev
+ * xmu-dev
+ * opengl-dev
+ * ncurses-dev
+ * libxml2-dev
+
+If FairSoft is installed on Linux using the clang compiler suite on
+needs additionaly the following programs
+
+* makedepend
+* flex
+* bison
+
+These packages for programs, libraries or header files are named differently
+for the different package managers. In the following we will list the
+command lines which are needed to install all packages for the different
+Linux flavors
+
+Debian, Ubuntu and other Debian based systems (64bit).
+```
+apt-get install  cmake cmake-data g++ gcc gfortran \
+  debianutils build-essential make patch sed \
+  libx11-dev libxft-dev libxext-dev libxpm-dev libxmu-dev \
+  libglu1-mesa-dev libgl1-mesa-dev \
+  libncurses5-dev curl libcurl4-openssl-dev bzip2 libbz2-dev gzip unzip tar \
+  subversion git xutils-dev flex bison lsb-release python-dev \
+  libc6-dev-i386 libxml2-dev wget libssl-dev libkrb5-dev \
+  automake autoconf libtool
+```
+
+Debian, Ubuntu and other Debian based systems (32bit).
+```
+apt-get install  cmake cmake-data g++ gcc gfortran \
+  debianutils build-essential make patch sed \
+  libx11-dev libxft-dev libxext-dev libxpm-dev libxmu-dev \
+  libglu1-mesa-dev libgl1-mesa-dev \
+  libncurses5-dev curl libcurl4-openssl-dev bzip2 libbz2-dev gzip unzip tar \
+  subversion git xutils-dev flex bison lsb-release python-dev \
+  libxml2-dev wget libssl-dev libkrb5-dev \
+  automake autoconf libtool
+```
+Suse, OpenSuse and other Suse based systems
+```
+zypper install cmake gcc gcc-c++ gcc-fortran make patch sed \
+  libX11-devel libXft-devel libXpm-devel libXext-devel \
+  libXmu-devel Mesa-libGL-devel freeglut-devel ncurses-devel \
+  curl libcurl-devel bzip2 libbz2-devel gzip unzip tar \
+  libexpat-devel subversion git flex bison makedepend lsb-release python-devel \
+  libxml2-devel libopenssl-devel krb5-devel wget \
+  libcurl-devel automake autoconf libtool which
+```
+Fedora, Redhat, Scientific Linuc and other Redhat based systems
+```
+yum install cmake gcc gcc-c++ gcc-gfortran make patch sed \
+  libX11-devel libXft-devel libXpm-devel libXext-devel \
+  libXmu-devel mesa-libGLU-devel mesa-libGL-devel ncurses-devel \
+  curl curl-devel bzip2 bzip2-devel gzip unzip tar \
+  expat-devel subversion git flex bison imake redhat-lsb-core python-devel \
+  libxml2-devel wget openssl-devel krb5-devel \
+  automake autoconf libtool which
+```
+Fedora22-25
+```
+dnf install cmake gcc gcc-c++ gcc-gfortran make patch sed \
+  libX11-devel libXft-devel libXpm-devel libXext-devel \
+  libXmu-devel mesa-libGLU-devel mesa-libGL-devel ncurses-devel \
+  curl curl-devel bzip2 bzip2-devel gzip unzip tar expat-devel \
+  subversion git flex bison imake redhat-lsb-core python-devel \
+  libxml2-devel wget openssl-devel krb5-devel \
+  automake autoconf libtool which
+```
