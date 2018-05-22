@@ -132,4 +132,4 @@ export FAIRLOGGER_LOCATION="https://github.com/FairRootGroup/FairLogger"
 export FAIRLOGGER_VERSION=v1.2.0
 
 export FAIRMQ_LOCATION="https://github.com/FairRootGroup/FairMQ"
-export FAIRMQ_VERSION=v1.2.1
+export FAIRMQ_VERSION=v1.2.3
