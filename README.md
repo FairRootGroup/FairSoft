@@ -25,6 +25,7 @@ This Release was tested on following systems:
 | Fedora   | 27                   | gcc 7.3.1   |
 | OpenSuse | 42.2                 | gcc 4.8.5   |
 | OpenSuse | 42.3                 | gcc 4.8.5   |
+| OpenSuse | Tumbleweed (220518)  | gcc 7.3.1   |
 | Ubuntu   | 16.04                | gcc 5.4     |
 | Ubuntu   | 18.04                | gcc 7.3.0   |
 | Ubuntu   | 18.04                | gcc 8.0.1   |
