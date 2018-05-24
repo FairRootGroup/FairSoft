@@ -95,6 +95,7 @@ set +xv
                     -Dreflex=OFF \
                     -Dcintex=OFF \
                     -Drpath=ON \
+                    -Dmemstat=ON \
                      $VC \
                     -Dhttp=ON \
                     -DGSL_DIR=$SIMPATH_INSTALL \
