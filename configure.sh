@@ -386,6 +386,13 @@ then
   source scripts/install_fairlogger.sh
 fi
 
+##################### OFI ###############################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_ofi.sh
+fi
+
 ##################### FairMQ ###############################################
 
 if [ "$check" = "1" ];
