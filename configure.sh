@@ -393,6 +393,13 @@ then
   source scripts/install_ofi.sh
 fi
 
+##################### asiofi ###############################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_asiofi.sh
+fi
+
 ##################### FairMQ ###############################################
 
 if [ "$check" = "1" ];
