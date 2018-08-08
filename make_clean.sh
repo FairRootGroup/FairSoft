@@ -604,8 +604,26 @@ clean_DDS() {
 
 }
 
+clean_asiofi() {
+   echo "Remove temporary files from package asiofi"
+   if [ -e $SIMPATH/basics/asiofi ]; then
+     rm -rf $SIMPATH/basics/asiofi
+   fi
+   if [ "$rm_installed_files" = "true" ]; then
+     echo "Remove installed files from package asiofi"
+     if [ -e $SIMPATH_INSTALL/include/asiofi/version.hpp ]; then
+       rm -f $SIMPATH_INSTALL/include/asiofi.hpp
+       rm -rf $SIMPATH_INSTALL/include/asiofi
+       rm -rf $SIMPATH_INSTALL/lib/cmake/asiofi*
+       rm -rf $SIMPATH_INSTALL/bin/afi*
+       rm -rf $SIMPATH_INSTALL/share/asiofi
+     fi
+   fi
+
+}
+
 clean_all() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq"
+  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi"
 
   for pack in $valid_packages
   do
@@ -614,7 +632,7 @@ clean_all() {
 }
 
 check_package_exist() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq"
+  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi"
 
   if [ "$1" = "all" ]; then
     return
