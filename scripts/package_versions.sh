@@ -4,7 +4,7 @@ export CMAKE_LOCATION="http://www.cmake.org/files/v3.11/"
 export CMAKEVERSION_REQUIRED=cmake-3.11.1
 export CMAKEVERSION=cmake-3.11.1
 
-export GTEST_LOCATION="https://github.com/google/googletest/archive/"
+export GTEST_LOCATION="https://github.com/google/googletest/archive"
 export GTESTVERSION=release-1.7.0
 
 export GSL_LOCATION="http://ftpmirror.gnu.org/gsl/"
