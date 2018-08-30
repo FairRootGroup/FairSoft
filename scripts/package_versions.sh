@@ -78,13 +78,11 @@ export PROTOBUF_VERSION=3.4.0
 export FLATBUFFERS_LOCATION="https://github.com/FairRootGroup/flatbuffers.git"
 export FLATBUFFERS_BRANCH=v1.9.0-fairroot
 
-export MSGPACK_LOCATION="https://github.com/FairRootGroup/msgpack-c.git"
-export MSGPACK_BRANCH=cpp-2.1.5-fairroot
+export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c"
+export MSGPACK_VERSION=cpp-3.1.0
 
-export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg/archive/"
-#export NANOMSG_LOCATION="http://download.nanomsg.org/"
-export NANOMSG_VERSION=1.0.0
-
+export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg"
+export NANOMSG_VERSION=1.1.4
 
 export G4TENDL_VERSION=G4TENDL1.3.2
 export G4TENDL_TAR=G4TENDL1.3.2.tar.gz
@@ -132,7 +130,7 @@ export FAIRLOGGER_LOCATION="https://github.com/FairRootGroup/FairLogger"
 export FAIRLOGGER_VERSION=v1.2.0
 
 export FAIRMQ_LOCATION="https://github.com/FairRootGroup/FairMQ"
-export FAIRMQ_VERSION=v1.2.3
+export FAIRMQ_VERSION=v1.2.7
 
 export OFI_LOCATION="https://github.com/ofiwg/libfabric"
 export OFI_TESTS_LOCATION="https://github.com/ofiwg/fabtests"
