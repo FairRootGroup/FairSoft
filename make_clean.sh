@@ -519,37 +519,6 @@ clean_protobuf() {
   fi
 }
 
-
-clean_nanomsg() {
-  echo "Remove temporary files from package nanomsg"
-  if [ -e $SIMPATH/basics/nanomsg ]; then
-    cd $SIMPATH/basics/nanomsg
-    make clean
-  fi
-
-  if [ "$rm_installed_files" = "true" ]; then
-    echo "Remove installed files from package nanomsg"
-    if [ -e $SIMPATH_INSTALL/bin/nanocat ]; then
-      cd $SIMPATH/basics/nanomsg
-      make uninstall
-      rm -f $SIMPATH_INSTALL/bin/nn_*
-    fi
-  fi
-}
-
-
-clean_msgpack (){
-echo "Remove temporary files from package Msgpack"
-if [ -e $SIMPATH/basics/msgpack/build ]; then
-  cd $SIMPATH/basics/msgpack/build
-  make clean
-fi
-
-if [ "$rm_installed_files" = "true" ]; then
-  echo "Remove installed files from package Msgpack"
-  rm -f $SIMPATH_INSTALL/lib/libmsgpackc.*
-fi
-}
 clean_fairlogger() {
   echo "Remove temporary files from package fairlogger"
   if [ -e $SIMPATH/basics/FairLogger ]; then
@@ -622,8 +591,43 @@ clean_asiofi() {
 
 }
 
+clean_msgpack() {
+  echo "Remove temporary files from package msgpack"
+  if [ -e $SIMPATH/basics/msgpack ]; then
+    rm -rf $SIMPATH/basics/msgpack
+  fi
+  if [ "$rm_installed_files" = "true" ]; then
+    echo "Remove installed files from package msgpack"
+    if [ -e $SIMPATH_INSTALL/include/msgpack.hpp ]; then
+      rm -rf $SIMPATH_INSTALL/include/msgpack*
+      rm -rf $SIMPATH_INSTALL/lib/cmake/msgpack*
+      rm -rf $SIMPATH_INSTALL/lib/libmsgpackc*
+    fi
+  fi
+}
+
+clean_nanomsg() {
+  echo "Remove temporary files from package nanomsg"
+  if [ -e $SIMPATH/basics/nanomsg ]; then
+    rm -rf $SIMPATH/basics/nanomsg
+  fi
+
+  if [ "$rm_installed_files" = "true" ]; then
+    echo "Remove installed files from package nanomsg"
+    if [ -e $SIMPATH_INSTALL/bin/nanocat ]; then
+      rm -f $SIMPATH_INSTALL/bin/nanocat
+      rm -rf $SIMPATH_INSTALL/bin/nn_*
+      rm -rf $SIMPATH_INSTALL/include/nanomsg*
+      rm -rf $SIMPATH_INSTALL/lib/cmake/nanomsg*
+      rm -rf $SIMPATH_INSTALL/lib/pkgconfig/nanomsg*
+      rm -rf $SIMPATH_INSTALL/lib/libnanomsg*
+    fi
+  fi
+}
+
+
 clean_all() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi"
+  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi msgpack"
 
   for pack in $valid_packages
   do
@@ -632,7 +636,7 @@ clean_all() {
 }
 
 check_package_exist() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi"
+  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi msgpack"
 
   if [ "$1" = "all" ]; then
     return
