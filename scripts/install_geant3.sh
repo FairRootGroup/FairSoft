@@ -21,6 +21,8 @@ then
 
   cd $SIMPATH/transport/geant3
 
+  mypatch ../geant3_gfortran.patch | tee -a $logfile
+  
 # ????
 #  if [ "$build_root6" = "yes" ]; then
 #    mypatch ../geant3_root6.patch
