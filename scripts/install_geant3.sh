@@ -56,6 +56,8 @@ then
   fi  
 
   mypatch ../Geant3_32bit.patch
+
+  mypatch ../geant3_gfortran.patch | tee -a $logfile
   
   mkdir build
   cd build
