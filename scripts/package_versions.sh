@@ -82,7 +82,7 @@ export MSGPACK_LOCATION="https://github.com/msgpack/msgpack-c"
 export MSGPACK_VERSION=cpp-3.1.0
 
 export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg"
-export NANOMSG_VERSION=1.1.4
+export NANOMSG_VERSION=1.1.5
 
 export G4TENDL_VERSION=G4TENDL1.3.2
 export G4TENDL_TAR=G4TENDL1.3.2.tar.gz
