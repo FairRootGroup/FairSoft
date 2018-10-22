@@ -46,6 +46,9 @@ then
     create_links dylib so
   fi
 
+  rm -f $install_prefix/share/geant3
+  ln -s $install_prefix/share/Geant3-* $install_prefix/share/geant3
+
   check_all_libraries $install_prefix/lib
 
   check_success Geant3 $checkfile
