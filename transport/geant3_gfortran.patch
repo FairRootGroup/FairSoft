@@ -1,16 +1,14 @@
-File Edit Options Buffers Tools Diff Help                                                                                                                                       
-diff --git a/CMakeLists.txt b/CMakeLists.txt                                                                                                                                    
-index fd6eb27..eb8ef1b 100644                                                                                                                                                   
---- a/CMakeLists.txt                                                                                                                                                            
-+++ b/CMakeLists.txt                                                                                                                                                            
-@@ -61,3 +61,10 @@ include(Geant3BuildProject)
- #--- CPack ----------------- --------------------------------------------------                                                                                                
- include(Geant3CPack)                                                                                                                                                           
-                                                                                                                                                                                
-+#--- Workaround for newer gfortran versions-------------------------------------                                                                                               
-+if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")                                                                                                                                   
-+  if(CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER 8.1)                                                                                                                       
-+    message(STATUS "gfortran 8.1+ requires '-std=legacy' to compile geant3")                                                                                                   
-+    SET(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -std=legacy")                                                                                                              
-+  endif()                                                                                                                                                                      
-+endif() #CMAKE_CXX_COMPILER_VERSION                                                                                                                                            
+--- CMakeLists.txt.orig	2018-11-13 12:08:17.000000000 +0100
++++ CMakeLists.txt	2018-11-13 12:16:54.000000000 +0100
+@@ -61,3 +61,11 @@
+ #--- CPack ----------------- --------------------------------------------------
+ include(Geant3CPack)
+ 
++#--- Workaround for newer gfortran versions------------------------------------
++if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
++  if(CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER 8.1)
++    message(STATUS "gfortran 8.1+ requires '-std=legacy' to compile geant3")
++    SET(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -std=legacy")
++  endif()
++endif() #CMAKE_CXX_COMPILER_VERSION
++
