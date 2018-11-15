@@ -64,6 +64,7 @@ then
   cmake -DCMAKE_INSTALL_PREFIX=$install_prefix \
         -DCMAKE_INSTALL_LIBDIR=$install_prefix/lib \
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+        -DGEANT4_BUILD_MULTITHREADED=ON \
         -DCMAKE_CXX_COMPILER=$CXX \
         -DCMAKE_C_COMPILER=$CC \
         -DGEANT4_USE_G3TOG4=ON \
