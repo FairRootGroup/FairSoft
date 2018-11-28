@@ -121,7 +121,7 @@ export FAIRROOT_LOCATION="https://github.com/FairRootGroup/FairRoot.git"
 export FAIRROOTVERSION=dev
 
 export DDS_LOCATION="https://github.com/FairRootGroup/DDS.git"
-export DDSVERSION=2.1-1-g181b66a
+export DDSVERSION=2.2
 
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
 export ALIROOTVERSION=master
