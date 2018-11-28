@@ -7,7 +7,7 @@ then
   git clone $DDS_LOCATION
 fi
 
-checkfile=$SIMPATH_INSTALL/bin/dds-server
+checkfile=$SIMPATH_INSTALL/bin/dds-session
 
 if (not_there DDS $checkfile);
 then
