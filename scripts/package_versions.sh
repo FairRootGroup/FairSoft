@@ -134,7 +134,7 @@ export FAIRMQ_VERSION=v1.2.7
 
 export OFI_LOCATION="https://github.com/ofiwg/libfabric"
 export OFI_TESTS_LOCATION="https://github.com/ofiwg/fabtests"
-export OFI_VERSION=v1.6.1
+export OFI_VERSION=v1.6.2
 
 export ASIOFI_LOCATION="https://github.com/FairRootGroup/asiofi"
 export ASIOFI_VERSION=master
