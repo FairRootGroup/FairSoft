@@ -93,17 +93,20 @@ echo "Choosing 'Yes' will skip building ROOT, GEANT, etc"
 echo "The default option is 'No' "
 PS3='Please enter a choice from the above menu: '
 
-select CHOICE in "Yes" "No" Quit
+select CHOICE in "Yes" "No" "FairMQ dependencies only" Quit
 do
 case "$CHOICE" in
 Quit) exit
-;;
+      ;;
 "Yes") build_MQOnly=yes
-break
-;;
+       break
+       ;;
 "No")  build_MQOnly=no
-break
-;;
+       break
+       ;;
+"FairMQ dependencies only") build_MQOnly=depsonly
+                            break
+                            ;;
 "") echo This value is not valid. Hit Enter to see menu again!
 continue
 ;;
