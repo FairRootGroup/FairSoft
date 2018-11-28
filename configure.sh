@@ -97,8 +97,14 @@ fi
 if [ "$build_MQOnly" = "yes" ]
 then
     mqonly=1
+    mqdepsonly=0
+elif [ "$build_MQOnly" = "depsonly" ]
+then
+    mqonly=1
+    mqdepsonly=1
 else
     mqonly=0
+    mqdepsonly=0
 fi
 
 if [ "$install_sim" = "yes" ]
@@ -402,7 +408,7 @@ fi
 
 ##################### FairMQ ###############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$mqdepsonly" = "0" ];
 then
   source scripts/install_fairmq.sh
 fi

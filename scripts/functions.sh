@@ -243,10 +243,10 @@ function check_variables {
   if [ "$build_MQOnly" = "" ]; then
     echo "*** It is not defined in the input file if only the FairMQ toolchain should be installed."
     echo "*** Please add the missing definition in the input file."
-    echo "*** e.g.: build_MQOnly=[no/yes]"
+    echo "*** e.g.: build_MQOnly=[no/yes/depsonly]"
     exit 1
   else
-    check_yes_no build_MQOnly
+    check_yes_no_depsonly build_MQOnly
   fi
   if [ "$SIMPATH_INSTALL" = "" ]; then
     echo "*** No installation directory is defined in the input file."
@@ -284,6 +284,17 @@ check_yes_no() {
     echo "*** For the variable $variable only yes or no are allowed."
     echo "*** Please correct the definition of \"$variable=$value\" in the input file."
     echo "*** e.g.: $variable=no or $variable=yes"
+    exit 1
+  fi
+}
+
+check_yes_no_depsonly() {
+  variable=$1
+  eval value=\$$1 #eval forces update of $a which is set to the value of $1
+  if [ ! "$value" = "yes" -a ! "$value" = "no" -a ! "$value" = "depsonly" ]; then
+    echo "*** For the variable $variable only yes/no/depsonly are allowed."
+    echo "*** Please correct the definition of \"$variable=$value\" in the input file."
+    echo "*** e.g.: $variable=no, $variable=yes or $variable=depsonly"
     exit 1
   fi
 }
