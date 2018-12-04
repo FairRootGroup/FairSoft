@@ -175,6 +175,7 @@ echo "Architecture        : " $arch | tee -a $logfile
 echo "G4System            : " $geant4_system | tee -a $logfile
 echo "g4_data_files       : " $geant4_data_files | tee -a $logfile
 echo "g4_get_data         : " $geant4_get_data | tee -a $logfile
+echo "build G4 with MT    : " $geant4mt | tee -a $logfile
 echo "Number of parallel    " | tee -a $logfile
 echo "processes for build : " $number_of_processes | tee -a $logfile
 echo "Installation Directory: " $SIMPATH_INSTALL | tee -a $logfile
