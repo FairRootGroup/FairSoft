@@ -184,6 +184,36 @@ else
   geant4_install_data_from_dir=no
 fi
 
+
+if [ "$install_sim" = "yes" ]
+then
+    clear
+    echo
+    echo "Would you like to compile Geant4 in multihreaded mode?"
+    echo "For that to work all detectors have to impliment CloneModule "
+    PS3='Please enter a choice from the above menu: '
+
+    select CHOICE in "Yes" "No" Quit
+    do
+      case "$CHOICE" in
+            Quit) exit
+            ;;
+      "Yes") geant4mt=yes
+            break
+            ;;
+      "No")  geant4mt=no
+            break
+            ;;
+      "") echo This value is not valid. Hit Enter to see menu again!
+            continue
+            ;;
+   esac
+   done
+ else
+      geant4mt=no
+ fi
+
+
 clear
 
 

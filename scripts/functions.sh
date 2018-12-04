@@ -214,8 +214,17 @@ function check_variables {
     echo "*** e.g.: geant4_install_data_from_dir=[no/yes]"
     exit 1
   else
+    check_yes_no geant4mt
+  fi
+  if [ "$geant4mt" = "" ]; then
+    echo "*** It is not defined in the input file if the geant4 should be builb with MT or not."
+    echo "*** Please add the missing definition in the input file."
+    echo "*** e.g.: geant4mt=[no/yes]"
+    exit 1
+  else
     check_yes_no geant4_install_data_from_dir
   fi
+
   if [ "$build_python" = "" ]; then
     echo "*** It is not defined in the input file if the python bindings should be installed."
     echo "*** Please add the missing definition in the input file."
@@ -357,6 +366,7 @@ function generate_config_cache {
   echo build_MQOnly=$build_MQOnly >> $cache_file
   echo geant4_download_install_data_automatic=$geant4_download_install_data_automatic >> $cache_file
   echo geant4_install_data_from_dir=$geant4_install_data_from_dir >> $cache_file
+  echo geant4mt=$geant4mt >> $cache_file
   echo build_root6=$build_root6 >> $cache_file
   echo build_python=$build_python >> $cache_file
   echo install_sim=$install_sim >> $cache_file

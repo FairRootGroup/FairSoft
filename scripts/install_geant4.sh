@@ -61,6 +61,16 @@ then
     geant4_opengl=""
   fi
 
+  if [ "$geant4mt" = "yes" ];
+  then
+    g4mt="-DGEANT4_BUILD_MULTITHREADED=ON"
+  else
+    g4mt="-DGEANT4_BUILD_MULTITHREADED=OFF"
+  fi
+
+
+
+
   cmake -DCMAKE_INSTALL_PREFIX=$install_prefix \
         -DCMAKE_INSTALL_LIBDIR=$install_prefix/lib \
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
@@ -69,7 +79,7 @@ then
         -DGEANT4_USE_G3TOG4=ON \
         -DGEANT4_BUILD_STORE_TRAJECTORY=OFF \
         -DGEANT4_BUILD_VERBOSE_CODE=ON \
-        $geant4_opengl \
+        $geant4_opengl $g4mt\
         $install_data  $geant4_cpp ../
 
   $MAKE_command -j$number_of_processes  install
