@@ -39,7 +39,7 @@ export GEANT4VERSIONp=Geant4-10.4.1
 export ROOT_LOCATION="https://github.com/root-project/root"
 #if [ "$build_root6" = "yes" ]; then
   # Root v6.10.00 (commit b630f34)
-export ROOTVERSION=v6-14-08
+export ROOTVERSION=v6-12-06
   #export ROOTHASHVALUE=b630f342fdab71b7297d7bdb73ecfbefd71c884a
 #else
   # Root v5.34.36
