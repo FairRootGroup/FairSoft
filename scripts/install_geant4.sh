@@ -68,9 +68,6 @@ then
     g4mt="-DGEANT4_BUILD_MULTITHREADED=OFF"
   fi
 
-
-
-
   cmake -DCMAKE_INSTALL_PREFIX=$install_prefix \
         -DCMAKE_INSTALL_LIBDIR=$install_prefix/lib \
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
@@ -79,6 +76,7 @@ then
         -DGEANT4_USE_G3TOG4=ON \
         -DGEANT4_BUILD_STORE_TRAJECTORY=OFF \
         -DGEANT4_BUILD_VERBOSE_CODE=ON \
+        -DGEANT4_BUILD_TLS_MODEL="global-dynamic" \
         $geant4_opengl $g4mt\
         $install_data  $geant4_cpp ../
 
