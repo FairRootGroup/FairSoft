@@ -112,8 +112,8 @@ then
     if [ ! -L $install_prefix/share/Geant4/data/G4NDL ]; then
       ln -s $install_prefix/share/Geant4/data/${G4NDL_VERSION} $install_prefix/share/Geant4/data/G4NDL
     fi
-    if [ ! -L $install_prefix/share/Geant4/data/G4NEUTRONXS ]; then
-      ln -s $install_prefix/share/Geant4/data/${G4NEUTRONXS_VERSION} $install_prefix/share/Geant4/data/G4NEUTRONXS
+    if [ ! -L $install_prefix/share/Geant4/data/G4PARTICLEXS ]; then
+      ln -s $install_prefix/share/Geant4/data/${G4PARTICLEXS_VERSION} $install_prefix/share/Geant4/data/G4PARTICLEXS
     fi
     if [ ! -L $install_prefix/share/Geant4/data/G4PII ]; then
       ln -s $install_prefix/share/Geant4/data/${G4PII_VERSION} $install_prefix/share/Geant4/data/G4PII
