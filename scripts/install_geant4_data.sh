@@ -83,19 +83,19 @@ else
  echo "Package $G4NDL_VERSION already installed." | tee -a $logfile
 fi
 
-if [ ! -d $G4NEUTRONXS_VERSION ];
+if [ ! -d $G4PARTICLEXS_VERSION ];
 then
-  if [ -e $data_source/$G4NEUTRONXS_TAR ];
+  if [ -e $data_source/$G4PARTICLEXS_TAR ];
   then
-    cp $data_source/$G4NEUTRONXS_TAR .
-    untar G4NEUTRONXS  $G4NEUTRONXS_TAR
-    ln -s $G4NEUTRONXS_VERSION G4NEUTRONXS
-    rm $G4NEUTRONXS_TAR
+    cp $data_source/$G4PARTICLEXS_TAR .
+    untar G4PARTICLEXS  $G4PARTICLEXS_TAR
+    ln -s $G4PARTICLEXS_VERSION G4PARTICLEXS
+    rm $G4PARTICLEXS_TAR
   else
-    echo "Could not find file $G4NEUTRONXS_TAR in $data_source" | tee -a $logfile
+    echo "Could not find file $G4PARTICLEXS_TAR in $data_source" | tee -a $logfile
   fi
 else
- echo "Package $G4NEUTRONXS_VERSION already installed." | tee -a $logfile
+ echo "Package $G4PARTICLEXS_VERSION already installed." | tee -a $logfile
 fi
 
 if [ ! -d $G4PII_VERSION ];
