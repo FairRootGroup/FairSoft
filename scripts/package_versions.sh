@@ -32,8 +32,8 @@ export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10
 export MESAVERSION=MesaLib-7.10.3
 
 export GEANT4_LOCATION="https://github.com/Geant4/geant4.git/"
-export GEANT4VERSION=geant4-10.5-release
-export GEANT4VERSIONp=Geant4-10.5.0
+export GEANT4VERSION=geant4-10.05-release
+export GEANT4VERSIONp=Geant4-10.05.0
 
 #export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 export ROOT_LOCATION="https://github.com/root-project/root"

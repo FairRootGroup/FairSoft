@@ -8,17 +8,10 @@
 if [ ! -d  $SIMPATH/transport/geant4 ];
 then
   cd $SIMPATH/transport
-  if [ ! -e $GEANT4VERSION.tar.gz ];
-  then
-    echo "*** Downloading geant4 sources ***"
-    download_file $GEANT4_LOCATION/$GEANT4VERSION.tar.gz
-  fi
-  untar geant4 $GEANT4VERSION.tar.gz
-  if [ -d $GEANT4VERSION ];
-  then
-    ln -s $GEANT4VERSION geant4
-  fi
+  git clone $GEANT4_LOCATION
 fi
+
+git checkout $GEANT4VERSION
 
 # Full output during compilation and linking to check for the
 # compile and link commands
