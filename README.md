@@ -111,29 +111,32 @@ directory of FairSoft.
 |Package|Version|
 |---|---|
 | cmake  |3.11.1 |
-| gtest  |1.7.0|
+| gtest  |1.8.1|
 | gsl    |1.16|
-| icu4c  |53.1|
-| boost  |1_67_0|
+| icu4c  |63.1|
+| boost  |1_69_0|
 | Pythia6 |416|
 | HepMC  |2.06.09|
-| Pythia8| 212|
+| Pythia8| 240|
 | Mesa | 7.10.3|
 | Geant4 |10.04.p01|
 | xrootd |4.8.3|
-| ROOT | 6.12.06|
-| Geant321+_vmc| v2-5|
-| VGM| v4-4|
-| G4VMC| v3-6|
-| MillePede |V04-03-04|
-| ZeroMQ |4.2.5|
-| Protocoll Buffers| 3.4.0|
+| ROOT | 6.16.00|
+| Geant321+_vmc| v2-6|
+| VGM| v4-5|
+| G4VMC| v4-0|
+| MillePede |V04-03-10|
+| ZeroMQ |4.3.1|
+| Protocoll Buffers| 3.6.1|
 | nanomsg |1.0.0|
-| FlatBuffers |1.9.0|
-| MessagePack |2.1.5|
+| FlatBuffers |1.10.0|
+| MessagePack |3.1.1|
 | DDS |2.2|
 | FairMQ |1.3.7|
-| FairLogger |1.3.0|
+| FairLogger |1.4.0|
+| Libfabric |1.6.2|
+| Asiofi |1.0|
+
 
 In case the python bindings are build the following additional packages will be installed
 * XercesC 3.1.2
