@@ -13,8 +13,8 @@ export GSLVERSION=gsl-2.5
 export ICU_LOCATION="http://download.icu-project.org/files/icu4c/63.1/"
 export ICUVERSION=icu4c-63_1
 
-export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.69.0/"
-export BOOSTVERSION=boost_1_69_0
+export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.68.0/"
+export BOOSTVERSION=boost_1_68_0
 
 export PYTHIA6_LOCATION="https://root.cern.ch/download/"
 export PYTHIA6VERSION=pythia6
@@ -139,7 +139,7 @@ export FAIRLOGGER_LOCATION="https://github.com/FairRootGroup/FairLogger"
 export FAIRLOGGER_VERSION=v1.4.0
 
 export FAIRMQ_LOCATION="https://github.com/FairRootGroup/FairMQ"
-export FAIRMQ_VERSION=v1.3.7
+export FAIRMQ_VERSION=1.3.8
 
 export OFI_LOCATION="https://github.com/ofiwg/libfabric"
 export OFI_TESTS_LOCATION="https://github.com/ofiwg/fabtests"

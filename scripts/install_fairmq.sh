@@ -22,7 +22,7 @@ then
         -DCMAKE_PREFIX_PATH=$SIMPATH_INSTALL \
         -DBUILD_TESTING=OFF \
         -DBUILD_NANOMSG_TRANSPORT=ON \
-        -DBUILD_DDS_PLUGIN=ON \
+        -DBUILD_DDS_PLUGIN=ON\
         ..
   $MAKE_command -j$number_of_processes install
 fi
