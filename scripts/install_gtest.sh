@@ -33,13 +33,6 @@ then
           -DCMAKE_INSTALL_PREFIX=$install_prefix \
           ..
     make install
-    # fake the installation process
-  #  mkdir -p $install_prefix/lib
-  #  cp libgtest.a libgtest_main.a $install_prefix/lib
-  #  if [ ! -d $install_prefix/include/gtest ];then
-  #    mkdir -p $install_prefix/include
-  #    cp -r ../include/gtest $install_prefix/include
-  #  fi
 
     check_all_libraries  $install_prefix/lib
 
