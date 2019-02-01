@@ -12,10 +12,10 @@
      fi
    else
      debugstring=""
-   fi   
+   fi
 
-   ########### Xrootd has problems with gcc4.3.0 and 4.3.1 
-   ########### Roofit has problems with gcc3.3.5  
+   ########### Xrootd has problems with gcc4.3.0 and 4.3.1
+   ########### Roofit has problems with gcc3.3.5
    XROOTD="-Dxrootd=ON"
    export XRDSYS=$SIMPATH_INSTALL
    ROOFIT="-Droofit=ON"
@@ -51,13 +51,13 @@
        OPENGL="-DOPENGL_INCLUDE_DIR=$SIMPATH_INSTALL/include -DOPENGL_gl_LIBRARY=$SIMPATH_INSTALL/lib"
      fi
    else
-     root_comp_flag="-DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_LINKER=$CXX"   
+     root_comp_flag="-DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_LINKER=$CXX"
    fi
 
    if [ "$build_python" = "yes" ];
    then
       PYTHONBUILD="-Dpython=ON"
-   else   
+   else
       PYTHONBUILD=" "
    fi
 
@@ -80,10 +80,11 @@ set -xv
 set +xv
 
    #######################################################
-      
+
      etc_string="-DCMAKE_INSTALL_SYSCONFDIR=$SIMPATH_INSTALL/share/root/etc"
+     inc_string="-DCMAKE_INSTALL_INCLUDEDIR=$SIMPATH_INSTALL/include/root6"
      prefix_string="-DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL"
- 
+
      cmake ../ -Dsoversion=ON $PYTHONBUILD $XROOTD  $ROOFIT \
                     -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
 		    -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
@@ -100,7 +101,6 @@ set +xv
                     -Dhttp=ON \
                     -DGSL_DIR=$SIMPATH_INSTALL \
                     -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
-                    -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string \
+                    -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string $inc_string\
                     $etc_string -Dgnuinstall=ON \
                     -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-
