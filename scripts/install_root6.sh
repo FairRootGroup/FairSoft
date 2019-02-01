@@ -17,13 +17,13 @@ then
   # git clone --shallow-since=2017-09-25 --branch $ROOTVERSION $ROOT_LOCATION
   # older git versions dont support --shallow-since, but --depth 1000 will most probably work for the lifetime the root patch branch with almost same repo size
   git clone --depth=10 --branch $ROOTVERSION $ROOT_LOCATION
- 
+
 #  cd $SIMPATH/tools/root
 #  git checkout -b $ROOTVERSION $ROOTVERSION
 fi
 
 install_prefix=$SIMPATH_INSTALL
-libdir=$install_prefix/lib/root
+libdir=$install_prefix/lib/root6
 
 checkfile=$install_prefix/bin/root.exe
 
