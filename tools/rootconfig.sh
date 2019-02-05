@@ -81,13 +81,13 @@ set +xv
 
    #######################################################
 
-     etc_string="-DCMAKE_INSTALL_SYSCONFDIR=$SIMPATH_INSTALL/share/root/etc"
-     inc_string="-DCMAKE_INSTALL_INCLUDEDIR=$SIMPATH_INSTALL/include/root6"
+     etc_string="-DCMAKE_INSTALL_SYSCONFDIR=share/root/etc"
+     inc_string="-DCMAKE_INSTALL_INCLUDEDIR=include/root6"
      prefix_string="-DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL"
 
      cmake ../ -Dsoversion=ON $PYTHONBUILD $XROOTD  $ROOFIT \
                     -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
-		    -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
+		                -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
                     -Dbuiltin-freetype=ON $OPENGL \
                     -Dmysql=ON -Dpgsql=ON  -Dasimage=ON \
                     -DPYTHIA6_DIR=$SIMPATH_INSTALL \
@@ -101,6 +101,6 @@ set +xv
                     -Dhttp=ON \
                     -DGSL_DIR=$SIMPATH_INSTALL \
                     -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
-                    -DCMAKE_F_COMPILER=$FC $root_comp_flag $prefix_string $inc_string\
-                    $etc_string -Dgnuinstall=ON \
+                    -DCMAKE_F_COMPILER=$FC $root_comp_flag -Dgnuinstall=ON \
+                    $prefix_string $inc_string  $etc_string \
                     -DCMAKE_BUILD_TYPE=$BUILD_TYPE
