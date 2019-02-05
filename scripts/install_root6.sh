@@ -101,33 +101,11 @@ then
   fi
   echo "Configure Root .........................................." | tee -a $logfile
 
-  # actualy one should check for mac os x 10.8
-  if [ "$platform" = "macosx" -a "$compiler" = "Clang" ];
-  then
-    mysed 'DEBUGFLAGS    = -g$(DWARF2)' 'DEBUGFLAGS    =' config/Makefile.macosx64
-    mysed 'LDFLAGS       = $(OPT) -m64 -mmacosx-version-min=$(MACOSXVERS)' 'LDFLAGS       = -m64 -mmacosx-version-min=$(MACOSXVERS)' config/Makefile.macosx64
-  fi
-
-  # needed to compile with Apple LLVM 5.1, shouldn't hurt on other systems
-#  mypatch ../root5_34_17_LLVM51.patch | tee -a $logfile
-#  mypatch ../root5_34_17_linux_libc++.patch | tee -a $logfile
-
-  # needed to solve problem with the TGeoManger for some CBM and Panda geometries
-  mypatch ../root_TGeoShape.patch
-
-  # needed due to some problem with the ALICE HLT code
-  mypatch ../root5_34_19_hlt.patch
-
   # needed to compile root6 with newer versions of xrootd
-  if [ "$build_root6" = "yes" ]; then
-    mypatch ../root6_xrootd.patch
-    mypatch ../root6_00_find_xrootd.patch
-  fi
-
-
-  if [ "$build_root6" = "no" ]; then
-    mypatch ../root5_34_find_xrootd.patch
-  fi
+#  if [ "$build_root6" = "yes" ]; then
+#    mypatch ../root6_xrootd.patch
+#    mypatch ../root6_00_find_xrootd.patch
+#  fi
 
   cd build_for_fair/
   . rootconfig.sh

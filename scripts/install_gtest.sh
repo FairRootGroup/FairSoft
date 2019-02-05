@@ -19,7 +19,7 @@ fi
 
 install_prefix=$SIMPATH_INSTALL
 
-checkfile=$install_prefix/lib/libgtestd.a
+checkfile=$install_prefix/lib/libgtest.a
 
 if (not_there gtest $checkfile);
 then
@@ -35,6 +35,13 @@ then
     make install
 
     check_all_libraries  $install_prefix/lib
+
+    # When using the debug configuration the created library have
+    # an additional postfix "d". Create an symbolic link in this case
+    # to restore the old library name
+    if [ -f $install_prefix/lib/libgtestd.a ]; then
+      ln -s $install_prefix/lib/libgtestd.a $install_prefix/lib/libgtest.a
+    fi
 
     check_success gtest $checkfile
     check=$?
