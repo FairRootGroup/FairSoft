@@ -21,7 +21,8 @@ then
     cd build_g4py
 
     cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-          -DXERCESC_ROOT_DIR=${SIMPATH_INSTALL}  \
+          -DCMAKE_INSTALL_PREFIX=${SIMPATH_INSTALL} \
+          -DXERCESC_ROOT_DIR=${SIMPATH_INSTALL} \
           -DBOOST_ROOT=${SIMPATH_INSTALL} \
           -DBoost_NO_SYSTEM_PATHS=TRUE \
           -DBoost_NO_BOOST_CMAKE=TRUE \
