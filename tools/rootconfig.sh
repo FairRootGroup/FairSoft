@@ -34,7 +34,7 @@
    then
       PYTHONBUILD="-Dpython=ON"
    else
-      PYTHONBUILD=" "
+      PYTHONBUILD="-Dpython=OFF"
    fi
 
    if [ "$arch" = "ppc64le" ];
@@ -42,15 +42,6 @@
      VC="-Dvc=OFF"
    else
      VC="-Dvc=ON"
-   fi
-
-   if [ "$platform" = "macosx" ]; then
-     clang_version=$(clang --version | head -1 | cut -f 4 -d' ' | cut -f1,2 -d.)
-     clang_major_version=$(echo $clang_version | cut -f1 -d.)
-     if [ "$clang_version" = "7.3" -o $clang_major_version -ge 8 ]; then
-       VC="-Dvc=OFF"
-       XROOTD="-Dxrootd=OFF"
-     fi
    fi
 
    #######################################################
@@ -61,7 +52,7 @@
 
      cmake ../ -Dsoversion=ON $PYTHONBUILD $XROOTD  $ROOFIT \
                     -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
-		                -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
+                    -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
                     -Dbuiltin-freetype=ON $OPENGL \
                     -Dmysql=ON -Dpgsql=ON  -Dasimage=ON \
                     -DPYTHIA6_DIR=$SIMPATH_INSTALL \
