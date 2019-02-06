@@ -21,6 +21,8 @@ This Release was tested on following systems:
 | System   | Version              |  Compiler    |
 |----------|----------------------|--------------|
 | macOS    | Mojave (10.14.1)     | Clang 10.0.0 |
+| Cent OS  | 7                    | gcc 4.8.5    |
+| macOS    | High Sierra (10.13)  | Clang 10.0.0 |
 
 
 ## Guided Installation
