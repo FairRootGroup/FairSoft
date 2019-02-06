@@ -67,7 +67,7 @@ then
         -DCMAKE_CXX_COMPILER=$CXX \
         -DCMAKE_C_COMPILER=$CC \
         -DGEANT4_USE_G3TOG4=ON \
-        -DGEANT4_BUILD_STORE_TRAJECTORY=OFF \
+        -DGEANT4_BUILD_STORE_TRAJECTORY=ON \
         -DGEANT4_BUILD_VERBOSE_CODE=ON \
         $geant4_opengl \
         $install_data  $geant4_cpp ../
