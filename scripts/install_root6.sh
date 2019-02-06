@@ -17,9 +17,6 @@ then
   # git clone --shallow-since=2017-09-25 --branch $ROOTVERSION $ROOT_LOCATION
   # older git versions dont support --shallow-since, but --depth 1000 will most probably work for the lifetime the root patch branch with almost same repo size
   git clone --depth=10 --branch $ROOTVERSION $ROOT_LOCATION
-
-#  cd $SIMPATH/tools/root
-#  git checkout -b $ROOTVERSION $ROOTVERSION
 fi
 
 install_prefix=$SIMPATH_INSTALL
@@ -32,52 +29,6 @@ then
   export DYLD_LIBRARY_PATH=${DYLD_LIBRARY_PATH}
 else
   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-fi
-
-# install xrootd as prerequisit for root
-# since we use a script delivered with root we have to first unpack root to use the script
-# TODO: Check if the installation was done already
-# Compilation doesn't work with XCode 7
-set -xv
-if [ "$platform" = "macosx" ]; then
-  clang_version=$(clang --version | head -1 | cut -f 4 -d' ' | cut -f1,2 -d.)
-  clang_major_version=$(echo $clang_version | cut -f1 -d.)
-  if [ "$clang_version" = "7.3" -o $clang_major_version -ge 8 ]; then
-    # don't do anything
-    cd $SIMPATH/tools/root
-    _build_xrootd=no
-  else
-    _build_xrootd=yes
-  fi
-  # fix problem when linking with gcc6
-  # libgfortran isn't found without the change
-  gcc_version=$(gfortran -dumpversion | cut -c1)
-  echo $gcc_version
-  if [ $gcc_version -eq 6 ]; then
-    mysed 'minicern gfortran' 'minicern' $SIMPATH/tools/root/main/CMakeLists.txt
-    mysed 'minicern' 'minicern gfortran' $SIMPATH/tools/root/main/CMakeLists.txt
-  fi
-else
-  _build_xrootd=yes
-fi
-set +xv
-
-if [ "${_build_xrootd}" = "yes" ]; then
-  if (not_there xrootd $install_prefix/bin/xrd); then
-    cd $SIMPATH/tools/root
-    mypatch ../xrootd_cmake.patch
-    build/unix/installXrootd.sh $install_prefix -v $XROOTDVERSION --no-vers-subdir
-    if [ "$platform" = "macosx" ]; then
-      cd $install_prefix/lib
-      for file in $(ls libXrd*.dylib); do
-        install_name_tool -id $install_prefix/lib/$file $file
-        for file1 in $(ls libXrd*.dylib); do
-          install_name_tool -change  $file1 $install_prefix/lib/$file1 $file
-        done
-      done
-      create_links dylib so
-    fi
-  fi
 fi
 
 if (not_there root $checkfile);
@@ -101,54 +52,10 @@ then
   fi
   echo "Configure Root .........................................." | tee -a $logfile
 
-  # needed to compile root6 with newer versions of xrootd
-#  if [ "$build_root6" = "yes" ]; then
-#    mypatch ../root6_xrootd.patch
-#    mypatch ../root6_00_find_xrootd.patch
-#  fi
-
   cd build_for_fair/
   . rootconfig.sh
 
-  $MAKE_command -j$number_of_processes
-
-  cd $SIMPATH/tools/root/etc/vmc
-
-  if [ "$arch" = "linuxx8664icc" ];
-  then
-    cp Makefile.linuxx8664gcc Makefile.linuxx8664icc
-    mysed 'g++' 'icpc' Makefile.linuxx8664icc
-    mysed 'g77' 'ifort' Makefile.linuxx8664icc
-    mysed 'gcc' 'icc' Makefile.linuxx8664icc
-    mysed 'SHLIB         = -lg2c' '' Makefile.linuxx8664icc
-    mysed '-fno-f2c -fPIC' '-fPIC' Makefile.linuxx8664icc
-    mysed '-fno-second-underscore' '' Makefile.linuxx8664icc
-  fi
-  if [[ $FC =~ .*gfortran.* ]];
-  then
-    if [ "$arch" = "linuxx8664gcc" ];
-    then
-      mysed "OPT   = -O2 -g" "OPT   = ${CXXFLAGS}" Makefile.$arch
-      mysed 'LDFLAGS       = $(OPT)' "LDFLAGS       = ${CXXFLAGS_BAK}" Makefile.$arch
-      if [ "$compiler" = "Clang" ]; then
-        mysed 'CXXOPTS       = $(OPT)' "CXXOPTS       = ${CXXFLAGS_BAK}" Makefile.$arch
-        cd $SIMPATH/tools/root
-        mypatch ../root_vmc_MakeMacros.diff
-      fi
-    elif [ "$arch" = "linuxia64gcc" ];
-    then
-      cp Makefile.linux Makefile.linuxia64gcc
-#      mysed "OPT   = -O2" "OPT   =" Makefile.linuxia64gcc
-      mysed "-Woverloaded-virtual" "" Makefile.linuxia64gcc
-      mysed "-DCERNLIB_LINUX" "-DCERNLIB_LXIA64" Makefile.linuxia64gcc
-      mysed "OPT   = -O2" "OPT   =" Makefile.$arch
-      mysed "OPT   = -g" "OPT   = ${CXXFLAGS} -fPIC" Makefile.$arch
-    fi
-  fi
-
-  cd $SIMPATH/tools/root/build_for_fair/
-
-  $MAKE_command install
+  $MAKE_command -j$number_of_processes install
 
   check_all_libraries $install_prefix/lib
 
