@@ -122,7 +122,7 @@ directory of FairSoft.
 | FlatBuffers |1.10.0|
 | MessagePack |3.1.1|
 | DDS |2.2|
-| FairMQ |1.3.7|
+ | FairMQ |1.3.8|
 | FairLogger |1.4.0|
 | Libfabric |1.6.2|
 | Asiofi |1.0|
