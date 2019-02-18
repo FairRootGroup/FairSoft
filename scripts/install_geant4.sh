@@ -9,9 +9,10 @@ if [ ! -d  $SIMPATH/transport/geant4 ];
 then
   cd $SIMPATH/transport
   git clone $GEANT4_LOCATION
+
+  cd geant4
+  git checkout $GEANT4VERSION
 fi
-cd geant4
-git checkout $GEANT4VERSION
 
 # Full output during compilation and linking to check for the
 # compile and link commands
