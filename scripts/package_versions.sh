@@ -10,6 +10,9 @@ export GTESTVERSION=release-1.8.1
 export GSL_LOCATION="http://ftpmirror.gnu.org/gsl/"
 export GSLVERSION=gsl-2.5
 
+export VC_LOCATION="https://github.com/VcDevel/Vc.git"
+export VC_TAG=1.4.1
+
 export ICU_LOCATION="http://download.icu-project.org/files/icu4c/63.1/"
 export ICUVERSION=icu4c-63_1
 
@@ -35,16 +38,8 @@ export GEANT4_LOCATION="https://github.com/Geant4/geant4.git/"
 export GEANT4VERSION=geant4-10.5-release
 export GEANT4VERSIONp=Geant4-10.5.0
 
-#export ROOT_LOCATION="http://root.cern.ch/git/root.git"
 export ROOT_LOCATION="https://github.com/root-project/root"
-#if [ "$build_root6" = "yes" ]; then
-  # Root v6.10.00 (commit b630f34)
 export ROOTVERSION=v6-16-00
-  #export ROOTHASHVALUE=b630f342fdab71b7297d7bdb73ecfbefd71c884a
-#else
-  # Root v5.34.36
-  # export ROOTVERSION=v5-34-36
-#fi
 
 export XROOTDVERSION=4.8.3
 
@@ -83,6 +78,9 @@ export MSGPACK_VERSION=cpp-3.1.1
 
 export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg"
 export NANOMSG_VERSION=1.1.5
+
+export YAMLCPP_LOCATION="https://github.com/jbeder/yaml-cpp"
+export YAMLCPP_VERSION=0.6.2
 
 
 ############## Gent4 Data files

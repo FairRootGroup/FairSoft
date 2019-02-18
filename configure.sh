@@ -219,6 +219,13 @@ then
   source scripts/install_gsl.sh
 fi
 
+##################### Vc #############################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_vc.sh
+fi
+
 ############ ICU libraries ###############################
 
 if [ "$check" = "1" -a "$compiler" = "Clang" -a "$platform" = "linux" ];
@@ -377,6 +384,13 @@ fi
 if [ "$check" = "1" ];
 then
   source scripts/install_nanomsg.sh
+fi
+
+##################### yaml-cpp ##################################################
+
+if [ "$check" = "1" ];
+then
+  source scripts/install_yamlcpp.sh
 fi
 
 ##################### DDS ###############################################
