@@ -19,7 +19,7 @@ export BOOSTVERSION=boost_1_62_0
 export PYTHIA6_LOCATION="https://root.cern.ch/download/"
 export PYTHIA6VERSION=pythia6
 
-export HEPMC_LOCATION="http://lcgapp.cern.ch/project/simu/HepMC/download/"
+export HEPMC_LOCATION="https://hepmc.web.cern.ch/hepmc/releases"
 export HEPMCVERSION=2.06.09
 
 export PYTHIA8_LOCATION="http://home.thep.lu.se/~torbjorn/pythia8/"
