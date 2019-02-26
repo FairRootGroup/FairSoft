@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ ! -d  $SIMPATH/generators/bla ];
+if [ ! -d  $SIMPATH/generators/HepMC ];
 then
   cd $SIMPATH/generators
-  if [ ! -e hepmc2.$HEPMCVERSION.tgz ];
+  if [ ! -e hepmc$HEPMCVERSION.tgz ];
   then
     echo "*** Downloading hepmc sources ***"
     download_file $HEPMC_LOCATION/hepmc$HEPMCVERSION.tgz
