@@ -47,14 +47,14 @@ export PLUTO_LOCATION="http://web-docs.gsi.de/%7Ehadeshyp/pluto/v5.37/"
 export PLUTOVERSION=pluto_v5.37
 
 export GEANT3_LOCATION="https://github.com/FairRootGroup/geant3.git"
-export GEANT3BRANCH=v2-6
+export GEANT3BRANCH=v2-7
 
 export VGM_LOCATION="https://github.com/vmc-project/vgm"
 export VGMVERSION=v4-5
 export VGMDIR=VGM-4.5.0
 
 export GEANT4VMC_LOCATION="https://github.com/vmc-project/geant4_vmc.git"
-export GEANT4VMCBRANCH=v4-0
+export GEANT4VMCBRANCH=v4-0-p1
 
 export MILLEPEDE_LOCATION="http://svnsrv.desy.de/public/MillepedeII/tags/"
 export MILLEPEDE_VERSION=V04-03-10
