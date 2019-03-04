@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export CMAKE_LOCATION="http://www.cmake.org/files/v3.11/"
-export CMAKEVERSION_REQUIRED=cmake-3.11.1
-export CMAKEVERSION=cmake-3.11.1
+export CMAKE_LOCATION="http://www.cmake.org/files/v3.13/"
+export CMAKEVERSION_REQUIRED=cmake-3.12.4
+export CMAKEVERSION=cmake-3.13.4
 
 export GTEST_LOCATION="https://github.com/google/googletest/archive"
 export GTESTVERSION=release-1.8.1
