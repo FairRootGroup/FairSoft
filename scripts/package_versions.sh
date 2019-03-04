@@ -47,7 +47,7 @@ export PLUTO_LOCATION="http://web-docs.gsi.de/%7Ehadeshyp/pluto/v5.37/"
 export PLUTOVERSION=pluto_v5.37
 
 export GEANT3_LOCATION="https://github.com/FairRootGroup/geant3.git"
-export GEANT3BRANCH=v2-7
+export GEANT3BRANCH=v2-7_fairsoft
 
 export VGM_LOCATION="https://github.com/vmc-project/vgm"
 export VGMVERSION=v4-5
