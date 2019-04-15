@@ -8,10 +8,10 @@ by this repo)
 Initial setup like:
 
 ```bash
-cd /mydir
+cd (Choose-dir)
 git clone https://github.com/LLNL/spack.git
 cd spack/var/spack/repos
 git clone https://github.com/FairRootGroup/FairSoft-Spack.git
-cd -
+cd (Choose-dir)
 ./spack/bin/spack repo add spack/var/spack/repos/FairSoft-Spack
 ```
