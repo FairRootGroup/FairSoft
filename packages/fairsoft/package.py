@@ -39,22 +39,23 @@ class Fairsoft(Package):
     url      = "https://github.com/fuhlig1/fairsoft_description/archive/17.10.tar.gz"
 
     # Development versions
-    version('17.10', 'd3aee3525b04e1c70ccd4d5be5bf7fbf')
+    version('may18', '07e4938113b8a520a1d5dc67e7fbce50')
 
     # Add all dependencies here.
-    depends_on('cmake@3.9.4', type='build')
+#    depends_on('cmake@3.11.1', type='build')
+    depends_on('cmake', type='build')
     depends_on('gsl@1.16')
     depends_on('googletest@1.7.0')
 
-    depends_on('boost@1.64.0 clanglibcpp=True', when=(platform == 'darwin'))
-    depends_on('boost@1.64.0', when=(platform != 'darwin'))
+    depends_on('boost@1.67.0 cxxstd=11 clanglibcpp=true', when='platform=darwin')
+    depends_on('boost@1.67.0 cxxstd=11', when='platform=linux')
 
     depends_on('pythia6@428-alice1')
     depends_on('hepmc@2.06.09')     # also required for pythia8, so duplicate here 
     depends_on('pythia8@8212')
 
 #    'c++11' in compiler.flags['cxxflags']    
-    depends_on('geant4@10.02.p01~qt+cxx11~xercesc~vecgeom~expat~mt')   # check if c++11 or c++14 is in CXXFLAGS to build Geant4 accordingly
+#    depends_on('geant4@10.02.p01~qt+cxx11~xercesc~vecgeom~expat~mt')   # check if c++11 or c++14 is in CXXFLAGS to build Geant4 accordingly
 
     def install(self, spec, prefix):
         # touch a file in the installation directory
