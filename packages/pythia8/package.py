@@ -41,7 +41,7 @@ class Pythia8(AutotoolsPackage):
 
     def configure_args(self):
         spec = self.spec
-        cfl = ' '.join(self.compiler.flags['cxxflags'])
+        cfl = ' '.join(spec.compiler_flags['cxxflags'])
 
         args = ['--with-hepmc2=%s' % spec['hepmc'].prefix,
                 '--cxx-common=%s' % cfl,
