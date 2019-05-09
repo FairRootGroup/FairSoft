@@ -42,21 +42,27 @@ class Fairsoft(Package):
     version('may18', '07e4938113b8a520a1d5dc67e7fbce50')
 
     # Add all dependencies here.
-#    depends_on('cmake@3.11.1', type='build')
-    depends_on('cmake', type='build')
-    depends_on('gsl@1.16')
+    depends_on('cmake@3.11.1+ownlibs', type='build')
+#    depends_on('cmake', type='build')
+#    depends_on('gsl@1.16')           # installed by root as dependency
+#    depends_on('googletest@1.7.0 ^cmake@3.11.1')
     depends_on('googletest@1.7.0')
 
-    depends_on('boost@1.67.0 cxxstd=11 clanglibcpp=true', when='platform=darwin')
-    depends_on('boost@1.67.0 cxxstd=11', when='platform=linux')
 
+#    depends_on('boost@1.67.0 cxxstd=11 clanglibcpp=true', when='platform=darwin')
+#    depends_on('boost@1.67.0 cxxstd=11', when='platform=!darwin')
+    depends_on('boost@1.67.0 cxxstd=11')
+    
     depends_on('pythia6@428-alice1')
-    depends_on('hepmc@2.06.09')     # also required for pythia8, so duplicate here 
+#    depends_on('hepmc@2.06.09')     # also required for pythia8, so duplicate here 
     depends_on('pythia8@8212')
 
-#    'c++11' in compiler.flags['cxxflags']    
-#    depends_on('geant4@10.02.p01~qt+cxx11~xercesc~vecgeom~expat~mt')   # check if c++11 or c++14 is in CXXFLAGS to build Geant4 accordingly
+    depends_on('geant4@10.04.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads+data')
 
+    depends_on('python@3:')
+    depends_on('llvm ~lldb')
+    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd~python ^python@3: ^cmake@3.11.1+ownlibs')
+    
     def install(self, spec, prefix):
         # touch a file in the installation directory
         touch('%s/this-is-a-bundle.txt' % prefix)
