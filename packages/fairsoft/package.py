@@ -63,6 +63,9 @@ class Fairsoft(Package):
 #    depends_on('llvm ~lldb')
     depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd ^python@3: ^cmake@3.11.1+ownlibs')
     
+    depends_on('geant3@v2-5-gcc8')
+#    depends_on('vgm@4-4 ^geant4@10.04.p01 cxxstd=11 ^cmake@3.11.1+ownlibs ^python@3:')
+   
     def install(self, spec, prefix):
         # touch a file in the installation directory
         touch('%s/this-is-a-bundle.txt' % prefix)
