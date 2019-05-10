@@ -29,20 +29,22 @@ class Geant3(CMakePackage):
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "https://root.cern.ch/vmc"
 
-    git      = "https://github.com/vmc-project/geant3"
+    git      = "https://github.com/FairRootGroup/geant3.git"
 
-    version('2.7', tag='v2-7')
-    version('2.6', tag='v2-6')
-    version('2.5', tag='v2-5')
-    version('2.4', tag='v2-4')
-    version('2.3', tag='v2-3')
-    version('2.2', tag='v2-2')
-    version('2.1', tag='v2-1')
-    version('2.0', tag='v2-0')
+    version('v2-5-gcc8', tag='v2-5-gcc8')
 
     # FIXME: Add dependencies if required.
-    #depends_on("root")
+    depends_on('cmake', type='build')
+    depends_on("root")
 
-    def install(self, spec, prefix):
-        make()
-        make('install')
+    def cmake_args(self):
+        spec = self.spec
+        options = []
+        options.append('-DROOT_DIR={0}'.format(
+                self.spec['root'].prefix))
+                                           
+        return options
+
+#    def install(self, spec, prefix):
+#        make()
+ #       make('install')
