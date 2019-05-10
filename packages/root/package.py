@@ -185,7 +185,7 @@ class Root(CMakePackage):
     depends_on('pkgconfig', type='build')
 
     depends_on('blas')
-    depends_on('freetype')
+#    depends_on('freetype')
     depends_on('jpeg')
     depends_on('libice')
     depends_on('libpng')
@@ -204,11 +204,11 @@ class Root(CMakePackage):
     depends_on('libsm',   when="+x")
 
     # OpenGL
-    depends_on('ftgl@2.1.3-rc5',  when="+x+opengl")
-    depends_on('glew',  when="+x+opengl")
+#    depends_on('ftgl@2.1.3-rc5',  when="+x+opengl")
+#    depends_on('glew',  when="+x+opengl")
     depends_on('gl',    when="+x+opengl")
     depends_on('glu',   when="+x+opengl")
-    depends_on('gl2ps', when="+x+opengl")
+#    depends_on('gl2ps', when="+x+opengl")
 
     # Qt4
     depends_on('qt@:4.999', when='+qt4')
@@ -225,7 +225,7 @@ class Root(CMakePackage):
     depends_on('avahi',     when='+avahi')
     depends_on('davix',     when='+davix')
     depends_on('cfitsio',   when='+fits')
-    depends_on('fftw',      when='+fftw')
+#    depends_on('fftw',      when='+fftw')
     depends_on('graphviz',  when='+graphviz')
     depends_on('gsl',       when='+gsl')
 #    depends_on('http',      when='+http')
@@ -303,11 +303,11 @@ class Root(CMakePackage):
             '-Dastiff:BOOL=ON',   # asimage and astiff must be ON too
             '-Dbuiltin_cfitsio:BOOL=OFF',
             '-Dbuiltin_davix:BOOL=OFF',
-            '-Dbuiltin_fftw3:BOOL=OFF',
-            '-Dbuiltin_freetype:BOOL=OFF',
-            '-Dbuiltin_ftgl:BOOL=OFF',
-            '-Dbuiltin_gl2ps:BOOL=OFF',
-            '-Dbuiltin_glew:BOOL=OFF',
+            '-Dbuiltin_fftw3:BOOL=ON',
+            '-Dbuiltin_freetype:BOOL=ON',
+            '-Dbuiltin_ftgl:BOOL=ON',
+            '-Dbuiltin_gl2ps:BOOL=ON',
+            '-Dbuiltin_glew:BOOL=ON',
             '-Dbuiltin_gsl:BOOL=OFF',
             '-Dbuiltin_lzma:BOOL=OFF',
             '-Dbuiltin_openssl:BOOL=OFF',
@@ -496,11 +496,11 @@ class Root(CMakePackage):
             options.append('-DCMAKE_PROGRAM_PATH={0}'.format(
                 self.spec['mysql-client'].prefix.bin))
 
-        if '+x+opengl' in self.spec:
-            options.append('-DFTGL_ROOT_DIR={0}'.format(
-                self.spec['ftgl'].prefix))
-            options.append('-DFTGL_INCLUDE_DIR={0}'.format(
-                self.spec['ftgl'].prefix.include))
+#        if '+x+opengl' in self.spec:
+#            options.append('-DFTGL_ROOT_DIR={0}'.format(
+#                self.spec['ftgl'].prefix))
+#            options.append('-DFTGL_INCLUDE_DIR={0}'.format(
+#                self.spec['ftgl'].prefix.include))
 
         return options
 
