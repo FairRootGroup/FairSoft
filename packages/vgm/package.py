@@ -44,12 +44,8 @@ class Vgm(CMakePackage):
                 self.spec['root'].prefix))
         options.append('-DGeant4_DIR={0}'.format(
                 self.spec['geant4'].prefix))
-#                .'/lib/{0}'.format(
-#                self.spec['geant4'].version))
-        options.append('-DDWITH_TEST=OFF')
+        options.append('-DCLHEP_DIR={0}'.format(
+                self.spec['clhep'].prefix))
+        options.append('-DWITH_TEST=OFF')
                 
         return options
-
-#    def install(self, spec, prefix):
-#        make()
- #       make('install')
