@@ -44,7 +44,3 @@ class Geant3(CMakePackage):
                 self.spec['root'].prefix))
                                            
         return options
-
-#    def install(self, spec, prefix):
-#        make()
- #       make('install')
