@@ -43,30 +43,28 @@ class Fairsoft(Package):
 
     # Add all dependencies here.
     depends_on('cmake', type='build')
-##    depends_on('cmake', type='build')
-##    depends_on('gsl@1.16')           # installed by root as dependency
-##    depends_on('googletest@1.7.0 ^cmake@3.11.1')
     depends_on('googletest')
-
-
-##    depends_on('boost@1.67.0 cxxstd=11 clanglibcpp=true', when='platform=darwin')
-##    depends_on('boost@1.67.0 cxxstd=11', when='platform=!darwin')
     depends_on('boost cxxstd=11')
     
     depends_on('pythia6')
-##    depends_on('hepmc@2.06.09')     # also required for pythia8, so duplicate here 
     depends_on('pythia8')
 
     depends_on('geant4')
 
-#    depends_on('python')
-#    depends_on('llvm ~lldb')
     depends_on('root')
     
     depends_on('geant3')
     depends_on('vgm')
     depends_on('geant4_vmc')
-   
+
+    depends_on('zeromq')
+    depends_on('protobuf')
+    depends_on('flatbuffers')
+    depends_on('msgpack-c')
+
+#    depends_on('millepede')       
+
+    depends_on('fairlogger')
     def install(self, spec, prefix):
         # touch a file in the installation directory
         touch('%s/this-is-a-bundle.txt' % prefix)
