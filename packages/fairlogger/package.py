@@ -35,4 +35,5 @@ class Fairlogger(CMakePackage):
 
 
     # add correct version info for FairLoger from github tarball
-    patch('correct_version_info_1.2.0.patch', when='@1.2.0')
+    patch('correct_version_info_1.2.0.patch', when='@1.2.0', level=0)
+    
