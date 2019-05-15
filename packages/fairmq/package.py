@@ -33,14 +33,16 @@ class Fairmq(CMakePackage):
 
     version('1.2.3', '53f0d597d622eeb2b3f50a16d9ed7bbe')
 
+    # add correct version info for FairLoger from github tarball
+    patch('correct_version_info_1.2.3.patch', when='@1.2.3', level=0)  
+        
     depends_on('googletest')
     depends_on('boost')
     depends_on('fairlogger')
     depends_on('zeromq')
     depends_on('msgpack-c')
-#    depends_on('')
-#    depends_on('')
-    
+    depends_on('dds')
+    depends_on('nanomsg')
 
     def cmake_args(self):
         spec = self.spec
@@ -55,20 +57,18 @@ class Fairmq(CMakePackage):
                 self.spec['zeromq'].prefix))
         options.append('-DMSGPACK_ROOT={0}'.format(
                 self.spec['msgpack-c'].prefix))
-        options.append('-DBUILD_DDS_PLUGIN=OFF')
+        options.append('-DDDS_ROOT={0}'.format(
+                self.spec['dds'].prefix))
+        options.append('-DBUILD_DDS_PLUGIN=ON')
+        options.append('-DNANOMSG_ROOT={0}'.format(
+                self.spec['nanomsg'].prefix))
+        options.append('-DBUILD_NANOMSG_TRANSPORT=ON')
 
         return options
 
-
-
 #      ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD}
-
-#      ${DDS_ROOT:+-DDDS_ROOT=$DDS_ROOT}                          \
 #      ${ASIOFI_ROOT:+-DASIOFI_ROOT=$ASIOFI_ROOT}                 \
 #      ${OFI_ROOT:+-DOFI_ROOT=$OFI_ROOT}                          \
 #      ${OFI_ROOT:--DBUILD_OFI_TRANSPORT=OFF}                     \
 ##      -DDISABLE_COLOR=ON                                         \
-#      -DBUILD_DDS_PLUGIN=ON                                      \
-#      -DBUILD_NANOMSG_TRANSPORT=OFF                              \
 #      ${BUILD_OFI:+-DBUILD_OFI_TRANSPORT=ON}                     \
-#      -DCMAKE_INSTALL_BINDIR=bin
