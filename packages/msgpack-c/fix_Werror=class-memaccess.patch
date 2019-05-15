@@ -1,0 +1,13 @@
+diff --git a/include/msgpack/v1/object.hpp b/include/msgpack/v1/object.hpp
+index 6ea8446..0856b1e 100644
+--- a/include/msgpack/v1/object.hpp
++++ b/include/msgpack/v1/object.hpp
+@@ -649,7 +649,7 @@ inline object::object(const msgpack_object& o)
+ inline void operator<< (msgpack::object& o, const msgpack_object& v)
+ {
+     // FIXME beter way?
+-    std::memcpy(&o, &v, sizeof(v));
++    std::memcpy(static_cast<void*>(&o), &v, sizeof(v));
+ }
+ 
+ inline object::operator msgpack_object() const
