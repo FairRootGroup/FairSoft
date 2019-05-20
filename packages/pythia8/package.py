@@ -37,7 +37,7 @@ class Pythia8(AutotoolsPackage):
     version('8230', '5362429333f43bd1f7621a599bae5a24')
     version('8212', '0886d1b2827d8f0cd2ae69b925045f40')
 
-    depends_on('hepmc@2.06.09')
+    depends_on('hepmc@2.06.09 length=CM momentum=GEV', when="@8212")
 
     def configure_args(self):
         spec = self.spec
