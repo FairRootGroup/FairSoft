@@ -36,13 +36,14 @@ class Fairmq(CMakePackage):
     # add correct version info for FairLoger from github tarball
     patch('correct_version_info_1.2.3.patch', when='@1.2.3', level=0)  
         
-    depends_on('googletest')
-    depends_on('boost')
-    depends_on('fairlogger')
-    depends_on('zeromq')
-    depends_on('msgpack-c')
-    depends_on('dds')
-    depends_on('nanomsg')
+    # Fix dependencies for FairMQ 1.2.3
+    depends_on("googletest@1.7.0", when="@1.2.3")
+    depends_on("boost@1.67.0 cxxstd=11", when="@1.2.3")
+    depends_on("fairlogger@1.2.0", when="@1.2.3")
+    depends_on("zeromq@4.2.5", when="@1.2.3")
+    depends_on("msgpack-c@2.1.5", when="@1.2.3")
+    depends_on("dds@2.1-1-g181b66a", when="@1.2.3")
+    depends_on("nanomsg@1.0.0", when="@1.2.3")
 
     def cmake_args(self):
         spec = self.spec
