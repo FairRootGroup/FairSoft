@@ -42,29 +42,32 @@ class Fairsoft(Package):
     version('may18', '07e4938113b8a520a1d5dc67e7fbce50')
 
     # Add all dependencies here.
-    depends_on('cmake', type='build')
-    depends_on('googletest')
-    depends_on('boost cxxstd=11')
+    depends_on('cmake@3.11.1 +ownlibs', type='build')
+    depends_on('googletest@1.7.0')
+    depends_on('boost@1.67.0 cxxstd=11')
     
-    depends_on('pythia6')
-    depends_on('pythia8')
+    depends_on('pythia6@428-alice1')
+    depends_on('pythia8@8212')
 
-    depends_on('geant4')
+    depends_on('geant4@10.04.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads+data')
 
-    depends_on('root')
+    # mesa and libxml2 are dependencies of root which have to be build extra due to the
+    # extra build options
+    depends_on('mesa~llvm')
+    depends_on('libxml2+python')
+    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python')
     
-    depends_on('geant3')
-    depends_on('vgm')
-    depends_on('geant4_vmc')
+    depends_on('geant3@v2-5-gcc8')
+    depends_on('vgm@4-4')
+    depends_on('geant4_vmc@3-6')
 
-    depends_on('zeromq')
-    depends_on('protobuf')
-    depends_on('flatbuffers')
-    depends_on('msgpack-c')
+    depends_on('fairlogger@1.2.0')
+    depends_on('fairmq@1.2.3')
 
+#    depends_on('protobuf@3.4.0')
+#    depends_on('flatbuffers@1.9.0')    
 #    depends_on('millepede')       
 
-    depends_on('fairlogger')
     def install(self, spec, prefix):
         # touch a file in the installation directory
         touch('%s/this-is-a-bundle.txt' % prefix)
