@@ -55,7 +55,8 @@ class Fairsoft(Package):
     # extra build options
     depends_on('mesa~llvm')
     depends_on('libxml2+python')
-    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python')
+#    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python')
+    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt')
     
     depends_on('geant3@v2-5-gcc8')
     depends_on('vgm@4-4')
