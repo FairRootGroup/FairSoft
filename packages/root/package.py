@@ -57,6 +57,10 @@ class Root(CMakePackage):
     # https://github.com/root-project/ROOT/commit/e0ae0483985d90a71a6cabd10d3622dfd1c15611.
     patch('root7-webgui.patch', level=1, when='@6.16.00')
 
+    # Pass X11 include directories to build system when building builtin glew
+    patch('builtin_glew.patch', level=0)
+    patch('graf3d_gl.patch', level=0)
+
     if sys.platform == 'darwin':
         # Resolve non-standard use of uint, _cf_
         # https://sft.its.cern.ch/jira/browse/ROOT-7886.

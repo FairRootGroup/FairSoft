@@ -1,0 +1,11 @@
+--- graf3d/gl/CMakeLists.txt	2018-02-09 08:20:30.000000000 +0100
++++ graf3d/gl/CMakeLists.txt_new	2019-05-22 10:54:52.000000000 +0200
+@@ -2,7 +2,7 @@
+ # CMakeLists.txt file for building ROOT graf3d/gl package
+ ############################################################################
+ 
+-include_directories(${OPENGL_INCLUDE_DIR} ${FTGL_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
++include_directories(${OPENGL_INCLUDE_DIR} ${FTGL_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS} ${X11_INCLUDE_DIR})
+ 
+ ROOT_GLOB_HEADERS(headers RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/inc ${CMAKE_CURRENT_SOURCE_DIR}/inc/*.h)
+ list(REMOVE_ITEM headers  CsgOps.h TGLIncludes.h TGLWSIncludes.h
