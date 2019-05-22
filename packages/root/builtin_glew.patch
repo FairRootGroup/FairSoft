@@ -1,0 +1,22 @@
+--- graf3d/glew/CMakeLists.txt	2019-05-21 16:21:15.000000000 +0200
++++ graf3d/glew/CMakeLists.txt_new	2019-05-21 16:23:31.000000000 +0200
+@@ -2,7 +2,7 @@
+ # CMakeLists.txt file for building ROOT graf3d/glew package
+ ############################################################################
+ 
+-include_directories(${OPENGL_INCLUDE_DIR})
++include_directories(${OPENGL_INCLUDE_DIR} ${X11_INCLUDE_DIR})
+ 
+ # Do not install headers for all platforms and configurations.
+ if(UNIX)
+@@ -12,5 +12,9 @@
+   set(installoptions ${installoptions} FILTER "glxew")
+ endif()
+ 
+-ROOT_LINKER_LIBRARY(GLEW *.c LIBRARIES ${OPENGL_LIBRARIES})
++if(NOT x11)
++  ROOT_LINKER_LIBRARY(GLEW *.c LIBRARIES ${OPENGL_LIBRARIES})
++else()
++  ROOT_LINKER_LIBRARY(GLEW *.c LIBRARIES ${OPENGL_LIBRARIES} ${X11_LIBRARIES})
++endif()
+ ROOT_INSTALL_HEADERS(${installoptions})
