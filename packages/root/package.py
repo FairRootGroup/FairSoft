@@ -59,7 +59,10 @@ class Root(CMakePackage):
 
     # Pass X11 include directories to build system when building builtin glew
     patch('builtin_glew.patch', level=0)
+    patch('builtin_ftgl.patch', level=0)
     patch('graf3d_gl.patch', level=0)
+    patch('graf2d.patch', level=0)
+    patch('external_zlib.patch', level=0)
 
     if sys.platform == 'darwin':
         # Resolve non-standard use of uint, _cf_
@@ -204,6 +207,7 @@ class Root(CMakePackage):
     depends_on('libx11',  when="+x")
     depends_on('libxext', when="+x")
     depends_on('libxft',  when="+x")
+    depends_on('fontconfig',  when="+x")
     depends_on('libxpm',  when="+x")
     depends_on('libsm',   when="+x")
 
@@ -500,11 +504,18 @@ class Root(CMakePackage):
             options.append('-DCMAKE_PROGRAM_PATH={0}'.format(
                 self.spec['mysql-client'].prefix.bin))
 
-#        if '+x+opengl' in self.spec:
-#            options.append('-DFTGL_ROOT_DIR={0}'.format(
-#                self.spec['ftgl'].prefix))
+        if '+python' in self.spec:
+            options.append('-DPYTHON_EXECUTABLE={0}/python'.format(
+                self.spec['python'].prefix.bin))
+            
+        if '+x+opengl' in self.spec:
+            options.append('-DGLU_INCLUDE_DIR={0}'.format(
+                self.spec['glu'].prefix.include))
 #            options.append('-DFTGL_INCLUDE_DIR={0}'.format(
 #                self.spec['ftgl'].prefix.include))
+
+            options.append('-DFONTCONFIG_INCLUDE_DIR={0}'.format(
+                self.spec['fontconfig'].prefix.include))
 
         return options
 

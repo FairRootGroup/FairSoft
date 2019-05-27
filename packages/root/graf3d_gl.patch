@@ -5,7 +5,18 @@
  ############################################################################
  
 -include_directories(${OPENGL_INCLUDE_DIR} ${FTGL_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
-+include_directories(${OPENGL_INCLUDE_DIR} ${FTGL_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS} ${X11_INCLUDE_DIR})
++include_directories(${OPENGL_INCLUDE_DIR} ${FTGL_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS} ${X11_INCLUDE_DIR} ${GLU_INCLUDE_DIR})
  
  ROOT_GLOB_HEADERS(headers RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/inc ${CMAKE_CURRENT_SOURCE_DIR}/inc/*.h)
  list(REMOVE_ITEM headers  CsgOps.h TGLIncludes.h TGLWSIncludes.h
+--- graf3d/eve/CMakeLists.txt	2019-05-27 13:17:38.110783129 +0000
++++ graf3d/eve/CMakeLists.txt_new	2019-05-27 13:17:08.022783129 +0000
+@@ -2,7 +2,7 @@
+ # CMakeLists.txt file for building ROOT graf3d/eve package
+ ############################################################################
+ 
+-include_directories(${OPENGL_INCLUDE_DIR})
++include_directories(${OPENGL_INCLUDE_DIR} ${GLU_INCLUDE_DIR})
+ 
+ set(headers1 TEveBrowser.h TEveChunkManager.h TEveCompound.h
+              TEveElement*.h TEveEventManager.h TEveGValuators.h
