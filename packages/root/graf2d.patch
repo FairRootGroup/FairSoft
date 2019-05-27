@@ -1,0 +1,11 @@
+--- graf2d/x11ttf/CMakeLists.txt	2019-05-27 10:51:03.674783129 +0000
++++ graf2d/x11ttf/CMakeLists.txt_new	2019-05-27 10:50:43.330783129 +0000
+@@ -3,7 +3,7 @@
+ # @author Pere Mato, CERN
+ ############################################################################
+ 
+-include_directories(${FREETYPE_INCLUDE_DIRS} ${X11_INCLUDE_DIR})
++include_directories(${FREETYPE_INCLUDE_DIRS} ${X11_INCLUDE_DIR} ${FONTCONFIG_INCLUDE_DIR})
+ 
+ ROOT_STANDARD_LIBRARY_PACKAGE(GX11TTF
+                               DICTIONARY_OPTIONS "-writeEmptyRootPCM"

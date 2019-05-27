@@ -5,7 +5,7 @@
  ############################################################################
  
 -include_directories(${OPENGL_INCLUDE_DIR})
-+include_directories(${OPENGL_INCLUDE_DIR} ${X11_INCLUDE_DIR})
++include_directories(${OPENGL_INCLUDE_DIR} ${X11_INCLUDE_DIR} ${GLU_INCLUDE_DIR})
  
  # Do not install headers for all platforms and configurations.
  if(UNIX)

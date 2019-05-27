@@ -1,0 +1,11 @@
+--- graf3d/ftgl/CMakeLists.txt	2018-02-09 07:20:30.000000000 +0000
++++ graf3d/ftgl/CMakeLists.txt_new	2019-05-24 13:43:27.559505390 +0000
+@@ -2,7 +2,7 @@
+ # CMakeLists.txt file for building ROOT graf3d/ftgl package
+ ############################################################################
+ 
+-include_directories(${OPENGL_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
++include_directories(${OPENGL_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS} ${GLU_INCLUDE_DIR})
+ if(MACOSX_GLU_DEPRECATED)
+   add_definitions(-Wno-deprecated-declarations)
+ endif()

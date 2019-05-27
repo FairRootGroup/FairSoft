@@ -1,0 +1,21 @@
+--- core/zip/CMakeLists.txt	2018-02-09 07:20:30.000000000 +0000
++++ core/zip/CMakeLists.txt_new	2019-05-24 10:14:50.283505390 +0000
+@@ -30,6 +30,7 @@
+   set(ZLIB_HEADERS ${ZipInternalHeaders} ${ZipRootHeaders})
+ else()
+   set(ZLIB_HEADERS ${ZipRootHeaders})
++  include_directories(SYSTEM ${ZLIB_INCLUDE_DIRS})
+ endif()
+ set(ZLIB_SRCS ${ZipOldSource} ${CMAKE_CURRENT_SOURCE_DIR}/src/Compression.cxx ${CMAKE_CURRENT_SOURCE_DIR}/src/RZip.cxx)
+ 
+--- graf2d/postscript/CMakeLists.txt	2019-05-27 10:34:34.998783129 +0000
++++ graf2d/postscript/CMakeLists.txt_new	2019-05-27 10:36:02.414783129 +0000
+@@ -3,6 +3,8 @@
+ # @author Pere Mato, CERN
+ ############################################################################
+ 
++include_directories(SYSTEM ${ZLIB_INCLUDE_DIRS})
++
+ ROOT_STANDARD_LIBRARY_PACKAGE(Postscript
+                               DICTIONARY_OPTIONS "-writeEmptyRootPCM"
+                               LIBRARIES  ${ZLIB_LIBRARIES} mathtext
