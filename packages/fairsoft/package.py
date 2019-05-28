@@ -43,7 +43,7 @@ class Fairsoft(Package):
 
     # Add all dependencies here.
     depends_on('cmake@3.11.1 +ownlibs', type='build')
-    depends_on('googletest@1.7.0')
+    depends_on('googletest@1.7.0:')
     depends_on('boost@1.67.0 cxxstd=11')
     
     depends_on('pythia6@428-alice1')
