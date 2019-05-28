@@ -18,6 +18,7 @@ class Dds(CMakePackage):
     depends_on('boost@1.64.0:')
     depends_on('cmake@3.1.3:' , type='build')
 
+    parallel = False
     build_targets = ['all', 'wn_bin']
 
     patch('correct_version_info_211.patch', level=0)
