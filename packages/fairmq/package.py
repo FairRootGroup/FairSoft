@@ -37,7 +37,7 @@ class Fairmq(CMakePackage):
     patch('correct_version_info_1.2.3.patch', when='@1.2.3', level=0)  
         
     # Fix dependencies for FairMQ 1.2.3
-    depends_on("googletest@1.7.0", when="@1.2.3")
+    depends_on("googletest@1.7.0:", when="@1.2.3")
     depends_on("boost@1.67.0 cxxstd=11", when="@1.2.3")
     depends_on("fairlogger@1.2.0", when="@1.2.3")
     depends_on("zeromq@4.2.5", when="@1.2.3")
