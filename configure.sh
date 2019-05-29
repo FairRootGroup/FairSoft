@@ -416,7 +416,7 @@ fi
 
 ##################### asiofi ###############################################
 
-if [ "$check" = "1" ];
+if [ "$check" = "1" -a "$platform" = "linux" ];
 then
   source scripts/install_asiofi.sh
 fi
