@@ -517,6 +517,11 @@ class Root(CMakePackage):
             options.append('-DFONTCONFIG_INCLUDE_DIR={0}'.format(
                 self.spec['fontconfig'].prefix.include))
 
+        # see https://github.com/spack/spack/pull/11579
+        if '+python' in self.spec:
+            options.append('-DPYTHON_EXECUTABLE=%s/python' %
+                           self.spec['python'].prefix.bin)
+
         return options
 
     def setup_environment(self, spack_env, run_env):
