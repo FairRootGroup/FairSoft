@@ -15,7 +15,7 @@ class Fairroot(CMakePackage):
 
     # Add all dependencies here.
     depends_on('cmake@3.11.1 +ownlibs', type='build')
-    depends_on('googletest@1.7.0')
+    depends_on('googletest@1.7.0:')
     depends_on('boost@1.67.0 cxxstd=11')
     
     depends_on('pythia6@428-alice1')
@@ -27,7 +27,7 @@ class Fairroot(CMakePackage):
     # extra build options
     depends_on('mesa~llvm')
     depends_on('libxml2+python')
-    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python')
+    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt')
     
     depends_on('geant3@v2-5-gcc8')
     depends_on('vgm@4-4')
@@ -39,6 +39,11 @@ class Fairroot(CMakePackage):
 #    depends_on('protobuf@3.4.0')
 #    depends_on('flatbuffers@1.9.0')    
 #    depends_on('millepede')       
+
+    patch('CMake.patch', level=0)
+
+    def setup_environment(self, spack_env, run_env):
+        spack_env.append_flags('CXXFLAGS', '-std=c++11')
 
     def cmake_args(self):
         spec = self.spec
