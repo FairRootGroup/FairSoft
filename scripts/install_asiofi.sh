@@ -20,7 +20,6 @@ then
   cd build
   cmake -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
         -DCMAKE_PREFIX_PATH=$SIMPATH_INSTALL \
-        -DBUILD_FABTESTS=OFF \
         ..
   cmake --build . --target install -- -j$number_of_processes
 fi
