@@ -42,7 +42,8 @@ class Fairsoft(Package):
     version('may18', '07e4938113b8a520a1d5dc67e7fbce50')
 
     # Add all dependencies here.
-    depends_on('cmake@3.11.1 +ownlibs', type='build')
+    depends_on('gnutls ~guile') #dependency of cmake which has to be build without guile support
+    depends_on('cmake@3.11.1+ownlibs', type='build')
     depends_on('googletest@1.7.0:')
     depends_on('boost@1.67.0 cxxstd=11')
     
