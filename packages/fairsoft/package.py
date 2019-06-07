@@ -24,7 +24,7 @@
 ##############################################################################
 from spack import *
 import platform
-import compiler
+#import compiler
 #import os
 #import sys
 
