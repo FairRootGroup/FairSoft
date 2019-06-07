@@ -409,17 +409,17 @@ fi
 
 ##################### OFI ###############################################
 
-if [ "$check" = "1" -a "$platform" = "linux" ];
-then
-  source scripts/install_ofi.sh
-fi
+#if [ "$check" = "1" -a "$platform" = "linux" ];
+#then
+#  source scripts/install_ofi.sh
+#fi
 
 ##################### asiofi ###############################################
 
-if [ "$check" = "1" -a "$platform" = "linux" ];
-then
-  source scripts/install_asiofi.sh
-fi
+#if [ "$check" = "1" -a "$platform" = "linux" ];
+#then
+#  source scripts/install_asiofi.sh
+#fi
 
 ##################### FairMQ ###############################################
 
