@@ -20,8 +20,8 @@ cd (Choose-dir)
 
 ## Setup your Spack environment
 
-Next add Spack to your path. Spack has some nice command line integration tools, 
-so instead of simply appending to your PATH variable, source the spack setup script. 
+Next add Spack to your path. Spack has some nice command line integration tools,
+so instead of simply appending to your PATH variable, source the spack setup script.
 This also adds Spack to your path.
 
 ```bash
@@ -30,9 +30,9 @@ source spack/share/spack/setup-env.sh
 ```
 
 
-Depending on your use case, you may want to provide configuration settings common to everyone on your team, 
-or you may want to set default behaviors specific to a single user account. 
-Spack provides six configuration scopes to handle this customization. 
+Depending on your use case, you may want to provide configuration settings common to everyone on your team,
+or you may want to set default behaviors specific to a single user account.
+Spack provides six configuration scopes to handle this customization.
 These scopes, in order of decreasing priority, are:
 
 | Scope        | Directory |
@@ -43,8 +43,8 @@ These scopes, in order of decreasing priority, are:
 | System       | /etc/spack/ |
 | Defaults     | $SPACK_ROOT/etc/spack/defaults/ |
 
-Spack allows customization of several high-level settings. 
-These settings are stored in the generic config.yaml configuration file. 
+Spack allows customization of several high-level settings.
+These settings are stored in the generic config.yaml configuration file.
 You can see the default settings by running:
 
 ```bash
@@ -58,10 +58,10 @@ or copy the file
 cp $SPACK_ROOT/etc/spack/defaults/config.yaml ~/.spack/
 ```
 
-to your user scope. The default configuration defines the installtion directory to be 
+to your user scope. The default configuration defines the installtion directory to be
 $SPACK_ROOT/opt/spack. Since this will do the installation into the local working copy
 we recommend to change the installation directory.
 
-## Use system packages 
+## Use system packages
 
 ## Use GSI installation on CVMFS
