@@ -73,9 +73,7 @@ in the [Spack documentation.](https://spack.readthedocs.io/en/latest/tutorial_co
 ## Use system packages
 
 Sometimes it could also be necessary that Spack uses externally installed packages.
-For example this is a solution if a package can't be build on a system. We encountered the
-problem on macosx 10.12 where we had to use two packages from the system.
-
+For example this is a solution if a package can't be build on a system.
 Package preferences in Spack are managed through the packages.yaml configuration file.
 First, we will look at the default packages.yaml file.
 
@@ -89,7 +87,8 @@ Either change the default settings or copy the file
 cp $SPACK_ROOT/etc/spack/defaults/package.yaml ~/.spack/
 ```
 
-to your user scope.
+to your user scope. A full description of all the package options can be found
+in the [Spack documentation.](https://spack.readthedocs.io/en/latest/tutorial_configuration.html#external-packages)
 
 This settings in the file define the default preferences for compilers and
 for providers of virtual packages. There are no externally installed packages
@@ -103,13 +102,20 @@ zlib:
 ```
 
 Here zlib is the name of the package which should be taken from the system.
-zlib@1.2.8%gcc@5.4.0 is the complete description of the package to be installed
-which is version 1.2.8 of zlib compiled with gcc at version 5.4.0.
+zlib@1.2.8%gcc@5.4.0 is the complete description of the package to be used from an
+external location, which is version 1.2.8 of zlib compiled with gcc at version 5.4.0.
 arch=linux-ubuntu16.04-x86_64: describes the system for which this package should be used
 which is a 64bit version Ubuntu Linux 16.04. And finally it is described wehere the
-installed package is found.
+installed package is found, in this case it is /usr.
 
-To solve the issue with mac osx 10.12 the following lines have to be added.
+### Use needed system package on macosx 10.12
+
+We encountered compilation problems on macosx 10.12. At least on this system it was impossible to
+compile the mesa package which provides the OpenGL support. The problem with python was that
+packages which depends on python showed compilation errors which were related to the python
+installation. The compilation of python itself worked without problems.
+
+To solve theses issues we add the following lines:
 
 ```bash
   mesa:
@@ -120,4 +126,42 @@ To solve the issue with mac osx 10.12 the following lines have to be added.
       python+shared@3.7.3%clang@9.0.0-apple arch=darwin-sierra-x86_64: /usr/local/Cellar/python/3.7.3
 ```
 
+## Use existing Spack installation
+
+You can point your Spack installation to another installation to use any packages that are installed there.
+A single Spack instance can use multiple upstream Spack installations. Spack will search upstream instances
+in the order you list them in your configuration. If your installation refers to instances X and Y,
+in that order, then instance X must list Y as an upstream in its own upstreams.yaml.
+
+To register any other Spack instance, you can add it as an entry to upstreams.yaml file.
+If the file does not exist yet you have to create it in ~/.spack:
+
+```bash
+upstreams:
+  spack-instance-1:
+    install_tree: /path/to/other/spack/opt/spack
+  spack-instance-2:
+    install_tree: /path/to/another/spack/opt/spack
+```
+
+Once the upstream Spack instance has been added, spack will automatically check the upstream instance when
+querying installed packages, and new package installations for the local Spack install will use any
+dependencies that are installed in the upstream instance.
+
+A full description of all the upstream options can be found
+in the [Spack documentation.](https://spack.readthedocs.io/en/latest/chain.html)
+
+
 ## Use GSI installation on CVMFS
+
+At GSI there is already a central Spack installation of FairRoot on CVMFS. To use this installation
+add the following lines to your upstreams.yaml file:
+
+```bash
+upstreams:
+  spack-instance-1:
+    install_tree: /cvmfs/fairroot.gsi.de/spack
+```
+
+
+
