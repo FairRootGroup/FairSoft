@@ -152,7 +152,7 @@ A full description of all the upstream options can be found
 in the [Spack documentation.](https://spack.readthedocs.io/en/latest/chain.html)
 
 
-## Use GSI installation on CVMFS
+### Use GSI installation on CVMFS
 
 At GSI there is already a central Spack installation of FairRoot on CVMFS. To use this installation
 add the following lines to your upstreams.yaml file:
@@ -163,5 +163,19 @@ upstreams:
     install_tree: /cvmfs/fairroot.gsi.de/spack
 ```
 
+## Install a package using Spack
 
+After all the previous steps Spack should be used to install FairRoot. This is in the end done rather simple
+using the following command:
+
+```bash
+spack install fairroot
+```
+
+Since the dependency tree of FairRoot is rather large this step can take quite some time. If you are using an
+existing external Spack installation with all needed packages already installed the step only takes some seconds.
+In any case the result should b 
+
+
+## Setup the correct runtime environment
 
