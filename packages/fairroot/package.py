@@ -14,7 +14,8 @@ class Fairroot(CMakePackage):
     version('18.0.6', '822902c2fc879eab82fca47eccb14259')
 
     # Add all dependencies here.
-    depends_on('cmake@3.11.1 +ownlibs', type='build')
+    depends_on('gnutls ~guile') #dependency of cmake which has to be build without guile support
+    depends_on('cmake@3.11.1 +ownlibs')
     depends_on('googletest@1.7.0:')
     depends_on('boost@1.67.0 cxxstd=11')
     
