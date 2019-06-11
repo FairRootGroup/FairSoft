@@ -35,13 +35,16 @@ or you may want to set default behaviors specific to a single user account.
 Spack provides six configuration scopes to handle this customization.
 These scopes, in order of decreasing priority, are:
 
+
 | Scope        | Directory |
+| ------------ | --------- |
 | Command-line | N/A       |
 | Custom       | Custom directory, specified with --config-scope |
 | User         | ~/.spack/ |
 | Site         | $SPACK_ROOT/etc/spack/ |
 | System       | /etc/spack/ |
 | Defaults     | $SPACK_ROOT/etc/spack/defaults/ |
+
 
 Spack allows customization of several high-level settings.
 These settings are stored in the generic config.yaml configuration file.
