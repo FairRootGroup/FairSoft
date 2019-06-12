@@ -161,7 +161,21 @@ add the following lines to your upstreams.yaml file:
 upstreams:
   spack-instance-1:
     install_tree: /cvmfs/fairroot.gsi.de/spack
+    modules: 
+      tcl: /cvmfs/fairroot.gsi.de/spack/share/spack/modules
 ```
+
+The first part tells Spack where to find the installed packages. The second part tells Spack
+where to find the generated module files which are needed to setup the proper runtime environment.
+
+After the upstream installation was added ot is necessary to rerun the Spack setup script because 
+otherwise the installed module files are not found:
+
+```bash
+source $SPACK/spack/share/spack/setup-env.sh
+```
+
+Here $SPACK denotes the base directory of your Spack sources.
 
 ## Install a package using Spack
 
@@ -172,10 +186,31 @@ using the following command:
 spack install fairroot
 ```
 
+which will install FairRoot and all its dependencies. To have a look at the complete dependency tree one can 
+use the following command:
+
+```bash
+spack spec fairroot
+```
+
 Since the dependency tree of FairRoot is rather large this step can take quite some time. If you are using an
 existing external Spack installation with all needed packages already installed the step only takes some seconds.
-In any case the result should b 
+In any case the result should be similar to the line below:
 
+```bash
+==> fairroot is installed in an upstream Spack instance at /cvmfs/fairroot.gsi.de/spack/linux-debian8-x86_64/gcc-4.9.2/fairroot-18.0.6-rvd5rpdsidvvmuonvj4nacoahigorzic
+```
+
+Beside the installation directory which is in the example above /cvmfs/fairroot.gsi.de/spack/ .
+Spack adds additional subdirectories for the system (linux-debian8-x86_64) and the compiler (gcc-4.9.2)
+which where used to compile the package. The directory for the package contains beside the package name and 
+version also a unique hash value which depends on the package recipe and some environment.
+TODO: Put some more detailed information 
+
+After the installation of the FairRoot package the installation directory contains in the order of
+100 subdirectories each representing one installed package. 
 
 ## Setup the correct runtime environment
 
+To properly use the Spack installation of FairRoot on has to setup a runtime environment. Also here
+Spack helps to do an easy setup of this runtime environment. 
