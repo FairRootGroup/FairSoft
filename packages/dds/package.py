@@ -14,6 +14,7 @@ class Dds(CMakePackage):
     git      = "https://github.com/FairRootGroup/DDS"
 
     version('2.1-1-g181b66a', commit='181b66aca6072601d466436826fa5dac7a77ddc0')
+    version('2.2', tag='2.2')
 
     depends_on('boost@1.64.0:')
     depends_on('cmake@3.1.3:' , type='build')
@@ -22,6 +23,7 @@ class Dds(CMakePackage):
     build_targets = ['all', 'wn_bin']
 
     patch('correct_version_info_211.patch', level=0)
+    patch('correct_version_info_22.patch', level=0)
     
     def cmake_args(self):
         spec = self.spec
