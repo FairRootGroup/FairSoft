@@ -31,6 +31,7 @@ class Geant4Vmc(CMakePackage):
     url = "https://github.com/vmc-project/geant4_vmc/archive/v3-6.tar.gz"
 
     version('3-6', '01507945dfcc21827628d0eb6b233931')
+    version('v4-0-p1', '01507945dfcc21827628d0eb6b233931')
 
     # FIXME: Add dependencies if required.
     depends_on('cmake', type='build')
