@@ -32,8 +32,10 @@ class Fairlogger(CMakePackage):
     url      = "https://github.com/fuhlig1/FairLogger/archive/v1.2.0.tar.gz"
 
     version('1.2.0', '169417786f12411635c670ea3634c880')
+    version('1.4.0', '169417786f12411635c670ea3634c880')
 
 
     # add correct version info for FairLoger from github tarball
     patch('correct_version_info_1.2.0.patch', when='@1.2.0', level=0)
+    patch('correct_version_info_1.4.0.patch', when='@1.4.0', level=0)
     

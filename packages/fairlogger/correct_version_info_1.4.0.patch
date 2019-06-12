@@ -1,0 +1,11 @@
+--- CMakeLists.txt	2018-05-09 15:30:01.000000000 +0200
++++ CMakeLists.txt_new	2019-05-15 10:54:02.279255852 +0200
+@@ -14,7 +14,7 @@
+ include(FairLoggerLib)
+ 
+ set_fairlogger_cmake_policies()
+-get_git_version(OUTVAR_PREFIX FairLogger)
++get_git_version(OUTVAR_PREFIX FairLogger DEFAULT_VERSION 1.4.0)
+ 
+ project(FairLogger VERSION ${FairLogger_VERSION} LANGUAGES C CXX)
+ message(STATUS "${BWhite}${PROJECT_NAME}${CR} ${FairLogger_GIT_VERSION} from ${FairLogger_DATE}")
