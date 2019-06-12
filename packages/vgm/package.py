@@ -31,6 +31,7 @@ class Vgm(CMakePackage):
     url = "https://github.com/vmc-project/vgm/archive/v4-4.tar.gz"
 
     version('4-4', '42fcd9092981120be1aeb6e3872fa1f7')
+    version('4-5', '42fcd9092981120be1aeb6e3872fa1f7')
 
     # FIXME: Add dependencies if required.
     depends_on('cmake', type='build')

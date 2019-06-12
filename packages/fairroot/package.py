@@ -15,27 +15,27 @@ class Fairroot(CMakePackage):
 
     # Add all dependencies here.
     depends_on('gnutls ~guile') #dependency of cmake which has to be build without guile support
-    depends_on('cmake@3.11.1 +ownlibs')
-    depends_on('googletest@1.7.0:')
-    depends_on('boost@1.67.0 cxxstd=11')
+    depends_on('cmake@3.13.3 +ownlibs')
+    depends_on('googletest@1.8.1')
+    depends_on('boost@1.68.0 cxxstd=11')
     
     depends_on('pythia6@428-alice1')
     depends_on('pythia8@8212')
 
-    depends_on('geant4@10.04.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads+data')
+    depends_on('geant4@10.05 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads+data')
 
     # mesa and libxml2 are dependencies of root which have to be build extra due to the
     # extra build options
     depends_on('mesa~llvm')
     depends_on('libxml2+python')
-    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt')
+    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt')
     
-    depends_on('geant3@v2-5-gcc8')
-    depends_on('vgm@4-4')
-    depends_on('geant4_vmc@3-6')
+    depends_on('geant3@v2-7_fairsoft')
+    depends_on('vgm@4-5')
+    depends_on('geant4_vmc@v4-0-p1')
 
-    depends_on('fairlogger@1.2.0')
-    depends_on('fairmq@1.2.3')
+    depends_on('fairlogger@1.4.0')
+    depends_on('fairmq@1.4.3')
 
 #    depends_on('protobuf@3.4.0')
 #    depends_on('flatbuffers@1.9.0')    

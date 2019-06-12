@@ -32,6 +32,7 @@ class Geant3(CMakePackage):
     git      = "https://github.com/FairRootGroup/geant3.git"
 
     version('v2-5-gcc8', tag='v2-5-gcc8')
+    version('v2-7_fairsoft', tag='v2-7_fairsoft')
 
     # FIXME: Add dependencies if required.
     depends_on('cmake', type='build')
