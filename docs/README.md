@@ -161,14 +161,14 @@ add the following lines to your upstreams.yaml file:
 upstreams:
   spack-instance-1:
     install_tree: /cvmfs/fairroot.gsi.de/spack
-    modules: 
+    modules:
       tcl: /cvmfs/fairroot.gsi.de/spack/share/spack/modules
 ```
 
 The first part tells Spack where to find the installed packages. The second part tells Spack
 where to find the generated module files which are needed to setup the proper runtime environment.
 
-After the upstream installation was added ot is necessary to rerun the Spack setup script because 
+After the upstream installation was added ot is necessary to rerun the Spack setup script because
 otherwise the installed module files are not found:
 
 ```bash
@@ -186,7 +186,7 @@ using the following command:
 spack install fairroot
 ```
 
-which will install FairRoot and all its dependencies. To have a look at the complete dependency tree one can 
+which will install FairRoot and all its dependencies. To have a look at the complete dependency tree one can
 use the following command:
 
 ```bash
@@ -203,14 +203,14 @@ In any case the result should be similar to the line below:
 
 Beside the installation directory which is in the example above /cvmfs/fairroot.gsi.de/spack/ .
 Spack adds additional subdirectories for the system (linux-debian8-x86_64) and the compiler (gcc-4.9.2)
-which where used to compile the package. The directory for the package contains beside the package name and 
+which where used to compile the package. The directory for the package contains beside the package name and
 version also a unique hash value which depends on the package recipe and some environment.
-TODO: Put some more detailed information 
+TODO: Put some more detailed information
 
 After the installation of the FairRoot package the installation directory contains in the order of
-100 subdirectories each representing one installed package. 
+100 subdirectories each representing one installed package.
 
 ## Setup the correct runtime environment
 
 To properly use the Spack installation of FairRoot on has to setup a runtime environment. Also here
-Spack helps to do an easy setup of this runtime environment. 
+Spack helps to do an easy setup of this runtime environment.
