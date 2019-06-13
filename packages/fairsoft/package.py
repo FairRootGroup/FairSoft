@@ -30,7 +30,7 @@ import platform
 
 
 class Fairsoft(Package):
-    """Meta package to install all dependencies which are needed to properly install 
+    """Meta package to install all dependencies which are needed to properly install
        and run FairRoot. No url or homepage is defined, only all packages whcih are
        needed are defined as dependencies. """
 
@@ -46,7 +46,7 @@ class Fairsoft(Package):
     depends_on('cmake@3.11.1+ownlibs', type='build')
     depends_on('googletest@1.7.0:')
     depends_on('boost@1.67.0 cxxstd=11')
-    
+
     depends_on('pythia6@428-alice1')
     depends_on('pythia8@8212')
 
@@ -58,7 +58,7 @@ class Fairsoft(Package):
     depends_on('libxml2+python')
 #    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python')
     depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt')
-    
+
     depends_on('geant3@v2-5-gcc8')
     depends_on('vgm@4-4')
     depends_on('geant4_vmc@3-6')
@@ -67,8 +67,8 @@ class Fairsoft(Package):
     depends_on('fairmq@1.2.3')
 
 #    depends_on('protobuf@3.4.0')
-#    depends_on('flatbuffers@1.9.0')    
-#    depends_on('millepede')       
+#    depends_on('flatbuffers@1.9.0')
+#    depends_on('millepede')
 
     def install(self, spec, prefix):
         # touch a file in the installation directory

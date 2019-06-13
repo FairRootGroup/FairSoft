@@ -42,7 +42,7 @@ from spack import *
 
 class Pythia6(CMakePackage):
     """The Pythia6 program can be used to generate high-energy-physics "events",
-       i.e. sets of outgoing particles produced in the interactions between two 
+       i.e. sets of outgoing particles produced in the interactions between two
        in-coming particles."""
 
     homepage = "https://pythia6.hepforge.org/"
