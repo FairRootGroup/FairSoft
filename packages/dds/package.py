@@ -7,7 +7,7 @@ from spack import *
 
 
 class Dds(CMakePackage):
-    """The Dynamic Deployment System (DDS) 
+    """The Dynamic Deployment System (DDS)
        A tool-set that automates and significantly simplifies a deployment of user defined processes and their dependencies on any resource management system using a given topology. """
 
     homepage = "http://dds.gsi.de"
@@ -22,9 +22,9 @@ class Dds(CMakePackage):
     parallel = False
     build_targets = ['all', 'wn_bin']
 
-    patch('correct_version_info_211.patch', level=0)
-    patch('correct_version_info_22.patch', level=0)
-    
+    patch('correct_version_info_211.patch', level=0, when='@2.1-1-g181b66a')
+    patch('correct_version_info_22.patch', level=0, when='@2.2')
+
     def cmake_args(self):
         spec = self.spec
         options = []
