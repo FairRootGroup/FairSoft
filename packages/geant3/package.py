@@ -43,5 +43,5 @@ class Geant3(CMakePackage):
         options = []
         options.append('-DROOT_DIR={0}'.format(
                 self.spec['root'].prefix))
-                                           
+
         return options
