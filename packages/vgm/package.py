@@ -28,10 +28,10 @@ class Vgm(CMakePackage):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "https://github.com/vmc-project/vgm"
-    url = "https://github.com/vmc-project/vgm/archive/v4-4.tar.gz"
+    url = "https://github.com/vmc-project/vgm/archive/v4-5.tar.gz"
 
     version('4-4', '42fcd9092981120be1aeb6e3872fa1f7')
-    version('4-5', '42fcd9092981120be1aeb6e3872fa1f7')
+    version('4-5', 'e5054a39a33dcefcd6a6588efceda7be')
 
     # FIXME: Add dependencies if required.
     depends_on('cmake', type='build')
@@ -46,7 +46,7 @@ class Vgm(CMakePackage):
         options.append('-DGeant4_DIR={0}'.format(
                 self.spec['geant4'].prefix))
         options.append('-DCLHEP_DIR={0}'.format(
-                self.spec['clhep'].prefix))
+                self.spec['geant4'].prefix))
         options.append('-DWITH_TEST=OFF')
-                
+
         return options
