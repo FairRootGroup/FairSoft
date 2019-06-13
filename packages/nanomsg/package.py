@@ -29,5 +29,5 @@ class Nanomsg(CMakePackage):
     homepage = "https://nanomsg.org/"
     url = "https://github.com/nanomsg/nanomsg/archive/1.0.0.tar.gz"
 
+    version('1.1.5', '272db464bac1339b6cea060dd63b22d4')
     version('1.0.0', '6f56ef28c93cee644e8c4aaaef7cfb55')
-
