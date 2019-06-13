@@ -42,6 +42,9 @@ then
     if [ -f $install_prefix/lib/libgtestd.a ]; then
       ln -s $install_prefix/lib/libgtestd.a $install_prefix/lib/libgtest.a
     fi
+    if [ -f $install_prefix/lib/libgtest_maind.a ]; then
+      ln -s $install_prefix/lib/libgtest_maind.a $install_prefix/lib/libgtest_main.a
+    fi
 
     check_success gtest $checkfile
     check=$?
