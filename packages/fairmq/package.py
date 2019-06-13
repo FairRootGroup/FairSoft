@@ -32,17 +32,18 @@ class Fairmq(CMakePackage):
     url      = "https://github.com/FairRootGroup/FairMQ/archive/v1.2.3.tar.gz"
 
     version('1.2.3', '53f0d597d622eeb2b3f50a16d9ed7bbe')
-    version('1.4.3', '53f0d597d622eeb2b3f50a16d9ed7bbe')
+    version('1.4.3', '6659f281bdf07158935a878b34457466')
 
     # add correct version info for FairLoger from github tarball
-    patch('correct_version_info_1.2.3.patch', when='@1.2.3', level=0)  
-        
+    patch('correct_version_info_1.2.3.patch', when='@1.2.3', level=0)
+    patch('correct_version_info_1.4.3.patch', when='@1.4.3', level=0)
+
     # Fix dependencies for FairMQ 1.2.3
     depends_on("googletest@1.7.0:", when="@1.2.3")
     depends_on("googletest@1.8.1", when="@1.4.3")
 
     depends_on("boost@1.67.0 cxxstd=11", when="@1.2.3")
-    depends_on("boost@1.68.0 cxxstd=11", when="@1.4.3")
+    depends_on("boost@1.68.0 cxxstd=11 +container", when="@1.4.3")
 
     depends_on("fairlogger@1.2.0", when="@1.2.3")
     depends_on("fairlogger@1.4.0", when="@1.4.3")
