@@ -62,7 +62,7 @@ class Root(CMakePackage):
     patch('builtin_ftgl.patch', level=0)
     patch('graf3d_gl.patch', level=0)
     patch('graf2d.patch', level=0)
-    patch('external_zlib.patch', level=0)
+    patch('external_zlib.patch', level=0, when='@6.12.06')
 
     if sys.platform == 'darwin':
         # Resolve non-standard use of uint, _cf_
@@ -507,7 +507,7 @@ class Root(CMakePackage):
         if '+python' in self.spec:
             options.append('-DPYTHON_EXECUTABLE={0}/python'.format(
                 self.spec['python'].prefix.bin))
-            
+
         if '+x+opengl' in self.spec:
             options.append('-DGLU_INCLUDE_DIR={0}'.format(
                 self.spec['glu'].prefix.include))
