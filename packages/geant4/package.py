@@ -32,6 +32,7 @@ class Geant4(CMakePackage):
     variant('motif', default=False, description='Optional motif support')
     variant('threads', default=True, description='Build with multithreading')
     variant('data', default=True, description='Install geant4 data')
+    variant('clhep', default=True, description='Build with extrenal CLHEP')
 
     variant('cxxstd',
             default='11',
@@ -43,37 +44,37 @@ class Geant4(CMakePackage):
 
     # C++11 support
     depends_on("xerces-c cxxstd=11", when="cxxstd=11")
-    depends_on("clhep@2.4.1.0 cxxstd=11", when="@10.05.p01 cxxstd=11")
-    depends_on("clhep@2.4.1.0 cxxstd=11", when="@10.05 cxxstd=11")
-    depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p03 cxxstd=11")
-    depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p02 cxxstd=11")
-    depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p01 cxxstd=11")
-    depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04 cxxstd=11")
-    depends_on("clhep@2.3.4.6 cxxstd=11", when="@10.03.p03 cxxstd=11")
+    depends_on("clhep@2.4.1.0 cxxstd=11", when="@10.05.p01 cxxstd=11 +clhep")
+    depends_on("clhep@2.4.1.0 cxxstd=11", when="@10.05 cxxstd=11 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p03 cxxstd=11 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p02 cxxstd=11 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p01 cxxstd=11 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04 cxxstd=11 +clhep")
+    depends_on("clhep@2.3.4.6 cxxstd=11", when="@10.03.p03 cxxstd=11 +clhep")
     depends_on("vecgeom cxxstd=11", when="+vecgeom cxxstd=11")
 
     # C++14 support
     depends_on("xerces-c cxxstd=14", when="cxxstd=14")
-    depends_on("clhep@2.4.1.0 cxxstd=14", when="@10.05.p01 cxxstd=14")
-    depends_on("clhep@2.4.1.0 cxxstd=14", when="@10.05 cxxstd=14")
-    depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p03 cxxstd=14")
-    depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p02 cxxstd=14")
-    depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p01 cxxstd=14")
-    depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04 cxxstd=14")
-    depends_on("clhep@2.3.4.6 cxxstd=14", when="@10.03.p03 cxxstd=14")
+    depends_on("clhep@2.4.1.0 cxxstd=14", when="@10.05.p01 cxxstd=14 +clhep")
+    depends_on("clhep@2.4.1.0 cxxstd=14", when="@10.05 cxxstd=14 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p03 cxxstd=14 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p02 cxxstd=14 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p01 cxxstd=14 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04 cxxstd=14 +clhep")
+    depends_on("clhep@2.3.4.6 cxxstd=14", when="@10.03.p03 cxxstd=14 +clhep")
     depends_on("vecgeom cxxstd=14", when="+vecgeom cxxstd=14")
 
     # C++17 support
     depends_on("xerces-c cxxstd=17", when="cxxstd=17")
     patch('cxx17.patch', when='@:10.03.p99 cxxstd=17')
-    patch('cxx17_geant4_10_0.patch', level=1, when='@10.04.00: cxxstd=17')
-    depends_on("clhep@2.4.1.0 cxxstd=17", when="@10.05.p01 cxxstd=17")
-    depends_on("clhep@2.4.1.0 cxxstd=17", when="@10.05 cxxstd=17")
-    depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p03 cxxstd=17")
-    depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p02 cxxstd=17")
-    depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p01 cxxstd=17")
-    depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04 cxxstd=17")
-    depends_on("clhep@2.3.4.6 cxxstd=17", when="@10.03.p03 cxxstd=17")
+    patch('cxx17_geant4_10_0.patch', level=1, when='@10.04.00: cxxstd=17 +clhep')
+    depends_on("clhep@2.4.1.0 cxxstd=17", when="@10.05.p01 cxxstd=17 +clhep")
+    depends_on("clhep@2.4.1.0 cxxstd=17", when="@10.05 cxxstd=17 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p03 cxxstd=17 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p02 cxxstd=17 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p01 cxxstd=17 +clhep")
+    depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04 cxxstd=17 +clhep")
+    depends_on("clhep@2.3.4.6 cxxstd=17", when="@10.03.p03 cxxstd=17 +clhep")
     depends_on("vecgeom cxxstd=17", when="+vecgeom cxxstd=17")
 
     depends_on("expat")
@@ -98,7 +99,6 @@ class Geant4(CMakePackage):
 
         options = [
             '-DGEANT4_USE_GDML=ON',
-            '-DGEANT4_USE_SYSTEM_CLHEP=ON',
             '-DGEANT4_USE_G3TOG4=ON',
             '-DGEANT4_INSTALL_DATA=ON',
             '-DGEANT4_BUILD_TLS_MODEL=global-dynamic',
@@ -129,11 +129,15 @@ class Geant4(CMakePackage):
             options.append('-DUSolids_DIR=%s' % spec[
                 'vecgeom'].prefix.lib.CMake.USolids)
 
+
         on_or_off = lambda opt: 'ON' if '+' + opt in spec else 'OFF'
         options.append('-DGEANT4_BUILD_MULTITHREADED=' + on_or_off('threads'))
 
         # install the data with geant4
         options.append('-DGEANT4_INSTALL_DATA=' + on_or_off('data'))
+
+        # use external or internal CLHEP
+        options.append('-DGEANT4_USE_SYSTEM_CLHEP=' + on_or_off('clhep'))
 
         return options
 
