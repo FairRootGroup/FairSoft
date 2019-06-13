@@ -26,8 +26,8 @@ from spack import *
 
 
 class Pythia8(AutotoolsPackage):
-    """PYTHIA8 is a program for the generation of high-energy physics events, 
-       i.e. for the description of collisions at high energies between elementary 
+    """PYTHIA8 is a program for the generation of high-energy physics events,
+       i.e. for the description of collisions at high energies between elementary
        particles such as e+, e-, p and pbar in various combinations."""
 
     homepage = "http://home.thep.lu.se/~torbjorn/Pythia.html"
