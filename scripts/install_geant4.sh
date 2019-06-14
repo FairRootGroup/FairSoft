@@ -124,6 +124,9 @@ then
     if [ ! -L $install_prefix/share/Geant4/data/RealSurface ]; then
       ln -s $install_prefix/share/Geant4/data/${RealSurface_VERSION} $install_prefix/share/Geant4/data/RealSurface
     fi
+    if [ ! -L $install_prefix/share/Geant4/data/G4INCL ]; then
+      ln -s $install_prefix/share/Geant4/data/${G4INCL_VERSION} $install_prefix/share/Geant4/data/G4INCL
+    fi
 
   fi
 
