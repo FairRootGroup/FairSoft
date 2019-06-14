@@ -173,6 +173,21 @@ else
  echo "Package $RealSurface_VERSION already installed." | tee -a $logfile
 fi
 
+if [ ! -d $G4INCL_VERSION ];
+then
+  if [ -e $data_source/$G4INCL_TAR ];
+  then
+    cp $data_source/$G4INCL_TAR .
+    untar G4INCL  $G4INCL_TAR
+    ln -s $G4INCL_VERSION G4INCL
+    rm $G4INCL_TAR
+  else
+    echo "Could not find file $G4INCL_TAR in $data_source" | tee -a $logfile
+  fi
+else
+ echo "Package $G4INCL_VERSION already installed." | tee -a $logfile
+fi
+
 
 cd $SIMPATH
 

@@ -77,6 +77,47 @@ export NANOMSG_VERSION=1.1.5
 export YAMLCPP_LOCATION="https://github.com/jbeder/yaml-cpp"
 export YAMLCPP_VERSION=0.6.2
 
+############## Gent4 Data files
+
+export G4NDL_VERSION=G4NDL4.5
+export G4NDL_TAR=G4NDL.4.5.tar.gz
+
+export G4EMLOW_VERSION=G4EMLOW7.7
+export G4EMLOW_TAR=G4EMLOW.7.7.tar.gz
+
+export PhotonEvaporation_VERSION=PhotonEvaporation5.3
+export PhotonEvaporation_TAR=G4PhotonEvaporation.5.3.tar.gz
+
+export RadioactiveDecay_VERSION=RadioactiveDecay5.3
+export RadioactiveDecay_TAR=G4RadioactiveDecay5.3.tar.gz
+
+export G4SAIDDATA_VERSION=G4SAIDDATA2.0
+export G4SAIDDATA_TAR=G4SAIDDATA.2.0.tar.gz
+
+export G4PARTICLEXS_VERSION=G4PARTICLEXS1.1
+export G4PARTICLEXS_TAR=G4PARTICLEXS1.1.tar.gz
+
+export G4ABLA_VERSION=G4ABLA3.1
+export G4ABLA_TAR=G4ABLA3.1.tar.gz
+
+export G4INCL_VERSION=G4INCL1.0
+export G4INCL_TAR=G4INCL1.0.tar.gz
+
+export G4PII_VERSION=G4PII1.3
+export G4PII_TAR=G4PII.1.3.tar.gz
+
+export G4ENSDFSTATE_VERSION=G4ENSDFSTATE2.2
+export G4ENSDFSTATE_TAR=G4ENSDFSTATE2.2.tar.gz
+
+export RealSurface_VERSION=RealSurface2.1.1
+export RealSurface_TAR=G4RealSurface.2.1.1.tar.gz
+
+export G4TENDL_VERSION=G4TENDL1.3.2
+export G4TENDL_TAR=G4TENDL1.3.2.tar.gz
+
+############################
+
+
 export FAIRROOT_LOCATION="https://github.com/FairRootGroup/FairRoot.git"
 export FAIRROOTVERSION=dev
 
