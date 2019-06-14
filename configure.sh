@@ -120,16 +120,13 @@ if [ "$build_MQOnly" = "no" ]
 then
      if [ "$build_root6" = "yes" ]
      then
-       pluto=0
        export Root_Version=6
      elif [ "$build_root6" = "no" ]
      then
-       pluto=1
        export Root_Version=5
      fi
  elif [ "$build_MQOnly" = "yes" ];
  then
-    pluto=0
     export Root_Version=0
 fi
 
@@ -307,13 +304,6 @@ then
   then
     source scripts/install_g4py.sh
   fi
-fi
-
-##################### Pluto #############################################
-
-if [ "$check" = "1" -a "$onlyreco" = "0" -a "$pluto" = "1"  -a "$mqonly" = "0" ];
-then
-     source scripts/install_pluto.sh
 fi
 
 ##################### Geant 3 VMC #############################################
