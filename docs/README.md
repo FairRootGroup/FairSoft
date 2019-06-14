@@ -9,7 +9,7 @@ Initial setup like:
 
 ```bash
 cd (Choose-dir)
-git clone https://github.com/spack/spack
+git clone https://github.com/FairRootGroup/spack
 cd spack
 git checkout may18
 cd (Choose-dir)
