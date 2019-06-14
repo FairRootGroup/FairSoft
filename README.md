@@ -22,6 +22,8 @@ This Release was tested on following systems:
 |----------|----------------------|--------------|
 | macOS    | Mojave (10.14.1)     | Clang 10.0.0 |
 | Cent OS  | 7                    | gcc 4.8.5    |
+| SuseLeap  | 40                  | gcc 7.4.0    |
+| Ubuntu  | 18.04                 | gcc 7.4.0    |
 | macOS    | High Sierra (10.13)  | Clang 10.0.0 |
 
 
@@ -100,7 +102,7 @@ directory of FairSoft.
 
 |Package|Version|
 |---|---|
-| cmake  |3.11.1 |
+| cmake  |3.13.4 |
 | gtest  |1.8.1|
 | gsl    |1.16|
 | icu4c  |63.1|
@@ -109,23 +111,23 @@ directory of FairSoft.
 | HepMC  |2.06.09|
 | Pythia8| 240|
 | Mesa | 7.10.3|
-| Geant4 |10.5.0|
-| xrootd |4.8.3|
+| Geant4 |10.5.1|
 | ROOT | 6.16.00|
-| Geant321+_vmc| v2-6|
+| Geant321+_vmc| v2-7|
 | VGM| v4-5|
 | G4VMC| v4-0|
 | MillePede |V04-03-10|
 | ZeroMQ |4.3.1|
 | Protocoll Buffers| 3.6.1|
-| nanomsg |1.0.0|
+| nanomsg |1.1.5|
 | FlatBuffers |1.10.0|
 | MessagePack |3.1.1|
 | DDS |2.2|
- | FairMQ |1.3.8|
+| FairMQ |1.4.3|
 | FairLogger |1.4.0|
 | Libfabric |1.6.2|
-| Asiofi |1.0|
+| Asiofi |0.4.1|
+| Yaml |0.6.2|
 
 
 In case the python bindings are build the following additional packages will be installed

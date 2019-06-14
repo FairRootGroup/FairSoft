@@ -14,7 +14,7 @@
      debugstring=""
    fi
 
-   XROOTD="-Dxrootd=ON -Dbuiltin_xrootd=ON"
+   XROOTD="-Dxrootd=OFF -Dbuiltin_xrootd=OFF"
    ROOFIT="-Droofit=ON"
 
    OPENGL=" "
@@ -54,7 +54,7 @@
                     -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
                     -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
                     -Dbuiltin-freetype=ON $OPENGL \
-                    -Dmysql=ON -Dpgsql=ON  -Dasimage=ON \
+                    -Dasimage=ON \
                     -DPYTHIA6_DIR=$SIMPATH_INSTALL \
                     -DPYTHIA8_DIR=$SIMPATH_INSTALL \
                     -Dglobus=OFF \
@@ -62,6 +62,7 @@
                     -Dcintex=OFF \
                     -Drpath=ON \
                     -Dmemstat=ON \
+                    -Ddavix=OFF \
                      $VC \
                     -Dhttp=ON \
                     -DGSL_DIR=$SIMPATH_INSTALL \
