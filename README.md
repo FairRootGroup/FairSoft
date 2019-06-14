@@ -120,7 +120,7 @@ directory of FairSoft.
 | ZeroMQ |4.3.1|
 | Protocoll Buffers| 3.6.1|
 | nanomsg |1.1.5|
-| FlatBuffers |1.10.0|
+| FlatBuffers |1.11.0|
 | MessagePack |3.1.1|
 | DDS |2.2|
 | FairMQ |1.4.3|
