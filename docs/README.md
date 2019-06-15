@@ -11,7 +11,6 @@ Initial setup like:
 cd (Choose-dir)
 git clone https://github.com/FairRootGroup/spack
 cd spack
-git checkout may18
 cd (Choose-dir)
 git clone https://github.com/FairRootGroup/FairSoft-Spack
 git checkout may18
@@ -186,12 +185,28 @@ using the following command:
 spack install fairroot
 ```
 
-which will install FairRoot and all its dependencies. To have a look at the complete dependency tree one can
-use the following command:
+which will install FairRoot and all its dependencies. This will install the version which is defined as default.
+If it is intended to install aspecific version this version has to be specified as parameter:
+
+```bash
+spack install fairroot@v18.0.6
+```
+
+At the time of writing there are three versions available: dev, RC_v18.1.0 and v18.0.6.
+
+To have a look at the complete dependency tree one can use the following command:
 
 ```bash
 spack spec fairroot
 ```
+
+or 
+
+```bash
+spack spec fairroot@v18.0.6
+```
+
+to et the information for a specific version.
 
 Since the dependency tree of FairRoot is rather large this step can take quite some time. If you are using an
 existing external Spack installation with all needed packages already installed the step only takes some seconds.
