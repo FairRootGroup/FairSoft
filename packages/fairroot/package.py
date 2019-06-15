@@ -12,6 +12,7 @@ class Fairroot(CMakePackage):
     git      = "https://github.com/FairRootGroup/FairRoot.git"
 
     version('dev', branch='dev')
+    version('RC_v18.1.0', branch='RC_v18.1.0')
 
     # Development versions
     version('18.0.6', '822902c2fc879eab82fca47eccb14259')
@@ -30,7 +31,7 @@ class Fairroot(CMakePackage):
     depends_on('googletest@1.8.1', when="@dev")
     depends_on('boost@1.68.0 cxxstd=11 +container', when="@dev")
 
-    depends_on('geant4@10.05 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads+data~clhep', when="@dev")
+    depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads+data~clhep', when="@dev")
 
     depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt', when="@dev")
 
@@ -40,6 +41,22 @@ class Fairroot(CMakePackage):
 
     depends_on('fairlogger@1.4.0', when="@dev")
     depends_on('fairmq@1.4.3', when="@dev")
+
+    # Dependencies for RC_v18.1.0
+    depends_on('cmake@3.13.3 +ownlibs', when="@RC_v18.1.0")
+    depends_on('googletest@1.8.1', when="@RC_v18.1.0")
+    depends_on('boost@1.68.0 cxxstd=11 +container', when="@RC_v18.1.0")
+
+    depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads+data~clhep', when="@RC_v18.1.0")
+
+    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt', when="@RC_v18.1.0")
+
+    depends_on('geant3@v2-7_fairsoft', when="@RC_v18.1.0")
+    depends_on('vgm@4-5', when="@RC_v18.1.0")
+    depends_on('geant4_vmc@4-0-p1', when="@RC_v18.1.0")
+
+    depends_on('fairlogger@1.4.0', when="@RC_v18.1.0")
+    depends_on('fairmq@1.4.3', when="@RC_v18.1.0")
 
     # Dependencies for v18.0.6
     depends_on('cmake@3.11.1 +ownlibs', when="@18.0.6")
