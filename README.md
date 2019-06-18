@@ -20,12 +20,13 @@ This Release was tested on following systems:
 
 | System   | Version              |  Compiler    |
 |----------|----------------------|--------------|
-| macOS    | Mojave (10.14.1)     | Clang 10.0.0 |
+| macOS    | Mojave (10.14.5)     | Clang 10.0.1 |
+| macOS    | High Sierra (10.13)  | Clang 10.0.0 |
 | Cent OS  | 7                    | gcc 4.8.5    |
 | openSUSE Leap   | 15.1          | gcc 7.4.0    |
 | Ubuntu  | 18.04                 | gcc 7.4.0    |
-| macOS    | High Sierra (10.13)  | Clang 10.0.0 |
-
+| Debian  | buster                | gcc 8.3.0    |
+| Fedora  | 32                    | gcc 9.1.1    |
 
 ## Guided Installation
 
