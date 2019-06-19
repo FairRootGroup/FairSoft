@@ -18,9 +18,7 @@ class Geant4(CMakePackage):
     url = "http://geant4.cern.ch/support/source/geant4.10.01.p03.tar.gz"
 
     version('10.05.p01', '8a5fa524b5e6e427452e7680d49d5471')
-    version('10.05', '5886b77f756dd4d9bed477d6c6d24b7a')
     version('10.04.p03', 'e60a321b691f6b58de54c8a2139b21fa')
-    version('10.04.p02', 'b0a201c7b8ab1e45a07371b5cd3b09b0')
     version('10.04.p01', '3f9f5f61d956b2d1d12f009ddd810fd0')
     version('10.04', 'b84beeb756821d0c61f7c6c93a2b83de')
     version('10.03.p03', 'ccae9fd18e3908be78784dc207f2d73b')
@@ -45,9 +43,7 @@ class Geant4(CMakePackage):
     # C++11 support
     depends_on("xerces-c cxxstd=11", when="cxxstd=11")
     depends_on("clhep@2.4.1.0 cxxstd=11", when="@10.05.p01 cxxstd=11 +clhep")
-    depends_on("clhep@2.4.1.0 cxxstd=11", when="@10.05 cxxstd=11 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p03 cxxstd=11 +clhep")
-    depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p02 cxxstd=11 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p01 cxxstd=11 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04 cxxstd=11 +clhep")
     depends_on("clhep@2.3.4.6 cxxstd=11", when="@10.03.p03 cxxstd=11 +clhep")
@@ -56,9 +52,7 @@ class Geant4(CMakePackage):
     # C++14 support
     depends_on("xerces-c cxxstd=14", when="cxxstd=14")
     depends_on("clhep@2.4.1.0 cxxstd=14", when="@10.05.p01 cxxstd=14 +clhep")
-    depends_on("clhep@2.4.1.0 cxxstd=14", when="@10.05 cxxstd=14 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p03 cxxstd=14 +clhep")
-    depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p02 cxxstd=14 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p01 cxxstd=14 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04 cxxstd=14 +clhep")
     depends_on("clhep@2.3.4.6 cxxstd=14", when="@10.03.p03 cxxstd=14 +clhep")
@@ -69,9 +63,7 @@ class Geant4(CMakePackage):
     patch('cxx17.patch', when='@:10.03.p99 cxxstd=17')
     patch('cxx17_geant4_10_0.patch', level=1, when='@10.04.00: cxxstd=17 +clhep')
     depends_on("clhep@2.4.1.0 cxxstd=17", when="@10.05.p01 cxxstd=17 +clhep")
-    depends_on("clhep@2.4.1.0 cxxstd=17", when="@10.05 cxxstd=17 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p03 cxxstd=17 +clhep")
-    depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p02 cxxstd=17 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p01 cxxstd=17 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04 cxxstd=17 +clhep")
     depends_on("clhep@2.3.4.6 cxxstd=17", when="@10.03.p03 cxxstd=17 +clhep")
@@ -91,8 +83,11 @@ class Geant4(CMakePackage):
     # this allows external data installations
     # to avoid duplication
 
+    depends_on('geant4-data@10.05.p01', when='@10.05.p01 ~data')
+    depends_on('geant4-data@10.04.p03', when='@10.04.p03 ~data')
+    depends_on('geant4-data@10.04.p01', when='@10.04.p01 ~data')
     depends_on('geant4-data@10.03.p03', when='@10.03.p03 ~data')
-    depends_on('geant4-data@10.04', when='@10.04 ~data')
+#    depends_on('geant4-data@10.04.', when='@10.04 ~data')
 
     def cmake_args(self):
         spec = self.spec
@@ -157,14 +152,13 @@ class Geant4(CMakePackage):
             patch = version[-1]
         else:
             patch = 0
-        datadir = 'Geant4-%s.%s.%s/data' % (major, minor, patch)
+        datadir = 'Geant4-%s.%s.%s' % (major, minor, patch)
         with working_dir(join_path(spec.prefix.share, datadir),
                          create=True):
             dirs = glob.glob('%s/%s/*' %
                              (spec['geant4-data'].prefix.share, datadir))
             for d in dirs:
-                target = os.readlink(d)
-                os.symlink(target, os.path.basename(target))
+                os.symlink(d, os.path.basename(d))
 
     def setup_dependent_environment(self, spack_env, run_env, dep_spec):
         version = self.version
