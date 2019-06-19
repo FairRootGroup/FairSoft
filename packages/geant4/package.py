@@ -83,11 +83,9 @@ class Geant4(CMakePackage):
     # this allows external data installations
     # to avoid duplication
 
-    depends_on('geant4-data@10.05.p01', when='@10.05.p01 ~data')
-    depends_on('geant4-data@10.04.p03', when='@10.04.p03 ~data')
-    depends_on('geant4-data@10.04.p01', when='@10.04.p01 ~data')
-    depends_on('geant4-data@10.03.p03', when='@10.03.p03 ~data')
-#    depends_on('geant4-data@10.04.', when='@10.04 ~data')
+    depends_on('geant4-data@10.05', when='@10.05.p00:10.05.p99 ~data')
+    depends_on('geant4-data@10.04', when='@10.04.p00:10.04.p99 ~data')
+    depends_on('geant4-data@10.03', when='@10.03.p03 ~data')
 
     def cmake_args(self):
         spec = self.spec
@@ -153,10 +151,11 @@ class Geant4(CMakePackage):
         else:
             patch = 0
         datadir = 'Geant4-%s.%s.%s' % (major, minor, patch)
+        linkdir = 'Geant4-%s.%s.0' % (major, minor)
         with working_dir(join_path(spec.prefix.share, datadir),
                          create=True):
             dirs = glob.glob('%s/%s/*' %
-                             (spec['geant4-data'].prefix.share, datadir))
+                             (spec['geant4-data'].prefix.share, linkdir))
             for d in dirs:
                 os.symlink(d, os.path.basename(d))
 
