@@ -96,60 +96,45 @@ class Geant4Data(Package):
         with working_dir(datadir, create=True):
             for d in glob.glob('%s/share/data/*' %
                                spec['g4abla'].prefix):
-                dest = 'G4ABLA' + '{0}'.format(spec['g4abla'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             for d in glob.glob('%s/share/data/*' %
                                spec['g4emlow'].prefix):
-                dest = 'G4EMLOW' + '{0}'.format(spec['g4emlow'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             for d in glob.glob('%s/share/data/*' %
                                spec['g4ndl'].prefix):
-                dest = 'G4NDL' + '{0}'.format(spec['g4ndl'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             for d in glob.glob('%s/share/data/*' %
                                spec['g4saiddata'].prefix):
-                dest = 'G4SAIDDATA' + '{0}'.format(spec['g4saiddata'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             for d in glob.glob('%s/share/data/*' %
                                spec['g4ensdfstate'].prefix):
-                dest = 'G4ENSDFSTATE' + '{0}'.format(spec['g4ensdfstate'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             for d in glob.glob('%s/share/data/*' %
                                spec['g4photonevaporation'].prefix):
-                dest = 'PhotonEvaporation' + '{0}'.format(spec['g4photonevaporation'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             for d in glob.glob('%s/share/data/*' %
                                spec['g4pii'].prefix):
-                dest = 'G4PII' + '{0}'.format(spec['g4pii'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             for d in glob.glob('%s/share/data/*' %
                                spec['g4radioactivedecay'].prefix):
-                dest = 'RadioactiveDecay' + '{0}'.format(spec['g4radioactivedecay'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             for d in glob.glob('%s/share/data/*' %
                                spec['g4realsurface'].prefix):
-                dest = 'RealSurface' + '{0}'.format(spec['g4realsurface'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             for d in glob.glob('%s/share/data/*' %
                                spec['g4tendl'].prefix):
-                dest = 'G4TENDL' + '{0}'.format(spec['g4tendl'].version)
-                os.symlink(d, dest)
+                os.symlink(d, os.path.basename(d))
             if minor < 5:
                 for d in glob.glob('%s/share/data/*' %
                                spec['g4neutronxs'].prefix):
-                    dest = 'G4NEUTRONXS' + '{0}'.format(spec['g4neutronxs'].version)
-                    os.symlink(d, dest)
+                    os.symlink(d, os.path.basename(d))
             else:
                 for d in glob.glob('%s/share/data/*' %
                                spec['g4particlexs'].prefix):
-                    dest = 'G4PARTICLEXS' + '{0}'.format(spec['g4particlexs'].version)
-                    os.symlink(d, dest)
+                    os.symlink(d, os.path.basename(d))
                 for d in glob.glob('%s/share/data/*' %
                                spec['g4incl'].prefix):
-                    dest = 'G4INCL' + '{0}'.format(spec['g4incl'].version)
-                    os.symlink(d, dest)
-
-
+                    os.symlink(d, os.path.basename(d))
 
     def url_for_version(self, version):
         """Handle version string."""
