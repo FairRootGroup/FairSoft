@@ -122,7 +122,7 @@ export FAIRROOT_LOCATION="https://github.com/FairRootGroup/FairRoot.git"
 export FAIRROOTVERSION=dev
 
 export DDS_LOCATION="https://github.com/FairRootGroup/DDS.git"
-export DDSVERSION=2.2
+export DDSVERSION=2.4
 
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
 export ALIROOTVERSION=master
