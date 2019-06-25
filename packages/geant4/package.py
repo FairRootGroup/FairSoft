@@ -6,7 +6,7 @@
 from spack import *
 import os
 import glob
-
+import subprocess
 
 class Geant4(CMakePackage):
     """Geant4 is a toolkit for the simulation of the passage of particles
@@ -161,6 +161,7 @@ class Geant4(CMakePackage):
 
     def setup_dependent_environment(self, spack_env, run_env, dep_spec):
         version = self.version
+        spec = self.spec
         major = version[0]
         minor = version[1]
         if len(version) > 2:
@@ -170,4 +171,18 @@ class Geant4(CMakePackage):
         datadir = 'Geant4-%s.%s.%s' % (major, minor, patch)
         spack_env.append_path('CMAKE_MODULE_PATH',
                               '{0}/{1}/Modules'.format(
-                                  self.prefix.lib64, datadir))
+                                  spec.prefix.lib64, datadir))
+
+        # Get the tuple of installed data sets from the geant4 config
+        # Split it in parts to get the name of the environment variable
+        # and the corresponding installation directory.
+        # The same information is also needed for the run environment
+        # of Geant4 but the config file is not yet installed when
+        # setup_environment is executed.
+        # TODO: find a way to setup the environment also for Geant4
+        command = "%s/geant4-config" % spec.prefix.bin
+        output = subprocess.check_output([ command, "--datasets"])
+        for line in output.split('\n'):
+            item = line.split(' ')
+            if item[0]:
+                run_env.set(item[1], item[2])
