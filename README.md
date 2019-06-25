@@ -123,7 +123,7 @@ directory of FairSoft.
 | nanomsg |1.1.5|
 | FlatBuffers |1.11.0|
 | MessagePack |3.1.1|
-| DDS |2.2|
+| DDS |2.4|
 | FairMQ |1.4.3|
 | FairLogger |1.4.0|
 | Libfabric |1.6.2|
