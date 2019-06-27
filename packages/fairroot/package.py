@@ -17,18 +17,25 @@ class Fairroot(CMakePackage):
 
     version('18.0.6', '822902c2fc879eab82fca47eccb14259')
 
+    variant('cxxstd',
+            default='11',
+            values=('11', '14', '17'),
+            multi=False,
+            description='Use the specified C++ standard when building.')
+
     # Dependencies which are same for all versions
     depends_on('gnutls ~guile') #dependency of cmake which has to be build without guile support
     depends_on('pythia6@428-alice1')
     depends_on('pythia8@8212')
+    depends_on('cmake@3.13.3: +ownlibs')
+    depends_on('googletest@1.8.1:')
+
     # mesa and libxml2 are dependencies of root which have to be build extra due to the
     # extra build options
     depends_on('mesa~llvm')
     depends_on('libxml2+python')
 
     # Dependencies for dev version
-    depends_on('cmake@3.13.3 +ownlibs', when="@dev")
-    depends_on('googletest@1.8.1', when="@dev")
     depends_on('boost@1.68.0 cxxstd=11 +container', when="@dev")
 
     depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads~data~clhep', when="@dev")
@@ -43,8 +50,6 @@ class Fairroot(CMakePackage):
     depends_on('fairmq@1.4.3', when="@dev")
 
     # Dependencies for RC_v18.2.0
-    depends_on('cmake@3.13.3 +ownlibs', when="@RC_v18.2.0")
-    depends_on('googletest@1.8.1', when="@RC_v18.2.0")
     depends_on('boost@1.68.0 cxxstd=11 +container', when="@RC_v18.2.0")
 
     depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads~data~clhep', when="@RC_v18.2.0")
@@ -59,8 +64,6 @@ class Fairroot(CMakePackage):
     depends_on('fairmq@1.4.3', when="@RC_v18.2.0")
 
     # Dependencies for v18.0.6
-    depends_on('cmake@3.11.1 +ownlibs', when="@18.0.6")
-    depends_on('googletest@1.7.0:', when="@18.0.6")
     depends_on('boost@1.67.0 cxxstd=11', when="@18.0.6")
 
     depends_on('geant4@10.04.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads~data~clhep', when="@18.0.6")
@@ -81,7 +84,8 @@ class Fairroot(CMakePackage):
     patch('CMake.patch', level=0, when="@18.0.6")
 
     def setup_environment(self, spack_env, run_env):
-        spack_env.append_flags('CXXFLAGS', '-std=c++11')
+        stdversion=('-std=c++%s' % self.spack.cxxstd)
+        spack_env.append_flags('CXXFLAGS', '-std=c++%s' % self.spack.cxxstd)
 
     def cmake_args(self):
         spec = self.spec
@@ -90,8 +94,6 @@ class Fairroot(CMakePackage):
         self.spec['root'].prefix))
         options.append('-DROOT_CONFIG_SEARCHPATH={0}'.format(
         self.spec['root'].prefix))
-#        options.append('-D={0}'.format(
-#        self.spec[''].prefix))
         options.append('-DPythia6_LIBRARY_DIR={0}/lib'.format(
         self.spec['pythia6'].prefix))
         options.append('-DGeant3_DIR={0}'.format(
