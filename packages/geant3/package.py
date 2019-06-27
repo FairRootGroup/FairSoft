@@ -45,3 +45,6 @@ class Geant3(CMakePackage):
                 self.spec['root'].prefix))
 
         return options
+
+    def setup_environment(self, spack_env, run_env):
+        run_env.set('G3SYS', '%s/share/geant3' % self.spec.prefix)
