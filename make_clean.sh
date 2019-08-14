@@ -39,7 +39,7 @@ main() {
 
   source $SIMPATH/scripts/package_versions.sh
   source $SIMPATH/scripts/functions.sh
-  echo "Check if all variables are properly defined in config.cache."
+  echo "Checking if all variables are properly defined in config.cache..."
   check_variables
   echo "All variables are properly defined in config.cache."
 
@@ -561,16 +561,25 @@ clean_DDS() {
    fi
    if [ "$rm_installed_files" = "true" ]; then
      echo "Remove installed files from package DDS"
-     if [ -e $SIMPATH_INSTALL/bin/dds-server ]; then
+     if [ -e $SIMPATH_INSTALL/bin/dds-commander ]; then
+       rm -rf $SIMPATH_INSTALL/bin/private
+       rm -rf $SIMPATH_INSTALL/bin/wn_bins
        rm -f $SIMPATH_INSTALL/bin/dds*
+       rm -f $SIMPATH_INSTALL/etc/DDSWorker.sh.in
+       rm -f $SIMPATH_INSTALL/etc/version
+       rm -rf $SIMPATH_INSTALL/include/DDS
        rm -f $SIMPATH_INSTALL/lib/libdds*
-       rm -f $SIMPATH_INSTALL/include/dds*
-       rm -f $SIMPATH_INSTALL/DDS/DDS_env.sh
-       rm -rf $SIMPATH_INSTALL/DDS
-       rm -rf $SIMPATH_INSTALL/plugins
+       rm -f $SIMPATH_INSTALL/lib/libpipe_log_engine
+       rm -rf $SIMPATH_INSTALL/lib/cmake/DDS*
+       rm -rf $SIMPATH_INSTALL/plugins/dds*
+       rm -f $SIMPATH_INSTALL/share/topology.xsd
+       rm -rf $SIMPATH_INSTALL/tests/
+       rm -rf $SIMPATH_INSTALL/tutorials/
+       rm -f $SIMPATH_INSTALL/DDS_env.sh
+       rm -f $SIMPATH_INSTALL/LICENSE
+       rm -f $SIMPATH_INSTALL/ReleaseNotes.md
      fi
    fi
-
 }
 
 clean_asiofi() {
@@ -588,7 +597,6 @@ clean_asiofi() {
        rm -rf $SIMPATH_INSTALL/share/asiofi
      fi
    fi
-
 }
 
 clean_msgpack() {
