@@ -19,6 +19,7 @@ then
   fi
   cd build
   BOOST_ROOT=$SIMPATH_INSTALL cmake -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL -C ../BuildSetup.cmake ../
+  $MAKE_command -j$number_of_processes
   $MAKE_command -j$number_of_processes wn_bin
   $MAKE_command -j$number_of_processes install
 fi
