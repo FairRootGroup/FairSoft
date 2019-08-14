@@ -144,6 +144,7 @@ then
     done
 else
     install_sim=no
+    build_root6=no
 fi
 
 
@@ -239,6 +240,8 @@ then
                             ;;
        esac
      done
+else
+     build_python=no
 fi
 
 clear
