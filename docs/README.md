@@ -28,6 +28,10 @@ cd (Choose-dir)
 source spack/share/spack/setup-env.sh
 ```
 
+## Add FairSoft repository to spack
+```bash
+spack repo add PATH-TO-FAIRSOFT-SPACK
+```
 
 Depending on your use case, you may want to provide configuration settings common to everyone on your team,
 or you may want to set default behaviors specific to a single user account.
