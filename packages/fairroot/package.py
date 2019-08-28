@@ -13,8 +13,8 @@ class Fairroot(CMakePackage):
 
     # Development versions
     version('dev', branch='dev')
-    version('RC_v18.2.0', branch='RC_v18.2.0')
 
+    version('18.2.0', 'f523c8607415962258fa2bb950ea4cd6')
     version('18.0.6', '822902c2fc879eab82fca47eccb14259')
 
     variant('cxxstd',
@@ -26,8 +26,8 @@ class Fairroot(CMakePackage):
     # Dependencies which are same for all versions
     depends_on('gnutls ~guile') #dependency of cmake which has to be build without guile support
     depends_on('pythia6@428-alice1')
-    depends_on('pythia8@8212')
-    depends_on('cmake@3.13.3: +ownlibs')
+    depends_on('pythia8@8240')
+    depends_on('cmake@3.13.4: +ownlibs')
     depends_on('googletest@1.8.1:')
 
     # mesa and libxml2 are dependencies of root which have to be build extra due to the
@@ -49,19 +49,19 @@ class Fairroot(CMakePackage):
     depends_on('fairlogger@1.4.0', when="@dev")
     depends_on('fairmq@1.4.3', when="@dev")
 
-    # Dependencies for RC_v18.2.0
-    depends_on('boost@1.68.0 cxxstd=11 +container', when="@RC_v18.2.0")
+    # Dependencies for v18.2.0
+    depends_on('boost@1.68.0 cxxstd=11 +container', when="@18.2.0")
 
-    depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads~data~clhep', when="@RC_v18.2.0")
+    depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads~data~clhep', when="@18.2.0")
 
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt', when="@RC_v18.2.0")
+    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt', when="@18.2.0")
 
-    depends_on('geant3@v2-7_fairsoft', when="@RC_v18.2.0")
-    depends_on('vgm@4-5', when="@RC_v18.2.0")
-    depends_on('geant4_vmc@4-0-p1', when="@RC_v18.2.0")
+    depends_on('geant3@v2-7_fairsoft', when="@18.2.0")
+    depends_on('vgm@4-5', when="@18.2.0")
+    depends_on('geant4_vmc@4-0-p1', when="@18.2.0")
 
-    depends_on('fairlogger@1.4.0', when="@RC_v18.2.0")
-    depends_on('fairmq@1.4.3', when="@RC_v18.2.0")
+    depends_on('fairlogger@1.4.0', when="@18.2.0")
+    depends_on('fairmq@1.4.3', when="@18.2.0")
 
     # Dependencies for v18.0.6
     depends_on('boost@1.67.0 cxxstd=11', when="@18.0.6")
@@ -84,8 +84,8 @@ class Fairroot(CMakePackage):
     patch('CMake.patch', level=0, when="@18.0.6")
 
     def setup_environment(self, spack_env, run_env):
-        stdversion=('-std=c++%s' % self.spack.cxxstd)
-        spack_env.append_flags('CXXFLAGS', '-std=c++%s' % self.spack.cxxstd)
+        stdversion=('-std=c++%s' % self.spec.variants['cxxstd'].value)
+        spack_env.append_flags('CXXFLAGS', '-std=c++%s' % self.spec.variants['cxxstd'].value)
 
     def cmake_args(self):
         spec = self.spec
