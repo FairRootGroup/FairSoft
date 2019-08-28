@@ -48,7 +48,7 @@ class Fairsoft(Package):
     depends_on('boost@1.67.0 cxxstd=11')
 
     depends_on('pythia6@428-alice1')
-    depends_on('pythia8@8212')
+    depends_on('pythia8@8240')
 
     depends_on('geant4@10.04.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads+data')
 
