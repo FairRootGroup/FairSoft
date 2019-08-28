@@ -33,9 +33,12 @@ class Pythia8(AutotoolsPackage):
     homepage = "http://home.thep.lu.se/~torbjorn/Pythia.html"
     url      = "http://home.thep.lu.se/~torbjorn/pythia8/pythia8212.tgz"
 
+    version('8240', '1ef981f813d41b97579bbd4a9202bef4')
     version('8235', 'eed56d357dc91df4571c2a65d60f1af5')
     version('8230', '5362429333f43bd1f7621a599bae5a24')
     version('8212', '0886d1b2827d8f0cd2ae69b925045f40')
+
+    depends_on('hepmc@2.06.09 length=CM momentum=GEV', when="@8240")
 
     depends_on('hepmc@2.06.09 length=CM momentum=GEV', when="@8212")
 

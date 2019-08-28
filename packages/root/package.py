@@ -248,7 +248,7 @@ class Root(CMakePackage):
     depends_on('openssl', when='+davix')  # Also with davix
     depends_on('postgresql', when='+postgres')
     depends_on('pythia6',  when='+pythia6')
-    depends_on('pythia8@8212',  when='+pythia8') # - not supported on Spack
+    depends_on('pythia8@8240',  when='+pythia8') # - not supported on Spack
     depends_on('python@2.7:',     when='+python', type=('build', 'run'))
     depends_on('r',         when='+r', type=('build', 'run'))
     depends_on('r-cpp',     when='+r', type=('build', 'run'))
