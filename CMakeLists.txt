@@ -11,6 +11,7 @@ endif()
 
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 cmake_policy(VERSION 3.11...3.15)
+enable_testing()
 
 project(FairSoft LANGUAGES C CXX Fortran)
 set(FairSoft_VERSION jun19p1)
@@ -54,6 +55,13 @@ if(BUILD_METHOD STREQUAL spack)
 
   # Test #######################################################################
   # TODO add_test(...) specific to spack build
+# set(SPACK_DIR $ENV{SPACK_DIR})
+# set(FAIRROOT_VERSION $ENV{FAIRROOT_VERSION})
+# set(SPACK_EXTRA_FLAGS $ENV{SPACK_EXTRA_FLAGS})
+#
+# configure_file(${CMAKE_SOURCE_DIR}/test/cmaketest.sh.in ${CMAKE_BINARY_DIR}/test/cmaketest.sh)
+# add_test(NAME build_fairroot_spack COMMAND ${CMAKE_BINARY_DIR}/test/cmaketest.sh)
+# set_tests_properties(build_fairroot_spack PROPERTIES TIMEOUT 14400)
 elseif(BUILD_METHOD STREQUAL legacy)
   # LEGACY MODE ################################################################
 
