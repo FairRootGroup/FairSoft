@@ -14,7 +14,7 @@
      debugstring=""
    fi
 
-   XROOTD="-Dxrootd=OFF -Dbuiltin_xrootd=OFF"
+   XROOTD="-Dxrootd=OFF -Dbuiltin_xrootd=ON"
    ROOFIT="-Droofit=ON"
 
    OPENGL=" "
@@ -51,7 +51,7 @@
      prefix_string="-DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL"
 
      cmake ../ -Dsoversion=ON $PYTHONBUILD $XROOTD  $ROOFIT \
-                    -Dminuit2=ON  -Dgdml=ON -Dxml=ON -Dbuiltin_xrootd=ON \
+                    -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
                     -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
                     -Dbuiltin-freetype=ON $OPENGL \
                     -Dasimage=ON \
