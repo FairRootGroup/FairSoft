@@ -52,6 +52,9 @@ then
   fi
   echo "Configure Root .........................................." | tee -a $logfile
 
+  # patch XRootD - installation of binary files and GCC 9 support
+  mypatch ../root6_16_xrootd.patch
+
   cd build_for_fair/
   . rootconfig.sh
 
