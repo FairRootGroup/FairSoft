@@ -1,14 +1,18 @@
 --- cmake/modules/SearchInstalledSoftware.cmake
 +++ cmake/modules/SearchInstalledSoftware.cmake
-@@ -889,6 +889,7 @@
+@@ -889,6 +889,11 @@
    string(REPLACE "-W " "" __cxxflags "${__cxxflags}")          # Otherwise it produces many warnings
    string(REPLACE "-Wshadow" "" __cxxflags "${__cxxflags}")          # Otherwise it produces many warnings
    string(REPLACE "-Woverloaded-virtual" "" __cxxflags "${__cxxflags}")  # Otherwise it produces manywarnings  
-+  string(APPEND __cxxflags " -Wno-error=deprecated-copy")  # GCC 9 compilation correction
++  if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "9")
++      string(APPEND __cxxflags " -Wno-error=deprecated-copy")  # GCC 9 compilation correction
++    endif()
++  endif()
    set(XROOTD_LIBRARIES ${XROOTD_ROOTDIR}/${_LIBDIR_DEFAULT}/libXrdUtils${CMAKE_SHARED_LIBRARY_SUFFIX}
                         ${XROOTD_ROOTDIR}/${_LIBDIR_DEFAULT}/libXrdClient${CMAKE_SHARED_LIBRARY_SUFFIX}
                         ${XROOTD_ROOTDIR}/${_LIBDIR_DEFAULT}/libXrdCl${CMAKE_SHARED_LIBRARY_SUFFIX})
-@@ -906,8 +907,10 @@
+@@ -906,8 +911,10 @@
                 -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
                 -DENABLE_PYTHON=OFF
                 -DENABLE_CEPH=OFF
@@ -19,7 +23,7 @@
      LOG_DOWNLOAD 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
      BUILD_BYPRODUCTS ${XROOTD_LIBRARIES}
    )
-@@ -916,6 +919,7 @@
+@@ -916,6 +923,7 @@
    set(XROOTD_NOMAIN TRUE)
    set(XROOTD_CFLAGS "-DROOTXRDVERS=${XROOTD_VERSIONNUM}")
    install(DIRECTORY ${XROOTD_ROOTDIR}/${_LIBDIR_DEFAULT}/ DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT libraries FILES_MATCHING PATTERN "libXrd*")
