@@ -1,0 +1,11 @@
+#!/bin/bash
+
+unset DART_TEST_FROM_DART
+unset DASHBOARD_TEST_FROM_CTEST
+unset ctest_model
+
+cd @SPACK_DIR@
+source ./share/spack/setup-env.sh
+env
+spack install @SPACK_EXTRA_FLAGS@ fairroot@@FAIRROOT_VERSION@
+
