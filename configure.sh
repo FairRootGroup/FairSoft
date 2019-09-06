@@ -31,7 +31,6 @@ unset SAPDB
 unset RFIO
 unset CASTOR
 unset GFAL
-unset GSL
 unset HDFS
 unset PYTHIA6
 unset PYTHIA8
@@ -207,13 +206,6 @@ fi
 if [ "$check" = "1" ];
 then
   source scripts/install_gtest.sh
-fi
-
-############ GNU scientific library ###############################
-
-if [ "$check" = "1" ];
-then
-  source scripts/install_gsl.sh
 fi
 
 ##################### Vc #############################################
