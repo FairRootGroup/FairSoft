@@ -113,27 +113,6 @@ clean_gtest() {
 }
 
 
-clean_gsl() {
-  echo "Remove temporary files from package gsl"
-  if [ -e $SIMPATH/basics/gsl ]; then
-   cd $SIMPATH/basics/gsl
-    make clean
-  fi
-
-  if [ "$rm_installed_files" = "true" ]; then
-    echo "Remove installed files from package gsl"
-    if [ -e $SIMPATH_INSTALL/bin/gsl-config ]; then
-      cd $SIMPATH/basics/gsl
-      make uninstall
-      cd $SIMPATH_INSTALL/lib
-      rm -f libgsl*.so
-      cd $SIMPATH_INSTALL/share/info
-      rm -f dir
-    fi
-  fi
-
-  clean_root
-}
 
 clean_icu() {
   if [ "$compiler" = "Clang" -a "$platform" = "linux" ]; then
@@ -635,7 +614,7 @@ clean_nanomsg() {
 
 
 clean_all() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi msgpack"
+  valid_packages="cmake gtest icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi msgpack"
 
   for pack in $valid_packages
   do
@@ -644,7 +623,7 @@ clean_all() {
 }
 
 check_package_exist() {
-  valid_packages="cmake gtest gsl icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi msgpack"
+  valid_packages="cmake gtest icu boost pythia6 hepmc pythia8 xercesc mesa geant4 xrootd root g4py pluto geant3 vgm geant4_vmc millipede zeromq protobuf nanomsg fairlogger DDS fairmq asiofi msgpack"
 
   if [ "$1" = "all" ]; then
     return
