@@ -53,7 +53,7 @@
      cmake ../ -Dsoversion=ON $PYTHONBUILD $XROOTD  $ROOFIT \
                     -Dminuit2=ON  -Dgdml=ON -Dxml=ON \
                     -Dbuiltin-ftgl=ON -Dbuiltin-glew=ON \
-                    -Dbuiltin-freetype=ON $OPENGL \
+                    -Dbuiltin-freetype=ON -Dbuiltin_gsl=ON  $OPENGL \
                     -Dasimage=ON \
                     -DPYTHIA6_DIR=$SIMPATH_INSTALL \
                     -DPYTHIA8_DIR=$SIMPATH_INSTALL \
@@ -65,7 +65,6 @@
                     -Ddavix=OFF \
                      $VC \
                     -Dhttp=ON \
-                    -DGSL_DIR=$SIMPATH_INSTALL \
                     -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC \
                     -DCMAKE_F_COMPILER=$FC $root_comp_flag -Dgnuinstall=ON \
                     $prefix_string $inc_string  $etc_string \
