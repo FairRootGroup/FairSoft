@@ -1,0 +1,11 @@
+compiler=@LEGACY_COMPILER@
+debug=@LEGACY_DEBUG@
+optimize=@LEGACY_OPTIMIZE@
+geant4_download_install_data_automatic=@LEGACY_GEANT4_DATA_DOWNLOAD@
+geant4_install_data_from_dir=@LEGACY_GEANT4_DATA_FROM_DIR@
+geant4mt=@LEGACY_GEANT4_MT@
+build_root6=yes
+build_python=@LEGACY_PYTHON@
+install_sim=@LEGACY_SIM@
+build_MQOnly=@LEGACY_FAIRMQ_ONLY@
+SIMPATH_INSTALL=@CMAKE_INSTALL_PREFIX@
