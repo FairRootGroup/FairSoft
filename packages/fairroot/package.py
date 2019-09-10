@@ -40,7 +40,7 @@ class Fairroot(CMakePackage):
 
     depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads~data~clhep', when="@dev")
 
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt', when="@dev")
+    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+python~vdt', when="@dev")
 
     depends_on('geant3@v2-7_fairsoft', when="@dev")
     depends_on('vgm@4-5', when="@dev")
@@ -54,7 +54,7 @@ class Fairroot(CMakePackage):
 
     depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads~data~clhep', when="@18.2.1")
 
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt', when="@18.2.1")
+    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+python~vdt', when="@18.2.1")
 
     depends_on('geant3@v2-7_fairsoft', when="@18.2.1")
     depends_on('vgm@4-5', when="@18.2.1")
