@@ -13,8 +13,6 @@ git clone https://github.com/FairRootGroup/spack
 cd spack
 cd (Choose-dir)
 git clone https://github.com/FairRootGroup/FairSoft-Spack
-git checkout may18
-cd (Choose-dir)
 ```
 
 ## Setup your Spack environment
@@ -111,7 +109,7 @@ arch=linux-ubuntu16.04-x86_64: describes the system for which this package shoul
 which is a 64bit version Ubuntu Linux 16.04. And finally it is described wehere the
 installed package is found, in this case it is /usr.
 
-### Use needed system package on macosx 10.12
+### Use needed system package on macOS 10.12
 
 We encountered compilation problems on macosx 10.12. At least on this system it was impossible to
 compile the mesa package which provides the OpenGL support. The problem with python was that
@@ -233,3 +231,6 @@ After the installation of the FairRoot package the installation directory contai
 
 To properly use the Spack installation of FairRoot on has to setup a runtime environment. Also here
 Spack helps to do an easy setup of this runtime environment.
+
+spack view --verbose symlink -i (Choose-dir) fairroot
+
