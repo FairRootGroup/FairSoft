@@ -23,6 +23,7 @@ then
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_CXX_COMPILER=$CXX \
           -DCMAKE_C_COMPILER=$CC \
+          -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
           ..
 
     make -j$number_of_processes
