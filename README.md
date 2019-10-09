@@ -9,7 +9,7 @@ cd FairSoft
 git checkout cmake_build
 mkdir build install
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=../install
+cmake -DCMAKE_INSTALL_PREFIX=../install ..
 make
 make install
 ```
