@@ -1,0 +1,71 @@
+macro(SetFairSoftFlags)
+
+  # Check if all needed compileres are installed
+  If(CMAKE_CXX_COMPILER AND CMAKE_C_COMPILER AND CMAKE_Fortran_COMPILER)
+    If (CMAKE_COMPILER_IS_GNUCC)
+      Execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
+                      OUTPUT_VARIABLE GCC_VERSION)
+      If (GCC_VERSION VERSION_GREATER 4.8 OR GCC_VERSION VERSION_EQUAL 4.8)
+        Message(STATUS "Found GCC Version >= 4.8")
+        Message(STATUS "Found all necessary compilers.")
+        Set(ALL_COMPILER_FOUND TRUE)
+      Else()
+        Message(WARNING "Found GCC Version < 4.8")
+        Message(WARNING "At least GCC 4.8 is needed.")
+      EndIf()
+    ElseIf("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+      Execute_process(COMMAND ${CMAKE_C_COMPILER} --version
+                      COMMAND grep version
+                      OUTPUT_VARIABLE CLANG_VERSION_INFO
+      )
+      If(CLANG_VERSION_INFO MATCHES "^.*based on LLVM.*")
+        String(REGEX REPLACE "^.*based on LLVM[ ]([0-9]+)\\.[0-9]+.*" "\\1" CLANG_MAJOR "${CLANG_VERSION_INFO}")
+        String(REGEX REPLACE "^.*based on LLVM[ ][0-9]+\\.([0-9]+).*" "\\1" CLANG_MINOR "${CLANG_VERSION_INFO}")
+      Else()
+        String(REGEX REPLACE "^.*[ ]version[ ]([0-9]+)\\.[0-9]+.*" "\\1" CLANG_MAJOR "${CLANG_VERSION_INFO}")
+        String(REGEX REPLACE "^.*[ ]version[ ][0-9]+\\.([0-9]+).*" "\\1" CLANG_MINOR "${CLANG_VERSION_INFO}")
+      EndIf()
+      Set(CLANG_VERSION "${CLANG_MAJOR}.${CLANG_MINOR}")
+      If (CLANG_VERSION VERSION_GREATER 3.4 OR CLANG_VERSION VERSION_EQUAL 3.4)
+        Message(STATUS "Found Clang Version >= 3.4")
+        Message(STATUS "Found all necessary compilers.")
+        Set(ALL_COMPILER_FOUND TRUE)
+      Else()
+        Message(WARNING "Found Clang Version < 3.4")
+        Message(WARNING "At least Clang 3.4 is needed.")
+      EndIf()
+    ElseIf(${CMAKE_CXX_COMPILER_ID} STREQUAL "Intel")
+      Message(STATUS "Found ${CMAKE_CXX_COMPILER} version ${CMAKE_CXX_COMPILER_VERSION}")
+      if (${CMAKE_CXX_COMPILER_VERSION} VERSION_GREATER 15.0 OR ${CMAKE_CXX_COMPILER_VERSION} VERSION_EQUAL 15.0)
+        Message(STATUS "Found all necessary compilers.")
+        Set(ALL_COMPILER_FOUND TRUE)
+      Else()
+        Message(WARNING "At lease icc 15.0 is needed")
+      EndIf()
+    EndIf()
+    Get_Filename_Component(_FC ${CMAKE_Fortran_COMPILER} NAME)
+  EndIf()
+
+Include(CheckCXXCompilerFlag)
+
+#---Check for cxx11
+CHECK_CXX_COMPILER_FLAG("-std=c++11" HAS_CXX11)
+If(HAS_CXX11)
+  Message(STATUS "Current compiler does suppport -std=c++11 option.")
+  Set(FAIRSOFT_CXX_FLAGS "${FAIRSOFT_CXX_FLAGS} -std=c++11")
+Else()
+  Message(STATUS "Current compiler does not suppport -std=c++11 option.")
+EndIf()
+
+#---Check for libc++
+CHECK_CXX_COMPILER_FLAG("-std=c++11 -stdlib=libc++" HAS_LIBCXX)
+If(HAS_LIBCXX)
+  Message(STATUS "Current compiler does suppport -stdlib=libc++")
+  Set(FAIRSOFT_CXX_FLAGS "${FAIRSOFT_CXX_FLAGS} -stdlib=libc++")
+  String(STRIP ${FAIRSOFT_CXX_FLAGS} FAIRSOFT_CXX_FLAGS)
+Else()
+  Message(STATUS "Current compiler does not suppport -stdlib=libc++")
+EndIf()
+
+endmacro()
+
