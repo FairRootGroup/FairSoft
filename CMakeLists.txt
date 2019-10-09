@@ -42,6 +42,9 @@ message(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
 if(BUILD_METHOD STREQUAL spack)
   # SPACK MODE #################################################################
 
+  Include(cmake/SetFairSoftFlags.cmake)
+  SetFairSoftFlags()
+
   # Configure ##################################################################
   # TODO git submodule update --init
   # TODO setup environment, maybe generate module file?
@@ -69,10 +72,13 @@ if(BUILD_METHOD STREQUAL spack)
   add_custom_target(SpackBuild ALL ${CMAKE_SOURCE_DIR}/spack/bin/spack install
       fairroot@18.2.1)
 
+  Configure_File(${CMAKE_SOURCE_DIR}/cmake/fairsoft-config.in
+      ${CMAKE_INSTALL_PREFIX}/bin/fairsoft-config @ONLY)
+
   # Install ####################################################################
   # TODO spack commands to create spack env via install(SCRIPT ...)
-  install(CODE "execute_process(COMMAND ./spack/bin/spack view --verbose
-  symlink -i ${CMAKE_INSTALL_PREFIX} fairroot WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
+  install(CODE "execute_process(COMMAND ./spack/bin/spack view --verbose \
+symlink -i ${CMAKE_INSTALL_PREFIX} fairroot WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 
   # Test #######################################################################
   # TODO add_test(...) specific to spack build
