@@ -46,9 +46,35 @@ if(BUILD_METHOD STREQUAL spack)
   # TODO git submodule update --init
   # TODO setup environment, maybe generate module file?
   # TODO generate spack configuration
+  if(EXISTS ${CMAKE_SOURCE_DIR}/spack)
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule foreach git pull origin
+        develop WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+  else()
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+  endif()
+
+  file(WRITE $ENV{HOME}/.spack/config.yaml "config:\n\
+  install_tree: ${CMAKE_INSTALL_PREFIX}/opt/spack\n\
+  module_roots:\n\
+    tcl: ${CMAKE_INSTALL_PREFIX}/share/spack/modules\n\
+    lmod: ${CMAKE_INSTALL_PREFIX}/share/spack/lmod\n\
+    dotkit: ${CMAKE_INSTALL_PREFIX}/share/spack/dotkit")
+
+  execute_process(COMMAND ./spack/bin/spack repo list WORKING_DIRECTORY
+      ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE SPACK_REPOS)
+  string(FIND ${SPACK_REPOS} "${CMAKE_SOURCE_DIR}\n" POS_FOUND)
+  Message(${SPACK_REPOS})
+  Message(${POS_FOUND})
+  if(${POS_FOUND} EQUAL -1)
+    execute_process(COMMAND ./spack/bin/spack repo add ${CMAKE_SOURCE_DIR}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+  endif()
 
   # Build ######################################################################
   # TODO add_custom_target(SpackBuild ALL spack install)
+  add_custom_target(SpackBuild ALL ${CMAKE_SOURCE_DIR}/spack/bin/spack install
+      fairroot@18.2.1)
 
   # Install ####################################################################
   # TODO spack commands to create spack env via install(SCRIPT ...)
