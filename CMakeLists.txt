@@ -46,13 +46,8 @@ if(BUILD_METHOD STREQUAL spack)
   # TODO git submodule update --init
   # TODO setup environment, maybe generate module file?
   # TODO generate spack configuration
-  if(EXISTS ${CMAKE_SOURCE_DIR}/spack)
-    execute_process(COMMAND ${GIT_EXECUTABLE} submodule foreach git pull origin
-        develop WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-  else()
-    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-  endif()
+  execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init
+      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
   file(WRITE $ENV{HOME}/.spack/config.yaml "config:\n\
   install_tree: ${CMAKE_INSTALL_PREFIX}/opt/spack\n\
