@@ -59,8 +59,6 @@ if(BUILD_METHOD STREQUAL spack)
   execute_process(COMMAND ./spack/bin/spack repo list WORKING_DIRECTORY
       ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE SPACK_REPOS)
   string(FIND ${SPACK_REPOS} "${CMAKE_SOURCE_DIR}\n" POS_FOUND)
-  Message(${SPACK_REPOS})
-  Message(${POS_FOUND})
   if(${POS_FOUND} EQUAL -1)
     execute_process(COMMAND ./spack/bin/spack repo add ${CMAKE_SOURCE_DIR}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -73,6 +71,8 @@ if(BUILD_METHOD STREQUAL spack)
 
   # Install ####################################################################
   # TODO spack commands to create spack env via install(SCRIPT ...)
+  install(CODE "execute_process(COMMAND ./spack/bin/spack view --verbose
+  symlink -i ${CMAKE_INSTALL_PREFIX} fairroot WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 
   # Test #######################################################################
   # TODO add_test(...) specific to spack build
