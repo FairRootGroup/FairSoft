@@ -59,6 +59,8 @@ if(BUILD_METHOD STREQUAL spack)
     execute_process(COMMAND "mkdir ${CMAKE_BINARY_DIR}/.spack")
   endif()
 
+  execute_process(COMMAND ./spack/bin/spack compilers WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
   file(WRITE ${CMAKE_BINARY_DIR}/.spack/config.yaml "config:\n\
   install_tree: ${CMAKE_INSTALL_PREFIX}/opt/spack\n\
   module_roots:\n\
