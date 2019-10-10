@@ -49,16 +49,46 @@ if(BUILD_METHOD STREQUAL spack)
   # TODO git submodule update --init
   # TODO setup environment, maybe generate module file?
   # TODO generate spack configuration
+
+  # Update spack submodule
   execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
-  file(WRITE $ENV{HOME}/.spack/config.yaml "config:\n\
+  # Change default location for packages and module files
+  if(NOT EXISTS ${CMAKE_BINARY_DIR}/.spack)
+    execute_process(COMMAND "mkdir ${CMAKE_BINARY_DIR}/.spack")
+  endif()
+
+  file(WRITE ${CMAKE_BINARY_DIR}/.spack/config.yaml "config:\n\
   install_tree: ${CMAKE_INSTALL_PREFIX}/opt/spack\n\
   module_roots:\n\
     tcl: ${CMAKE_INSTALL_PREFIX}/share/spack/modules\n\
     lmod: ${CMAKE_INSTALL_PREFIX}/share/spack/lmod\n\
     dotkit: ${CMAKE_INSTALL_PREFIX}/share/spack/dotkit")
 
+  # If on macOS - take libiconv from system
+  if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    execute_process(COMMAND ./spack/bin/spack compiler info clang WORKING_DIRECTORY
+        ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE SPACK_CLANG_INFO_STRING
+        ERROR_VARIABLE SPACK_CLANG_INFO_ERROR)
+    if("${SPACK_CLANG_INFO_STRING}" STREQUAL "")
+      Message(FATAL_ERROR "spack could not find clang compiler. ${SPACK_CLANG_INFO_ERROR}")
+    endif()
+    string(REPLACE "\n" ";" SPACK_CLANG_INFO_LIST ${SPACK_CLANG_INFO_STRING})
+    list(GET SPACK_CLANG_INFO_LIST 0 SPACK_CLANG_INFO_T)
+    string(REPLACE ":" "" SPACK_CLANG_INFO ${SPACK_CLANG_INFO_T})
+
+    if(NOT EXISTS ${CMAKE_BINARY_DIR}/.spack/darwin)
+      execute_process(COMMAND "mkdir ${CMAKE_BINARY_DIR}/.spack/darwin")
+    endif()
+
+    file(WRITE ${CMAKE_BINARY_DIR}/.spack/darwin/packages.yaml "packages:\n\
+  libiconv:\n\
+    paths:\n\
+      libiconv@1.16%${SPACK_CLANG_INFO} arch=darwin-macos-x86_64: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr")
+  endif()
+
+  # If not yet done - add fairsoft repo to spack
   execute_process(COMMAND ./spack/bin/spack repo list WORKING_DIRECTORY
       ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE SPACK_REPOS)
   string(FIND ${SPACK_REPOS} "${CMAKE_SOURCE_DIR}\n" POS_FOUND)
@@ -69,16 +99,23 @@ if(BUILD_METHOD STREQUAL spack)
 
   # Build ######################################################################
   # TODO add_custom_target(SpackBuild ALL spack install)
-  add_custom_target(SpackBuild ALL ${CMAKE_SOURCE_DIR}/spack/bin/spack install
+
+  # Install fairroot and dependencies
+  add_custom_target(SpackBuild ALL ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+      ${CMAKE_BINARY_DIR}/.spack install
       fairroot@18.2.1)
 
+  # Generate fairsoft-config script
   Configure_File(${CMAKE_SOURCE_DIR}/cmake/fairsoft-config.in
-      ${CMAKE_INSTALL_PREFIX}/bin/fairsoft-config @ONLY)
+      ${CMAKE_INSTALL_PREFIX}/fairsoft/bin/fairsoft-config @ONLY)
 
   # Install ####################################################################
   # TODO spack commands to create spack env via install(SCRIPT ...)
-  install(CODE "execute_process(COMMAND ./spack/bin/spack view --verbose \
-symlink -i ${CMAKE_INSTALL_PREFIX} fairroot WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
+
+  # Put links to all packages into one installation folder
+  install(CODE "execute_process(COMMAND ./spack/bin/spack -C \
+${CMAKE_BINARY_DIR}/.spack view --verbose \
+symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft fairroot WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 
   # Test #######################################################################
   # TODO add_test(...) specific to spack build
