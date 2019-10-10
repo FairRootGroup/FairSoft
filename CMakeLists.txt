@@ -87,7 +87,7 @@ if(BUILD_METHOD STREQUAL spack)
     file(WRITE ${CMAKE_BINARY_DIR}/.spack/darwin/packages.yaml "packages:\n\
   libiconv:\n\
     paths:\n\
-      libiconv@1.16%${SPACK_CLANG_INFO} arch=darwin-macos-x86_64: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr")
+      libiconv@1.16%${SPACK_CLANG_INFO} arch=darwin-macos-x86_64: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr")
   endif()
 
   # If not yet done - add fairsoft repo to spack
