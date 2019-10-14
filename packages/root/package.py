@@ -193,7 +193,7 @@ class Root(CMakePackage):
 
     depends_on('blas')
 #    depends_on('freetype')
-    depends_on('jpeg')
+#    depends_on('jpeg')
     depends_on('libice')
     depends_on('libpng')
     depends_on('lz4', when='@6.13.02:')  # See cmake_args, below.

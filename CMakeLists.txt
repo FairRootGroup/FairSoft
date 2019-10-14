@@ -84,10 +84,27 @@ if(BUILD_METHOD STREQUAL spack)
       execute_process(COMMAND "mkdir ${CMAKE_BINARY_DIR}/.spack/darwin")
     endif()
 
-    file(WRITE ${CMAKE_BINARY_DIR}/.spack/darwin/packages.yaml "packages:\n\
+    execute_process(COMMAND sw_vers OUTPUT_VARIABLE MACOS_VERSION)
+    string(REPLACE "\n" ";" MACOS_VERSION ${MACOS_VERSION})
+    list(GET MACOS_VERSION 1 MACOS_VERSION)
+    string(REGEX MATCH "[0-9][0-9].[0-9][0-9]+" MACOS_VERSION ${MACOS_VERSION})
+    Message(STATUS "macOS version ${MACOS_VERSION}")
+    if(${MACOS_VERSION} STREQUAL "10.15")
+      file(WRITE ${CMAKE_BINARY_DIR}/.spack/darwin/packages.yaml "packages:\n\
   libiconv:\n\
     paths:\n\
       libiconv@1.16%${SPACK_CLANG_INFO} arch=darwin-macos-x86_64: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr")
+    elseif(${MACOS_VERSION} STREQUAL "10.14")
+      file(WRITE ${CMAKE_BINARY_DIR}/.spack/darwin/packages.yaml "packages:\n\
+  libiconv:\n\
+    paths:\n\
+      libiconv@1.16%${SPACK_CLANG_INFO} arch=darwin-mojave-x86_64: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr\n\
+  sqlite:\n\
+    paths:\n\
+      sqlite@3.28.0%${SPACK_CLANG_INFO}+fts~functions arch=darwin-mojave-x86_64: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr")
+    else()
+      Message(WARNING "FairSoft was not tested on macOS ${MACOS_VERSION}.")
+    endif()
   endif()
 
   # If not yet done - add fairsoft repo to spack
