@@ -17,9 +17,6 @@ project(FairSoft LANGUAGES C CXX Fortran)
 set(FairSoft_VERSION jun19p1)
 
 find_package(Git)
-if(GIT_FOUND)
-
-endif()
 
 # Options ######################################################################
 if(NOT DEFINED BUILD_METHOD)
@@ -51,8 +48,10 @@ if(BUILD_METHOD STREQUAL spack)
   # TODO generate spack configuration
 
   # Update spack submodule
-  execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init
+  if(GIT_FOUND)
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+  endif()
 
   # Change default location for packages and module files
   if(NOT EXISTS ${CMAKE_BINARY_DIR}/.spack)
