@@ -12,11 +12,11 @@
 # Please report bugs to https://github.com/FairRootGroup/FairSoft/issues. Thx!
 
 import curses
-from curses import panel
 import glob
 import os
 import subprocess
 from sys import platform
+import sys
 
 class Question:
     def __init__(self, parent, question, answers):
@@ -25,17 +25,18 @@ class Question:
         self.answers = answers
         self.selected = 1
         self.editMode = False
+        self.default = 1
 
     def draw(self, y, x, selected):
-        self.parent.addstr(y, x, "%s: %s" % (self.question, self.answer()),
+        self.parent.addstr(y, x, "%s: %s" % (self.question, self.answer("display")),
             curses.A_REVERSE if selected else curses.A_NORMAL)
         return y + 1, x
 
-    def answer(self):
-        answer = self.answers[self.selected - 1]
-        if isinstance(answer, dict):
-            return answer["short"]
-        return answer
+    def answer(self, key):
+        res = self.answers[self.selected - 1]
+        if isinstance(res, dict):
+            res = res[key]
+        return res
 
     def edit(self):
         self.selected = (self.selected + 1) % len(self.answers)
@@ -58,15 +59,15 @@ class PathQuestion(Question):
         self.text = default
         self.cursor = [0, 0]
 
-    def answer(self):
+    def answer(self, key):
         return self.text
 
     def draw(self, y, x, selected):
         if self.editMode:
             q = "%s: " % self.question
             self.parent.addstr(y, x, q, curses.A_REVERSE if selected else curses.A_NORMAL)
-            self.parent.addstr(y, x + len(q), self.answer())
-            self.cursor = [y, x + len(q) + len(self.answer())]
+            self.parent.addstr(y, x + len(q), self.answer("value"))
+            self.cursor = [y, x + len(q) + len(self.answer("value"))]
             return (y + 1, x)
         else:
             return Question.draw(self, y, x, selected)
@@ -134,11 +135,15 @@ class Application:
 
             defaultCompilers = []
             if platform.startswith('darwin'):
-                defaultCompilers = ["Clang (macOS)", "GCC (Linux)"]
+                defaultCompilers = [{"display": "Clang (macOS)", "value": "Clang"},
+                                    {"display": "GCC (Linux)", "value": "gcc"}]
             else:
-                defaultCompilers = ["GCC (Linux)", "Clang (macOS)"]
+                defaultCompilers = [{"display": "GCC (Linux)", "value": "gcc"},
+                                    {"display": "Clang (macOS)", "value": "Clang"}]
             self.compilerQuestion = Question(self.screen, "Compiler",
-                defaultCompilers + ["Intel Compiler (Linux)", "CC (Solaris)", "Portland Compiler"])
+                defaultCompilers + [{"display": "Intel Compiler (Linux)", "value": "intel"},
+                                    {"display": "CC (Solaris)", "value": "CC"},
+                                    {"display": "Portland Compiler", "value": "PGI"}])
             self.optimizerQuestion = Question(self.screen, "  Optimized build", ["yes", "no"])
             self.debugQuestion = Question(self.screen, "  Debug Info", ["no", "yes"])
             self.packagesQuestion = Question(self.screen, "Packages",
@@ -147,7 +152,8 @@ class Application:
             self.pythonQuestion = Question(self.screen, "  ROOT/Geant4 Python Bindings", ["yes", "no"])
             self.geant4MtQuestion = Question(self.screen, "  Geant4 Multi-threaded", ["no", "yes"])
             self.geant4DataQuestion = Question(self.screen, "  Geant4 Data Files",
-                ["download", "no", "from <build>/legacy/transport directory"])
+                ["download", "no",
+                 {"display": "from <build>/legacy/transport directory", "value": "directory"}])
             self.buildDirQuestion = PathQuestion(self.screen, "Build Directory", "TODO")
             defaultPrefix = os.path.expandvars("$HOME/fairsoft/" + self.fairsoftVersion)
             self.destinationQuestion = PathQuestion(self.screen, "Install Prefix", defaultPrefix)
@@ -161,10 +167,10 @@ class Application:
             raise
 
     def questions(self):
-        if self.methodQuestion.answer() == "legacy":
+        if self.methodQuestion.answer("value") == "legacy":
             questions =  [self.methodQuestion, self.compilerQuestion, self.optimizerQuestion,
                 self.debugQuestion, self.packagesQuestion]
-            if not self.packagesQuestion.answer().startswith("FairMQ"):
+            if not self.packagesQuestion.answer("display").startswith("FairMQ"):
                 questions += [self.simQuestion, self.pythonQuestion, self.geant4MtQuestion,
                     self.geant4DataQuestion]
             questions += [self.buildDirQuestion, self.destinationQuestion]
@@ -195,7 +201,7 @@ class Application:
         if self.showControl:
             controls += ["<Up>/<Down>/<Tab>: Select",
                 "<Enter>/<Space>: " + self.selectedQuestion().editAction(),
-                "<F5>: Save and exit",
+                "a/<F5>: Apply and Exit",
                 "q/^C: Abort"]
         else:
             controls += self.selectedQuestion().controls() + ["^C: Abort"]
@@ -249,6 +255,16 @@ class Application:
             self.running = False
         elif key == curses.KEY_ENTER or key == 10 or key == 13 or key == ord(' '):
             self.selectedQuestion().edit()
+        elif key == curses.KEY_F5 or key == ord('a'):
+            self.exportToCmake()
+            self.running = False
+
+    def importFromCmake(self, buildDir):
+        self.buildDirQuestion.text = buildDir
+        pass
+
+    def exportToCmake(self):
+        pass
 
     def shutdown(self):
         curses.curs_set(1)
@@ -258,8 +274,16 @@ class Application:
         curses.endwin()
 
 def main():
+    buildDir = os.path.abspath(sys.argv[2] if len(sys.argv) == 2 else "build")
+    try:
+        os.makedirs(buildDir)
+    except OSError as ex:
+        if not ex.errno == 17: # File exists
+            raise ex
+
     try:
         app = Application()
+        app.importFromCmake(buildDir)
         app.run()
         app.shutdown()
     except KeyboardInterrupt:
