@@ -11,27 +11,16 @@ endif()
 
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 cmake_policy(VERSION 3.0...3.15)
-enable_testing()
 
 project(FairSoft LANGUAGES C CXX Fortran)
 set(FairSoft_VERSION jun19p1)
 
 find_package(Git)
 
+include(CTest)
+
 # Options ######################################################################
-if(NOT DEFINED BUILD_METHOD)
-  set(BUILD_METHOD spack)
-endif()
-set(BUILD_METHOD ${BUILD_METHOD} CACHE STRING
-  "Whether to build via legacy shell scripts or to invoke new spack-based build - choices: spack, legacy")
-
-include(cmake/legacy_options.cmake)
-include(cmake/spack_options.cmake)
-
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX "$ENV{HOME}/fairsoft/${FairSoft_VERSION}" CACHE PATH
-    "FairSoft installation prefix" FORCE)
-endif()
+include(cmake/options.cmake)
 
 message(STATUS "FairSoft version: ${FairSoft_VERSION}")
 message(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
@@ -172,6 +161,10 @@ fairsoft WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 # set_tests_properties(build_fairroot_spack PROPERTIES TIMEOUT 14400)
 elseif(BUILD_METHOD STREQUAL legacy)
   # LEGACY MODE ################################################################
+  # Former files in the FairSoft root directory have been moved to /legacy. This
+  # mode copies all those files to the build directory (to support proper
+  # out-of-source builds), generates a config file and invokes the legacy
+  # configure.sh script.
 
   # Configure ##################################################################
   file(COPY legacy DESTINATION ${CMAKE_BINARY_DIR})
@@ -180,16 +173,19 @@ elseif(BUILD_METHOD STREQUAL legacy)
   # Build ######################################################################
   add_custom_target(LegacyBuild ALL
     ./configure.sh generated.conf
+    COMMAND ${CMAKE_COMMAND} -E touch .installed
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/legacy
     COMMENT "Building and installing FairSoft via legacy shell scripts to ${CMAKE_INSTALL_PREFIX}"
     VERBATIM)
 
-  # NO Install #################################################################
+  # Install ####################################################################
+  # We need a dummy install rule to create the global cmake install target
+  install(FILES .installed DESTINATION ${CMAKE_INSTALL_PREFIX})
 
   # Test #######################################################################
   # TODO add_test(...) specific to legacy build
 else()
-  message(FATAL_ERROR "Unknown BUILD_METHOD=${BUILD_METHOD}. Must be either spack or legacy.")
+  message(FATAL_ERROR "Unknown BUILD_METHOD=${BUILD_METHOD}. Must be either spack, or legacy.")
 endif()
 
 # Test #######################################################################

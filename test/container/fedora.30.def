@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: fedora:30
+
+%post
+    dnf -y update
+    dnf -y groupinstall --with-optional "C Development Tools and Libraries"
+    dnf -y install gcc-gfortran wget which git xz patch procps
+    # following packages only needed for legacy install
+    dnf -y install libcurl-devel mesa-libGLU-devel openssl-devel libXft-devel libXpm-devel libXmu-devel python-devel
+    dnf -y clean all

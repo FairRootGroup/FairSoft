@@ -1,19 +1,8 @@
-# FairSoft-Spack
-This holds a set of Spack packages for FAIR software.  It depends
-on Spack and the builtin Spack packages (some of which are overridden
-by this repo)
+# Advanced Installation Guide
 
-## Getting started
+This guide assumes that the user is familiar with Spack. See the [Spack documentation](https://spack.readthedocs.io/en/latest/index.html) if you want to learn more about Spack.
 
-Initial setup like:
-
-```bash
-cd (Choose-dir)
-git clone https://github.com/FairRootGroup/spack
-cd spack
-cd (Choose-dir)
-git clone https://github.com/FairRootGroup/FairSoft-Spack
-```
+TODO Update this guide
 
 ## Setup your Spack environment
 
@@ -202,7 +191,7 @@ To have a look at the complete dependency tree one can use the following command
 spack spec fairroot
 ```
 
-or 
+or
 
 ```bash
 spack spec fairroot@v18.0.6
