@@ -9,8 +9,8 @@ if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
   message(FATAL_ERROR "In-source builds are not supported.")
 endif()
 
-cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
-cmake_policy(VERSION 3.11...3.15)
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_policy(VERSION 3.0...3.15)
 enable_testing()
 
 project(FairSoft LANGUAGES C CXX Fortran)
