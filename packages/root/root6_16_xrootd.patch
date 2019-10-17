@@ -1,5 +1,5 @@
 --- cmake/modules/SearchInstalledSoftware.cmake
-+++ cmake/modules/SearchInstalledSoftware.cmake
++++ cmake/modules/SearchInstalledSoftware.cmake_new
 @@ -889,6 +889,11 @@
    string(REPLACE "-W " "" __cxxflags "${__cxxflags}")          # Otherwise it produces many warnings
    string(REPLACE "-Wshadow" "" __cxxflags "${__cxxflags}")          # Otherwise it produces many warnings
