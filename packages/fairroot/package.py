@@ -23,6 +23,7 @@ class Fairroot(CMakePackage):
             multi=False,
             description='Use the specified C++ standard when building.')
 
+    variant('x', default=True, description='Enable graphical components')
     variant('opengl', default=True, description='Enable opengl support')
 
     # Dependencies which are same for all versions
@@ -44,6 +45,7 @@ class Fairroot(CMakePackage):
 
     depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+python~vdt', when="@dev")
     depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+python~vdt~opengl', when="@dev~opengl")
+    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+python~vdt~x', when="@dev~x")
 
     depends_on('geant3@v2-7_fairsoft', when="@dev")
     depends_on('vgm@4-5', when="@dev")
