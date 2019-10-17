@@ -66,7 +66,8 @@ if(BUILD_METHOD STREQUAL spack)
   module_roots:\n\
     tcl: ${CMAKE_INSTALL_PREFIX}/share/spack/modules\n\
     lmod: ${CMAKE_INSTALL_PREFIX}/share/spack/lmod\n\
-    dotkit: ${CMAKE_INSTALL_PREFIX}/share/spack/dotkit")
+    dotkit: ${CMAKE_INSTALL_PREFIX}/share/spack/dotkit\n\
+  source_cache: ${CMAKE_BINARY_DIR}/var/spack/cache")
 
   # If on macOS - take libiconv from system
   if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
