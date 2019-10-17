@@ -137,6 +137,10 @@ if(BUILD_METHOD STREQUAL spack)
 ${CMAKE_BINARY_DIR}/.spack view --verbose \
 symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft fairroot WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/spack DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+  install(DIRECTORY ${CMAKE_BINARY_DIR}/.spack DESTINATION ${CMAKE_INSTALL_PREFIX})
+
   # Test #######################################################################
   # TODO add_test(...) specific to spack build
 # set(SPACK_DIR $ENV{SPACK_DIR})
