@@ -123,7 +123,7 @@ if(BUILD_METHOD STREQUAL spack)
   # Install fairroot and dependencies
   add_custom_target(SpackBuild ALL ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
       ${CMAKE_BINARY_DIR}/.spack install
-      fairroot@18.2.1)
+      fairroot${FAIRROOT_OPTIONS})
 
   # Generate fairsoft-config script
   Configure_File(${CMAKE_SOURCE_DIR}/cmake/fairsoft-config.in
