@@ -135,7 +135,7 @@ if(BUILD_METHOD STREQUAL spack)
   # Put links to all packages into one installation folder
   install(CODE "execute_process(COMMAND ./spack/bin/spack -C \
 ${CMAKE_BINARY_DIR}/.spack view --verbose \
-symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft fairroot WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
+symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft fairroot${FAIRROOT_OPTIONS} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/spack DESTINATION ${CMAKE_INSTALL_PREFIX})
 
