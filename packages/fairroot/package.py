@@ -23,6 +23,8 @@ class Fairroot(CMakePackage):
             multi=False,
             description='Use the specified C++ standard when building.')
 
+    variant('opengl', default=True, description='Enable opengl support')
+
     # Dependencies which are same for all versions
     depends_on('gnutls ~guile') #dependency of cmake which has to be build without guile support
     depends_on('pythia6@428-alice1')
@@ -32,7 +34,7 @@ class Fairroot(CMakePackage):
 
     # mesa and libxml2 are dependencies of root which have to be build extra due to the
     # extra build options
-    depends_on('mesa~llvm')
+    depends_on('mesa~llvm', when="+opengl")
     depends_on('libxml2+python')
 
     # Dependencies for dev version
@@ -41,6 +43,7 @@ class Fairroot(CMakePackage):
     depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads~data~clhep', when="@dev")
 
     depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+python~vdt', when="@dev")
+    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+python~vdt~opengl', when="@dev~opengl")
 
     depends_on('geant3@v2-7_fairsoft', when="@dev")
     depends_on('vgm@4-5', when="@dev")
