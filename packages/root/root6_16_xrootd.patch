@@ -1,0 +1,33 @@
+--- cmake/modules/SearchInstalledSoftware.cmake
++++ cmake/modules/SearchInstalledSoftware.cmake
+@@ -889,6 +889,11 @@
+   string(REPLACE "-W " "" __cxxflags "${__cxxflags}")          # Otherwise it produces many warnings
+   string(REPLACE "-Wshadow" "" __cxxflags "${__cxxflags}")          # Otherwise it produces many warnings
+   string(REPLACE "-Woverloaded-virtual" "" __cxxflags "${__cxxflags}")  # Otherwise it produces manywarnings  
++  if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "9")
++      string(APPEND __cxxflags " -Wno-error=deprecated-copy")  # GCC 9 compilation correction
++    endif()
++  endif()
+   set(XROOTD_LIBRARIES ${XROOTD_ROOTDIR}/${_LIBDIR_DEFAULT}/libXrdUtils${CMAKE_SHARED_LIBRARY_SUFFIX}
+                        ${XROOTD_ROOTDIR}/${_LIBDIR_DEFAULT}/libXrdClient${CMAKE_SHARED_LIBRARY_SUFFIX}
+                        ${XROOTD_ROOTDIR}/${_LIBDIR_DEFAULT}/libXrdCl${CMAKE_SHARED_LIBRARY_SUFFIX})
+@@ -906,8 +911,10 @@
+                -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
+                -DENABLE_PYTHON=OFF
+                -DENABLE_CEPH=OFF
++               -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=<INSTALL_DIR>/bin/xrd_bin
+     INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install
+             COMMAND ${CMAKE_COMMAND} -E copy_directory <INSTALL_DIR>/include/xrootd <INSTALL_DIR>/include
++            COMMAND ${CMAKE_COMMAND} -E copy_directory <INSTALL_DIR>/bin/xrd_bin <INSTALL_DIR>/bin
+     LOG_DOWNLOAD 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
+     BUILD_BYPRODUCTS ${XROOTD_LIBRARIES}
+   )
+@@ -916,6 +923,7 @@
+   set(XROOTD_NOMAIN TRUE)
+   set(XROOTD_CFLAGS "-DROOTXRDVERS=${XROOTD_VERSIONNUM}")
+   install(DIRECTORY ${XROOTD_ROOTDIR}/${_LIBDIR_DEFAULT}/ DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT libraries FILES_MATCHING PATTERN "libXrd*")
++  install(DIRECTORY ${XROOTD_ROOTDIR}/bin/xrd_bin/ DESTINATION ${CMAKE_INSTALL_BINDIR} USE_SOURCE_PERMISSIONS)
+   install(DIRECTORY ${XROOTD_ROOTDIR}/include/xrootd/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT headers)
+   set(XROOTD_TARGET XROOTD)
+   set(xrootd ON CACHE BOOL "Enabled because builtin_xrootd requested (${xrootd_description})" FORCE)

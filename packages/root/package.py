@@ -63,6 +63,7 @@ class Root(CMakePackage):
     patch('graf3d_gl.patch', level=0)
     patch('graf2d.patch', level=0)
     patch('external_zlib.patch', level=0, when='@6.12.06')
+    patch('root6_16_xrootd.patch', level=0, when='@6.16.00')
 
     if sys.platform == 'darwin':
         # Resolve non-standard use of uint, _cf_
