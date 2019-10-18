@@ -127,19 +127,32 @@ if(BUILD_METHOD STREQUAL spack)
 
   # Generate fairsoft-config script
   Configure_File(${CMAKE_SOURCE_DIR}/cmake/fairsoft-config.in
-      ${CMAKE_INSTALL_PREFIX}/fairsoft/bin/fairsoft-config @ONLY)
+      ${CMAKE_BINARY_DIR}/fairsoft/bin/fairsoft-config @ONLY)
 
   # Install ####################################################################
   # TODO spack commands to create spack env via install(SCRIPT ...)
 
   # Put links to all packages into one installation folder
-  install(CODE "execute_process(COMMAND ./spack/bin/spack -C \
-${CMAKE_BINARY_DIR}/.spack view --verbose \
-symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft fairroot${FAIRROOT_OPTIONS} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
-
-  install(DIRECTORY ${CMAKE_SOURCE_DIR}/spack DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/spack DESTINATION ${CMAKE_INSTALL_PREFIX} MESSAGE_NEVER)
 
   install(DIRECTORY ${CMAKE_BINARY_DIR}/.spack DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+  install(CODE "execute_process(COMMAND rm -rf ${CMAKE_INSTALL_PREFIX}/fairsoft WORKING_DIRECTORY ${CMAKE_BINARY_DIR})")
+
+  install(PROGRAMS ${CMAKE_BINARY_DIR}/fairsoft/bin/fairsoft-config DESTINATION ${CMAKE_INSTALL_PREFIX}/fairsoft/bin)
+
+  if("${FAIRROOT_HASH7}" STREQUAL "")
+    install(CODE "execute_process(COMMAND ./spack/bin/spack -C \
+${CMAKE_BINARY_DIR}/.spack view --verbose \
+symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft \
+fairroot${FAIRROOT_OPTIONS} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
+  else()
+    install(CODE "execute_process(COMMAND ./spack/bin/spack -C \
+${CMAKE_BINARY_DIR}/.spack view --verbose \
+symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft \
+/${FAIRROOT_HASH7} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
+  endif()
+
 
   # Test #######################################################################
   # TODO add_test(...) specific to spack build
