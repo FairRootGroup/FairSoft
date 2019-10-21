@@ -14,7 +14,7 @@ fi
 
 install_prefix=$SIMPATH_INSTALL
 
-checkfile=$install_prefix/lib/libicuuc.so.53.1
+checkfile=$install_prefix/lib/libicuuc.so
 
 if (not_there icu $checkfile);
 then
