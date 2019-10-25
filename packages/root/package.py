@@ -142,7 +142,7 @@ class Root(CMakePackage):
         description='Enable R ROOT bindings')
     variant('rpath', default=True,
         description='Enable RPATH')
-    variant('rootfit', default=True,
+    variant('roofit', default=True,
         description='Build the libRooFit advanced fitting package')
     variant('root7', default=False,
         description='Enable ROOT 7 support')
