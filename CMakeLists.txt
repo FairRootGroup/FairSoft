@@ -122,8 +122,28 @@ if(BUILD_METHOD STREQUAL spack)
 
   # Install fairroot and dependencies
   add_custom_target(SpackBuild ALL ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install
-      fairroot${FAIRROOT_OPTIONS})
+      ${CMAKE_BINARY_DIR}/.spack install fairsoft)
+
+  add_custom_target(fairmq ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+      ${CMAKE_BINARY_DIR}/.spack install fairmq)
+
+  add_custom_target(fairsoft_nosim_nopython ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+      ${CMAKE_BINARY_DIR}/.spack install fairsoft~sim~python)
+
+  add_custom_target(fairsoft_nosim_python ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+      ${CMAKE_BINARY_DIR}/.spack install fairsoft~sim+python)
+
+  add_custom_target(fairsoft_python ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim+python)
+
+  add_custom_target(fairsoft_g4mt_python ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim+python+g4mt)
+
+  add_custom_target(fairsoft_nopython ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim~python)
+
+  add_custom_target(fairsoft_g4mt_nopython ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim~python+g4mt)
 
   # Generate fairsoft-config script
   Configure_File(${CMAKE_SOURCE_DIR}/cmake/fairsoft-config.in
@@ -141,17 +161,10 @@ if(BUILD_METHOD STREQUAL spack)
 
   install(PROGRAMS ${CMAKE_BINARY_DIR}/fairsoft/bin/fairsoft-config DESTINATION ${CMAKE_INSTALL_PREFIX}/fairsoft/bin)
 
-  if("${FAIRROOT_HASH7}" STREQUAL "")
-    install(CODE "execute_process(COMMAND ./spack/bin/spack -C \
-${CMAKE_BINARY_DIR}/.spack view --verbose \
+  install(CODE "execute_process(COMMAND ./spack/bin/spack -C \
+${CMAKE_BINARY_DIR}/.spack view --verbose -d true \
 symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft \
-fairroot${FAIRROOT_OPTIONS} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
-  else()
-    install(CODE "execute_process(COMMAND ./spack/bin/spack -C \
-${CMAKE_BINARY_DIR}/.spack view --verbose \
-symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft \
-/${FAIRROOT_HASH7} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
-  endif()
+fairsoft WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 
 
   # Test #######################################################################
