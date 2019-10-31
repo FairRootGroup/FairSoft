@@ -13,20 +13,28 @@ class Dds(CMakePackage):
     homepage = "http://dds.gsi.de"
     git      = "https://github.com/FairRootGroup/DDS"
 
-    version('2.1-1-g181b66a', commit='181b66aca6072601d466436826fa5dac7a77ddc0')
+    version('2.5', tag='2.5')
     version('2.2', tag='2.2')
+    version('2.1-1-g181b66a', commit='181b66aca6072601d466436826fa5dac7a77ddc0')
 
-    depends_on('boost@1.64.0:')
+    version('master', branch = 'master')
+
+    depends_on('boost@1.68.0: cxxstd=11 +container', when='@master')
+    depends_on('boost@1.68.0: cxxstd=11 +container', when='@2.5')
+    depends_on('boost@1.68.0: cxxstd=11 +container', when='@2.2')
     depends_on('cmake@3.1.3:' , type='build')
 
     build_targets = ['all', 'wn_bin']
 
-    patch('correct_version_info_211.patch', level=0, when='@2.1-1-g181b66a')
+    patch('correct_version_info_2546.patch', level=0, when='@master')
+    patch('correct_version_info_25.patch', level=0, when='@2.5')
     patch('correct_version_info_22.patch', level=0, when='@2.2')
+    patch('correct_version_info_211.patch', level=0, when='@2.1-1-g181b66a')
 
     def cmake_args(self):
         spec = self.spec
         options = []
+        options.append('-DBoost_NO_BOOST_CMAKE=ON')
         options.append('-DBOOST_ROOT={0}'.format(
                 self.spec['boost'].prefix))
 

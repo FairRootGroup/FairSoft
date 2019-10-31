@@ -121,8 +121,8 @@ if(BUILD_METHOD STREQUAL spack)
   # TODO add_custom_target(SpackBuild ALL spack install)
 
   # Install fairroot and dependencies
-  add_custom_target(SpackBuild ALL ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install fairsoft)
+  #  add_custom_target(SpackBuild ALL ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+  #      ${CMAKE_BINARY_DIR}/.spack install fairsoft)
 
   add_custom_target(fairmq ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
       ${CMAKE_BINARY_DIR}/.spack install fairmq)
@@ -134,13 +134,13 @@ if(BUILD_METHOD STREQUAL spack)
       ${CMAKE_BINARY_DIR}/.spack install fairsoft~sim+python)
 
   add_custom_target(fairsoft_python ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim+python)
+      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim+python~g4mt)
 
   add_custom_target(fairsoft_g4mt_python ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
       ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim+python+g4mt)
 
   add_custom_target(fairsoft_nopython ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim~python)
+      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim~python~g4mt)
 
   add_custom_target(fairsoft_g4mt_nopython ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
       ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim~python+g4mt)

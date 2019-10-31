@@ -21,3 +21,8 @@ class Flatbuffers(CMakePackage):
     # Remove unnecessary const qualifier
     # https://github.com/google/flatbuffers/pull/4698
     patch('remove_unnecessary_const_qualifier.patch', when='@1.9.0')
+
+    def cmake_args(self):
+        args=[]
+        args.append('-DCMAKE_BUILD_TYPE=Release')
+        return args
