@@ -52,7 +52,9 @@ if(BUILD_METHOD STREQUAL spack)
     tcl: ${CMAKE_INSTALL_PREFIX}/share/spack/modules\n\
     lmod: ${CMAKE_INSTALL_PREFIX}/share/spack/lmod\n\
     dotkit: ${CMAKE_INSTALL_PREFIX}/share/spack/dotkit\n\
-  source_cache: ${CMAKE_BINARY_DIR}/var/spack/cache")
+  source_cache: ${CMAKE_BINARY_DIR}/var/spack/cache\n\
+  build_stage:\n\
+    - ${CMAKE_BINARY_DIR}/var/spack/stage")
 
   # If on macOS - take libiconv from system
   if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
