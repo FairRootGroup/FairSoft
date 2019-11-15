@@ -131,7 +131,7 @@ export FAIRLOGGER_LOCATION="https://github.com/FairRootGroup/FairLogger"
 export FAIRLOGGER_VERSION=v1.4.0
 
 export FAIRMQ_LOCATION="https://github.com/FairRootGroup/FairMQ"
-export FAIRMQ_VERSION=v1.4.3
+export FAIRMQ_VERSION=v1.4.8
 
 export OFI_LOCATION="https://github.com/ofiwg/libfabric"
 export OFI_TESTS_LOCATION="https://github.com/ofiwg/fabtests"
