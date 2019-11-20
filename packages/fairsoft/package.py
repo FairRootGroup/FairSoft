@@ -68,7 +68,7 @@ class Fairsoft(Package):
     depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt')
     depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~opengl', when="~opengl")
     depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~x', when="~x")
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~python', when="~python")
+    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~python~tmva', when="~python")
 
     depends_on('geant3@v2-7_fairsoft', when='+sim')
     depends_on('vgm@4-5', when='+sim')

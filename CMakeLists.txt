@@ -52,7 +52,9 @@ if(BUILD_METHOD STREQUAL spack)
     tcl: ${CMAKE_INSTALL_PREFIX}/share/spack/modules\n\
     lmod: ${CMAKE_INSTALL_PREFIX}/share/spack/lmod\n\
     dotkit: ${CMAKE_INSTALL_PREFIX}/share/spack/dotkit\n\
-  source_cache: ${CMAKE_BINARY_DIR}/var/spack/cache")
+  source_cache: ${CMAKE_BINARY_DIR}/var/spack/cache\n\
+  build_stage:\n\
+    - ${CMAKE_BINARY_DIR}/var/spack/stage")
 
   # If on macOS - take libiconv from system
   if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
@@ -112,22 +114,25 @@ if(BUILD_METHOD STREQUAL spack)
       ${CMAKE_BINARY_DIR}/.spack install fairmq)
 
   add_custom_target(fairsoft_nosim_nopython ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install fairsoft~sim~python)
+      ${CMAKE_BINARY_DIR}/.spack install fairroot@18.2.1~sim~python)
 
   add_custom_target(fairsoft_nosim_python ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install fairsoft~sim+python)
+      ${CMAKE_BINARY_DIR}/.spack install fairroot@18.2.1~sim+python)
 
   add_custom_target(fairsoft_python ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim+python~g4mt)
+      ${CMAKE_BINARY_DIR}/.spack install fairroot@18.2.1+sim+python~g4mt)
 
   add_custom_target(fairsoft_g4mt_python ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim+python+g4mt)
+      ${CMAKE_BINARY_DIR}/.spack install fairroot@18.2.1+sim+python+g4mt)
 
   add_custom_target(fairsoft_nopython ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim~python~g4mt)
+      ${CMAKE_BINARY_DIR}/.spack install fairroot@18.2.1+sim~python~g4mt)
 
   add_custom_target(fairsoft_g4mt_nopython ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
-      ${CMAKE_BINARY_DIR}/.spack install fairsoft+sim~python+g4mt)
+      ${CMAKE_BINARY_DIR}/.spack install fairroot@18.2.1+sim~python+g4mt)
+
+  add_custom_target(clean_all ${CMAKE_SOURCE_DIR}/spack/bin/spack -C
+      ${CMAKE_BINARY_DIR}/.spack uninstall --all --dependents fairroot@18.2.1)
 
   # Generate fairsoft-config script
   Configure_File(${CMAKE_SOURCE_DIR}/cmake/fairsoft-config.in
@@ -145,9 +150,10 @@ if(BUILD_METHOD STREQUAL spack)
   install(PROGRAMS ${CMAKE_BINARY_DIR}/fairsoft/bin/fairsoft-config DESTINATION ${CMAKE_INSTALL_PREFIX}/fairsoft/bin)
 
   install(CODE "execute_process(COMMAND ./spack/bin/spack -C \
-${CMAKE_BINARY_DIR}/.spack view --verbose -d true \
+${CMAKE_BINARY_DIR}/.spack view --verbose --dependencies yes \
+--exclude fairroot \
 symlink -i ${CMAKE_INSTALL_PREFIX}/fairsoft \
-fairsoft WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
+fairroot@18.2.1 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 
 
   # Test #######################################################################
