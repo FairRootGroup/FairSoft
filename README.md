@@ -20,7 +20,7 @@ git submodule update --init
 
 By default, the packages will be installed into spack/opt/spack folder. In order to change the installation prefix, one can set install_tree variable in the per-user configuration file as follows:
 ```
-echo 'config:\n  install_tree: (Choose_Directory)' > $HOME/.spack/config.yaml
+echo -e 'config:\n  install_tree: (Choose_Directory)' > $HOME/.spack/config.yaml
 ```
 You can find more configuration options in [Spack documentation](https://spack.readthedocs.io/en/latest/config_yaml.html#config-yaml).
 
