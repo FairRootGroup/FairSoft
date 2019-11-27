@@ -20,6 +20,7 @@ git submodule update --init
 
 By default, the packages will be installed into spack/opt/spack folder. In order to change the installation prefix, one can set install_tree variable in the per-user configuration file as follows:
 ```
+mkdir -p $HOME/.spack
 echo -e 'config:\n  install_tree: (Choose_Directory)' > $HOME/.spack/config.yaml
 ```
 You can find more configuration options in [Spack documentation](https://spack.readthedocs.io/en/latest/config_yaml.html#config-yaml).
@@ -29,7 +30,7 @@ You can find more configuration options in [Spack documentation](https://spack.r
 Use the following commands in order to setup the spack environment:
 
 ```
-./spack/bin/spack bootstrap
+./spack/bin/spack -C ./config bootstrap
 source spack/share/spack/setup-env.sh
 ```
 
@@ -45,14 +46,14 @@ More about spack package repositories is in the [Spack documentation](https://sp
 
 The following command will install FairRoot release 18.2.1 and its dependencies:
 ```
-spack install fairroot@18.2.1
+spack -C ./config install fairroot@18.2.1
 ```
 
 ---
 
 In order to load the environment of FairRoot and its dependencies, use the load command of Spack:
 ```
-spack load --dependencies fairroot@18.2.1
+spack load -r fairroot@18.2.1
 ```
 
 ## Contributing
