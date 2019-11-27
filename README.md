@@ -4,8 +4,6 @@ The FairSoft distribution provides the software packages needed to compile and r
 
 ## Installation
 
-For more control and advanced customization options, see the [next section](#advanced-installation).
-
 ### 1. Install the [prerequisites](docs/prerequisites.md).
 
 ### 2. Clone the repo
@@ -16,40 +14,58 @@ cd FairSoft
 git submodule update --init
 ```
 
-### 3. Compile and Install
+### 3. Configure Spack
 
-By default, the packages will be installed into spack/opt/spack folder. In order to change the installation prefix, one can set install_tree variable in the per-user configuration file as follows:
+#### Activate Spack in your current shell
+
 ```
 mkdir -p $HOME/.spack
-echo -e 'config:\n  install_tree: (Choose_Directory)' > $HOME/.spack/config.yaml
-```
-You can find more configuration options in [Spack documentation](https://spack.readthedocs.io/en/latest/config_yaml.html#config-yaml).
-
----
-
-Use the following commands in order to setup the spack environment:
-
-```
-./spack/bin/spack -C ./config bootstrap
 source spack/share/spack/setup-env.sh
 ```
 
----
+#### Configure Spack directories
 
-Add the recepies to the list of spack package repositories:
+We recommend to create a [per-user configuration file](https://spack.readthedocs.io/en/latest/config_yaml.html#config-yaml) and point certain paths to a directory outside of the FairSoft source repo:
+
+```
+$ mkdir -p $HOME/.spack
+$ EDITOR=vim spack config edit config
+$ cat $HOME/.spack/config.yaml
+config:
+  install_tree: ~/.spack/install_tree
+  source_cache: ~/.spack/source_cache
+```
+
+Verify the config changes are recognized by running `spack config blame config`.
+
+#### Bootstrap Spack
+
+```
+spack -C ./config bootstrap
+```
+
+#### Add the FairSoft [repository](https://spack.readthedocs.io/en/latest/repositories.html)
+
 ```
 spack repo add .
 ```
-More about spack package repositories is in the [Spack documentation](https://spack.readthedocs.io/en/latest/repositories.html).
 
----
+Verify
+
+```
+$ spack repo list
+fairsoft    ~/FairSoft
+builtin     ~/FairSoft/spack/var/spack/repos/builtin
+```
+
+### 4. Compile/Install
 
 The following command will install FairRoot release 18.2.1 and its dependencies:
 ```
 spack -C ./config install fairroot@18.2.1
 ```
 
----
+### 5. Use
 
 In order to load the environment of FairRoot and its dependencies, use the load command of Spack:
 ```
