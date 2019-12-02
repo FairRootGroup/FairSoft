@@ -56,6 +56,20 @@ In order to load the environment of FairRoot and its dependencies, use the load 
 spack load -r fairroot@18.2.1
 ```
 
+---
+
+### 4. Create view
+
+As an alternative to loading fairroot and its dependencies into the environment, one can create a view.
+View is a directory where links to all packages are put together. This directory can be used as SIMPATH
+in order to compile experiment frameworks.
+```
+spack -C ./config view --verbose --dependencies true -e python symlink -i (YOUR_SIMPATH) fairroot@18.2.1
+```
+In case you are using macOS, following packages need to be skipped when creating a view:
+macOS 10.14 Mojave: -e libiconv -e libpng -e sqlite
+macOS 10.15 Catalina: -e libiconv
+
 ## Contributing
 
 Please ask your questions, request features, and report issues by [creating a github issue](https://github.com/FairRootGroup/FairSoft/issues/new).
