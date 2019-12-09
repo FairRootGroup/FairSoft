@@ -70,6 +70,17 @@ In case you are using macOS, following packages need to be skipped when creating
 macOS 10.14 Mojave: -e libiconv -e libpng -e sqlite
 macOS 10.15 Catalina: -e libiconv
 
+---
+
+### 5. Development build
+
+You can use spack for building a package in the development mode: not checking out from repository, but building
+the source code in local path.
+```
+spack -C ./config diy -j (NUMBER_OF_PARALLEL_JOBS) -d (PATH_TO_SOURCE) fairroot@18.2.1
+```
+The version number of the package in this command is mandatory.
+
 ## Contributing
 
 Please ask your questions, request features, and report issues by [creating a github issue](https://github.com/FairRootGroup/FairSoft/issues/new).
