@@ -41,8 +41,7 @@ class Fairroot(CMakePackage):
     # mesa and libxml2 are dependencies of root which have to be build extra due to the
     # extra build options
     depends_on('mesa~llvm', when="+opengl")
-    depends_on('libxml2+python', when='+python')
-    depends_on('libxml2~python', when='~python')
+    depends_on('libxml2~python')
 
     # Dependencies for dev version
     depends_on('boost@1.68.0 cxxstd=11 +container', when="@dev")

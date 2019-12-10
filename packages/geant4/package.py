@@ -181,8 +181,8 @@ class Geant4(CMakePackage):
         # setup_environment is executed.
         # TODO: find a way to setup the environment also for Geant4
         command = "%s/geant4-config" % spec.prefix.bin
-        output = subprocess.check_output([ command, "--datasets"])
-        for line in output.split('\n'):
-            item = line.split(' ')
+        output = subprocess.check_output([ command, "--datasets"]).decode("ascii")
+        for line in output.split("\n"):
+            item = line.split(" ")
             if item[0]:
                 run_env.set(item[1], item[2])
