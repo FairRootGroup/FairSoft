@@ -104,6 +104,11 @@ if(BUILD_METHOD STREQUAL spack)
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
   endif()
 
+  execute_process(COMMAND mktemp -d
+    OUTPUT_VARIABLE TEST_TARGETDIR
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+  message(STATUS "Directory for this test run: ${TEST_TARGETDIR}")
+
   # Build ######################################################################
 
   # Install fairroot and dependencies
@@ -157,7 +162,35 @@ fairroot@18.2.1 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 
 
   # Test #######################################################################
-  # TODO add_test(...) specific to spack build
+
+  macro(fs_test_props testname)
+    set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
+                 TARGETDIR=${TEST_TARGETDIR})
+  endmacro()
+  function(fs_test_simple)
+    cmake_parse_arguments(ARGS "" "NAME" "SPEC" ${ARGN})
+    add_test(NAME simple.${ARGS_NAME}
+             COMMAND test/buildsimple.sh ${ARGS_SPEC}
+             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+    fs_test_props(simple.${ARGS_NAME})
+  endfunction()
+  function(fs_test_env)
+    cmake_parse_arguments(ARGS "" "NAME;ENVFILE" "" ${ARGN})
+    add_test(NAME env.${ARGS_NAME}
+             COMMAND test/buildenv.sh ${ARGS_ENVFILE}
+             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+    fs_test_props(env.${ARGS_NAME})
+  endfunction()
+
+  fs_test_simple(NAME openssl SPEC openssl)
+  fs_test_simple(NAME bzip2 SPEC bzip2)
+
+  fs_test_env(NAME fairlogger ENVFILE env/dev/fairlogger.yaml)
+  fs_test_env(NAME dds        ENVFILE env/dev/dds.yaml)
+  fs_test_env(NAME fairmq     ENVFILE env/dev/fairmq.yaml)
+  fs_test_env(NAME jun19.threads   ENVFILE env/jun19/sim_python_threads.yaml)
+  fs_test_env(NAME jun19.nothreads ENVFILE env/jun19/sim_python_no-threads.yaml)
+
 # set(SPACK_DIR $ENV{SPACK_DIR})
 # set(FAIRROOT_VERSION $ENV{FAIRROOT_VERSION})
 # set(SPACK_EXTRA_FLAGS $ENV{SPACK_EXTRA_FLAGS})
