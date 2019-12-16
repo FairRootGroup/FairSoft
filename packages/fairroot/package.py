@@ -23,20 +23,17 @@ class Fairroot(CMakePackage):
             multi=False,
             description='Use the specified C++ standard when building.')
 
-    variant('x', default=True, description='Enable graphical components')
     variant('opengl', default=True, description='Enable opengl support')
 
     variant('sim', default=True, description='Enable simulation engines and event generators')
-    variant('python', default=True, description='Enable python bindings for ROOT')
-    variant('g4mt', default=False, description='GEANT4 in multithreaded mode')
 
     # Dependencies which are same for all versions
     depends_on('gnutls ~guile') #dependency of cmake which has to be build without guile support
     depends_on('cmake@3.13.4: +ownlibs', type='build')
     depends_on('googletest@1.8.1:')
 
-    depends_on('pythia6@428-alice1', when='+sim')
-    depends_on('pythia8@8240', when='+sim')
+    depends_on('pythia6', when='+sim')
+    depends_on('pythia8', when='+sim')
 
     # mesa and libxml2 are dependencies of root which have to be build extra due to the
     # extra build options
@@ -44,52 +41,18 @@ class Fairroot(CMakePackage):
     depends_on('libxml2~python')
 
     # Dependencies for dev version
-    depends_on('boost@1.68.0 cxxstd=11 +container', when="@dev")
+    depends_on('boost@1.68.0: cxxstd=11 +container')
 
-    depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif~data~clhep+threads', when="@dev+sim+g4mt")
-    depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif~data~clhep~threads', when="@dev+sim~g4mt")
+    depends_on('geant4', when="+sim")
 
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt', when="@dev")
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~opengl', when="@dev~opengl")
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~x', when="@dev~x")
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~python~tmva', when="@dev~python")
+    depends_on('root')
 
-    depends_on('geant3@v2-7_fairsoft', when="@dev+sim")
-    depends_on('vgm@4-5', when="@dev+sim")
-    depends_on('geant4_vmc@4-0-p1', when="@dev+sim")
+    depends_on('geant3', when="+sim")
+    depends_on('vgm', when="+sim")
+    depends_on('geant4_vmc', when="+sim")
 
-    depends_on('fairlogger@1.4.0', when="@dev")
-    depends_on('fairmq@1.4.3', when="@dev")
-
-    # Dependencies for v18.2.1
-    depends_on('boost@1.68.0 cxxstd=11 +container', when="@18.2.1")
-
-    depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif~data~clhep+threads', when="@18.2.1+sim+g4mt")
-    depends_on('geant4@10.05.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif~data~clhep~threads', when="@18.2.1+sim~g4mt")
-
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt', when="@18.2.1")
-    depends_on('root@6.16.00 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~python~tmva', when="@18.2.1~python")
-
-    depends_on('geant3@v2-7_fairsoft', when="@18.2.1+sim")
-    depends_on('vgm@4-5', when="@18.2.1+sim")
-    depends_on('geant4_vmc@4-0-p1', when="@18.2.1+sim")
-
-    depends_on('fairlogger@1.4.0', when="@18.2.1")
-    depends_on('fairmq@1.4.3', when="@18.2.1")
-
-    # Dependencies for v18.0.6
-    depends_on('boost@1.67.0 cxxstd=11', when="@18.0.6")
-
-    depends_on('geant4@10.04.p01 cxxstd=11 ~qt~vecgeom~opengl~x11~motif+threads~data~clhep', when="@18.0.6")
-
-    depends_on('root@6.12.06 cxxstd=11 +fortran+gdml+http+memstat+pythia6+pythia8+vc+xrootd+python~vdt', when="@18.0.6")
-
-    depends_on('geant3@v2-5-gcc8', when="@18.0.6")
-    depends_on('vgm@4-4', when="@18.0.6")
-    depends_on('geant4_vmc@3-6', when="@18.0.6")
-
-    depends_on('fairlogger@1.2.0', when="@18.0.6")
-    depends_on('fairmq@1.2.3', when="@18.0.6")
+    depends_on('fairlogger@1.4.0:')
+    depends_on('fairmq@1.4.3:')
 
 #    depends_on('protobuf@3.4.0')
 #    depends_on('flatbuffers@1.9.0')
