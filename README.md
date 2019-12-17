@@ -31,7 +31,7 @@ Use the following commands in order to setup the spack environment:
 
 ```
 ./spack/bin/spack -C ./config bootstrap
-source spack/share/spack/setup-env.sh
+. ./spack/share/spack/setup-env.sh
 ```
 
 ---
@@ -44,14 +44,26 @@ More about spack package repositories is in the [Spack documentation](https://sp
 
 ---
 
-The following command will install FairRoot release 18.2.1 and its dependencies:
+Following commands will create a Spack environment from the specified configuration file, activate this environment
+and install FairRoot and its dependencies:
 ```
-spack -C ./config install fairroot@18.2.1
+spack -C env create jun19 env/jun19/sim_python_threads.yaml
+spack -C env activate jun19
+spack -C ./config install
 ```
+The environment needs to be activated in every shell. One can deactivate the environemnt with command:
+```
+spack env deactivate
+```
+or
+```
+despacktivate
+```
+More about environments can be found in [Spack documentation](https://spack.readthedocs.io/en/latest/environments.html).
 
 ---
 
-In order to load the environment of FairRoot and its dependencies, use the load command of Spack:
+In order to set the environment variables needed for FairRoot and its dependencies, use the load command of Spack:
 ```
 spack load -r fairroot@18.2.1
 ```
