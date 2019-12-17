@@ -3,12 +3,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import *
-import os
 
 class Fairlogger(CMakePackage):
     """Lightweight and fast C++ Logging Library"""
 
-    phases = ['cmake', 'build', 'test', 'install']
     homepage = "https://github.com/FairRootGroup/FairLogger"
     url = "https://github.com/FairRootGroup/FairLogger/archive/v1.2.0.tar.gz"
     maintainers = ['dennisklein']
@@ -18,19 +16,6 @@ class Fairlogger(CMakePackage):
     version('1.4.0', '004029900cde3b6e61191f08288a0fa1')
     version('1.5.0', '7cb633a9b740efce2b1281dc27e32144bd149594')
     version('1.6.0', '849ebd128ed2fcaeb806ebf33488189d4557ac7e')
-
-    @on_package_attributes(run_tests=True)
-    def test(self, spec, prefix):
-        Executable(os.path.join(self.build_directory, 'loggerTest'))()
-
-    @run_after('install')
-    def remove_test_executable(self):
-        bin_dir = os.path.join(self.prefix, 'bin')
-        os.remove(os.path.join(bin_dir, 'loggerTest'))
-        try:
-            os.rmdir(bin_dir)
-        except:
-            pass
 
     def patch(self):
         """Spack strips the git repository, but the version is determined
