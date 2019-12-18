@@ -16,6 +16,7 @@ class Fairlogger(CMakePackage):
     version('1.4.0', '004029900cde3b6e61191f08288a0fa1')
     version('1.5.0', '7cb633a9b740efce2b1281dc27e32144bd149594')
     version('1.6.0', '849ebd128ed2fcaeb806ebf33488189d4557ac7e')
+    version('1.6.1', sha256='3894580f4c398d724ba408e410e50f70c9f452e8cfaf7c3ff8118c08df28eaa8')
 
     def patch(self):
         """Spack strips the git repository, but the version is determined
