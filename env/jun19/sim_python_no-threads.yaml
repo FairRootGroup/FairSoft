@@ -11,11 +11,11 @@ spack:
     - fairlogger@1.4.0
     - pythia6@428-alice1
     - pythia8@8240
-    - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep+threads
+    - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep~threads
     - $root
     - geant3@v2-7_fairsoft
     - vgm@4-5
     - geant4_vmc@4-0-p1
-    - fairroot@dev+sim
+    - fairroot@18.2.1+sim
   concretization: together
   view: false
