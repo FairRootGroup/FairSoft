@@ -47,8 +47,8 @@ More about spack package repositories is in the [Spack documentation](https://sp
 Following commands will create a Spack environment from the specified configuration file, activate this environment
 and install FairRoot and its dependencies:
 ```
-spack -C env create jun19 env/jun19/sim_python_threads.yaml
-spack -C env activate jun19
+spack env create jun19 env/jun19/sim_python_threads.yaml
+spack env activate jun19
 spack -C ./config install
 ```
 The environment needs to be activated in every shell. One can deactivate the environemnt with command:
