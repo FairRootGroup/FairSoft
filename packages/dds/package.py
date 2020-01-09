@@ -19,9 +19,7 @@ class Dds(CMakePackage):
 
     version('master', branch = 'master')
 
-    depends_on('boost@1.68.0: cxxstd=11 +container', when='@master')
-    depends_on('boost@1.68.0: cxxstd=11 +container', when='@2.5')
-    depends_on('boost@1.68.0: cxxstd=11 +container', when='@2.2')
+    depends_on('boost@1.68.0: cxxstd=11 +container', when='@2.2:')
     depends_on('cmake@3.1.3:' , type='build')
 
     patch('correct_version_info_2546.patch', level=0, when='@master')
