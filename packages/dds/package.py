@@ -24,8 +24,6 @@ class Dds(CMakePackage):
     depends_on('boost@1.68.0: cxxstd=11 +container', when='@2.2')
     depends_on('cmake@3.1.3:' , type='build')
 
-    build_targets = ['all', 'wn_bin']
-
     patch('correct_version_info_2546.patch', level=0, when='@master')
     patch('correct_version_info_25.patch', level=0, when='@2.5')
     patch('correct_version_info_22.patch', level=0, when='@2.2')
