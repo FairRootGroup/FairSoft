@@ -24,7 +24,7 @@ class Dds(CMakePackage):
     version('2.1-1-g181b66a', commit='181b66aca6072601d466436826fa5dac7a77ddc0')
 
     depends_on('boost@1.68.0: cxxstd=11 +container', when='@2.2:')
-    depends_on('cmake@3.1.3:' , type='build')
+    depends_on('cmake@3.1.3:', type='build')
 
     patch('correct_version_info_25.patch', level=0, when='@2.5')
     patch('correct_version_info_22.patch', level=0, when='@2.2')
@@ -46,7 +46,6 @@ class Dds(CMakePackage):
                     f.write(version + "\n")
 
     def cmake_args(self):
-        spec = self.spec
         options = []
         options.append('-DBoost_NO_BOOST_CMAKE=ON')
         options.append('-DBOOST_ROOT={0}'.format(
