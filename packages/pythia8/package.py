@@ -33,14 +33,13 @@ class Pythia8(AutotoolsPackage):
     homepage = "http://home.thep.lu.se/~torbjorn/Pythia.html"
     url      = "http://home.thep.lu.se/~torbjorn/pythia8/pythia8212.tgz"
 
-    version('8240', '1ef981f813d41b97579bbd4a9202bef4')
-    version('8235', 'eed56d357dc91df4571c2a65d60f1af5')
-    version('8230', '5362429333f43bd1f7621a599bae5a24')
-    version('8212', '0886d1b2827d8f0cd2ae69b925045f40')
+    version('8240', sha256='d27495d8ca7707d846f8c026ab695123c7c78c7860f04e2c002e483080418d8d')
+    version('8235', sha256='e82f0d6165a8250a92e6aa62fb53201044d8d853add2fdad6d3719b28f7e8e9d')
+    version('8230', sha256='332fad0ed4f12e6e0cb5755df0ae175329bc16bfaa2ae472d00994ecc99cd78d')
+    version('8212', sha256='f8fb4341c7e8a8be3347eb26b00329a388ccf925313cfbdba655a08d7fd5a70e')
 
-    depends_on('hepmc@2.06.09 length=CM momentum=GEV', when="@8240")
-
-    depends_on('hepmc@2.06.09 length=CM momentum=GEV', when="@8212")
+    depends_on('hepmc@2.06.09 length=CM momentum=GEV')
+    depends_on('rsync', type='build')
 
     def configure_args(self):
         spec = self.spec
