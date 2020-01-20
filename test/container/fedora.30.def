@@ -1,10 +1,13 @@
+# Rebuild:
+#   singularity build -f -F fedora.30.sif fedora.30.def
+
 Bootstrap: docker
 From: fedora:30
 
 %post
     dnf -y update
-    dnf -y groupinstall --with-optional "C Development Tools and Libraries"
-    dnf -y install gcc-gfortran wget which git xz patch procps
-    # following packages only needed for legacy install
-    dnf -y install libcurl-devel mesa-libGLU-devel openssl-devel libXft-devel libXpm-devel libXmu-devel python-devel
+    dnf -y groupinstall "C Development Tools and Libraries"
+    dnf -y install gcc-gfortran wget curl which git xz patch procps unzip
+    # We need cmake for our testing
+    dnf -y install cmake
     dnf -y clean all
