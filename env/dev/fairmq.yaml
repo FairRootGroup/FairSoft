@@ -1,0 +1,6 @@
+spack:
+  specs:
+  - matrix:
+    - ["fairmq"]
+    - ["@1.4.3"]
+  view: false
