@@ -18,17 +18,16 @@ class Dds(CMakePackage):
     git      = "https://github.com/FairRootGroup/DDS"
 
     version('master', branch='master')
-    version('3.0', sha256='6b6bdbdeb2d43ca2917400e1503e1f5690fd9efb8b18358bd1052ee31ae6974a')
+    version('3.0', tag='3.0')
     version('2.5', tag='2.5')
     version('2.2', tag='2.2')
-    version('2.1-1-g181b66a', commit='181b66aca6072601d466436826fa5dac7a77ddc0')
-
-    depends_on('boost@1.68.0: cxxstd=11 +container', when='@2.2:')
-    depends_on('cmake@3.1.3:', type='build')
+    
+    depends_on('boost@1.67.0: cxxstd=11 +container', when='@2.5:')
+    depends_on('boost@1.67.0:1.68.0 cxxstd=11 +container +signals', when='@2.2')
+    depends_on('cmake@3.11:', type='build')
 
     patch('correct_version_info_25.patch', level=0, when='@2.5')
     patch('correct_version_info_22.patch', level=0, when='@2.2')
-    patch('correct_version_info_211.patch', level=0, when='@2.1-1-g181b66a')
 
     def patch(self):
         # Fetching version from .git doesn't work reliebly.
