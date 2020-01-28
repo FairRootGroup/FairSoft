@@ -8,22 +8,24 @@ def jobMatrix(String prefix, List specs, Closure callback) {
   def nodes = [:]
   for (spec in specs) {
     def label = specToLabel(spec)
+    def jobsh = "job_${label}.sh"
     nodes["${prefix}/${label}"] = {
       node('slurm') {
         githubNotify(context: "${prefix}/${label}", description: 'Building ...', status: 'PENDING')
         try {
-          deleteDir()
           checkout scm
 
           sh """
-            echo '#! /bin/bash' >job.sh
-            echo "source <(sed -e '/^#/d' -e '/^export/!s/^/export /' /etc/environment)" >>job.sh
-            echo "export LABEL=${label}" >>job.sh
-            echo "${env.SINGULARITY_CONTAINER_ROOT}/run_container ${spec.container} ctest -VV -S FairSoft_test.cmake" >> job.sh
+            echo '#! /bin/bash' >${jobsh}
+            echo 'echo "*** Job started at: \$(date -R)"' >>${jobsh}
+            echo 'echo "*** Job ID: \$SLURM_JOB_ID"' >>${jobsh}
+            echo "source <(sed -e '/^#/d' -e '/^export/!s/^.*=/export &/' /etc/environment)" >>${jobsh}
+            echo "export LABEL=${label}" >>${jobsh}
+            echo "${env.SINGULARITY_CONTAINER_ROOT}/run_container ${spec.container} ctest -VV -S FairSoft_test.cmake" >> ${jobsh}
           """
-          sh 'cat job.sh'
+          sh "cat ${jobsh}"
 
-          callback.call(spec, label, "job.sh")
+          callback.call(spec, label, jobsh)
 
           githubNotify(context: "${prefix}/${label}", description: 'Success', status: 'SUCCESS')
         } catch (e) {
@@ -45,7 +47,8 @@ pipeline {
           def build_jobs = jobMatrix('build', [
             [os: 'Fedora30', container: 'fedora.30.sif'],
           ]) { spec, label, jobsh ->
-            sh """srun -p main -c 8 -n 1 -t 300 --job-name="alfa-${label}" bash ${jobsh}"""
+            sh """ echo "*** Submitting at: \$(date -R)" """
+            sh """srun -p main -c 64 -n 1 -t 300 --job-name="alfa-${label}" bash ${jobsh}"""
           }
           parallel(build_jobs)
         }
