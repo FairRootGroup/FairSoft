@@ -9,6 +9,8 @@ spack:
     - googletest@1.8.1
     - boost@1.68.0
     - fairlogger@1.4.0
+    - dds@2.4
+    - fairmq@1.4.3
     - pythia6@428-alice1
     - hepmc@2.06.09 length=CM momentum=GEV
     - pythia8@8240

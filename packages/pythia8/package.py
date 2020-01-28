@@ -33,6 +33,7 @@ class Pythia8(AutotoolsPackage):
     homepage = "http://home.thep.lu.se/~torbjorn/Pythia.html"
     url      = "http://home.thep.lu.se/~torbjorn/pythia8/pythia8212.tgz"
 
+    version('8301', sha256='51382768eb9aafb97870dca1909516422297b64ef6a6b94659259b3e4afa7f06')
     version('8240', sha256='d27495d8ca7707d846f8c026ab695123c7c78c7860f04e2c002e483080418d8d')
     version('8235', sha256='e82f0d6165a8250a92e6aa62fb53201044d8d853add2fdad6d3719b28f7e8e9d')
     version('8230', sha256='332fad0ed4f12e6e0cb5755df0ae175329bc16bfaa2ae472d00994ecc99cd78d')

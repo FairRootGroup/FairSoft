@@ -23,9 +23,10 @@ class Root(CMakePackage):
     # Development version (when more recent than production).
 
     # Production version
-    version('6.16.00', sha256='2a45055c6091adaa72b977c512f84da8ef92723c30837c7e2643eecc9c5ce4d8', preferred=True)
+    version('6.18.04', sha256='315a85fc8363f8eb1bffa0decbf126121258f79bd273513ed64795675485cfa4', preferred=True)
 
     # Old versions
+    version('6.16.00', sha256='2a45055c6091adaa72b977c512f84da8ef92723c30837c7e2643eecc9c5ce4d8')
     version('6.14.08', sha256='1b63b51cfb4dc20f1f5749faac6bbd1098eccab777f8b49911257d77186c73c4')
     version('6.14.06', sha256='0fb943b61396f282b289e35c455a9ab60126229be1bd3f04a8f00b37c13ab432')
     version('6.14.04', sha256='463ec20692332a422cfb5f38c78bedab1c40ab4d81be18e99b50cf9f53f596cf')
@@ -249,7 +250,7 @@ class Root(CMakePackage):
     depends_on('openssl', when='+davix')  # Also with davix
     depends_on('postgresql', when='+postgres')
     depends_on('pythia6',  when='+pythia6')
-    depends_on('pythia8@8240',  when='+pythia8') # - not supported on Spack
+    depends_on('pythia8@8301',  when='+pythia8') # - not supported on Spack
     depends_on('python@2.7:',     when='+python', type=('build', 'run'))
     depends_on('r',         when='+r', type=('build', 'run'))
     depends_on('r-cpp',     when='+r', type=('build', 'run'))
