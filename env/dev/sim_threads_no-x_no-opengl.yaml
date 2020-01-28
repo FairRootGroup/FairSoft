@@ -1,9 +1,9 @@
 spack:
   definitions:
     - when: platform == 'linux'
-      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~x~opengl+python+tmva]
+      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~x~opengl~python~tmva]
     - when: platform == 'darwin'
-      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+aqua]
+      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~x~opengl~python~tmva+aqua]
   specs:
     - cmake@3.13.4
     - googletest@1.8.1

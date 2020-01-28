@@ -1,9 +1,9 @@
 spack:
   definitions:
     - when: platform == 'linux'
-      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt+python+tmva]
+      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~python~tmva]
     - when: platform == 'darwin'
-      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt+python+tmva+aqua]
+      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~python~tmva+aqua]
   specs:
     - cmake@3.13.4
     - googletest@1.8.1
@@ -16,6 +16,6 @@ spack:
     - geant3@v2-7_fairsoft
     - vgm@4-5
     - geant4_vmc@4-0-p1
-    - fairroot@18.2.1+sim
+    - fairroot@dev+sim
   concretization: together
   view: false
