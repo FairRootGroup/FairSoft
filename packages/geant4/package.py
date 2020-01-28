@@ -43,6 +43,7 @@ class Geant4(CMakePackage):
 
     # C++11 support
     depends_on("xerces-c cxxstd=11", when="cxxstd=11")
+    depends_on("clhep@2.4.1.3 cxxstd=11", when="@10.06 cxxstd=11 +clhep")
     depends_on("clhep@2.4.1.0 cxxstd=11", when="@10.05.p01 cxxstd=11 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p03 cxxstd=11 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=11", when="@10.04.p01 cxxstd=11 +clhep")
@@ -52,6 +53,7 @@ class Geant4(CMakePackage):
 
     # C++14 support
     depends_on("xerces-c cxxstd=14", when="cxxstd=14")
+    depends_on("clhep@2.4.1.3 cxxstd=14", when="@10.06 cxxstd=14 +clhep")
     depends_on("clhep@2.4.1.0 cxxstd=14", when="@10.05.p01 cxxstd=14 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p03 cxxstd=14 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=14", when="@10.04.p01 cxxstd=14 +clhep")
@@ -63,6 +65,7 @@ class Geant4(CMakePackage):
     depends_on("xerces-c cxxstd=17", when="cxxstd=17")
     patch('cxx17.patch', when='@:10.03.p99 cxxstd=17')
     patch('cxx17_geant4_10_0.patch', level=1, when='@10.04.00: cxxstd=17 +clhep')
+    depends_on("clhep@2.4.1.3 cxxstd=17", when="@10.06 cxxstd=17 +clhep")
     depends_on("clhep@2.4.1.0 cxxstd=17", when="@10.05.p01 cxxstd=17 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p03 cxxstd=17 +clhep")
     depends_on("clhep@2.4.0.0 cxxstd=17", when="@10.04.p01 cxxstd=17 +clhep")
@@ -84,6 +87,7 @@ class Geant4(CMakePackage):
     # this allows external data installations
     # to avoid duplication
 
+    depends_on('geant4-data@10.06', when='@10.06:10.06.p99 ~data')
     depends_on('geant4-data@10.05', when='@10.05.p00:10.05.p99 ~data')
     depends_on('geant4-data@10.04', when='@10.04.p00:10.04.p99 ~data')
     depends_on('geant4-data@10.03', when='@10.03.p03 ~data')

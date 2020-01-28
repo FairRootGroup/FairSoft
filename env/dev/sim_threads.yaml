@@ -1,7 +1,7 @@
 spack:
   definitions:
     - when: platform == 'linux'
-      root: [root@6.18.04+fortran+gdml+http+pythia6+pythia8+vc~vdt+python+tmva]
+      root: [root@6.18.04+fortran+gdml+http+pythia6+pythia8+vc~vdt+python+tmva ^mesa~llvm]
     - when: platform == 'darwin'
       root: [root@6.18.04+fortran+gdml+http+pythia6+pythia8+vc~vdt+python+tmva+aqua]
   specs:
@@ -11,9 +11,10 @@ spack:
     - pythia8@8301
     - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep+threads
     - $root
-    - geant3@v2-7_fairsoft
-    - vgm@4-6
-    - geant4_vmc@4-0-p1
+    - vmc@1-0
+    - geant3@v3-0_fairsoft
+    - vgm@4-7
+    - geant4_vmc@5-0
     - fairroot@dev+sim
   concretization: together
   view: false

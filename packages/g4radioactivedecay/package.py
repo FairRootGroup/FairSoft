@@ -16,6 +16,7 @@ class G4radioactivedecay(Package):
     version('5.1.1', 'f7a9a0cc998f0d946359f2cb18d30dff1eabb7f3c578891111fc3641833870ae')
     version('5.2', '99c038d89d70281316be15c3c98a66c5d0ca01ef575127b6a094063003e2af5d')
     version('5.3', '5c8992ac57ae56e66b064d3f5cdfe7c2fee76567520ad34a625bfb187119f8c1')
+    version('5.4', sha256='240779da7d13f5bf0db250f472298c3804513e8aca6cae301db97f5ccdcc4a61')
 
     def install(self, spec, prefix):
         mkdirp(join_path(prefix.share, 'data'))

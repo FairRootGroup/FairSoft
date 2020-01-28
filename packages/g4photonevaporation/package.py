@@ -16,6 +16,7 @@ class G4photonevaporation(Package):
     version('4.3.2', 'd4641a6fe1c645ab2a7ecee09c34e5ea584fb10d63d2838248bfc487d34207c7')
     version('5.2', '83607f8d36827b2a7fca19c9c336caffbebf61a359d0ef7cee44a8bcf3fc2d1f')
     version('5.3', 'd47ababc8cbe548065ef644e9bd88266869e75e2f9e577ebc36bc55bf7a92ec8')
+    version('5.5', sha256='5995dda126c18bd7f68861efde87b4af438c329ecbe849572031ceed8f5e76d7')
 
     def install(self, spec, prefix):
         mkdirp(join_path(prefix.share, 'data'))

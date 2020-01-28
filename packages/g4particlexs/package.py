@@ -12,8 +12,9 @@ class G4particlexs(Package):
     """Geant4 data files for evaluated particle cross-sections on natural composition
        of elements"""
     homepage = "http://geant4.web.cern.ch"
-    url = "http://geant4-data.web.cern.ch/geant4-data/datasets/G4PARTICLESXS.1.1.tar.gz"
+    url = "http://geant4-data.web.cern.ch/geant4-data/datasets/G4PARTICLEXS.1.1.tar.gz"
 
+    version('2.1', sha256='094d103372bbf8780d63a11632397e72d1191dc5027f9adabaf6a43025520b41')
     version('1.1', '100a11c9ed961152acfadcc9b583a9f649dda4e48ab314fcd4f333412ade9d62')
 
     def install(self, spec, prefix):

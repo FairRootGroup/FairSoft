@@ -32,12 +32,14 @@ class Geant4Vmc(CMakePackage):
 
     version('3-6', '01507945dfcc21827628d0eb6b233931')
     version('4-0-p1', 'd7e88a3ef11ea62bec314b5f251c91b1')
+    version('5-0', sha256='9a3820ea4b68b5a0697c340bbbc0972b9c8e4205ceecdd87258a9bdfd249cd8b')
 
     # FIXME: Add dependencies if required.
     depends_on('cmake', type='build')
     depends_on('root')
     depends_on('geant4')
     depends_on('vgm')
+    depends_on('vmc', when='@5-0:')
 
     def cmake_args(self):
         spec = self.spec

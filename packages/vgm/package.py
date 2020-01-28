@@ -33,6 +33,7 @@ class Vgm(CMakePackage):
     version('4-4', '42fcd9092981120be1aeb6e3872fa1f7')
     version('4-5', 'e5054a39a33dcefcd6a6588efceda7be')
     version('4-6', sha256='6bf0aeef38f357a313e376090b45d3e0713ef9e52ca198075fae8579b8d5a23a')
+    version('4-7', sha256='a5f5588db457dc3e6562d1f7da1707960304560fbb0a261559fa3f112a476aea')
 
     # FIXME: Add dependencies if required.
     depends_on('cmake', type='build')

@@ -33,10 +33,12 @@ class Geant3(CMakePackage):
 
     version('v2-5-gcc8', tag='v2-5-gcc8')
     version('v2-7_fairsoft', tag='v2-7_fairsoft')
+    version('v3-0_fairsoft', tag='v3-0_fairsoft')
 
     # FIXME: Add dependencies if required.
     depends_on('cmake', type='build')
-    depends_on("root")
+    depends_on('root')
+    depends_on('vmc', when='@v3-0_fairsoft:')
 
     def cmake_args(self):
         spec = self.spec

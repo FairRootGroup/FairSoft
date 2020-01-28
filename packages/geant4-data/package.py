@@ -14,6 +14,7 @@ class Geant4Data(Package):
     homepage = "http://geant4.cern.ch"
     url      = "http://geant4-data.web.cern.ch/geant4-data/ReleaseNotes/ReleaseNotes4.10.3.html"
 
+    version('10.06', sha256='cc4b1b54cc480961271733c7d64ffe28d06f4ab3bec673885c16251975c3bc9b', expand=False)
     version('10.05', 'd43b9cc4418afe67a7b444727810827a', expand=False)
     version('10.04', 'c49194b96e65ed4527d34d22a9860972', expand=False)
     version('10.03', '2248ad436613897d9fad93bdb99d9446', expand=False)
@@ -61,6 +62,19 @@ class Geant4Data(Package):
     depends_on("g4ensdfstate@2.2", when='@10.05')
     depends_on("g4realsurface@2.1.1", when='@10.05')
     depends_on("g4tendl@1.3.2", when='@10.05')
+    # geant4@10.06
+    depends_on("g4ndl@4.6", when='@10.06')
+    depends_on("g4emlow@7.9", when='@10.06')
+    depends_on("g4photonevaporation@5.5", when='@10.06')
+    depends_on("g4radioactivedecay@5.4", when='@10.06')
+    depends_on("g4saiddata@2.0", when='@10.06')
+    depends_on("g4particlexs@2.1", when='@10.06')
+    depends_on("g4abla@3.1", when='@10.06')
+    depends_on("g4incl@1.0", when='@10.06')
+    depends_on("g4pii@1.3", when='@10.06')
+    depends_on("g4ensdfstate@2.2", when='@10.06')
+    depends_on("g4realsurface@2.1.1", when='@10.06')
+    depends_on("g4tendl@1.3.2", when='@10.06')
 
     # geant4@10.03.p03
 #    depends_on("g4abla@3.0", when='@10.03.p03 ')

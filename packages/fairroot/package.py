@@ -40,6 +40,8 @@ class Fairroot(CMakePackage):
     # Dependencies for dev version
     depends_on('boost@1.68.0: cxxstd=11 +container')
 
+    depends_on('vmc', when='@dev')
+
     depends_on('geant4', when="+sim")
 
     depends_on('root')
@@ -52,7 +54,7 @@ class Fairroot(CMakePackage):
     depends_on('fairmq@1.4.3:')
 
 #    depends_on('protobuf@3.4.0')
-#    depends_on('flatbuffers@1.9.0')
+    depends_on('flatbuffers')
 #    depends_on('millepede')
 
     patch('CMake.patch', level=0, when="@18.0.6")
@@ -80,6 +82,8 @@ class Fairroot(CMakePackage):
         self.spec['boost'].prefix))
         options.append('-DBOOST_LIBRARYDIR={0}/lib'.format(
         self.spec['boost'].prefix))
+        options.append('-DFlatbuffers_DIR={0}'.format(
+        self.spec['flatbuffers'].prefix))
         options.append('-DDISABLE_GO=ON')
         options.append('-DBUILD_EXAMPLES=OFF')
         options.append('-DFAIRROOT_MODULAR_BUILD=ON')
