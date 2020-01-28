@@ -11,6 +11,9 @@ fi
 # echo "==> Environment:"
 # env | sed -e 's/^/==>  | /'
 
+echo -n "*** Number of threads per python: "
+python3 -c 'import multiprocessing; print(multiprocessing.cpu_count())'
+
 if [ ! -d "$TARGETDIR" ]
 then
 	TARGETDIR="$(mktemp -d)"
@@ -31,7 +34,14 @@ config:
   module_roots:
     tcl: '$HOME/install-tree/modules'
   source_cache: '$HOME/source-cache'
+  build_stage:
+  - '$HOME/stage'
 EOF
+
+	if [ -n "$SLURM_CPUS_PER_TASK" ]
+	then
+		echo "  build_jobs: $SLURM_CPUS_PER_TASK" >>"$HOME/.spack/config.yaml"
+	fi
 
 	. spack/share/spack/setup-env.sh
 
