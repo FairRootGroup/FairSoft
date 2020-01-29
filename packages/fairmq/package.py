@@ -1,4 +1,7 @@
-# Copyright 2019 GSI Helmholtz Centre for Heavy Ion Research
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
+#   Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright 2019-2020 GSI Helmholtz Centre for Heavy Ion Research GmbH,
+#   Darmstadt, Germany
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
@@ -9,74 +12,76 @@ class Fairmq(CMakePackage):
     """C++ Message Queuing Library and Framework"""
 
     homepage = 'https://github.com/FairRootGroup/FairMQ'
-    url = 'https://github.com/FairRootGroup/FairMQ/archive/v1.2.3.tar.gz'
     git = 'https://github.com/FairRootGroup/FairMQ.git'
+    maintainers = ['dennisklein', 'ChristianTackeGSI']
+    generator = 'Ninja'
 
-    version('dev', branch='dev')
-    version('1.4.3', '6659f281bdf07158935a878b34457466')
-    version('1.2.3', '53f0d597d622eeb2b3f50a16d9ed7bbe')
+    version('develop', branch='dev', submodules=True, get_full_repo=True)
+    version('1.4.12', tag='v1.4.12', commit='9f8a3553ba7e6c3ce5c9e378d77d3e16d7ce6daf', submodules=True, no_cache=True)
+    version('1.4.11', tag='v1.4.11', commit='e6dede492e02d6966cfa68e6820f90f679b74592', submodules=True, no_cache=True)
+    version('1.4.10', tag='v1.4.10', commit='f31be6d7a10ab0b7e4183576438268c8122117a5', submodules=True, no_cache=True)
+    version('1.4.9', tag='v1.4.9', commit='f6e3183f453d3daf97e529d3b834da715b43c47b', submodules=True, no_cache=True)
+    version('1.4.8', tag='v1.4.8', commit='3f5374820a56c472a79e81b977861eddf4bff343', no_cache=True)
+    version('1.4.7', tag='v1.4.7', commit='7cacf471b957aa1a89616b84339ce0b25699c7a0', no_cache=True)
+    version('1.4.6', tag='v1.4.6', commit='93eb599df7d9ee4c869e2fe70c03b7a845739683', no_cache=True)
+    version('1.4.5', tag='v1.4.5', commit='b1c82641237c1da7ae4d7af1fcb1cf69f596a54c', no_cache=True)
+    version('1.4.4', tag='v1.4.4', commit='99c8d33191a8f69bcd6b51cfa8c11a1d736734b0', no_cache=True)
+    version('1.4.3', tag='v1.4.3', commit='3582091b1c76cbe689b8e66813ea71dd5ff55bc5', no_cache=True)
+    version('1.4.2', tag='v1.4.2', commit='2457094b6c4004a75620a45329574d983cdc263e', no_cache=True)
+    version('1.4.1', tag='v1.4.1', commit='95ec56dcf0d95917a0c9cdecd1004d4a1c4aa479', no_cache=True)
+    version('1.4.0', tag='v1.4.0', commit='4c2785dfc1d98576917bc3cfb2a01eab675c5f6e', no_cache=True)
+    version('1.3.9', tag='v1.3.9', commit='d91a7d23616d2781938423b2362651185e2c0607', no_cache=True)
+    # TODO Once https://github.com/spack/spack/issues/14344 is resolved, enable
+    #      source caching again (by removing the `no_cache` argument).
 
-    # Fix dependencies for FairMQ 1.2.3
-    depends_on('googletest@1.7.0:', when='@1.2.3')
-    depends_on('googletest@1.8.1', when='@1.4.3')
-    depends_on('googletest@1.8.1', when='@dev')
+    variant('build_type', default='RelWithDebInfo',
+            values=('Debug', 'Release', 'RelWithDebInfo'),
+            multi=False,
+            description='CMake build type')
+    variant('cxxstd', default='default',
+            values=('11', '14', '17'),
+            multi=False,
+            description='Force the specified C++ standard when building.')
+    conflicts('cxxstd=11', when='@1.4.11:')
 
-    depends_on('boost@1.67.0 cxxstd=11', when='@1.2.3')
-    depends_on('boost@1.68.0 cxxstd=11 +container', when='@1.4.3')
-    depends_on('boost@1.70.0 cxxstd=11 +container', when='@dev')
+    patch('fix_find_dds.patch', when='@1.4.0:1.4.4')
 
-    depends_on('fairlogger@1.2.0', when='@1.2.3')
-    depends_on('fairlogger@1.4.0', when='@1.4.3')
-    depends_on('fairlogger@1.4.0', when='@dev')
+    depends_on('googletest@1.7:', when='@:1.4.8')
+    depends_on('boost@1.64: +container+program_options+thread+system+filesystem+regex+date_time', when='@1.3')
+    depends_on('boost@1.64: +container+program_options+filesystem+date_time+regex', when='@1.4')
+    depends_on('fairlogger@1.2:1.5', when='@:1.4.7')
+    depends_on('fairlogger@1.2:', when='@1.4.8:,develop')
+    depends_on('zeromq@4.1.5:')
+    depends_on('nanomsg@1.1.5:')
+    depends_on('msgpack-c@3.1:')
+    depends_on('dds@2.2:2.4', when='@:1.4.9')
+    depends_on('dds@2.5-odc', when='@1.4.10')
+    depends_on('dds@3.0:', when='@1.4.11:')
+    depends_on('flatbuffers', when='@1.4.9:')
+    depends_on('pmix@2.1.4:', when='@1.4:')
 
-    depends_on('zeromq@4.2.5', when='@1.2.3')
-    depends_on('zeromq@4.3.1', when='@1.4.3')
-    depends_on('zeromq@4.3.1', when='@dev')
-
-    depends_on('msgpack-c@2.1.5', when='@1.2.3')
-    depends_on('msgpack-c@3.1.1', when='@1.4.3')
-    depends_on('msgpack-c@3.1.1', when='@dev')
-
-    depends_on('dds@2.1-1-g181b66a', when='@1.2.3')
-    depends_on('dds@2.2', when='@1.4.3')
-    depends_on('dds@master', when='@dev')
-
-    depends_on('nanomsg@1.0.0', when='@1.2.3')
-    depends_on('nanomsg@1.1.5', when='@1.4.3')
-    depends_on('nanomsg@1.1.5', when='@dev')
-
-    depends_on('flatbuffers', when='@dev')
+    depends_on('cmake@3.9.4:', type='build', when='@1.3')
+    depends_on('cmake@3.10:', type='build', when='@1.4.0:1.4.7')
+    depends_on('cmake@3.11:', type='build', when='@1.4.8:')
+    depends_on('cmake@3.12:', type='build', when='@develop')
+    depends_on('git', type='build')
+    depends_on('ninja', type='build')
 
     def cmake_args(self):
-        spec = self.spec
-        options = []
-        options.append('-DGTEST_ROOT={0}'.format(
-            self.spec['googletest'].prefix))
-        options.append('-DBOOST_ROOT={0}'.format(self.spec['boost'].prefix))
-        options.append('-DFAIRLOGGER_ROOT={0}'.format(
-            self.spec['fairlogger'].prefix))
-        options.append('-DZEROMQ_ROOT={0}'.format(self.spec['zeromq'].prefix))
-        options.append('-DMSGPACK_ROOT={0}'.format(
-            self.spec['msgpack-c'].prefix))
-        options.append('-DDDS_ROOT={0}'.format(self.spec['dds'].prefix))
-        options.append('-DBUILD_DDS_PLUGIN=ON')
-        options.append('-DNANOMSG_ROOT={0}'.format(
-            self.spec['nanomsg'].prefix))
-        options.append('-DBUILD_NANOMSG_TRANSPORT=ON')
-        if self.spec.satisfies('@dev'):
-            options.append('-DBUILD_SDK=ON')
-            options.append('-DBUILD_SDK_COMMANDS=ON')
-
-        return options
-
-    def patch(self):
-        """Spack strips the git repository, but the version is determined
-           by querying the git repository. This patches the CMake code to
-           not rely on a successful git query for the version info any more."""
-        filter_file('get_git_version\(\)',
-                    'get_git_version(DEFAULT_VERSION %s)' % self.spec.version,
-                    'CMakeLists.txt')
-
-    def setup_dependent_build_environment(self, env, dependent_spec):
-        """Prepend this package to the CMAKE_PREFIX_PATH"""
-        env.prepend_path('CMAKE_PREFIX_PATH', self.prefix)
+        args = []
+        args.append('-DDISABLE_COLOR=ON')
+        args.append('-DBUILD_NANOMSG_TRANSPORT=ON')
+        args.append('-DBUILD_DDS_PLUGIN=ON')
+        cxxstd = self.spec.variants['cxxstd'].value
+        if cxxstd != 'default':
+           args.append('-DCMAKE_CXX_STANDARD={0}'.format(cxxstd))
+        if self.spec.satisfies('@1.4:'):
+           args.append('-DBUILD_PMIX_PLUGIN=ON')
+        if self.spec.satisfies('@1.4.9:'):
+           args.append('-DBUILD_SDK_COMMANDS=ON')
+        if self.spec.satisfies('@1.4.11:'):
+           args.append('-DBUILD_SDK=ON')
+        # NOTE Support for building the ofi transport will be added at a later
+        #      point in time.
+        # args.append('-DBUILD_OFI_TRANSPORT=ON')
+        return args
