@@ -1,7 +1,13 @@
 spack:
+  definitions:
+  - no_pretty: ['@1.1.0', '@1.2.0', '@1.3.0']
+  - all:
+    - $no_pretty
+    - matrix:
+      - ['@1.4.0', '@1.5.0', '@1.6.0', '@1.6.1', '@develop']
+      - ['+pretty', '~pretty']
   specs:
-  - fairlogger
   - matrix:
-    - ["fairlogger"]
-    - ["@1.6.0", "@1.5.0","@1.4.0"]
+    - ['fairlogger']
+    - [$all]
   view: false
