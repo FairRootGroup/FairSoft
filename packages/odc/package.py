@@ -1,24 +1,9 @@
-# Copyright 2013-2019 Lawrence Livermore National Security, LLC and other
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
+#   Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright 2020 GSI Helmholtz Centre for Heavy Ion Research GmbH,
+#   Darmstadt, Germany
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-
-# ----------------------------------------------------------------------------
-# If you submit this package back to Spack as a pull request,
-# please first remove this boilerplate and all FIXME comments.
-#
-# This is a template package file for Spack.  We've put "FIXME"
-# next to all the things you'll want to change. Once you've handled
-# them, you can save this file and test your package like this:
-#
-#     spack install odc
-#
-# You can edit this file again by typing:
-#
-#     spack edit odc
-#
-# See the Spack documentation for more information on packaging.
-# ----------------------------------------------------------------------------
 
 from spack import *
 
@@ -28,23 +13,20 @@ class Odc(CMakePackage):
        The Online Device Control project control/communicate with a graph (topology) of FairMQ devices using DDS or PMIx."""
 
     homepage = "https://github.com/FairRootGroup/ODC"
-    git      = "https://github.com/FairRootGroup/ODC.git"
+    git = "https://github.com/FairRootGroup/ODC.git"
+    generator = 'Ninja'
 
-    version('master', branch='master')
+    version('develop', branch='master')
 
-    depends_on('boost@1.67.0: cxxstd=11 +container')
-    depends_on('cmake@3.11:', type='build')
-    depends_on('protobuf')
-    depends_on('grpc')
-    depends_on('dds@master')
-    depends_on('fairmq@dev')
+    depends_on('boost@1.67: +log+thread+program_options+filesystem+system+regex')
+    depends_on('protobuf +shared')
+    depends_on('grpc +codegen+shared')
+    depends_on('dds@develop')
+    depends_on('fairmq@develop')
+    depends_on('fairlogger@:1.5') # TODO Remove version restriction once ODC
+                                  # supports FairLogger 1.6+ (can handle the
+                                  # transitive fmt dependency)
 
-    def cmake_args(self):
-        args = []
-        args.append('-DBoost_NO_BOOST_CMAKE=ON')
-        args.append('-DBOOST_ROOT={0}'.format(self.spec['boost'].prefix))
-        args.append('-DProtobuf_DIR={0}'.format(self.spec['protobuf'].prefix))
-        args.append('-Dgrpc_DIR={0}'.format(self.spec['grpc'].prefix))
-        args.append('-DDDS_DIR={0}'.format(self.spec['dds'].prefix))
-        args.append('-DFairMQ_DIR={0}'.format(self.spec['fairmq'].prefix))
-        return args
+    depends_on('cmake@3.12:', type='build')
+    depends_on('git', type='build')
+    depends_on('ninja', type='build')
