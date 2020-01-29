@@ -166,6 +166,8 @@ fairroot@18.2.1 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
   macro(fs_test_props testname)
     set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
                  TARGETDIR=${TEST_TARGETDIR})
+    set_property(TEST ${testname} APPEND PROPERTY
+                 FIXTURES_REQUIRED fixture.main)
   endmacro()
   function(fs_test_simple)
     cmake_parse_arguments(ARGS "" "NAME" "SPEC" ${ARGN})
@@ -190,6 +192,14 @@ fairroot@18.2.1 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
   fs_test_env(NAME fairmq     ENVFILE env/dev/fairmq.yaml)
   fs_test_env(NAME jun19.threads   ENVFILE env/jun19/sim_threads.yaml)
   fs_test_env(NAME jun19.nothreads ENVFILE env/jun19/sim_no-threads.yaml)
+
+  add_test(NAME test.cleanup
+           COMMAND test/buildcleanup.sh
+           WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+  set_property(TEST test.cleanup APPEND PROPERTY ENVIRONMENT
+               TARGETDIR=${TEST_TARGETDIR})
+  set_property(TEST test.cleanup APPEND PROPERTY
+               FIXTURES_CLEANUP fixture.main)
 
 # set(SPACK_DIR $ENV{SPACK_DIR})
 # set(FAIRROOT_VERSION $ENV{FAIRROOT_VERSION})
