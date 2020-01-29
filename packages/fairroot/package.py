@@ -23,8 +23,6 @@ class Fairroot(CMakePackage):
             multi=False,
             description='Use the specified C++ standard when building.')
 
-    variant('opengl', default=True, description='Enable opengl support')
-
     variant('sim', default=True, description='Enable simulation engines and event generators')
 
     # Dependencies which are same for all versions
@@ -37,7 +35,6 @@ class Fairroot(CMakePackage):
 
     # mesa and libxml2 are dependencies of root which have to be build extra due to the
     # extra build options
-    depends_on('mesa~llvm', when="+opengl")
     depends_on('libxml2~python')
 
     # Dependencies for dev version
