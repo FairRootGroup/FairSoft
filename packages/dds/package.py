@@ -1,53 +1,54 @@
-# Copyright 2013-2019 Lawrence Livermore National Security, LLC and other
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
+#   Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright 2019-2020 GSI Helmholtz Centre for Heavy Ion Research GmbH,
+#   Darmstadt, Germany
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-
-import os.path
-import shutil
 
 from spack import *
 
 
 class Dds(CMakePackage):
     """The Dynamic Deployment System (DDS)
-       A tool-set that automates and significantly simplifies a deployment of user defined processes and their dependencies on any resource management system using a given topology. """
+       A tool-set that automates and significantly simplifies a deployment
+       of user defined processes and their dependencies on any resource
+       management system using a given topology.
+    """
 
     homepage = "http://dds.gsi.de"
-    url      = "https://github.com/FairRootGroup/DDS/archive/3.0.tar.gz"
-    git      = "https://github.com/FairRootGroup/DDS"
+    git = "https://github.com/FairRootGroup/DDS"
+    maintainers = ['dennisklein', 'ChristianTackeGSI']
 
-    version('master', branch='master')
-    version('3.0', tag='3.0')
-    version('2.5', tag='2.5')
-    version('2.2', tag='2.2')
-    
-    depends_on('boost@1.67.0: cxxstd=11 +container', when='@2.5:')
-    depends_on('boost@1.67.0:1.68.0 cxxstd=11 +container +signals', when='@2.2')
+    version('develop', branch='master', get_full_repo=True)
+    version('3.0', tag='3.0', commit='8b00716622962929ab4e19d0bb13e761d955fd87', no_cache=True)
+    version('2.5-odc', tag='2.5-odc', commit='77d8452e15b390eaa6314c78c6073c3a9d687202', no_cache=True)
+    version('2.4', tag='2.4', commit='7499753bdec9b5ed2468a712e57c5578ca25e7a6', no_cache=True)
+    version('2.2', tag='2.2', commit='7c633d61d011af6e38c591152d77a979f841ce8c', no_cache=True)
+    # TODO Once https://github.com/spack/spack/issues/14344 is resolved, enable
+    #      source caching again (by removing the `no_cache` argument).
+
+    patch('fix_wn_bin_2.x.patch', when='@:2.4')
+    patch('fix_wn_bin_3.0.patch', when='@2.5-odc,3.0,develop')
+    # TODO Upstream the wn_bin fix and once accepted update the `when` condition here
+
+    depends_on('boost@1.67: +shared+log+thread+program_options+filesystem+system+regex+test', when='@2.4:')
+    depends_on('boost@1.67:1.68 +shared+log+thread+program_options+filesystem+system+regex+test+signals', when='@:2.3')
+
     depends_on('cmake@3.11:', type='build')
+    depends_on('git', type='build')
 
-    patch('correct_version_info_25.patch', level=0, when='@2.5')
-    patch('correct_version_info_22.patch', level=0, when='@2.2')
+    variant('cxxstd', default='default',
+            values=('11', '14', '17'),
+            multi=False,
+            description='Force the specified C++ standard when building.')
 
-    def patch(self):
-        # Fetching version from .git doesn't work reliebly.
-        if os.path.exists(join_path(self.stage.source_path, ".git")):
-            shutil.rmtree(join_path(self.stage.source_path, ".git"))
-
-        if self.spec.satisfies("@master"):
-            version = "master"
-        else:
-            version = str(self.spec.version)
-
-        for directory in (self.stage.source_path, self.build_directory):
-            with working_dir(directory, create=True):
-                with open("version", "w") as f:
-                    f.write(version + "\n")
+    build_targets = ['wn_bin', 'all']
 
     def cmake_args(self):
-        options = []
-        options.append('-DBoost_NO_BOOST_CMAKE=ON')
-        options.append('-DBOOST_ROOT={0}'.format(
-                self.spec['boost'].prefix))
-
-        return options
+        args = []
+        if self.spec.satisfies('@:2.5'):
+            args.append('-DBUILD_SHARED_LIBS=ON')
+        cxxstd = self.spec.variants['cxxstd'].value
+        if cxxstd != 'default':
+            args.append('-DCMAKE_CXX_STANDARD=%s' % cxxstd)
+        return args
