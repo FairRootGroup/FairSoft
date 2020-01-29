@@ -184,6 +184,8 @@ fairroot@18.2.1 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
 
   fs_test_simple(NAME openssl SPEC openssl)
   fs_test_simple(NAME bzip2 SPEC bzip2)
+  fs_test_simple(NAME grpc SPEC grpc)
+  fs_test_simple(NAME flatbuffers SPEC flatbuffers)
 
   fs_test_env(NAME fairlogger ENVFILE env/dev/fairlogger.yaml)
   fs_test_env(NAME dds        ENVFILE env/dev/dds.yaml)
