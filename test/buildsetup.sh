@@ -43,6 +43,10 @@ EOF
 		echo "  build_jobs: $SLURM_CPUS_PER_TASK" >>"$HOME/.spack/config.yaml"
 	fi
 
+	cat "$HOME/.spack/config.yaml"
+	mkdir -v -p "$HOME/install-tree"
+	mkdir -v -p "$HOME/stage"
+
 	. spack/share/spack/setup-env.sh
 
 	spack mirror add test http://citpc008.gsi.de/spack/source-cache
@@ -50,3 +54,5 @@ EOF
 else
 	. spack/share/spack/setup-env.sh
 fi
+
+echo "*** [$(date +%H:%M:%S)] Starting"
