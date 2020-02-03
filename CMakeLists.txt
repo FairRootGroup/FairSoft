@@ -168,6 +168,8 @@ fairroot@18.2.1 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")
                  TARGETDIR=${TEST_TARGETDIR})
     set_property(TEST ${testname} APPEND PROPERTY
                  FIXTURES_REQUIRED fixture.main)
+    set_property(TEST ${testname} APPEND PROPERTY
+                 TIMEOUT 10800)
   endmacro()
   function(fs_test_simple)
     cmake_parse_arguments(ARGS "" "NAME" "SPEC" ${ARGN})
