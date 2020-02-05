@@ -128,7 +128,13 @@ class Cmake(Package):
     conflicts('%intel@:14', when='@3.14:',
               msg="Intel 14 has immature C++11 support")
 
+    sanity_check_is_file = ['bin/cmake']
+
     phases = ['bootstrap', 'build', 'install']
+
+    def setup_build_environment(self, env):
+        super(Cmake, self).setup_build_environment(env)
+        env.unset('DASHBOARD_TEST_FROM_CTEST')
 
     def flag_handler(self, name, flags):
         if name == 'cxxflags' and self.compiler.name == 'fj':
@@ -197,3 +203,5 @@ class Cmake(Package):
 
     def install(self, spec, prefix):
         make('install')
+
+        self.sanity_check_prefix()
