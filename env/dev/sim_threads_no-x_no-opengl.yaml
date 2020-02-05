@@ -10,6 +10,7 @@ spack:
     - boost@1.68.0
     - fairlogger@1.4.0
     - pythia6@428-alice1
+    - hepmc@2.06.09 length=CM momentum=GEV
     - pythia8@8240
     - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep+threads
     - $root
