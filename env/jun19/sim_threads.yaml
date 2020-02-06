@@ -5,6 +5,7 @@ spack:
     - when: platform == 'darwin'
       root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~python~tmva+aqua]
   specs:
+    - pcre+jit
     - cmake@3.13.4
     - googletest@1.8.1
     - boost@1.68.0
