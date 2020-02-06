@@ -49,6 +49,7 @@ class Fairmq(CMakePackage):
     depends_on('googletest@1.7:', when='@:1.4.8')
     depends_on('boost@1.64: +container+program_options+thread+system+filesystem+regex+date_time', when='@1.3')
     depends_on('boost@1.64: +container+program_options+filesystem+date_time+regex', when='@1.4')
+    conflicts('^boost@1.70:', when='^cmake@:3.14')
     depends_on('fairlogger@1.2:1.5', when='@:1.4.7')
     depends_on('fairlogger@1.2:', when='@1.4.8:,develop')
     depends_on('zeromq@4.1.5:')

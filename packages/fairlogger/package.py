@@ -41,6 +41,7 @@ class Fairlogger(CMakePackage):
     conflicts('+pretty', when='@:1.3')
 
     depends_on('boost', when='+pretty')
+    conflicts('^boost@1.70:', when='^cmake@:3.14')
     depends_on('fmt@5.3.0:', when='@1.6.0:')
 
     depends_on('cmake@3.9.4:', type='build')

@@ -33,6 +33,7 @@ class Dds(CMakePackage):
 
     depends_on('boost@1.67: +shared+log+thread+program_options+filesystem+system+regex+test', when='@2.4:')
     depends_on('boost@1.67:1.68 +shared+log+thread+program_options+filesystem+system+regex+test+signals', when='@:2.3')
+    conflicts('^boost@1.70:', when='^cmake@:3.14')
 
     depends_on('cmake@3.11:', type='build')
     depends_on('git', type='build')

@@ -19,6 +19,7 @@ class Odc(CMakePackage):
     version('develop', branch='master')
 
     depends_on('boost@1.67: +log+thread+program_options+filesystem+system+regex')
+    conflicts('^boost@1.70:', when='^cmake@:3.14')
     depends_on('protobuf +shared')
     depends_on('grpc +codegen+shared')
     depends_on('dds@develop')
