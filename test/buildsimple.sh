@@ -2,4 +2,4 @@
 
 . test/buildsetup.sh
 
-spack install "$@"
+spack -C ./config install "$@"
