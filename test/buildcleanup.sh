@@ -8,5 +8,5 @@ rm -rf "$HOME/install-tree"
 stageKB="$(cd $HOME/stage && du -ks . | sed -e 's/[	 ].*$//')"
 
 echo ""
-echo "<DartMeasurement name=\"installedMB\" type=\"numeric/integer\">$installedMB</DartMeasurement>"
-echo "<DartMeasurement name=\"stageKB\" type=\"numeric/integer\">$stageKB</DartMeasurement>"
+echo "<DartMeasurement name=\"installedMB\" type=\"numeric/double\">$installedMB</DartMeasurement>"
+echo "<DartMeasurement name=\"stageKB\" type=\"numeric/double\">$stageKB</DartMeasurement>"
