@@ -17,7 +17,7 @@ class Geant4(CMakePackage):
     homepage = "http://geant4.cern.ch/"
     url = "http://geant4.cern.ch/support/source/geant4.10.01.p03.tar.gz"
 
-    version('10.06', sha256='7bfb29677bbc2306b111da670672bad2942c202de5a486e2b8d013172a1bd7d9')
+    version('10.06', sha256='1424c5a0e37adf577f265984956a77b19701643324e87568c5cb69adc59e3199')
     version('10.05.p01', '8a5fa524b5e6e427452e7680d49d5471')
     version('10.04.p03', 'e60a321b691f6b58de54c8a2139b21fa')
     version('10.04.p01', '3f9f5f61d956b2d1d12f009ddd810fd0')
