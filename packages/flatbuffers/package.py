@@ -28,4 +28,5 @@ class Flatbuffers(CMakePackage):
         args.append('-DFLATBUFFERS_BUILD_SHAREDLIB=ON')
         args.append('-DFLATBUFFERS_BUILD_FLATLIB=OFF')
         args.append('-DCMAKE_BUILD_TYPE=Release')
+        args.append('-DCMAKE_MACOSX_RPATH=ON')
         return args
