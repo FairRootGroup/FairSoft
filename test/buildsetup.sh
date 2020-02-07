@@ -11,22 +11,22 @@ fi
 # echo "==> Environment:"
 # env | sed -e 's/^/==>  | /'
 
-echo -n "*** Number of threads per python: "
-python3 -c 'import multiprocessing; print(multiprocessing.cpu_count())'
+# echo -n "*** Number of threads per python: "
+# python3 -c 'import multiprocessing; print(multiprocessing.cpu_count())'
 
 if [ ! -d "$TARGETDIR" ]
 then
 	TARGETDIR="$(mktemp -d)"
-	echo "==> Created test directory: $TARGETDIR"
+	echo "*** Created test directory: $TARGETDIR"
 else
-	echo "==> Reusing test directory: $TARGETDIR"
+	echo "*** Reusing test directory: $TARGETDIR"
 fi
 
 export HOME="$TARGETDIR"
 
 if [ ! -d "$HOME/.spack/" ]
 then
-	echo "==> Setting up spack"
+	echo "*** Setting up spack"
 	mkdir -p "$HOME/.spack/"
 	cat >"$HOME/.spack/config.yaml" <<EOF
 config:
@@ -49,7 +49,11 @@ EOF
 
 	. spack/share/spack/setup-env.sh
 
-	spack mirror add test http://citpc008.gsi.de/spack/source-cache
+	if (hostname --all-fqdns 2>/dev/null || hostname -f) | grep '[.]gsi[.]de *$' >/dev/null
+	then
+		spack mirror add test http://citpc008.gsi.de/spack/source-cache
+	fi
+
 	spack repo add .
 else
 	. spack/share/spack/setup-env.sh
