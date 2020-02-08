@@ -8,6 +8,6 @@ From: fedora:30
     dnf -y update
     dnf -y groupinstall "C Development Tools and Libraries"
     dnf -y install gcc-gfortran wget curl which git xz patch procps unzip
-    # We need cmake for our testing
-    dnf -y install cmake
+    # Things for our testing system:
+    dnf -y install cmake hostname redhat-lsb-core
     dnf -y clean all
