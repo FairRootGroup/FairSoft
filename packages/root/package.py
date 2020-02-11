@@ -65,6 +65,7 @@ class Root(CMakePackage):
     patch('graf2d.patch', level=0)
     patch('external_zlib.patch', level=0, when='@6.12.06')
     patch('root6_16_xrootd.patch', level=0, when='@6.16.00')
+    patch('cmake_python.patch', when="@6.16.00 ^cmake@3.12:")
 
     if sys.platform == 'darwin':
         # Resolve non-standard use of uint, _cf_
