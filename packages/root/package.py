@@ -264,6 +264,7 @@ class Root(CMakePackage):
     depends_on('vdt',       when='+vdt')
     depends_on('libxml2~python',   when='+xml')
     depends_on('xrootd',    when='+xrootd')
+    depends_on('python@2.7:2.99', when='@6.16', type='build')
     # depends_on('hdfs') - supported (TODO)
 
     # Not supported
