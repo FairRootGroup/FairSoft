@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 78beec7..2afe209 100644
+index 73d70a4..bb85b06 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -10,7 +10,8 @@ set(DDS_PROTOCOL_VERSION "2")
@@ -73,21 +73,7 @@ index 78beec7..2afe209 100644
 -
 -set(DDS_AGENT_BIN_PATH $<TARGET_FILE:dds-agent>)
 -set(DDS_PREREQ_SOURCE_BIN_PATH $<TARGET_FILE:dds-commander>)
-+# top-level executables to package in wn pkg
-+list(APPEND WN_PKG_EXECUTABLES
-+  $<TARGET_FILE:dds-agent>
-+  $<TARGET_FILE:dds-user-defaults> )
-+separate_arguments(CLI_WN_PKG_EXECUTABLES
-+  UNIX_COMMAND "${WN_PKG_EXECUTABLES}" )
-+
-+# Generate a list of what CMake considers to be system prefixes
-+list(APPEND WN_PKG_EXCLUDED_SYSTEM_PREFIXES
-+  ${CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES}
-+  ${CMAKE_INSTALL_LIBDIR} )
-+list(REMOVE_DUPLICATES WN_PKG_EXCLUDED_SYSTEM_PREFIXES)
-+separate_arguments(CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES
-+  UNIX_COMMAND "${WN_PKG_EXCLUDED_SYSTEM_PREFIXES}" )
- 
+-
 -set(PREREQ_DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 -
 -
@@ -123,12 +109,28 @@ index 78beec7..2afe209 100644
 -#
 -# TODO: replace DDS_CollectPrerequisites.cmake by DDS_CollectPrerequisitesGen.cmake and make the script more generic
 -#
- add_custom_target( wn_bin
+-add_custom_target( wn_bin ALL
 -	COMMAND -mkdir -p ${WN_PKG_DIR}
 -	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:dds-agent> "${WN_PKG_DIR}"
 -	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:dds-user-defaults> "${WN_PKG_DIR}"
 -	COMMAND ${CMAKE_COMMAND} -DPREREQ_DESTINATION=${WN_PKG_DIR} -DDDS_AGENT_BIN_PATH=${DDS_AGENT_BIN_PATH}
 -		-DPREREQ_DIRS=${PREREQ_DIRS} -DDDS_BOOST_LIB_DIR=${DDS_BOOST_LIB_DIR} -P "${CMAKE_SOURCE_DIR}/cmake/modules/DDS_CollectPrerequisites.cmake"
++# top-level executables to package in wn pkg
++list(APPEND WN_PKG_EXECUTABLES
++  $<TARGET_FILE:dds-agent>
++  $<TARGET_FILE:dds-user-defaults> )
++separate_arguments(CLI_WN_PKG_EXECUTABLES
++  UNIX_COMMAND "${WN_PKG_EXECUTABLES}" )
++
++# Generate a list of what CMake considers to be system prefixes
++list(APPEND WN_PKG_EXCLUDED_SYSTEM_PREFIXES
++  ${CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES}
++  ${CMAKE_INSTALL_LIBDIR} )
++list(REMOVE_DUPLICATES WN_PKG_EXCLUDED_SYSTEM_PREFIXES)
++separate_arguments(CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES
++  UNIX_COMMAND "${WN_PKG_EXCLUDED_SYSTEM_PREFIXES}" )
++
++add_custom_target( wn_bin
 +	COMMAND ${CMAKE_COMMAND} -E make_directory ${WN_PKG_DIR}
 +  COMMAND ${CMAKE_COMMAND}
 +    -DEXECUTABLES=${CLI_WN_PKG_EXECUTABLES}

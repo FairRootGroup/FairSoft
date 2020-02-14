@@ -27,15 +27,18 @@ class Dds(CMakePackage):
     # TODO Once https://github.com/spack/spack/issues/14344 is resolved, enable
     #      source caching again (by removing the `no_cache` argument).
 
-    patch('fix_wn_bin_2.x.patch', when='@:2.4')
-    patch('fix_wn_bin_3.0.patch', when='@2.5-odc,3.0,develop')
-    # TODO Upstream the wn_bin fix and once accepted update the `when` condition here
+    patch('fix_wn_bin_2.2.patch', when='@2.2')
+    patch('fix_wn_bin_2.4.patch', when='@2.4')
+    patch('fix_wn_bin_2.5-odc.patch', when='@2.5-odc')
+    patch('fix_wn_bin_3.0.patch', when='@3.0')
+    patch('fix_wn_bin_master.patch', when='@develop')
+    # TODO Upstream the wn_bin fix
 
     depends_on('boost@1.67: +shared+log+thread+program_options+filesystem+system+regex+test', when='@2.4:')
     depends_on('boost@1.67:1.68 +shared+log+thread+program_options+filesystem+system+regex+test+signals', when='@:2.3')
     conflicts('^boost@1.70:', when='^cmake@:3.14')
 
-    depends_on('cmake@3.11:', type='build')
+    depends_on('cmake@3.16:', type='build')
     depends_on('git', type='build')
 
     variant('cxxstd', default='default',
@@ -43,7 +46,7 @@ class Dds(CMakePackage):
             multi=False,
             description='Force the specified C++ standard when building.')
 
-    build_targets = ['wn_bin', 'all']
+    build_targets = ['all', 'wn_bin']
 
     def cmake_args(self):
         args = []

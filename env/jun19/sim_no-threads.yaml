@@ -7,7 +7,6 @@ spack:
   specs:
     - pcre+jit
     - python@2.7.16
-    - cmake@3.13.4
     - googletest@1.8.1
     - boost@1.68.0
     - fairlogger@1.4.0

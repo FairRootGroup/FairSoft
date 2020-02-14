@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 78beec7..2afe209 100644
+index a8c297a..adb1f61 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -10,7 +10,8 @@ set(DDS_PROTOCOL_VERSION "2")
+@@ -9,7 +9,8 @@ set(DDS_PROTOCOL_VERSION "2")
  #
  # Check if cmake has the required version
  #
@@ -12,7 +12,7 @@ index 78beec7..2afe209 100644
  
  set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
  
-@@ -131,23 +132,20 @@ set(MiscCommon_LOCATION
+@@ -125,23 +126,20 @@ set(MiscCommon_LOCATION
  if(APPLE)
  	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++ -Wthread-safety")
  	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lc++")
@@ -48,7 +48,7 @@ index 78beec7..2afe209 100644
  
  #
  # global variables
-@@ -392,71 +390,30 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
+@@ -380,63 +378,30 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
  set( WN_PKG_NAME_ARCH "${WN_PKG_NAME}.tar.gz" )
  set( WN_PKG_REMOTE_DIR "/u/ddswww/web-docs/releases/add/${DDS_VERSION}" )
  
@@ -57,22 +57,16 @@ index 78beec7..2afe209 100644
 -	set(DDS_BOOST_LIB_DIR ${Boost_LIBRARY_DIR_RELEASE})
 -endif()
 -
--if(ENV{DDS_LD_LIBRARY_PATH})
--  # because of SIP on macOS we can't use (DY)LD_LIBRARY_PATH.
--  # But we need to search also in custom location for libstdc++ in case if user installs a custom version of gcc/clang.
--  # WORKAROUND: We therefore introduce DDS_LD_LIBRARY_PATH, which user can use to specify custom library path(s)
--  file(TO_CMAKE_PATH "$ENV{DDS_LD_LIBRARY_PATH}" ENV_LD_LIBRARY_PATH)
--else()
--  file(TO_CMAKE_PATH "$ENV{LD_LIBRARY_PATH}" ENV_LD_LIBRARY_PATH)
--endif()
+-# because of SIP on macOS we can't use (DY)LD_LIBRARY_PATH.
+-# But we need to search also in custom location for libstdc++ in case if user installs a custom version of gcc/clang.
+-# WORKAROUND: We therefore introduce DDS_LD_LIBRARY_PATH, which user can use to specify custom library path(s)
+-set(ENV_LD_LIBRARY_PATH "$ENV{DDS_LD_LIBRARY_PATH}")
 -
--set(PREREQ_DIRS "$<TARGET_FILE_DIR:dds-user-defaults>::$<TARGET_FILE_DIR:dds_protocol_lib>::$<TARGET_FILE_DIR:dds_intercom_lib>::$<TARGET_FILE_DIR:dds_topology_lib>::$<TARGET_FILE_DIR:dds_ncf>::${DDS_BOOST_LIB_DIR}")
--foreach(p IN LISTS ENV_LD_LIBRARY_PATH)
--  set(PREREQ_DIRS "${PREREQ_DIRS}::${p}")
--endforeach()
--
+-set(PREREQ_DIRS "$<TARGET_FILE_DIR:dds-user-defaults>::$<TARGET_FILE_DIR:dds_protocol_lib>::$<TARGET_FILE_DIR:dds_intercom_lib>::$<TARGET_FILE_DIR:dds_topology_lib>::$<TARGET_FILE_DIR:dds_ncf>::${DDS_BOOST_LIB_DIR}::${ENV_LD_LIBRARY_PATH}")
 -set(DDS_AGENT_BIN_PATH $<TARGET_FILE:dds-agent>)
 -set(DDS_PREREQ_SOURCE_BIN_PATH $<TARGET_FILE:dds-commander>)
+-
+-set(PREREQ_DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 +# top-level executables to package in wn pkg
 +list(APPEND WN_PKG_EXECUTABLES
 +  $<TARGET_FILE:dds-agent>
@@ -88,8 +82,6 @@ index 78beec7..2afe209 100644
 +separate_arguments(CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES
 +  UNIX_COMMAND "${WN_PKG_EXCLUDED_SYSTEM_PREFIXES}" )
  
--set(PREREQ_DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
--
 -
 -# WORKAROUND: don't generate helper script when building an xcode project
 -# The reason: "Evaluation file to be written multiple times for different configurations or languages with different content"
@@ -141,7 +133,7 @@ index 78beec7..2afe209 100644
  	COMMENT "Generate WN binary package"
  	VERBATIM )
  
-@@ -477,19 +434,6 @@ add_dependencies( wn_bin_upload
+@@ -457,19 +422,6 @@ add_dependencies( wn_bin_upload
  
  INSTALL(FILES ${CMAKE_BINARY_DIR}/${WN_PKG_NAME_ARCH} DESTINATION bin/wn_bins OPTIONAL)
  
