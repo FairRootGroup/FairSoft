@@ -45,10 +45,17 @@ $ spack compiler find
     /home/dklein/.spack/linux/compilers.yaml
 ```
 
-Now whitelist the `$LD_LIBRARY_PATH` to be passed to the spack build environment (instead of using the [yq command](https://github.com/mikefarah/yq) you may also edit the file manually or by any other means):
+Now whitelist the `$LD_LIBRARY_PATH` to be passed to the spack build environment:
 
 ```
-$ yq w -i /home/dklein/.spack/linux/compilers.yaml 'compilers.(compiler.spec==gcc@8.3.0).compiler.environment.prepend-path.LD_LIBRARY_PATH' "$LD_LIBRARY_PATH"
+$ spack python tools/dds_compiler_fix.py
+*** Fixing compiler spec 'gcc@8.3.0' with prefix '/home/dklein/.spack/install_tree/linux-fedora31-skylake/gcc-9.2.1/gcc-8.3.0-xqpz6stvina7sfg3l7pm7lhscvtq57e6' to add LD_LIBRARY_PATH '/home/dklein/.spack/install_tree/linux-fedora31-skylake/gcc-9.2.1/gcc-8.3.0-xqpz6stvina7sfg3l7pm7lhscvtq57e6/lib'
+```
+
+Alternatively use the [yq command](https://github.com/mikefarah/yq), or you may also edit the file manually or by any other means:
+
+```
+$ yq w -i $HOME/.spack/linux/compilers.yaml 'compilers.(compiler.spec==gcc@8.3.0).compiler.environment.prepend-path.LD_LIBRARY_PATH' "$LD_LIBRARY_PATH"
 compilers:
 (...)
 - compiler:
