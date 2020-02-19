@@ -15,18 +15,23 @@ class Root(CMakePackage):
     homepage = "https://root.cern.ch"
     url      = "https://root.cern/download/root_v6.16.00.source.tar.gz"
 
+    maintainers = ['chissg', 'HadrienG2']
+
     # ###################### Versions ##########################
 
     # Master branch
     version('master', git="https://github.com/root-project/root.git",
-        branch='master')
+            branch='master')
 
     # Development version (when more recent than production).
 
     # Production version
-    version('6.18.04', sha256='315a85fc8363f8eb1bffa0decbf126121258f79bd273513ed64795675485cfa4', preferred=True)
+    version('6.18.04', sha256='315a85fc8363f8eb1bffa0decbf126121258f79bd273513ed64795675485cfa4',
+            preferred=True)
 
     # Old versions
+    version('6.18.02', sha256='50ffffdbf2585a536c77a03f54aa631926138275ffeee02e5a16dde87e978c1d')
+    version('6.18.00', sha256='e6698d6cfe585f186490b667163db65e7d1b92a2447658d77fa831096383ea71')
     version('6.16.00', sha256='2a45055c6091adaa72b977c512f84da8ef92723c30837c7e2643eecc9c5ce4d8')
     version('6.14.08', sha256='1b63b51cfb4dc20f1f5749faac6bbd1098eccab777f8b49911257d77186c73c4')
     version('6.14.06', sha256='0fb943b61396f282b289e35c455a9ab60126229be1bd3f04a8f00b37c13ab432')
@@ -60,12 +65,6 @@ class Root(CMakePackage):
     patch('root7-webgui.patch', level=1, when='@6.16.00')
 
     # Pass X11 include directories to build system when building builtin glew
-    patch('builtin_glew.patch', level=0, when='@:6.16.00')
-    patch('builtin_ftgl.patch', level=0, when='@:6.16.00')
-    patch('graf3d_gl.patch', level=0, when='@:6.16.00')
-    patch('builtin_glew_6.18.patch', level=0, when='@6.18:')
-    patch('builtin_ftgl_6.18.patch', level=0, when='@6.18:')
-    patch('graf3d_gl_6.18.patch', level=0, when='@6.18:')
     patch('graf2d.patch', level=0)
     patch('external_zlib.patch', level=0, when='@6.12.06')
     patch('root6_16_xrootd.patch', level=0, when='@6.16.00')
@@ -83,36 +82,36 @@ class Root(CMakePackage):
     variant('avahi', default=False,
         description='Compile with avahi')
     variant('aqua', default=False,
-        description='Enable Aqua interface')
+            description='Enable Aqua interface')
     # No need for a specific variant: libafterimage is not provided by spack
     # By default always true, we get the builtin included in the source
     # variant('asimage', default=True,
     #    description='Enable image processing support')
     variant('davix', default=True,
-        description='Compile with external Davix')
+            description='Compile with external Davix')
     variant('emacs', default=False,
-        description='Enable Emacs support')
+            description='Enable Emacs support')
     variant('examples', default=True,
-        description='Install examples')
+            description='Install examples')
     variant('fftw', default=False,
-        description='Enable Fast Fourier Transform support')
+            description='Enable Fast Fourier Transform support')
     variant('fits', default=False,
-        description='Enable support for images and data from FITS files')
+            description='Enable support for images and data from FITS files')
     variant('fortran', default=False,
-        description='Enable the Fortran components of ROOT')
+            description='Enable the Fortran components of ROOT')
     variant('graphviz', default=False,
-        description='Enable graphviz support')
+            description='Enable graphviz support')
     variant('gdml', default=True,
-        description='Enable GDML writer and reader')
+            description='Enable GDML writer and reader')
     variant('gminimal', default=True,
-        description='Ignore most of Root\'s feature defaults except for '
-        'basic graphic options')
+            description='Ignore most of Root\'s feature defaults except for '
+            'basic graphic options')
     variant('gsl', default=True,
-        description='Enable linking against shared libraries for GSL')
+            description='Enable linking against shared libraries for GSL')
     variant('http', default=False,
-        description='Enable HTTP server support')
+            description='Enable HTTP server support')
     variant('jemalloc', default=False,
-        description='Enable using the jemalloc allocator')
+            description='Enable using the jemalloc allocator')
     variant('kerberos', default=False,
         description='Enable Kerberos support')
     variant('ldap', default=False,
@@ -120,69 +119,69 @@ class Root(CMakePackage):
     variant('libcxx', default=False,
         description='Build using libc++')
     variant('math', default=True,
-        description='Build the new libMathMore extended math library')
+            description='Build the new libMathMore extended math library')
     variant('memstat', default=False,
-        description='Enable a memory stats utility to detect memory leaks')
+            description='Enable a memory stats utility to detect memory leaks')
     # Minuit must not be installed as a dependency of root
     # otherwise it crashes with the internal minuit library
     variant('minuit', default=True,
-        description='Automatically search for support libraries')
+            description='Automatically search for support libraries')
     variant('mysql', default=False)
     variant('odbc', default=False,
         description='Enable ODBC support')
     variant('opengl', default=True,
-        description='Enable OpenGL support')
+            description='Enable OpenGL support')
     # variant('oracle', default=False) - not supported by spack
     variant('postgres', default=False,
-        description='Enable postgres support')
+            description='Enable postgres support')
     variant('pythia6', default=False,
-        description='Enable pythia6 support')
-    variant('pythia8', default=False, # - not suported by spack
-        description='Enable pythia8 support')
+            description='Enable pythia6 support')
+    variant('pythia8', default=False,
+            description='Enable pythia8 support')
     variant('python', default=True,
-        description='Enable Python ROOT bindings')
+            description='Enable Python ROOT bindings')
     variant('qt4', default=False,
-        description='Enable Qt graphics backend')
+            description='Enable Qt graphics backend')
     variant('r', default=False,
-        description='Enable R ROOT bindings')
+            description='Enable R ROOT bindings')
     variant('rpath', default=True,
-        description='Enable RPATH')
+            description='Enable RPATH')
     variant('roofit', default=True,
-        description='Build the libRooFit advanced fitting package')
+            description='Build the libRooFit advanced fitting package')
     variant('root7', default=False,
-        description='Enable ROOT 7 support')
+            description='Enable ROOT 7 support')
     variant('shadow', default=False,
-        description='Enable shadow password support')
+            description='Enable shadow password support')
     variant('sqlite', default=False,
-        description='Enable SQLite support')
+            description='Enable SQLite support')
     variant('ssl', default=False,
-        description='Enable SSL encryption support')
+            description='Enable SSL encryption support')
     variant('table', default=False,
-        description='Build libTable contrib library')
+            description='Build libTable contrib library')
     variant('tbb', default=True,
-        description='TBB multi-threading support')
+            description='TBB multi-threading support')
     variant('test', default=False,
         description='Enable test suit of ROOT with CTest')
     variant('threads', default=True,
-        description='Enable using thread library')
+            description='Enable using thread library')
     variant('tiff', default=True,
         description='Include Tiff support in image processing')
     variant('tmva', default=True,
-        description='Build TMVA multi variate analysis library')
+            description='Build TMVA multi variate analysis library')
     variant('unuran', default=True,
-        description='Use UNURAN for random number generation')
+            description='Use UNURAN for random number generation')
     variant('vc', default=False,
-        description='Enable Vc for adding new types for SIMD programming')
+            description='Enable Vc for adding new types for SIMD programming')
     variant('vdt', default=True,
-        description='Enable set of fast and vectorisable math functions')
+            description='Enable set of fast and vectorisable math functions')
     variant('x', default=True,
-        description='Enable set of graphical options')
+            description='Enable set of graphical options')
     # variant('xinetd', default=False,  - not supported by spack
     #    description='Enable a daemon process manager')
     variant('xml', default=True,
-        description='Enable XML parser interface')
+            description='Enable XML parser interface')
     variant('xrootd', default=False,
-        description='Build xrootd file server and its client')
+            description='Build xrootd file server and its client')
 
     # ###################### Compiler variants ########################
 
@@ -194,7 +193,8 @@ class Root(CMakePackage):
 
     # ###################### Dependencies ######################
 
-    depends_on('cmake@3.4.3:', type='build')
+    depends_on('cmake@3.4.3:', type='build', when='@:6.16.99')
+    depends_on('cmake@3.9:', type='build', when='@6.18.00:')
     depends_on('pkgconfig', type='build')
 
     depends_on('blas')
@@ -218,8 +218,8 @@ class Root(CMakePackage):
     depends_on('libsm',   when="+x")
 
     # OpenGL
-#    depends_on('ftgl@2.1.3-rc5',  when="+x+opengl")
-#    depends_on('glew',  when="+x+opengl")
+#    depends_on('ftgl@2.1.3-rc5,2.4.0:', when="+x+opengl")
+    depends_on('glew',  when="+x+opengl")
     depends_on('gl',    when="+x+opengl")
     depends_on('glu',   when="+x+opengl")
 #    depends_on('gl2ps', when="+x+opengl")
@@ -251,7 +251,7 @@ class Root(CMakePackage):
     depends_on('odbc',      when='+odbc')
     # depends_on('oracle',   when='+oracle')
     depends_on('openssl',   when='+ssl')
-    depends_on('openssl', when='+davix')  # Also with davix
+    depends_on('openssl',   when='+davix')  # Also with davix
     depends_on('postgresql', when='+postgres')
     depends_on('pythia6',  when='+pythia6')
     depends_on('pythia8',   when='+pythia8')
@@ -321,7 +321,7 @@ class Root(CMakePackage):
             '-Dbuiltin_freetype:BOOL=ON',
             '-Dbuiltin_ftgl:BOOL=ON',
             '-Dbuiltin_gl2ps:BOOL=ON',
-            '-Dbuiltin_glew:BOOL=ON',
+            '-Dbuiltin_glew:BOOL=OFF',
             '-Dbuiltin_gsl:BOOL=OFF',
             '-Dbuiltin_lzma:BOOL=OFF',
             '-Dbuiltin_openssl:BOOL=OFF',
@@ -561,6 +561,15 @@ class Root(CMakePackage):
         add_include_path('zlib')
         add_include_path('libpng')
         add_include_path('jpeg')
+
+        # With that done, let's go fixing those deps
+        if '+x' in self.spec:
+            add_include_path('fontconfig')
+            add_include_path('libx11')
+            add_include_path('xproto')
+        if '+opengl' in self.spec:
+            add_include_path('glew')
+            add_include_path('mesa-glu')
 
     def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
         spack_env.set('ROOTSYS', self.prefix)
