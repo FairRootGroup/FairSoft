@@ -18,15 +18,19 @@ class Flatbuffers(CMakePackage):
     version('1.9.0', '8be7513bf960034f6873326d09521a4b')
     version('1.8.0', '276cab8303c4189cbe3b8a70e0515d65')
 
+    variant('shared', default=True,
+            description='Build shared instead of static libraries')
 
     # Remove unnecessary const qualifier
     # https://github.com/google/flatbuffers/pull/4698
     patch('remove_unnecessary_const_qualifier.patch', when='@1.9.0')
 
     def cmake_args(self):
-        args=[]
-        args.append('-DFLATBUFFERS_BUILD_SHAREDLIB=ON')
-        args.append('-DFLATBUFFERS_BUILD_FLATLIB=OFF')
-        args.append('-DCMAKE_BUILD_TYPE=Release')
-        args.append('-DCMAKE_MACOSX_RPATH=ON')
+        args = []
+        args.append('-DFLATBUFFERS_BUILD_SHAREDLIB={0}'.format(
+            'ON' if '+shared' in self.spec else 'OFF'))
+        args.append('-DFLATBUFFERS_BUILD_FLATLIB={0}'.format(
+            'ON' if '+shared' not in self.spec else 'OFF'))
+        if 'darwin' in self.spec.architecture:
+            args.append('-DCMAKE_MACOSX_RPATH=ON')
         return args
