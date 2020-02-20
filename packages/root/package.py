@@ -251,7 +251,8 @@ class Root(CMakePackage):
     depends_on('postgresql', when='+postgres')
     depends_on('pythia6',  when='+pythia6')
     depends_on('pythia8',   when='+pythia8')
-    depends_on('python@2.7:',     when='+python', type=('build', 'run'))
+    depends_on('python@2.7:2.99',     when='@6.16', type=('build', 'run'))
+    depends_on('python@2.7:', when='@6.18:+python', type=('build', 'run'))
     depends_on('r',         when='+r', type=('build', 'run'))
     depends_on('r-cpp',     when='+r', type=('build', 'run'))
     depends_on('r-inside',  when='+r', type=('build', 'run'))
@@ -505,7 +506,7 @@ class Root(CMakePackage):
             options.append('-DCMAKE_PROGRAM_PATH={0}'.format(
                 self.spec['mysql-client'].prefix.bin))
 
-        if '+python' in self.spec:
+        if '+python' in self.spec or '@6.16' in self.spec:
             options.append('-DPYTHON_EXECUTABLE={0}/python'.format(
                 self.spec['python'].prefix.bin))
 
