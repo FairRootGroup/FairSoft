@@ -17,6 +17,7 @@ class Fairlogger(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='dev', get_full_repo=True)
+    version('1.6.2', tag='v1.6.2', commit='cdf887f5da7c9871b621a88e9098a78d17da2eb0', no_cache=True)
     version('1.6.1', tag='v1.6.1', commit='86ab87de7b8211395f6c6bffce4efbf988ea5a4f', no_cache=True)
     version('1.6.0', tag='v1.6.0', commit='b9edcd623d758b79bb0d424c02c71239b2cc6b2a', no_cache=True)
     version('1.5.0', tag='v1.5.0', commit='9949e83a141e2678b9d0af6947418ceab21b4e77', no_cache=True)
@@ -42,7 +43,8 @@ class Fairlogger(CMakePackage):
 
     depends_on('boost', when='+pretty')
     conflicts('^boost@1.70:', when='^cmake@:3.14')
-    depends_on('fmt@5.3.0:', when='@1.6.0:')
+    depends_on('fmt@5.3.0:5.99', when='@1.6.0:1.6.1')
+    depends_on('fmt@5.3.0:', when='@1.6.2:')
 
     depends_on('cmake@3.9.4:', type='build')
     depends_on('git', type='build')
