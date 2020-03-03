@@ -1,0 +1,16 @@
+spack:
+  definitions:
+    - when: platform == 'linux'
+      libfabric:
+      - libfabric fabrics=verbs,sockets
+    - when: platform == 'darwin'
+      libfabric:
+      - libfabric
+  specs:
+  - slurm@18-08-9-1 +pmix sysconfdir=/etc/slurm
+  - pmix@2.2.2
+  - munge@0.5.13 localstatedir=/var
+  - $libfabric
+  - openmpi@3.1.0 schedulers=slurm +pmi +thread_multiple +legacylaunchers fabrics=auto
+  concretization: together
+  view: false
