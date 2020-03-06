@@ -38,6 +38,12 @@ else()
     message(STATUS "Created directory for test run: ${FS_TEST_WORKDIR}")
 endif()
 
+macro(fs_test_might_fail testname)
+  # If the test fails with exit code 1, mark it as skipped.
+  # Not exactly, what we want, but hopefully better.
+  set_property(TEST ${testname} APPEND PROPERTY
+               SKIP_RETURN_CODE 1)
+endmacro()
 function(fs_test_props_base testname)
   set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
                TARGETDIR=${FS_TEST_WORKDIR})
