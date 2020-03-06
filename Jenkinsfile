@@ -1,13 +1,16 @@
 #!groovy
 
-def jobMatrix(String node_type, List specs, Closure callback) {
+def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
   def nodes = [:]
   for (spec in specs) {
     def label = spec.os
     def jobsh = "job_${label}.sh"
     def title = "build/${label}"
+    def container = ""
     if (node_type == 'macos') {
       node_type = label
+    } else {
+      container = spec.container
     }
     nodes[title] = {
       node(node_type) {
@@ -22,7 +25,7 @@ def jobMatrix(String node_type, List specs, Closure callback) {
               echo 'echo "*** Job ID: \$SLURM_JOB_ID"' >> ${jobsh}
               echo "source <(sed -e '/^#/d' -e '/^export/!s/^.*=/export &/' /etc/environment)" >> ${jobsh}
               echo "export LABEL=${label}" >> ${jobsh}
-              echo "${env.SINGULARITY_CONTAINER_ROOT}/run_container ${spec.container} ctest -VV -S FairSoft_test.cmake" >> ${jobsh}
+              echo "${env.SINGULARITY_CONTAINER_ROOT}/run_container ${container} ${ctestcmd}" >> ${jobsh}
             """
             sh "cat ${jobsh}"
           }
@@ -46,7 +49,8 @@ pipeline {
     stage('Run CI Matrix') {
       steps{
         script {
-          def linux_jobs = jobMatrix('slurm', [
+          def ctestcmd = "ctest -VV -S FairSoft_test.cmake"
+          def linux_jobs = jobMatrix('slurm', ctestcmd, [
             [os: 'Fedora30', container: 'fedora.30.sif'],
           ]) { spec, label, jobsh ->
             sh """
@@ -54,12 +58,12 @@ pipeline {
               srun -p main -c 64 -n 1 -t 300 --job-name="alfaci-${label}" bash ${jobsh}
             """
           }
-          def macos_jobs = jobMatrix('macos', [
+          def macos_jobs = jobMatrix('macos', ctestcmd, [
             [os: 'macOS10.14'],
           ]) { spec, label, jobsh ->
             sh """
               export LABEL=${label}
-              ctest -VV -S FairSoft_test.cmake
+              ${ctestcmd}
             """
           }
           parallel(linux_jobs + macos_jobs)
