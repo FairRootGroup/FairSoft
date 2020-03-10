@@ -15,6 +15,8 @@ class Root(CMakePackage):
     homepage = "https://root.cern.ch"
     url      = "https://root.cern/download/root_v6.16.00.source.tar.gz"
 
+    maintainers = ['chissg', 'HadrienG2', 'drbenmorgan']
+
     # ###################### Versions ##########################
 
     # Master branch
@@ -24,7 +26,8 @@ class Root(CMakePackage):
     # Development version (when more recent than production).
 
     # Production version
-    version('6.18.04', sha256='315a85fc8363f8eb1bffa0decbf126121258f79bd273513ed64795675485cfa4', preferred=True)
+    version('6.18.04', sha256='315a85fc8363f8eb1bffa0decbf126121258f79bd273513ed64795675485cfa4',
+            preferred=True)
 
     # Old versions
     version('6.16.00', sha256='2a45055c6091adaa72b977c512f84da8ef92723c30837c7e2643eecc9c5ce4d8')
@@ -136,7 +139,7 @@ class Root(CMakePackage):
             description='Enable postgres support')
     variant('pythia6', default=False,
             description='Enable pythia6 support')
-    variant('pythia8', default=False, # - not suported by spack
+    variant('pythia8', default=False,
             description='Enable pythia8 support')
     variant('python', default=True,
             description='Enable Python ROOT bindings')
@@ -174,6 +177,8 @@ class Root(CMakePackage):
             description='Enable Vc for adding new types for SIMD programming')
     variant('vdt', default=True,
             description='Enable set of fast and vectorisable math functions')
+    variant('vmc', default=False,
+            description='Enable the Virtual Monte Carlo interface')
     variant('x', default=True,
             description='Enable set of graphical options')
     # variant('xinetd', default=False,  - not supported by spack
@@ -197,7 +202,7 @@ class Root(CMakePackage):
     depends_on('pkgconfig', type='build')
 
     depends_on('blas')
-#    depends_on('freetype')
+    depends_on('freetype')
     depends_on('jpeg')
     depends_on('libice')
     depends_on('libpng')
@@ -226,8 +231,8 @@ class Root(CMakePackage):
     # Qt4
     depends_on('qt@:4.999', when='+qt4')
 
-    # TMVA
-    depends_on('py-numpy', when='+tmva')
+    # Python
+    depends_on('py-numpy', type=('build', 'run'), when='+tmva')
 
     # Asimage variant would need one of these two
     # For the moment, we use the libafterimage provided by the root sources
@@ -238,7 +243,7 @@ class Root(CMakePackage):
     depends_on('avahi',     when='+avahi')
     depends_on('davix @0.7.1:', when='+davix')
     depends_on('cfitsio',   when='+fits')
-#    depends_on('fftw',      when='+fftw')
+    depends_on('fftw',      when='+fftw')
     depends_on('graphviz',  when='+graphviz')
     depends_on('gsl',       when='+gsl')
 #    depends_on('http',      when='+http')
@@ -250,7 +255,7 @@ class Root(CMakePackage):
     depends_on('odbc',      when='+odbc')
     # depends_on('oracle',   when='+oracle')
     depends_on('openssl',   when='+ssl')
-    depends_on('openssl', when='+davix')  # Also with davix
+    depends_on('openssl',   when='+davix')  # Also with davix
     depends_on('postgresql', when='+postgres')
     depends_on('pythia6',  when='+pythia6')
     depends_on('pythia8',   when='+pythia8')
@@ -303,7 +308,9 @@ class Root(CMakePackage):
 
         # #################### Base Settings #######################
 
-        # ROOT should not download its own dependencies
+        # Options related to ROOT's ability to download and build its own
+        # dependencies. Per Spack convention, this should generally be avoided.
+
         options = [
             '-Dexplicitlink=ON',
             '-Dexceptions=ON',
@@ -316,8 +323,8 @@ class Root(CMakePackage):
             '-Dastiff:BOOL=ON',   # asimage and astiff must be ON too
             '-Dbuiltin_cfitsio:BOOL=OFF',
             '-Dbuiltin_davix:BOOL=OFF',
-            '-Dbuiltin_fftw3:BOOL=ON',
-            '-Dbuiltin_freetype:BOOL=ON',
+            '-Dbuiltin_fftw3:BOOL=OFF',
+            '-Dbuiltin_freetype:BOOL=OFF',
             '-Dbuiltin_ftgl:BOOL=ON',
             '-Dbuiltin_gl2ps:BOOL=ON',
             '-Dbuiltin_glew:BOOL=ON',
@@ -344,6 +351,7 @@ class Root(CMakePackage):
 
         # #################### ROOT options #######################
 
+        # Features
         options.extend([
             '-Dx11:BOOL=%s' % (
                 'ON' if '+x' in spec else 'OFF'),
