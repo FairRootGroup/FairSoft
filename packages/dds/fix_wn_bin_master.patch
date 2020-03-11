@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 647ed7b..7aa9f5f 100644
+index ac59845..9e21c78 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -10,7 +10,8 @@ set(DDS_PROTOCOL_VERSION "2")
@@ -12,43 +12,7 @@ index 647ed7b..7aa9f5f 100644
  
  set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
  
-@@ -141,23 +142,20 @@ add_compile_definitions(BOOST_INTERPROCESS_TIMEOUT_WHEN_LOCKING_DURATION_MS=5000
- if(APPLE)
- 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++ -Wthread-safety")
- 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lc++")
--
--	# In response to CMake 3.0 generating warnings regarding policy CMP0042,
--	# the OSX RPATH settings have been updated per recommendations found
--	# in the CMake Wiki: http://www.cmake.org/Wiki/CMake_RPATH_handling#Mac_OS_X_and_the_RPATH
--	set(CMAKE_MACOSX_RPATH ON)
--	set(CMAKE_SKIP_BUILD_RPATH FALSE)
--	set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
--	set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
--	set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
--	list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
--	if("${isSystemDir}" STREQUAL "-1")
--		set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
--	endif()
--
- elseif(UNIX)
- 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
--endif(APPLE)
-+  set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} "-Wl,--enable-new-dtags")
-+  set(CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS} "-Wl,--enable-new-dtags")
-+endif()
-+
-+set(CMAKE_SKIP_BUILD_RPATH FALSE)
-+set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-+list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
-+if("${isSystemDir}" STREQUAL "-1")
-+  set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-+endif()
- 
- #
- # global variables
-@@ -403,69 +401,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
+@@ -411,69 +412,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
  set( WN_PKG_NAME_ARCH "${WN_PKG_NAME}.tar.gz" )
  set( WN_PKG_REMOTE_DIR "/u/ddswww/web-docs/releases/add/${DDS_VERSION}" )
  
@@ -81,8 +45,6 @@ index 647ed7b..7aa9f5f 100644
 -
 -set(DDS_AGENT_BIN_PATH $<TARGET_FILE:dds-agent>)
 -set(DDS_PREREQ_SOURCE_BIN_PATH $<TARGET_FILE:dds-commander>)
--
--set(PREREQ_DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 +# Generate a list of what CMake considers to be system prefixes
 +list(APPEND WN_PKG_EXCLUDED_SYSTEM_PREFIXES
 +  ${CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES}
@@ -91,6 +53,8 @@ index 647ed7b..7aa9f5f 100644
 +separate_arguments(CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES
 +  UNIX_COMMAND "${WN_PKG_EXCLUDED_SYSTEM_PREFIXES}" )
  
+-set(PREREQ_DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+-
 -
 -# WORKAROUND: don't generate helper script when building an xcode project
 -# The reason: "Evaluation file to be written multiple times for different configurations or languages with different content"
@@ -138,7 +102,7 @@ index 647ed7b..7aa9f5f 100644
  	COMMAND ${CMAKE_COMMAND} -E tar czf ${WN_PKG_NAME_ARCH} "${WN_PKG_DIR}"
  	COMMAND chmod go+xr ${WN_PKG_NAME_ARCH}
  	COMMENT "Generate WN binary package"
-@@ -488,19 +448,6 @@ add_dependencies( wn_bin_upload
+@@ -496,19 +459,6 @@ add_dependencies( wn_bin_upload
  
  INSTALL(FILES ${CMAKE_BINARY_DIR}/${WN_PKG_NAME_ARCH} DESTINATION bin/wn_bins OPTIONAL)
  
