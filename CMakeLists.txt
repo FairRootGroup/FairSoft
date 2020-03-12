@@ -29,14 +29,19 @@ execute_process(COMMAND mktemp -d
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 message(STATUS "Directory for this test run: ${TEST_TARGETDIR}")
 
-macro(fs_test_props testname)
+function(fs_test_props_base testname)
   set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
                TARGETDIR=${TEST_TARGETDIR})
+  set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
+               CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR})
+endfunction()
+function(fs_test_props testname)
+  fs_test_props_base(${testname})
   set_property(TEST ${testname} APPEND PROPERTY
                FIXTURES_REQUIRED fixture.main)
   set_property(TEST ${testname} APPEND PROPERTY
                TIMEOUT 10800)
-endmacro()
+endfunction()
 function(fs_test_simple)
   cmake_parse_arguments(ARGS "" "NAME" "SPEC" ${ARGN})
   add_test(NAME simple.${ARGS_NAME}
@@ -71,7 +76,6 @@ fs_test_env(NAME jun19.nothreads ENVFILE env/jun19/sim_no-threads.yaml)
 add_test(NAME test.cleanup
          COMMAND test/buildcleanup.sh
          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-set_property(TEST test.cleanup APPEND PROPERTY ENVIRONMENT
-             TARGETDIR=${TEST_TARGETDIR})
+fs_test_props_base(test.cleanup)
 set_property(TEST test.cleanup APPEND PROPERTY
              FIXTURES_CLEANUP fixture.main)
