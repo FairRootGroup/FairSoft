@@ -1,0 +1,10 @@
+--- graf3d/glew/CMakeLists.txt	2020-03-13 09:03:30.304208011 +0100
++++ graf3d/glew/CMakeLists.txt_new	2020-03-13 09:06:27.716714556 +0100
+@@ -10,6 +10,7 @@
+ )
+ 
+ target_include_directories(GLEW PRIVATE inc)
++target_include_directories(GLEW PUBLIC ${GLU_INCLUDE_DIR})
+ 
+ # Do not install headers for all platforms and configurations.
+ if(UNIX)

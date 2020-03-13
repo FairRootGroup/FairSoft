@@ -1,0 +1,20 @@
+--- graf3d/gl/CMakeLists.txt	2020-03-13 09:20:06.864274779 +0100
++++ graf3d/gl/CMakeLists.txt_new	2020-03-13 09:21:31.484539194 +0100
+@@ -2,7 +2,7 @@
+ # CMakeLists.txt file for building ROOT graf3d/gl package
+ ############################################################################
+ 
+-include_directories(${OPENGL_INCLUDE_DIR} ${FTGL_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
++include_directories(${OPENGL_INCLUDE_DIR} ${FTGL_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS} ${GLU_INCLUDE_DIR})
+ 
+ if(WIN32 OR cocoa)
+   set(installoptions FILTER "TX11GL")
+--- graf3d/eve/CMakeLists.txt	2020-03-13 09:20:22.387324367 +0100
++++ graf3d/eve/CMakeLists.txt_new	2020-03-13 09:22:25.474699123 +0100
+@@ -290,5 +290,5 @@
+   )
+ 
+   target_include_directories(Eve PRIVATE
+-    ${FTGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS})
++    ${FTGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${GLU_INCLUDE_DIR})
+ endif()
