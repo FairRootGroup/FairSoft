@@ -1,12 +1,13 @@
 spack:
   definitions:
     - when: platform == 'linux'
-      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~python~tmva ^mesa~llvm]
+      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt+python+tmva ^mesa~llvm]
     - when: platform == 'darwin'
-      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt~python~tmva+aqua]
+      root: [root@6.16.00+fortran+gdml+http+memstat+pythia6+pythia8+vc~vdt+python+tmva+aqua]
   specs:
     - pcre+jit
     - python@2.7.16
+    - py-numpy@1.16.5
     - googletest@1.8.1
     - boost@1.68.0
     - fairlogger@1.4.0
