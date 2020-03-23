@@ -2,5 +2,9 @@ spack:
   specs:
   - matrix:
     - ['dds']
-    - ['@develop', '@3.0', '@2.5-odc', '@2.4', '@2.2']
+    - - '@2.2'
+      - '@2.4'
+      - '@2.5-odc'
+      - '@3.0'
+      - '@develop'
   view: false
