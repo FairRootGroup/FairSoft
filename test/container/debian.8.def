@@ -1,8 +1,8 @@
 # Rebuild:
-#   singularity build -f -F ubuntu.18.04.sif ubuntu.18.04.def
+#   singularity build -f -F debian.8.sif debian.8.def
 
 Bootstrap: docker
-From: ubuntu:18.04
+From: debian:8
 
 %post
     apt-get update
@@ -10,5 +10,4 @@ From: ubuntu:18.04
     apt-get -y --no-install-recommends install sed curl ca-certificates wget xz-utils bzip2 gzip unzip tar
     apt-get -y --no-install-recommends install python3 g++ gcc gfortran make patch git
     # Things for our testing system:
-    apt-get -y --no-install-recommends install cmake hostname lsb-release
-    apt-get -y clean
+    apt-get -y install cmake hostname lsb-release
