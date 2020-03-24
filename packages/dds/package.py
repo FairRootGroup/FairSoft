@@ -33,7 +33,7 @@ class Dds(CMakePackage):
     patch('fix_wn_bin_3.0.patch', when='@3.0')
     patch('fix_wn_bin_master.patch', when='@develop')
     # TODO Upstream the wn_bin fix
-    patch('fix_uuid_init.patch', when='@2.5-odc:3.0,develop')
+    patch('fix_uuid_init.patch', when='@2.5-odc:3.0')
 
     depends_on('boost@1.67: +shared+log+thread+program_options+filesystem+system+regex+test', when='@2.4:')
     depends_on('boost@1.67:1.68 +shared+log+thread+program_options+filesystem+system+regex+test+signals', when='@:2.3')
