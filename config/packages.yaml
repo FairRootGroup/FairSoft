@@ -1,0 +1,5 @@
+packages:
+  all:
+    providers:
+      tbb: [fairsoft.intel-tbb]
+
