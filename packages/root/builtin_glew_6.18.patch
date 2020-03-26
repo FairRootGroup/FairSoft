@@ -1,6 +1,12 @@
---- graf3d/glew/CMakeLists.txt	2020-03-13 09:03:30.304208011 +0100
-+++ graf3d/glew/CMakeLists.txt_new	2020-03-13 09:06:27.716714556 +0100
-@@ -10,6 +10,7 @@
+--- graf3d/glew/CMakeLists.txt	2019-09-11 15:36:49.000000000 +0200
++++ graf3d/glew/CMakeLists.txt_new	2020-03-26 06:25:38.000000000 +0100
+@@ -5,11 +5,13 @@
+ ROOT_LINKER_LIBRARY(GLEW
+   src/glew.c
+   LIBRARIES
++    ${X11_LIBRARIES}
+     OpenGL::GL
+     OpenGL::GLU
  )
  
  target_include_directories(GLEW PRIVATE inc)
