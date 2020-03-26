@@ -19,7 +19,7 @@ class Fairroot(CMakePackage):
     git      = "https://github.com/FairRootGroup/FairRoot.git"
 
     # Development versions
-    version('dev', branch='dev')
+    version('develop', branch='dev')
 
     version('18.2.1', '06a5b3b2c5445f7342464061cccbe7bc')
     version('18.0.6', '822902c2fc879eab82fca47eccb14259')
@@ -47,7 +47,7 @@ class Fairroot(CMakePackage):
     # Dependencies for dev version
     depends_on('boost@1.68.0: cxxstd=11 +container')
 
-    depends_on('vmc', when='@dev')
+    depends_on('vmc', when='@develop')
 
     depends_on('geant4', when="+sim")
 
