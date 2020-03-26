@@ -1,10 +1,11 @@
-# Copyright 2013-2019 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 
 from spack import *
+from spack.util.environment import is_system_path
 import sys
 
 
@@ -198,7 +199,7 @@ class Root(CMakePackage):
 
     depends_on('blas')
 #    depends_on('freetype')
-#    depends_on('jpeg')
+    depends_on('jpeg')
     depends_on('libice')
     depends_on('libpng')
     depends_on('lz4', when='@6.13.02:')  # See cmake_args, below.
@@ -536,7 +537,30 @@ class Root(CMakePackage):
         if 'lz4' in self.spec:
             spack_env.append_path('CMAKE_PREFIX_PATH',
                                   self.spec['lz4'].prefix)
+
+        # This hack is made necessary by a header name collision between
+        # asimage's "import.h" and Python's "import.h" headers...
         spack_env.set('SPACK_INCLUDE_DIRS', '', force=True)
+
+        # ...but it breaks header search for any ROOT dependency which does not
+        # use CMake. To resolve this, we must bring back those dependencies's
+        # include paths into SPACK_INCLUDE_DIRS.
+        #
+        # But in doing so, we must be careful not to inject system header paths
+        # into SPACK_INCLUDE_DIRS, even in a deprioritized form, because some
+        # system/compiler combinations don't like having -I/usr/include around.
+        def add_include_path(dep_name):
+            try:
+                include_path = self.spec[dep_name].prefix.include
+            except KeyError:
+                return
+            if not is_system_path(include_path):
+                spack_env.append_path('SPACK_INCLUDE_DIRS', include_path)
+
+        # The internal afterimage needs those sometimes:
+        add_include_path('zlib')
+        add_include_path('libpng')
+        add_include_path('jpeg')
 
     def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
         spack_env.set('ROOTSYS', self.prefix)
