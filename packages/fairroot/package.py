@@ -65,6 +65,7 @@ class Fairroot(CMakePackage):
 #    depends_on('millepede')
 
     patch('CMake.patch', level=0, when="@18.0.6")
+    patch('link_against_flatbuffers_shared.patch', when="@develop")
 
     def setup_environment(self, spack_env, run_env):
         stdversion=('-std=c++%s' % self.spec.variants['cxxstd'].value)
