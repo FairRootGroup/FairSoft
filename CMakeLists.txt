@@ -73,6 +73,8 @@ fs_test_env(NAME dev.threads_nox_noopengl ENVFILE env/dev/sim_threads_no-x_no-op
 fs_test_env(NAME jun19.threads   ENVFILE env/jun19/sim_threads.yaml)
 fs_test_env(NAME jun19.nothreads ENVFILE env/jun19/sim_no-threads.yaml)
 
+fs_test_env(NAME r3broot ENVFILE env/dev/r3broot.yaml)
+
 add_test(NAME test.cleanup
          COMMAND test/buildcleanup.sh
          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
