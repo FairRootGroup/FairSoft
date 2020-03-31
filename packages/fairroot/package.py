@@ -32,6 +32,8 @@ class Fairroot(CMakePackage):
 
     variant('sim', default=True, description='Enable simulation engines and event generators')
 
+    patch('cmake_utf8.patch', when='@18.2.1')
+
     # Dependencies which are same for all versions
     depends_on('gnutls ~guile') #dependency of cmake which has to be build without guile support
     depends_on('cmake@3.13.4: +ownlibs', type='build')
