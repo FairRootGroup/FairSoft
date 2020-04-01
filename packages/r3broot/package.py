@@ -28,6 +28,7 @@ class R3broot(CMakePackage):
     depends_on('pythia8')
 
     patch('fairlogger_include.patch')
+    patch('no_boost_loading.patch')
 
     def cmake_args(self):
         args = ['-DCMAKE_CXX_STANDARD=11']

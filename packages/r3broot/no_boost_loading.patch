@@ -1,0 +1,18 @@
+--- spack-src/califa/R3BCalifaGeometry.cxx~	2020-04-01 14:17:31.000000000 +0200
++++ spack-src/califa/R3BCalifaGeometry.cxx	2020-04-01 16:30:16.546107352 +0200
+@@ -272,15 +272,6 @@
+     return distance;
+ }
+ 
+-// ROOT (or pyroot) is unable to automatically load dependencies of so's for whatever reason.
+-// so we try to force loading the lib during var initialisation.
+-// yes, this is ugly.
+-static bool _dummy_load_libboost_regex = []() {
+-    char buf[100];
+-    snprintf(buf, 100, "%s/lib/libboost_regex.so", getenv("SIMPATH"));
+-    return gSystem->Load(buf);
+-}();
+-
+ int R3BCalifaGeometry::GetCrystalId(const char* volumePath)
+ { /*
+    * Yes, regex matching in the stepping action is probably slow.
