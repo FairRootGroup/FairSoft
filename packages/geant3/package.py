@@ -31,5 +31,16 @@ class Geant3(CMakePackage):
 
         return options
 
-    def setup_environment(self, spack_env, run_env):
-        run_env.set('G3SYS', '%s/share/geant3' % self.spec.prefix)
+    def common_env_setup(self, env):
+        env.set('G3SYS', join_path(self.prefix.share, 'geant3'))
+        # So that root finds the shared library / rootmap
+        env.prepend_path("LD_LIBRARY_PATH", self.prefix.lib)
+
+    def setup_run_environment(self, env):
+        self.common_env_setup(env)
+
+    def setup_dependent_build_environment(self, env, dependent_spec):
+        self.common_env_setup(env)
+
+    def setup_dependent_run_environment(self, env, dependent_spec):
+        self.common_env_setup(env)

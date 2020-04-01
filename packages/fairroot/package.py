@@ -115,3 +115,15 @@ class Fairroot(CMakePackage):
 #        # touch a file in the installation directory
 #        touch('%s/this-is-a-bundle.txt' % prefix)
 
+    def common_env_setup(self, env):
+        # So that root finds the shared library / rootmap
+        env.prepend_path("LD_LIBRARY_PATH", self.prefix.lib)
+
+    def setup_run_environment(self, env):
+        self.common_env_setup(env)
+
+    def setup_dependent_build_environment(self, env, dependent_spec):
+        self.common_env_setup(env)
+
+    def setup_dependent_run_environment(self, env, dependent_spec):
+        self.common_env_setup(env)
