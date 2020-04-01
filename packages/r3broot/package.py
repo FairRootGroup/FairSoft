@@ -36,8 +36,8 @@ class R3broot(CMakePackage):
 
     def build(self, spec, prefix):
         super(R3broot, self).build(spec, prefix)
-        # with working_dir(self.build_directory):
-        #     make("test")
+        with working_dir(self.build_directory):
+            make("CTEST_OUTPUT_ON_FAILURE=1", "test")
 
     def setup_build_environment(self, env):
         env.set("FAIRROOTPATH", self.spec['fairroot'].prefix)
