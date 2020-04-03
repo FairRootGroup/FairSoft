@@ -18,10 +18,16 @@ class Geant3(CMakePackage):
     version('v2-7_fairsoft', tag='v2-7_fairsoft')
     version('v3-0_fairsoft', tag='v3-0_fairsoft')
 
+    variant('build_type', default='Nightly',
+            description='CMake build type',
+            values=('Nightly'))
+
     # FIXME: Add dependencies if required.
     depends_on('cmake', type='build')
     depends_on('root')
     depends_on('vmc', when='@v3-0_fairsoft:')
+
+    patch('gcalor_stringsize.patch', level=0)
 
     def cmake_args(self):
         spec = self.spec
