@@ -16,7 +16,7 @@ class Odc(CMakePackage):
     git = "https://github.com/FairRootGroup/ODC.git"
     generator = 'Ninja'
 
-    version('develop', branch='master')
+    version('develop', branch='master', get_full_repo=True)
 
     depends_on('boost@1.67: +log+thread+program_options+filesystem+system+regex')
     conflicts('^boost@1.70:', when='^cmake@:3.14')
