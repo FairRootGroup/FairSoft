@@ -42,6 +42,12 @@ config:
   - '$HOME/stage'
 EOF
 
+	if [ -n "$SPACK_CCACHE" ]
+	then
+		echo "*** Setting ccache to '$SPACK_CCACHE'"
+		echo "  ccache: $SPACK_CCACHE" >>"$HOME/.spack/config.yaml"
+	fi
+
 	if [ -n "$SLURM_CPUS_PER_TASK" ]
 	then
 		echo "  build_jobs: $SLURM_CPUS_PER_TASK" >>"$HOME/.spack/config.yaml"
