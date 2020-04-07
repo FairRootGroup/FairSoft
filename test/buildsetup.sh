@@ -26,6 +26,12 @@ else
 	echo "*** Reusing test directory: $TARGETDIR"
 fi
 
+if [ "$SPACK_CCACHE" = "true" ]
+then
+  CCACHE_CACHEDIR="$(ccache -k cache_dir)"
+  CCACHE_MAXSIZE="$(ccache -k max_size)"
+fi
+
 export HOME="$TARGETDIR"
 
 if [ ! -d "$HOME/.spack/" ]
@@ -42,10 +48,12 @@ config:
   - '$HOME/stage'
 EOF
 
-	if [ -n "$SPACK_CCACHE" ]
+	if [ "$SPACK_CCACHE" = "true" ]
 	then
-		echo "*** Setting ccache to '$SPACK_CCACHE'"
-		echo "  ccache: $SPACK_CCACHE" >>"$HOME/.spack/config.yaml"
+		echo "*** Enabling ccache"
+		echo "  ccache: true" >>"$HOME/.spack/config.yaml"
+		ccache -o "cache_dir=$CCACHE_CACHEDIR"
+		ccache -o "max_size=$CCACHE_MAXSIZE"
 	fi
 
 	if [ -n "$SLURM_CPUS_PER_TASK" ]
