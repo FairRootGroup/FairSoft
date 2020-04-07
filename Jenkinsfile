@@ -46,7 +46,7 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
 pipeline {
   agent none
   stages {
-    stage('Run CI Matrix') {
+    stage('run CI Matrix') {
       steps{
         script {
           def ctestcmd = "ctest -VV -S FairSoft_test.cmake"
