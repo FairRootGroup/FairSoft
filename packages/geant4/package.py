@@ -92,6 +92,15 @@ class Geant4(CMakePackage):
     depends_on('geant4-data@10.04', when='@10.04.p00:10.04.p99 ~data')
     depends_on('geant4-data@10.03', when='@10.03.p03 ~data')
 
+    @when('@10.04:10.06')
+    def patch(self):
+        # Workaround fix
+        # See: https://bugzilla-geant4.kek.jp/show_bug.cgi?id=2226#c7
+        filter_file(r'  fMaxLifeTime = 1000*CLHEP::second;',
+                    r'  fMaxLifeTime = 1.0*CLHEP::microsecond;',
+                    'source/processes/hadronic/models/de_excitation/management/src/G4DeexPrecoParameters.cc',
+                    string=True)
+
     def cmake_args(self):
         spec = self.spec
 
