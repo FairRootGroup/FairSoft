@@ -27,6 +27,7 @@ class Geant4Vmc(CMakePackage):
     def cmake_args(self):
         spec = self.spec
         options = []
+        options.append('-DCMAKE_INSTALL_LIBDIR:PATH=lib')
         options.append('-DGeant4VMC_USE_VGM=ON')
         options.append('-DGeant4VMC_USE_GEANT4_UI=Off')
         options.append('-DGeant4VMC_USE_GEANT4_VIS=Off')

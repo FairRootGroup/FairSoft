@@ -26,6 +26,7 @@ class Geant3(CMakePackage):
     def cmake_args(self):
         spec = self.spec
         options = []
+        options.append('-DCMAKE_INSTALL_LIBDIR:PATH=lib')
         options.append('-DROOT_DIR={0}'.format(
                 self.spec['root'].prefix))
 
