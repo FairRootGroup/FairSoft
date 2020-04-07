@@ -68,7 +68,9 @@ pipeline {
               ${ctestcmd}
             """
           }
-          parallel(linux_jobs + macos_jobs)
+          throttle(['long']) {
+            parallel(linux_jobs + macos_jobs)
+          }
         }
       }
     }
