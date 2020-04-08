@@ -18,7 +18,7 @@ spack:
     - pythia8@8240
     - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep+threads
     - $root
-    - geant3@v2-7_fairsoft
+    - geant3@2-7_fairsoft
     - vgm@4-5
     - geant4_vmc@4-0-p1
     - fairroot@18.2.1+sim+examples

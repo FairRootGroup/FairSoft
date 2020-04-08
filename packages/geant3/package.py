@@ -9,21 +9,19 @@ from spack import *
 class Geant3(CMakePackage):
     """Simulation software using Monte Carlo methods to describe how particles pass through matter.."""
 
-    # FIXME: Add a proper url for your package's homepage here.
     homepage = "https://root.cern.ch/vmc"
-
     git      = "https://github.com/FairRootGroup/geant3.git"
 
-    version('v2-5-gcc8', tag='v2-5-gcc8')
-    version('v2-7_fairsoft', tag='v2-7_fairsoft')
-    version('v3-0_fairsoft', tag='v3-0_fairsoft')
+    version('2-5-gcc8', tag='v2-5-gcc8')
+    version('2-7_fairsoft', tag='v2-7_fairsoft')
+    version('3-0_fairsoft', tag='v3-0_fairsoft')
 
     variant('build_type', default='Nightly',
             description='CMake build type',
             values=('Nightly'))
 
     depends_on('root')
-    depends_on('vmc', when='@v3-0_fairsoft:')
+    depends_on('vmc', when='@3-0_fairsoft:')
 
     patch('gcalor_stringsize.patch', level=0)
     patch('dict_fixes_30.patch', when='@v3-0_fairsoft')

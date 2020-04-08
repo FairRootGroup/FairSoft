@@ -143,7 +143,7 @@ dds@2.4
 fairlogger@1.4.0
 fairmq@1.4.3
 fairroot@18.2.1 +sim
-geant3@v2-7_fairsoft
+geant3@2-7_fairsoft
 geant4@10.05.p01 ~clhep~data~motif~opengl~qt+threads~vecgeom~x11
 geant4_vmc@4-0-p1
 googletest@1.8.1
@@ -177,7 +177,7 @@ dds@2.4
 fairlogger@1.4.0
 fairmq@1.4.3
 fairroot@18.2.1 +sim
-geant3@v2-7_fairsoft
+geant3@2-7_fairsoft
 geant4@10.05.p01 ~clhep~data~motif~opengl~qt+threads~vecgeom~x11
 geant4_vmc@4-0-p1
 googletest@1.8.1
@@ -197,7 +197,7 @@ cmake@3.13.4       g4radioactivedecay@5.3   libedit@3.1-20170329  libxrender@0.9
 davix@0.6.8        g4realsurface@2.1.1      libevent@2.1.8        llvm@9.0.0          tar@1.32
 dds@2.4            g4saiddata@2.0           libice@1.0.9          lz4@1.9.2           unuran@1.8.1
 expat@2.2.9        g4tendl@1.3.2            libiconv@1.16         mesa@18.3.6         vc@1.4.1
-fairlogger@1.4.0   geant3@v2-7_fairsoft     libpciaccess@0.13.5   mesa-glu@9.0.0      vgm@4-5
+fairlogger@1.4.0   geant3@2-7_fairsoft      libpciaccess@0.13.5   mesa-glu@9.0.0      vgm@4-5
 fairmq@1.4.3       geant4@10.05.p01         libpng@1.6.37         msgpack-c@3.1.1     xerces-c@3.2.2
 fairroot@18.2.1    geant4-data@10.05        libpthread-stubs@0.4  nanomsg@1.1.5       xextproto@7.3.0
 font-util@1.3.2    geant4_vmc@4-0-p1        libsm@1.2.2           ncurses@6.1         xproto@7.0.31
