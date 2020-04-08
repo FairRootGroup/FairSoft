@@ -190,7 +190,21 @@ g4ndl@4.5          hwloc@2.0.2              libxext@1.3.3         pythia8@8240
 
 ### 5. Use
 
-TODO
+Symbolic links to packages in install tree can be placed to a common installation prefix using view command.
+This will create a directory, which can be used as SIMPATH in order to build experiment-specific frameworks.
+View is created by following command:
+
+Linux
+```
+[jun19] $ spack -C ./config view --verbose --dependencies true symlink -i (YOUR_SIMPATH) fairroot
+```
+
+macOS
+```
+[jun19] $ spack -C ./config view --verbose --dependencies true -e libpng,libjpeg-turbo,libiconv,sqlite symlink -i (YOUR_SIMPATH) fairroot
+```
+
+The view creation has to be done within an activated environment.
 
 ## [Troubleshooting](docs/troubleshooting.md)
 
