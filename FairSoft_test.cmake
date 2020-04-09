@@ -6,6 +6,25 @@
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 
+if (USE_TEMPDIR)
+    execute_process(COMMAND mktemp -d --tmpdir fairsoft_ctest.XXXXXX
+                    OUTPUT_VARIABLE FS_TEST_WORKDIR
+                    OUTPUT_STRIP_TRAILING_WHITESPACE
+                    RESULT_VARIABLE res)
+    if (res)
+        execute_process(COMMAND mktemp -d
+                        OUTPUT_VARIABLE FS_TEST_WORKDIR
+                        OUTPUT_STRIP_TRAILING_WHITESPACE
+                        RESULT_VARIABLE res)
+    endif()
+    if (res)
+        message(FATAL_ERROR "Temp dir creation failed: ${res}")
+    endif()
+    message(STATUS "CTest workdir: ${FS_TEST_WORKDIR}")
+else()
+    set(FS_TEST_WORKDIR "")
+endif()
+
 set(CTEST_SOURCE_DIRECTORY .)
 set(CTEST_BINARY_DIRECTORY build)
 set(CTEST_TEST_TIMEOUT 10800)
@@ -54,7 +73,7 @@ endif()
 message(STATUS "cdash_group: ${cdash_group}")
 
 ctest_start(Continuous TRACK ${cdash_group})
-ctest_configure()
+ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR}")
 # ctest_build()
 ctest_test(RETURN_VALUE _ctest_test_ret_val)
 ctest_submit()
