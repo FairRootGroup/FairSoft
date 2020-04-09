@@ -24,14 +24,23 @@ endif()
 # Test #######################################################################
 include(CTest)
 
-execute_process(COMMAND mktemp -d
-  OUTPUT_VARIABLE TEST_TARGETDIR
-  OUTPUT_STRIP_TRAILING_WHITESPACE)
-message(STATUS "Directory for this test run: ${TEST_TARGETDIR}")
+if (DEFINED FS_TEST_WORKDIR AND NOT "${FS_TEST_WORKDIR}" STREQUAL "")
+    message(STATUS "FS_TEST_WORKDIR: ${FS_TEST_WORKDIR}")
+    if (EXISTS "${FS_TEST_WORKDIR}" AND IS_DIRECTORY "${FS_TEST_WORKDIR}")
+        # Everything fine.
+    else()
+        message(FATAL_ERROR "If you set FS_TEST_WORKDIR, make sure, "
+                "it is a directory")
+    endif()
+else()
+    set(FS_TEST_WORKDIR "${CMAKE_BINARY_DIR}/fairsoft_ctest")
+    file(MAKE_DIRECTORY "${FS_TEST_WORKDIR}")
+    message(STATUS "Created directory for test run: ${FS_TEST_WORKDIR}")
+endif()
 
 function(fs_test_props_base testname)
   set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
-               TARGETDIR=${TEST_TARGETDIR})
+               TARGETDIR=${FS_TEST_WORKDIR})
   set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
                CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR})
 endfunction()
