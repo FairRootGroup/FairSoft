@@ -35,7 +35,6 @@ class Fairroot(CMakePackage):
     patch('cmake_utf8.patch', when='@18.2.1')
 
     # Dependencies which are same for all versions
-    depends_on('gnutls ~guile') #dependency of cmake which has to be build without guile support
     depends_on('cmake@3.13.4: +ownlibs', type='build')
     depends_on('googletest@1.8.1:')
 
@@ -53,7 +52,7 @@ class Fairroot(CMakePackage):
 
     depends_on('geant4', when="+sim")
 
-    depends_on('root')
+    depends_on('root+http')
 
     depends_on('geant3', when="+sim")
     depends_on('vgm', when="+sim")
