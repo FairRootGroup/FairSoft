@@ -1,5 +1,5 @@
 # Rebuild:
-#   singularity build -f -F debian.8.sif debian.8.def
+#   singularity build -f -F gsi-debian-8.sif gsi-debian-8.def
 
 Bootstrap: docker
 From: debian:8
@@ -11,3 +11,8 @@ From: debian:8
     apt-get -y --no-install-recommends install python3 g++ gcc gfortran make patch git
     # Things for our testing system:
     apt-get -y install cmake hostname lsb-release
+
+    mkdir -p /cvmfs /etc/spack
+
+%files
+    gsi-debian-8-gcc.yaml /etc/spack/compilers.yaml
