@@ -201,7 +201,7 @@ Linux
 
 macOS
 ```
-[jun19] $ spack -C ./config view --verbose --dependencies true -e libpng,libjpeg-turbo,libiconv,sqlite symlink -i (YOUR_SIMPATH) fairroot
+[jun19] $ spack -C ./config view --verbose --dependencies true -e libpng -e libjpeg-turbo -e libiconv -e sqlite symlink -i (YOUR_SIMPATH) fairroot
 ```
 
 The view creation has to be done within an activated environment.
