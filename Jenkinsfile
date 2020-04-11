@@ -54,7 +54,7 @@ pipeline {
             ctestcmd + " -DUSE_TEMPDIR:BOOL=ON", [
             [os: 'Fedora30', container: 'fedora.30.sif'],
             [os: 'Ubuntu-18.04-LTS', container: 'ubuntu.18.04.sif'],
-            [os: 'Debian8', container: 'debian.8.sif'],
+            [os: 'GSI-Debian-8', container: 'gsi-debian-8.sif'],
           ]) { spec, label, jobsh ->
             sh """
               echo "*** Submitting at: \$(date -R)"
