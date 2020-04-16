@@ -24,7 +24,10 @@ class Grpc(CMakePackage):
     depends_on('protobuf')
     depends_on('openssl')
     depends_on('zlib')
-    depends_on('cares')
+    if Version(spack_version) >= Version('0.14'):
+        depends_on('c-ares')
+    else:
+        depends_on('cares')
     depends_on('benchmark')
     depends_on('gflags')
 

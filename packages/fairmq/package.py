@@ -53,7 +53,10 @@ class Fairmq(CMakePackage):
     conflicts('^boost@1.70:', when='^cmake@:3.14')
     depends_on('fairlogger@1.2:1.5', when='@:1.4.7')
     depends_on('fairlogger@1.2:', when='@1.4.8:')
-    depends_on('zeromq@4.1.5:')
+    if Version(spack_version) >= Version('0.14'):
+        depends_on('libzmq@4.1.5:')
+    else:
+        depends_on('zeromq@4.1.5:')
     depends_on('nanomsg@1.1.5:')
     depends_on('msgpack-c@3.1:')
     depends_on('dds@2.2:2.4', when='@:1.4.9')
