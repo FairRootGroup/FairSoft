@@ -5,7 +5,6 @@ spack:
     - when: platform == 'darwin'
       root: [root@6.18.04+fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite+aqua]
   specs:
-    - pcre+jit
     - pythia6@428-alice1
     - hepmc@2.06.09 length=CM momentum=GEV
     - pythia8@8301
