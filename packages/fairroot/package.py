@@ -31,8 +31,7 @@ class Fairroot(CMakePackage):
             description='Use the specified C++ standard when building.')
 
     variant('sim', default=True, description='Enable simulation engines and event generators')
-
-    patch('cmake_utf8.patch', when='@18.2.1')
+    variant('examples', default=False, description='Install examples')
 
     # Dependencies which are same for all versions
     depends_on('cmake@3.13.4: +ownlibs', type='build')
@@ -66,6 +65,7 @@ class Fairroot(CMakePackage):
 #    depends_on('millepede')
 
     patch('CMake.patch', level=0, when="@18.0.6")
+    patch('cmake_utf8.patch', when='@18.2.1')
     patch('link_against_flatbuffers_shared.patch', when="@develop")
 
     def setup_environment(self, spack_env, run_env):
@@ -94,7 +94,8 @@ class Fairroot(CMakePackage):
         options.append('-DFlatbuffers_DIR={0}'.format(
         self.spec['flatbuffers'].prefix))
         options.append('-DDISABLE_GO=ON')
-        options.append('-DBUILD_EXAMPLES=OFF')
+        options.append('-DBUILD_EXAMPLES:BOOL=%s' %
+                       ('ON' if '+examples' in self.spec else 'OFF'))
         options.append('-DFAIRROOT_MODULAR_BUILD=ON')
         options.append('-DBoost_NO_SYSTEM_PATHS=TRUE')
         options.append('-DCMAKE_EXPORT_COMPILE_COMMANDS=ON')
