@@ -1,0 +1,10 @@
+--- examples/common/mcstack/CMakeLists.txt~	2019-08-21 15:07:36.000000000 +0200
++++ examples/common/mcstack/CMakeLists.txt	2020-04-20 13:22:22.448247543 +0200
+@@ -12,6 +12,7 @@
+ Set(INCLUDE_DIRECTORIES
+   ${BASE_INCLUDE_DIRECTORIES}
+   ${CMAKE_SOURCE_DIR}/examples/common/mcstack
++  ${FairLogger_INCDIR}
+ )
+ 
+ Include_Directories(${INCLUDE_DIRECTORIES})
