@@ -13,7 +13,6 @@ from spack import *
 class Fairroot(CMakePackage):
     """C++ simulation, reconstruction and analysis framework for particle physics experiments """
 
-
     homepage = "http://fairroot.gsi.de"
     url      = "https://github.com/FairRootGroup/FairRoot/archive/v18.0.6.tar.gz"
     git      = "https://github.com/FairRootGroup/FairRoot.git"
@@ -67,6 +66,7 @@ class Fairroot(CMakePackage):
 
     patch('CMake.patch', level=0, when="@18.0.6")
     patch('cmake_utf8.patch', when='@18.2.1')
+    patch('fairlogger_incdir.patch', level=0, when='@18.2.1')
     patch('link_against_flatbuffers_shared.patch', when="@develop")
 
     def setup_environment(self, spack_env, run_env):
