@@ -61,9 +61,10 @@ class Fairroot(CMakePackage):
     depends_on('fairlogger@1.4.0:')
     depends_on('fairmq@1.4.3:')
 
-#    depends_on('protobuf@3.4.0')
+    depends_on('protobuf')
     depends_on('flatbuffers')
 #    depends_on('millepede')
+    depends_on('yaml-cpp', when='@18.2:')
 
     patch('CMake.patch', level=0, when="@18.0.6")
     patch('link_against_flatbuffers_shared.patch', when="@develop")
