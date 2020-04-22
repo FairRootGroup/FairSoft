@@ -42,3 +42,15 @@
  
  # Files produced by the dictionary generation
  SET(root_dict
+--- spack-src/source/CMakeLists.txt
++++ spack-src/source/CMakeLists.txt
+@@ -63,6 +63,9 @@
+   TVirtualMCSensitiveDetector.h
+   TVirtualMCStack.h
+   MODULE ${library_name}
++  OPTIONS "-I${CMAKE_INSTALL_PREFIX}/include/${base_name}"
++    -excludePath "${CMAKE_CURRENT_BINARY_DIR}"
++    -excludePath "${PROJECT_SOURCE_DIR}/source"
+   LINKDEF include/LinkDef.h)
+ 
+ # Files produced by the dictionary generation
