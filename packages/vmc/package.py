@@ -15,4 +15,6 @@ class Vmc(CMakePackage):
     version('1-0-p1', sha256='4a20515f7de426797955cec4a271958b07afbaa330770eeefb5805c882ad9749')
     version('1-0', sha256='3da58518b32db1b503082e3205884802a1a263a915071b96e3fd67861db3ca40')
 
+    patch('dict_fixes_101.patch', when='@1-0-p1')
+
     depends_on('root@6.18.04:')
