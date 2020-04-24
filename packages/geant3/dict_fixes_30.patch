@@ -1,0 +1,57 @@
+--- spack-src/cmake/Geant3BuildLibrary.cmake
++++ spack-src/cmake/Geant3BuildLibrary.cmake
+@@ -44,6 +44,7 @@
+   ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/TGeant3gu.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/TGeant3.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/TGeant3TGeo.h
++  MODULE ${library_name}
+   LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/geant3LinkDef.h)
+ 
+ # Files produced by the dictionary generation
+@@ -51,8 +51,8 @@
+ SET(root_dict
+   ${library_name}_dict.cxx)
+ SET(root_dict_libs
+-  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}_dict_rdict.pcm
+-  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}_dict.rootmap)
++  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}_rdict.pcm
++  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${library_name}.rootmap)
+ 
+ #-------------------------------------------------------------------------------
+ # Always use '@rpath' in install names of libraries.
+--- spack-src/cmake/Geant3BuildLibrary.cmake
++++ spack-src/cmake/Geant3BuildLibrary.cmake
+@@ -38,14 +38,14 @@
+ #
+ ROOT_GENERATE_DICTIONARY(
+   ${library_name}_dict
+-  ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/TCallf77.h
+-  ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/TG3Application.h
+-  ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/TGeant3f77.h
+-  ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/TGeant3gu.h
+-  ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/TGeant3.h
+-  ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/TGeant3TGeo.h
++  TCallf77.h
++  TG3Application.h
++  TGeant3f77.h
++  TGeant3gu.h
++  TGeant3.h
++  TGeant3TGeo.h
+   MODULE ${library_name}
+-  LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/TGeant3/geant3LinkDef.h)
++  LINKDEF TGeant3/geant3LinkDef.h)
+ 
+ # Files produced by the dictionary generation
+ SET(root_dict
+--- spack-src/cmake/Geant3BuildLibrary.cmake
++++ spack-src/cmake/Geant3BuildLibrary.cmake
+@@ -45,6 +45,9 @@
+   TGeant3.h
+   TGeant3TGeo.h
+   MODULE ${library_name}
++  OPTIONS "-I${CMAKE_INSTALL_PREFIX}/include/TGeant3"
++    -excludePath "${CMAKE_CURRENT_BINARY_DIR}"
++    -excludePath "${PROJECT_SOURCE_DIR}"
+   LINKDEF TGeant3/geant3LinkDef.h)
+ 
+ # Files produced by the dictionary generation

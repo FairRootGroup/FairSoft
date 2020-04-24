@@ -22,12 +22,11 @@ class Geant3(CMakePackage):
             description='CMake build type',
             values=('Nightly'))
 
-    # FIXME: Add dependencies if required.
-    depends_on('cmake', type='build')
     depends_on('root')
     depends_on('vmc', when='@v3-0_fairsoft:')
 
     patch('gcalor_stringsize.patch', level=0)
+    patch('dict_fixes_30.patch', when='@v3-0_fairsoft')
 
     def cmake_args(self):
         spec = self.spec
