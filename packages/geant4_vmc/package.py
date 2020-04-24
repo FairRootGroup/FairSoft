@@ -9,16 +9,14 @@ from spack import *
 class Geant4Vmc(CMakePackage):
     """Geant4 VMC implements the Virtual Monte Carlo (VMC) for Geant4"""
 
-    # FIXME: Add a proper url for your package's homepage here.
     homepage = "https://github.com/vmc-project/geant4_vmc"
     url = "https://github.com/vmc-project/geant4_vmc/archive/v3-6.tar.gz"
 
+    version('5-0-p1', sha256='b66cbf86a96b6efe1643753a7606b1c4ebb9d45cca9f6b8e933762920f32831f')
     version('3-6', '01507945dfcc21827628d0eb6b233931')
     version('4-0-p1', 'd7e88a3ef11ea62bec314b5f251c91b1')
     version('5-0', sha256='9a3820ea4b68b5a0697c340bbbc0972b9c8e4205ceecdd87258a9bdfd249cd8b')
 
-    # FIXME: Add dependencies if required.
-    depends_on('cmake', type='build')
     depends_on('root')
     depends_on('geant4')
     depends_on('vgm')
