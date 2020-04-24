@@ -22,6 +22,8 @@ class Geant4Vmc(CMakePackage):
     depends_on('vgm')
     depends_on('vmc', when='@5-0:')
 
+    patch('dict_fixes_501.patch', when='@5-0-p1')
+
     def cmake_args(self):
         spec = self.spec
         options = []

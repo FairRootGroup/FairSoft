@@ -1,0 +1,28 @@
+--- spack-src/source/CMakeLists.txt
++++ spack-src/source/CMakeLists.txt
+@@ -128,10 +128,10 @@
+ #
+ ROOT_GENERATE_DICTIONARY(
+   ${library_name}_dict
+-  ${CMAKE_CURRENT_SOURCE_DIR}/run/include/TG4RunConfiguration.h
+-  ${CMAKE_CURRENT_SOURCE_DIR}/run/include/TGeant4.h
++  TG4RunConfiguration.h
++  TGeant4.h
+   MODULE ${library_name}
+-  LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/${library_name}LinkDef.h)
++  LINKDEF ${library_name}LinkDef.h)
+ 
+ # Files produced by the dictionary generation
+ SET(root_dict
+--- spack-src/source/CMakeLists.txt
++++ spack-src/source/CMakeLists.txt
+@@ -131,6 +131,9 @@
+   TG4RunConfiguration.h
+   TGeant4.h
+   MODULE ${library_name}
++  OPTIONS "-I${CMAKE_INSTALL_PREFIX}/include/${library_name}"
++    -excludePath "${CMAKE_CURRENT_BINARY_DIR}"
++    -excludePath "${PROJECT_SOURCE_DIR}"
+   LINKDEF ${library_name}LinkDef.h)
+ 
+ # Files produced by the dictionary generation
