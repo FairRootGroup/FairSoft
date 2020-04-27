@@ -83,6 +83,7 @@ class Fairroot(CMakePackage):
         self.spec['root'].prefix))
         options.append('-DPythia6_LIBRARY_DIR={0}/lib'.format(
         self.spec['pythia6'].prefix))
+        options.append('-DPYTHIA8_DIR={0}'.format(self.spec['pythia8'].prefix))
         options.append('-DGeant3_DIR={0}'.format(
         self.spec['geant3'].prefix))
         options.append('-DGeant4_DIR={0}'.format(
