@@ -15,6 +15,6 @@ spack:
     - geant3@v3-0_fairsoft
     - vgm@4-7
     - geant4_vmc@5-0
-    - fairroot@develop+sim+examples
+    - fairroot@18.4.0+sim+examples
   concretization: together
   view: false

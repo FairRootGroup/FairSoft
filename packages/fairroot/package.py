@@ -20,6 +20,7 @@ class Fairroot(CMakePackage):
     # Development versions
     version('develop', branch='dev')
 
+    version('18.4.0', branch='RC_v18.4.0')
     version('18.2.1', '06a5b3b2c5445f7342464061cccbe7bc')
     version('18.0.6', '822902c2fc879eab82fca47eccb14259')
 
@@ -46,7 +47,7 @@ class Fairroot(CMakePackage):
     # Dependencies for dev version
     depends_on('boost@1.68.0: cxxstd=11 +container')
 
-    depends_on('vmc', when='@develop')
+    depends_on('vmc', when='@18.4: ^root@6.18:')
 
     depends_on('geant4', when="+sim")
 
@@ -67,7 +68,7 @@ class Fairroot(CMakePackage):
     patch('CMake.patch', level=0, when="@18.0.6")
     patch('cmake_utf8.patch', when='@18.2.1')
     patch('fairlogger_incdir.patch', level=0, when='@18.2.1')
-    patch('link_against_flatbuffers_shared.patch', when="@develop")
+    patch('link_against_flatbuffers_shared.patch', when="@18.4:")
 
     def setup_environment(self, spack_env, run_env):
         stdversion=('-std=c++%s' % self.spec.variants['cxxstd'].value)
