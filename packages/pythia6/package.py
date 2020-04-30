@@ -50,3 +50,7 @@ class Pythia6(CMakePackage):
 
     version('428-alice1', '8751dda1c4b5f137817876ea0d4b8a5b')
 
+    def cmake_args(self):
+        args=[]
+        args.append('-DCMAKE_MACOSX_RPATH=ON')
+        return args
