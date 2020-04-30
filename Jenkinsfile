@@ -58,7 +58,7 @@ pipeline {
           ]) { spec, label, jobsh ->
             sh """
               echo "*** Submitting at: \$(date -R)"
-              srun -p main -c 64 -n 1 -t 300 --job-name="alfaci-${label}" bash ${jobsh}
+              srun -p main -c 64 -n 1 -t 400 --job-name="${label}" bash ${jobsh}
             """
           }
           def macos_jobs = jobMatrix('macos', ctestcmd, [
