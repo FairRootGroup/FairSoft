@@ -25,7 +25,17 @@ else()
     set(FS_TEST_WORKDIR "")
 endif()
 
-set(CTEST_SOURCE_DIRECTORY .)
+if ("${FS_TEST_WORKDIR}" STREQUAL "")
+    set(CTEST_SOURCE_DIRECTORY .)
+else()
+    set(CTEST_SOURCE_DIRECTORY "${FS_TEST_WORKDIR}/FairSoft")
+    string(TIMESTAMP timestamp "[%H:%M:%S]")
+    message(STATUS "${timestamp} Copying source to: ${CTEST_SOURCE_DIRECTORY}")
+    file(COPY . DESTINATION "${CTEST_SOURCE_DIRECTORY}")
+    string(TIMESTAMP timestamp "[%H:%M:%S]")
+    message(STATUS "${timestamp} ... done")
+endif()
+
 set(CTEST_BINARY_DIRECTORY build)
 set(CTEST_TEST_TIMEOUT 10800)
 set(CTEST_USE_LAUNCHERS ON)
@@ -72,11 +82,26 @@ if (NOT "$ENV{BRANCH_NAME}" STREQUAL "")
 endif()
 message(STATUS "cdash_group: ${cdash_group}")
 
+
+# The cache contains the name of the source directory.
+# As we might create a temporary source directory, this does
+# not any more match. So remove the cache before start / configure.
+file(REMOVE "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt")
+# ctest_empty_binary_directory("${CTEST_BINARY_DIRECTORY}")
+
 ctest_start(Continuous TRACK ${cdash_group})
 ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR}")
+# ctest_submit(PARTS Start Configure)
+
 # ctest_build()
 ctest_test(RETURN_VALUE _ctest_test_ret_val)
 ctest_submit()
+
+if (NOT "${FS_TEST_WORKDIR}" STREQUAL "")
+    string(TIMESTAMP timestamp "[%H:%M:%S]")
+    message(STATUS "${timestamp} Removing directory: ${FS_TEST_WORKDIR}")
+    file(REMOVE_RECURSE "${FS_TEST_WORKDIR}")
+endif()
 
 if (_ctest_test_ret_val)
   Message(FATAL_ERROR "Some tests failed.")
