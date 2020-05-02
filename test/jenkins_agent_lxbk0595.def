@@ -15,7 +15,16 @@ From: centos:7.6.1810
     yum -y install git2u
 
 %startscript
-    java -jar /opt/agent.jar -jnlpUrl https://alfa-ci.gsi.de/computer/virgo/slave-agent.jnlp -secret REPLACEMEWITHREALSECRET -workDir "/lustre/rz/alfaci" > /tmp/alfaci/agent.log 2>&1
+    SECRET=REPLACEMEWITHREALSECRET
+    JAVA_ARGS="-Dorg.jenkinsci.plugins.gitclient.Git.timeOut=60"
+    JAVA_ARGS="$JAVA_ARGS -Dorg.jenkinsci.plugins.gitclient.CliGitAPIImpl.TIMEOUT=60"
+
+    if [ -r "$HOME/.config/jenkins_agent/$(hostname)/config.sh" ]
+    then
+        source "$HOME/.config/jenkins_agent/$(hostname)/config.sh"
+    fi
+
+    java $JAVA_ARGS -jar /opt/agent.jar -jnlpUrl https://alfa-ci.gsi.de/computer/virgo/slave-agent.jnlp -secret "$SECRET" -workDir "/lustre/rz/alfaci" > /tmp/alfaci/agent.log 2>&1
 
 %environment
     export https_proxy=http://proxy-ib2.gsi.de:3128/
