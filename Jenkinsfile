@@ -56,6 +56,7 @@ pipeline {
             [os: 'Ubuntu-18.04-LTS', container: 'ubuntu.18.04.sif'],
             [os: 'GSI-Debian-8', container: 'gsi-debian-8.sif'],
             [os: 'openSUSE-15.0', container: 'opensuse.15.0.sif'],
+            [os: 'openSUSE-15.2', container: 'opensuse.15.2.sif'],
           ]) { spec, label, jobsh ->
             sh """
               echo "*** Submitting at: \$(date -R)"
