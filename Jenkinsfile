@@ -50,14 +50,16 @@ pipeline {
       steps{
         script {
           def ctestcmd = "ctest -VV -S FairSoft_test.cmake"
-          def linux_jobs = jobMatrix('slurm',
-            ctestcmd + " -DUSE_TEMPDIR:BOOL=ON", [
+          def specs_list = [
             [os: 'Fedora30', container: 'fedora.30.sif'],
             [os: 'Ubuntu-18.04-LTS', container: 'ubuntu.18.04.sif'],
             [os: 'GSI-Debian-8', container: 'gsi-debian-8.sif'],
             [os: 'openSUSE-15.0', container: 'opensuse.15.0.sif'],
             [os: 'openSUSE-15.2', container: 'opensuse.15.2.sif'],
-          ]) { spec, label, jobsh ->
+          ]
+          def linux_jobs = jobMatrix('slurm',
+            ctestcmd + " -DUSE_TEMPDIR:BOOL=ON", specs_list
+          ) { spec, label, jobsh ->
             sh """
               echo "*** Submitting at: \$(date -R)"
               srun -p main -c 64 -n 1 -t 400 --job-name="${label}" bash ${jobsh}
