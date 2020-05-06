@@ -51,12 +51,19 @@ pipeline {
         script {
           def ctestcmd = "ctest -VV -S FairSoft_test.cmake"
           def specs_list = [
-            [os: 'Fedora30', container: 'fedora.30.sif'],
-            [os: 'Ubuntu-18.04-LTS', container: 'ubuntu.18.04.sif'],
+            [os: 'Fedora30',         container: 'fedora.30.sif',    for_pr: true],
+            [os: 'Ubuntu-18.04-LTS', container: 'ubuntu.18.04.sif', for_pr: true],
             [os: 'GSI-Debian-8', container: 'gsi-debian-8.sif'],
             [os: 'openSUSE-15.0', container: 'opensuse.15.0.sif'],
             [os: 'openSUSE-15.2', container: 'opensuse.15.2.sif'],
           ]
+
+          if (env.CHANGE_ID != null) {
+              specs_list = specs_list.findAll {
+                  elmt -> elmt.getOrDefault("for_pr", false)
+              }
+          }
+
           def linux_jobs = jobMatrix('slurm',
             ctestcmd + " -DUSE_TEMPDIR:BOOL=ON", specs_list
           ) { spec, label, jobsh ->
