@@ -68,7 +68,6 @@ class Root(CMakePackage):
     patch('graf3d_gl_6.18.patch', level=0, when='@6.18:')
     patch('graf2d.patch', level=0)
     patch('external_zlib.patch', level=0, when='@6.12.06')
-    patch('root6_16_xrootd.patch', level=0, when='@6.16.00')
 
     if sys.platform == 'darwin':
         # Resolve non-standard use of uint, _cf_
@@ -182,7 +181,7 @@ class Root(CMakePackage):
     variant('xml', default=True,
         description='Enable XML parser interface')
     variant('xrootd', default=False,
-        description='Build xrootd file server and its client')
+            description='Build xrootd file server and its client')
 
     # ###################### Compiler variants ########################
 
@@ -331,7 +330,7 @@ class Root(CMakePackage):
             '-Dbuiltin_vc:BOOL=OFF',
             '-Dbuiltin_vdt:BOOL=OFF',
             '-Dbuiltin_veccore:BOOL=OFF',
-            '-Dbuiltin_xrootd:BOOL=ON',
+            '-Dbuiltin_xrootd:BOOL=OFF',
             '-Dbuiltin_zlib:BOOL=OFF'
         ]
 
