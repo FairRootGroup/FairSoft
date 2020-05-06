@@ -1,5 +1,5 @@
---- examples/common/mcstack/CMakeLists.txt~	2019-08-21 15:07:36.000000000 +0200
-+++ examples/common/mcstack/CMakeLists.txt	2020-04-20 13:22:22.448247543 +0200
+--- examples/common/mcstack/CMakeLists.txt
++++ examples/common/mcstack/CMakeLists.txt
 @@ -12,6 +12,7 @@
  Set(INCLUDE_DIRECTORIES
    ${BASE_INCLUDE_DIRECTORIES}
@@ -8,3 +8,97 @@
  )
  
  Include_Directories(${INCLUDE_DIRECTORIES})
+--- templates/test_project_root_containers.sh.in
++++ templates/test_project_root_containers.sh.in
+@@ -12,7 +12,7 @@
+ cd build
+ export SIMPATH=@SIMPATH@
+ export FAIRROOTPATH=@CMAKE_INSTALL_PREFIX@
+-cmake -DUSE_DIFFERENT_COMPILER=true ..
++cmake ..
+ make
+ if [ $? -eq 0 ]; then
+     echo 'Test successful.'
+--- templates/project_root_containers/NewDetector/CMakeLists.txt
++++ templates/project_root_containers/NewDetector/CMakeLists.txt
+@@ -14,7 +14,7 @@
+ #put here all directories where header files are located
+ ${CMAKE_SOURCE_DIR}/MyProjData
+ ${CMAKE_SOURCE_DIR}/NewDetector
+-
++${FairLogger_INCDIR}
+ )
+ 
+ include_directories(${INCLUDE_DIRECTORIES})
+--- templates/project_root_containers/passive/CMakeLists.txt
++++ templates/project_root_containers/passive/CMakeLists.txt
+@@ -5,6 +5,7 @@
+ set(INCLUDE_DIRECTORIES
+ ${BASE_INCLUDE_DIRECTORIES}
+ ${CMAKE_SOURCE_DIR}/passive
++${FairLogger_INCDIR}
+ )
+ 
+ include_directories(${INCLUDE_DIRECTORIES})
+--- templates/project_root_containers/field/CMakeLists.txt
++++ templates/project_root_containers/field/CMakeLists.txt
+@@ -5,6 +5,7 @@
+ set(INCLUDE_DIRECTORIES
+ ${BASE_INCLUDE_DIRECTORIES} 
+ ${CMAKE_SOURCE_DIR}/field 
++${FairLogger_INCDIR}
+ )
+ 
+ include_directories( ${INCLUDE_DIRECTORIES})
+--- templates/test_project_stl_containers.sh.in
++++ templates/test_project_stl_containers.sh.in
+@@ -12,7 +12,7 @@
+ cd build
+ export SIMPATH=@SIMPATH@
+ export FAIRROOTPATH=@CMAKE_INSTALL_PREFIX@
+-cmake -DUSE_DIFFERENT_COMPILER=true ..
++cmake ..
+ make
+ if [ $? -eq 0 ]; then
+     echo 'Test successful.'
+--- templates/project_stl_containers/field/CMakeLists.txt
++++ templates/project_stl_containers/field/CMakeLists.txt
+@@ -5,6 +5,7 @@
+ set(INCLUDE_DIRECTORIES
+ ${BASE_INCLUDE_DIRECTORIES} 
+ ${CMAKE_SOURCE_DIR}/field 
++${FairLogger_INCDIR}
+ )
+ 
+ include_directories( ${INCLUDE_DIRECTORIES})
+--- templates/project_stl_containers/NewDetector/CMakeLists.txt
++++ templates/project_stl_containers/NewDetector/CMakeLists.txt
+@@ -14,7 +14,7 @@
+ #put here all directories where header files are located
+ ${CMAKE_SOURCE_DIR}/MyProjData
+ ${CMAKE_SOURCE_DIR}/NewDetector
+-
++${FairLogger_INCDIR}
+ )
+ 
+ include_directories(${INCLUDE_DIRECTORIES})
+--- templates/project_stl_containers/MyProjData/CMakeLists.txt
++++ templates/project_stl_containers/MyProjData/CMakeLists.txt
+@@ -3,6 +3,7 @@
+ set(INCLUDE_DIRECTORIES
+ ${BASE_INCLUDE_DIRECTORIES}
+ ${CMAKE_SOURCE_DIR}/MyProjData
++${FairLogger_INCDIR}
+ )
+ 
+ include_directories( ${INCLUDE_DIRECTORIES})
+--- templates/project_stl_containers/passive/CMakeLists.txt
++++ templates/project_stl_containers/passive/CMakeLists.txt
+@@ -5,6 +5,7 @@
+ set(INCLUDE_DIRECTORIES
+ ${BASE_INCLUDE_DIRECTORIES}
+ ${CMAKE_SOURCE_DIR}/passive
++${FairLogger_INCDIR}
+ )
+ 
+ include_directories(${INCLUDE_DIRECTORIES})
