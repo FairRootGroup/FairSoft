@@ -68,7 +68,6 @@ class Fairroot(CMakePackage):
     patch('CMake.patch', level=0, when="@18.0.6")
     patch('cmake_utf8.patch', when='@18.2.1')
     patch('fairlogger_incdir.patch', level=0, when='@18.2.1')
-    patch('link_against_flatbuffers_shared.patch', when="@18.4:")
 
     def setup_environment(self, spack_env, run_env):
         stdversion=('-std=c++%s' % self.spec.variants['cxxstd'].value)
