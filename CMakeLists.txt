@@ -66,6 +66,21 @@ function(fs_test_env)
   fs_test_props(env.${ARGS_NAME})
 endfunction()
 
+
+# Test setup
+# ----------
+
+add_test(NAME test.start
+         COMMAND test/buildstart.sh
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+fs_test_props_base(test.start)
+set_property(TEST test.start APPEND PROPERTY
+             FIXTURES_SETUP fixture.main)
+
+
+# Main tests
+# ----------
+
 fs_test_simple(NAME cmake       SPEC cmake)
 fs_test_simple(NAME grpc SPEC grpc)
 fs_test_simple(NAME flatbuffers SPEC flatbuffers)
@@ -83,6 +98,10 @@ fs_test_env(NAME jun19.nothreads ENVFILE env/jun19/sim_no-threads.yaml)
 fs_test_env(NAME jun19.fairroot184 ENVFILE env/dev/jun19_fairroot-18.4.yaml)
 
 fs_test_env(NAME r3broot ENVFILE env/dev/r3broot.yaml)
+
+
+# Test cleanup
+# ------------
 
 add_test(NAME test.cleanup
          COMMAND test/buildcleanup.sh
