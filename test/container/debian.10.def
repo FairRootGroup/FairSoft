@@ -1,7 +1,14 @@
+# Rebuild:
+#   singularity build -f -F debian.10.sif debian.10.def
+
 Bootstrap: docker
 From: debian:10
 
 %post
     apt-get update
     apt-get -y upgrade
-    apt-get -y install cmake cmake-data g++ gcc gfortran debianutils build-essential make patch sed libx11-dev libxft-dev libxext-dev libxpm-dev libxmu-dev libglu1-mesa-dev libgl1-mesa-dev libncurses5-dev curl libcurl4-openssl-dev bzip2 libbz2-dev gzip unzip tar subversion git xutils-dev flex bison lsb-release python-dev libc6-dev-i386 libxml2-dev wget libssl-dev libkrb5-dev automake autoconf libtool
+    apt-get -y --no-install-recommends install sed curl ca-certificates wget xz-utils bzip2 gzip unzip tar
+    apt-get -y --no-install-recommends install python3 g++ gcc gfortran make patch git
+    # Things for our testing system:
+    apt-get -y --no-install-recommends install cmake hostname lsb-release
+    apt-get -y clean
