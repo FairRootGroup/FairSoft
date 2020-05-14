@@ -85,4 +85,6 @@ class Fairmq(CMakePackage):
         # NOTE Support for building the ofi transport will be added at a later
         #      point in time.
         # args.append('-DBUILD_OFI_TRANSPORT=ON')
+        if self.spec.satisfies('^boost@:1.69.99'):
+            args.append('-DBoost_NO_BOOST_CMAKE=ON')
         return args

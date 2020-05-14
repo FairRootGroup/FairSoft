@@ -99,8 +99,9 @@ class Fairroot(CMakePackage):
         options.append('-DBUILD_EXAMPLES:BOOL=%s' %
                        ('ON' if '+examples' in self.spec else 'OFF'))
         options.append('-DFAIRROOT_MODULAR_BUILD=ON')
-        options.append('-DBoost_NO_SYSTEM_PATHS=TRUE')
         options.append('-DCMAKE_EXPORT_COMPILE_COMMANDS=ON')
+        if self.spec.satisfies('^boost@:1.69.99'):
+            options.append('-DBoost_NO_BOOST_CMAKE=ON')
 
         return options
 

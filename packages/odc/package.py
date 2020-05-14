@@ -31,3 +31,9 @@ class Odc(CMakePackage):
     depends_on('cmake@3.12:', type='build')
     depends_on('git', type='build')
     depends_on('ninja', type='build')
+
+    def cmake_args(self):
+        args = []
+        if self.spec.satisfies('^boost@:1.69.99'):
+            args.append('-DBoost_NO_BOOST_CMAKE=ON')
+        return args
