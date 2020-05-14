@@ -56,4 +56,6 @@ class Dds(CMakePackage):
         cxxstd = self.spec.variants['cxxstd'].value
         if cxxstd != 'default':
             args.append('-DCMAKE_CXX_STANDARD=%s' % cxxstd)
+        if self.spec.satisfies('^boost@:1.69.99'):
+            args.append('-DBoost_NO_BOOST_CMAKE=ON')
         return args

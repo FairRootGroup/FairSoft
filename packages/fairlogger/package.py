@@ -61,4 +61,6 @@ class Fairlogger(CMakePackage):
                        ('ON' if '+pretty' in self.spec else 'OFF'))
         if self.spec.satisfies('@1.6:'):
             args.append('-DUSE_EXTERNAL_FMT=ON')
+        if self.spec.satisfies('^boost@:1.69.99'):
+            args.append('-DBoost_NO_BOOST_CMAKE=ON')
         return args
