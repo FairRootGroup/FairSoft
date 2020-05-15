@@ -3,7 +3,7 @@
 . test/buildsetup.sh
 
 installedMB="$(cd $HOME/install-tree && du -ms . | sed -e 's/[	 ].*$//')"
-rm -rf "$HOME/install-tree"
+# rm -rf "$HOME/install-tree"
 
 # stageKB="$(cd $HOME/stage && du -ks . | sed -e 's/[	 ].*$//')"
 (cd "$HOME" && du -sh stage)
