@@ -2,12 +2,31 @@
 
 The FairSoft distribution provides the software packages needed to compile and run the [FairRoot framework](https://github.com/FairRootGroup/FairRoot) and experiment packages based on FairRoot. FairSoft is a source distribution with recurring releases for macOS and Linux.
 
-## Installation
+The newly released FairSoft modernizes and reorganizes the framework installation.
+All needed packages, including the FairRoot package itself,
+are now installed using [Spack](https://spack.readthedocs.io/en/latest/).
 
-### 1. Install the [prerequisites](docs/prerequisites.md).
+The packages are installed by Spack automatically using package [recipes](https://spack-tutorial.readthedocs.io/en/latest/tutorial_packaging.html), stored in the corresponding folders of the [packages](https://github.com/FairRootGroup/FairSoft/tree/dev/packages) directory. The [recipe](https://spack-tutorial.readthedocs.io/en/latest/tutorial_packaging.html)
+lists the dependencies of the given package and describes its installation procedure. A collection of packages that form the software framework is called [spack environment](https://spack.readthedocs.io/en/latest/environments.html)  - examples of such are located in the [env](https://github.com/FairRootGroup/FairSoft/tree/dev/env) directories.
 
-### 2. Clone the repo
+In the process of installing of a package, Spack creates its list of dependencies,
+forming the so-called installation tree. It is possible to install different packages/versions with [Spack](https://spack.readthedocs.io/en/latest/). Since they share a common installation tree, the Spack reuses already available software when installing new package.
 
+
+The following document is divided into:  
+[I. Preparation](#i-preparation) (download the package)  
+[II. Configuration](#ii-configuration) (set up Spack)  
+[III. Installation](#iii-installation) (install packages in environment)  
+[IV. Execution](#iv-execution) (using the framework)  
+[V. Troubleshooting](#v-troubleshooting)  
+
+---
+
+## I. Preparation
+
+### I.1. Install the [prerequisites](docs/prerequisites.md).
+
+### I.2. Clone the repo
 ```
 git clone https://github.com/FairRootGroup/FairSoft
 cd FairSoft
@@ -16,15 +35,15 @@ git submodule update --init
 
 Remember to run `git submodule update --init` even after you checked out a new branch or tag in an existing repository clone!
 
-### 3. Configure Spack
+## II. Configuration
 
-#### Activate Spack in your current shell
+### II.1. Activate Spack in your current shell
 
 ```
 source spack/share/spack/setup-env.sh
 ```
 
-#### Configure Spack directories
+### II.2. Configure Spack directories
 
 We recommend to create a [per-user configuration file](https://spack.readthedocs.io/en/latest/config_yaml.html#config-yaml) and point certain paths to a directory outside of the FairSoft source repo because these directories can grow quite large:
 
@@ -37,15 +56,18 @@ config:
   source_cache: ~/.spack/source_cache
 ```
 
+The source_cache directory is used by Spack to store the downloaded packages,
+while the install_tree holds the whole installation tree.
+
 Verify the config changes are recognized by running `spack config blame config`.
 
-#### Bootstrap Spack
+### II.3. Bootstrap Spack
 
 ```
 spack -C ./config bootstrap
 ```
 
-#### Add the FairSoft [repository](https://spack.readthedocs.io/en/latest/repositories.html)
+### II.4. Add the FairSoft [repository](https://spack.readthedocs.io/en/latest/repositories.html)
 
 ```
 spack repo add .
@@ -59,9 +81,9 @@ fairsoft    ~/FairSoft
 builtin     ~/FairSoft/spack/var/spack/repos/builtin
 ```
 
-### 4. Compile/Install
+## III. Installation
 
-#### Define a [spack environment](https://spack.readthedocs.io/en/latest/environments.html) for a FairSoft release
+### III.1. Define a [spack environment](https://spack.readthedocs.io/en/latest/environments.html) for a FairSoft release
 
 ```
 spack env create jun19 env/jun19/sim_threads.yaml
@@ -75,7 +97,7 @@ $ spack env list
     jun19
 ```
 
-#### Activate the [spack environment](https://spack.readthedocs.io/en/latest/environments.html)
+### III.2. Activate the Spack environment
 
 In order to work with the previously defined environment, it needs to be activated in any given shell instance
 
@@ -106,7 +128,7 @@ or
 despacktivate
 ```
 
-#### Compile and install the packages defined in the active [spack environment](https://spack.readthedocs.io/en/latest/environments.html)
+### III.3. Compile and install the packages defined in the active [spack environment](https://spack.readthedocs.io/en/latest/environments.html)
 
 Inspect the active environment
 
@@ -143,7 +165,7 @@ The `jun19` FairSoft release pins certain package version and build variants tha
 
 This step usually takes a while - time for a coffee break ☕.
 
-Verify the installation
+### III.4. Verify the installation
 
 ```
 [jun19] $ spack find
@@ -188,10 +210,12 @@ g4incl@1.0         hepmc@2.06.09            libxdmcp@1.1.2        pythia6@428-al
 g4ndl@4.5          hwloc@2.0.2              libxext@1.3.3         pythia8@8240
 ```
 
-### 5. Use
+## IV. Execution
+
+### IV.1. Spack view
 
 Symbolic links to packages in install tree can be placed to a common installation prefix using view command.
-This will create a directory, which can be used as SIMPATH in order to build experiment-specific frameworks.
+This will create a directory, which can be used as SIMPATH or FAIRROOTPATH in order to build experiment-specific frameworks.
 View is created by following command:
 
 Linux
@@ -204,9 +228,19 @@ macOS
 [jun19] $ spack -C ./config view --verbose --dependencies true -e libpng -e libjpeg-turbo -e libiconv -e sqlite symlink -i (YOUR_SIMPATH) fairroot
 ```
 
-The view creation has to be done within an activated environment.
+The view creation has to be done within an [activated environment](#iii2-activate-the-spack-environment).
 
-## [Troubleshooting](docs/troubleshooting.md)
+### IV.2. Spack load
+
+As an alternative to the view the Spack offers the [module mechanism](https://spack.readthedocs.io/en/latest/module_file_support.html), allowing the user to set the running environment using the load command:
+
+```
+[jun19] $ spack load --dependencies fairroot
+```
+
+This will set the corrects paths to run the environment.
+
+## V. [Troubleshooting](docs/troubleshooting.md)
 
 ## Structure of this repo
 
