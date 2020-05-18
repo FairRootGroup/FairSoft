@@ -69,9 +69,12 @@ class Fairroot(CMakePackage):
     patch('cmake_utf8.patch', when='@18.2.1')
     patch('fairlogger_incdir.patch', level=0, when='@18.2.1')
 
-    def setup_environment(self, spack_env, run_env):
+    def setup_build_environment(self, env):
+        super(Fairroot, self).setup_build_environment(env)
         stdversion=('-std=c++%s' % self.spec.variants['cxxstd'].value)
-        spack_env.append_flags('CXXFLAGS', '-std=c++%s' % self.spec.variants['cxxstd'].value)
+        env.append_flags('CXXFLAGS', '-std=c++%s' % self.spec.variants['cxxstd'].value)
+        env.unset('SIMPATH')
+        env.unset('FAIRSOFT_ROOT')
 
     def cmake_args(self):
         spec = self.spec

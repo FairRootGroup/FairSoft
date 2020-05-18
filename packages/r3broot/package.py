@@ -42,4 +42,5 @@ class R3broot(CMakePackage):
     def setup_build_environment(self, env):
         env.set("FAIRROOTPATH", self.spec['fairroot'].prefix)
         env.set("SIMPATH", self.spec["fairroot"].prefix)
+        env.unset('FAIRSOFT_ROOT')
         env.append_path('CPATH', self.spec['fairlogger'].prefix.include)
