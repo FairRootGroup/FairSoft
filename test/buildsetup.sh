@@ -1,5 +1,8 @@
 #! /bin/bash
 
+export SIMPATH="$PWD/test/simpath_broken"
+export FAIRSOFT_ROOT="$SIMPATH"
+
 if [ -z "$LABEL" ]
 then
 	if which lsb_release >/dev/null

@@ -1,0 +1,5 @@
+#! /bin/sh
+
+echo "fairsoft-config should not be used with spack" >&2
+
+exit 1
