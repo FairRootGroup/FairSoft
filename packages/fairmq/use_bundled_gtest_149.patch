@@ -1,0 +1,32 @@
+commit b32e04db6051024ce0439128c89cff153281cdec
+Author: Dennis Klein <d.klein@gsi.de>
+Date:   Tue May 19 10:23:15 2020 +0200
+
+    Do not search external GTest by default
+    
+    Can be overridden by -DUSE_EXTERNAL_GTEST=ON.
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e1279fd4..6661b2b5 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -51,6 +51,8 @@ fairmq_build_option(BUILD_DOCS              "Build FairMQ documentation."
+                                              DEFAULT OFF)
+ fairmq_build_option(FAST_BUILD              "Fast production build. Not recommended for development."
+                                              DEFAULT OFF)
++fairmq_build_option(USE_EXTERNAL_GTEST      "Do not use bundled GTest. Not recommended."
++                                             DEFAULT OFF)
+ ################################################################################
+ 
+ 
+@@ -160,7 +160,9 @@
+ endif()
+ 
+ if(BUILD_TESTING)
+-  find_package2(PRIVATE GTest VERSION 1.7.0)
++  if(USE_EXTERNAL_GTEST)
++    find_package2(PRIVATE GTest VERSION 1.7.0)
++  endif()
+   if(NOT GTest_FOUND)
+     build_bundled(GTest extern/googletest)
+     find_package2(PRIVATE GTest REQUIRED)
