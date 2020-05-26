@@ -1,9 +1,9 @@
 spack:
   definitions:
     - when: platform == 'linux'
-      root: [root@6.18.04+fortran+gdml+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+xrootd]
+      root: [root@6.18.04+fortran+gdml+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+xrootd+sqlite]
     - when: platform == 'darwin'
-      root: [root@6.18.04+fortran+gdml+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+xrootd+aqua]
+      root: [root@6.18.04+fortran+gdml+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+xrootd+sqlite+aqua]
   specs:
     - pcre+jit
     - pythia6@428-alice1
