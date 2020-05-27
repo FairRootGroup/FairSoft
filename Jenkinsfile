@@ -65,14 +65,6 @@ pipeline {
               }
           }
 
-          def linux_jobs = jobMatrix('slurm',
-            ctestcmd + " -DUSE_TEMPDIR:BOOL=ON", specs_list
-          ) { spec, label, jobsh ->
-            sh """
-              echo "*** Submitting at: \$(date -R)"
-              srun -p main -c 64 -n 1 -t 400 --job-name="${label}" bash ${jobsh}
-            """
-          }
           def macos_jobs = jobMatrix('macos', ctestcmd, [
             [os: 'macOS10.14'],
           ]) { spec, label, jobsh ->
@@ -82,7 +74,7 @@ pipeline {
             """
           }
           throttle(['long']) {
-            parallel(linux_jobs + macos_jobs)
+            parallel(macos_jobs)
           }
         }
       }

@@ -81,23 +81,8 @@ set_property(TEST test.start APPEND PROPERTY
 # Main tests
 # ----------
 
-fs_test_simple(NAME cmake       SPEC cmake)
-fs_test_simple(NAME grpc SPEC grpc)
-fs_test_simple(NAME flatbuffers SPEC flatbuffers)
-fs_test_env(NAME fairlogger ENVFILE test/env/fairlogger.yaml)
-fs_test_env(NAME dds        ENVFILE test/env/dds.yaml)
-fs_test_env(NAME fairmq     ENVFILE test/env/fairmq.yaml)
-fs_test_simple(NAME odc         SPEC odc)
-
-fs_test_env(NAME dev.threads_nox_noopengl ENVFILE env/dev/sim_threads_no-x_no-opengl.yaml)
-fs_test_env(NAME dev.threads              ENVFILE env/dev/sim_threads.yaml)
-fs_test_env(NAME dev.nothreads            ENVFILE env/dev/sim_no-threads.yaml)
-
-fs_test_env(NAME jun19.threads   ENVFILE env/jun19/sim_threads.yaml)
-fs_test_env(NAME jun19.nothreads ENVFILE env/jun19/sim_no-threads.yaml)
-fs_test_env(NAME jun19.fairroot184 ENVFILE env/dev/jun19_fairroot-18.4.yaml)
-
-fs_test_env(NAME r3broot ENVFILE env/dev/r3broot.yaml)
+fs_test_simple(NAME fontutil1   SPEC font-util)
+fs_test_simple(NAME fontutil2   SPEC font-util)
 
 
 # Test cleanup
