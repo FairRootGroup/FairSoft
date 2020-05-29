@@ -51,7 +51,7 @@ pipeline {
         script {
           def ctestcmd = "ctest -VV -S FairSoft_test.cmake"
           def specs_list = [
-            [os: 'Fedora30',         container: 'fedora.30.sif',    for_pr: true],
+            [os: 'Fedora31',         container: 'fedora.31.sif',    for_pr: true],
             [os: 'Ubuntu-18.04-LTS', container: 'ubuntu.18.04.sif', for_pr: true],
             [os: 'Debian-10',        container: 'debian.10.sif'],
             [os: 'GSI-Debian-8', container: 'gsi-debian-8.sif'],

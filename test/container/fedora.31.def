@@ -1,8 +1,8 @@
 # Rebuild:
-#   singularity build -f -F fedora.30.sif fedora.30.def
+#   singularity build -f -F fedora.31.sif fedora.31.def
 
 Bootstrap: docker
-From: fedora:30
+From: fedora:31
 
 %post
     dnf -y update
