@@ -6,5 +6,6 @@ spack:
     - slurm@18-08-9-1 +pmix sysconfdir=/etc/slurm
     - openmpi@3.1.0 schedulers=slurm +pmi +pmix ~pmix-dstore +thread_multiple +legacylaunchers fabrics=verbs
     - osu-micro-benchmarks
+    - scalasca
   concretization: together
   view: false
