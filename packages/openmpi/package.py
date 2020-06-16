@@ -351,9 +351,8 @@ class Openmpi(AutotoolsPackage):
             return '--without-{0}'.format(opt)
         line = '--with-{0}'.format(opt)
         path = _verbs_dir()
-        #if (path is not None) and (path not in ('/usr', '/usr/local')):
-        #    line += '={0}'.format(path)
-        line += '=/usr'
+        if (path is not None) and (path not in ('/usr', '/usr/local')):
+            line += '={0}'.format(path)
         return line
 
     def with_or_without_mxm(self, activated):
