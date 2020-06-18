@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ -z "${SPACK_ENV}" ]]; then
+    echo "Activate spack environment before calling the script."
+    return
+fi
+
 if [ "$#" -ne 3 ]; then
     echo "Invalid number of parameter. Expects 3 parameters."
     echo "Usage  : . ./spack_dev-build.sh /path/to/package/source package-name package-options"
