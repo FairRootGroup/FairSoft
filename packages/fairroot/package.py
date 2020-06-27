@@ -14,14 +14,14 @@ class Fairroot(CMakePackage):
     """C++ simulation, reconstruction and analysis framework for particle physics experiments """
 
     homepage = "http://fairroot.gsi.de"
-    url      = "https://github.com/FairRootGroup/FairRoot/archive/v18.0.6.tar.gz"
+    url      = "https://github.com/FairRootGroup/FairRoot/archive/v18.4.0.tar.gz"
     git      = "https://github.com/FairRootGroup/FairRoot.git"
 
     # Development versions
     version('develop', branch='dev')
 
-    version('18.4.0', branch='RC_v18.4.0')
-    version('18.2.1', '06a5b3b2c5445f7342464061cccbe7bc')
+    version('18.4.0', sha256='97ad86d039db195acf12e9978eb660daab0c91e95e517921bac5a0f157a3e309')
+    version('18.2.1', sha256='a9c22965d2d99e385f64c0df1867b477b9c129bcd087ba3b683d0ada6f3d66d0')
     version('18.0.6', '822902c2fc879eab82fca47eccb14259')
 
     variant('cxxstd',
@@ -34,7 +34,7 @@ class Fairroot(CMakePackage):
     variant('examples', default=False, description='Install examples')
 
     # Dependencies which are same for all versions
-    depends_on('cmake@3.13.4: +ownlibs', type='build')
+    depends_on('cmake@3.13.4:', type='build')
     depends_on('googletest@1.8.1:')
 
     depends_on('pythia6', when='+sim')
