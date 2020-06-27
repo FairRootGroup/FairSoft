@@ -22,7 +22,6 @@ class Fairroot(CMakePackage):
 
     version('18.4.0', sha256='97ad86d039db195acf12e9978eb660daab0c91e95e517921bac5a0f157a3e309')
     version('18.2.1', sha256='a9c22965d2d99e385f64c0df1867b477b9c129bcd087ba3b683d0ada6f3d66d0')
-    version('18.0.6', '822902c2fc879eab82fca47eccb14259')
 
     variant('cxxstd',
             default='11',
@@ -65,7 +64,6 @@ class Fairroot(CMakePackage):
 #    depends_on('millepede')
     depends_on('yaml-cpp', when='@18.2:')
 
-    patch('CMake.patch', level=0, when="@18.0.6")
     patch('cmake_utf8.patch', when='@18.2.1')
     patch('fairlogger_incdir.patch', level=0, when='@18.2.1')
 
