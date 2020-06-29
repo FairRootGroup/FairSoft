@@ -22,6 +22,11 @@ class Pythia8(AutotoolsPackage):
     version('8230', sha256='332fad0ed4f12e6e0cb5755df0ae175329bc16bfaa2ae472d00994ecc99cd78d')
     version('8212', sha256='f8fb4341c7e8a8be3347eb26b00329a388ccf925313cfbdba655a08d7fd5a70e')
 
+    # Avoid sqrt of negative numbers
+    # See: https://github.com/alisw/alidist/pull/2333
+    # See: https://github.com/alisw/pythia8/commit/a854fb5c250fe7b7b17e4e43f7dcb03e63ee1364
+    patch('ropewalk_sqrt.patch', when='@8240:8244,8301:8302')
+
     depends_on('rsync', type='build')
     depends_on('hepmc@2:2.99')
 
