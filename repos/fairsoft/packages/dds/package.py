@@ -20,6 +20,7 @@ class Dds(CMakePackage):
     maintainers = ['dennisklein', 'ChristianTackeGSI']
 
     version('develop', branch='master', get_full_repo=True)
+    version('3.4', tag='3.4', commit='e0900e946069d840c76e00f29113fd56158fdaa4', no_cache=True)
     version('3.2', tag='3.2', commit='03efdc71eb9aa35091ed1fbc41680c44e2ac7f54', no_cache=True)
     version('3.0', tag='3.0', commit='8b00716622962929ab4e19d0bb13e761d955fd87', no_cache=True)
     version('2.5-odc', tag='2.5-odc', commit='77d8452e15b390eaa6314c78c6073c3a9d687202', no_cache=True)
@@ -32,7 +33,7 @@ class Dds(CMakePackage):
     patch('fix_wn_bin_2.4.patch', when='@2.4')
     patch('fix_wn_bin_2.5-odc.patch', when='@2.5-odc')
     patch('fix_wn_bin_3.0.patch', when='@3.0')
-    patch('fix_wn_bin_3.2.patch', when='@3.2')
+    patch('fix_wn_bin_3.2_3.4.patch', when='@3.2:3.4')
     patch('fix_wn_bin_master.patch', when='@develop')
     # TODO Upstream the wn_bin fix
     patch('fix_uuid_init.patch', when='@2.5-odc:3.0')
