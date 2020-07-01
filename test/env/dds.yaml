@@ -7,5 +7,6 @@ spack:
       - '@2.5-odc'
       - '@3.0'
       - '@3.2'
+      - '@3.4'
       - '@develop'
   view: false
