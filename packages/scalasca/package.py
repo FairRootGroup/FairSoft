@@ -26,6 +26,7 @@ class Scalasca(AutotoolsPackage):
     version('2.2.2', sha256='909567ca294366119bbcb7e8122b94f43982cbb328e18c6f6ce7a722d72cd6d4')
     version('2.1',   sha256='fefe43f10becf7893863380546c80ac8db171a3b1ebf97d0258602667572c2fc')
 
+    depends_on('zlib')
     depends_on("mpi")
 
     # version 2.4+
@@ -62,3 +63,7 @@ class Scalasca(AutotoolsPackage):
             config_args.append("--with-mpi=mpich3")
 
         return config_args
+
+    def setup_build_environment(self, env):
+        env.set('LIBZ_INCLUDE', self.spec['zlib'].prefix.include)
+        env.set('LIBZ_LIB', self.spec['zlib'].prefix.lib)
