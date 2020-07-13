@@ -73,9 +73,20 @@ pipeline {
               srun -p main -c 64 -n 1 -t 400 --job-name="${label}" bash ${jobsh}
             """
           }
-          def macos_jobs = jobMatrix('macos', ctestcmd, [
-            [os: 'macOS10.14'],
-          ]) { spec, label, jobsh ->
+
+          if (env.CHANGE_ID != null) {
+              specs_list = [
+                [os: 'macOS'],
+              ];
+          } else {
+              specs_list = [
+                [os: 'macOS10.14'],
+                [os: 'macOS10.15'],
+              ];
+          }
+
+          def macos_jobs = jobMatrix('macos', ctestcmd, specs_list)
+          { spec, label, jobsh ->
             sh """
               export LABEL=${label}
               ${ctestcmd}
