@@ -104,6 +104,10 @@ fs_test_env(NAME jun19.nothreads ENVFILE env/jun19/sim_no-threads.yaml)
 fs_test_env(NAME jun19.fairroot184 ENVFILE env/dev/jun19_fairroot-18.4.yaml)
 
 fs_test_env(NAME r3broot ENVFILE env/dev/r3broot.yaml)
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    fs_test_env(NAME openmpi_3 ENVFILE test/env/openmpi_3.yaml)
+    fs_test_might_fail(env.openmpi_3)
+endif()
 
 
 # Test cleanup
