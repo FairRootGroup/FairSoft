@@ -236,7 +236,7 @@ class Root(CMakePackage):
 
     # Optional dependencies
     depends_on('avahi',     when='+avahi')
-    depends_on('davix',     when='+davix')
+    depends_on('davix @0.7.1:', when='+davix')
     depends_on('cfitsio',   when='+fits')
 #    depends_on('fftw',      when='+fftw')
     depends_on('graphviz',  when='+graphviz')
