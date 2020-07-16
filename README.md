@@ -40,7 +40,15 @@ Remember to run `git submodule update --init` even after you checked out a new b
 ### II.1. Activate Spack in your current shell
 
 ```
-source spack/share/spack/setup-env.sh
+source thisfairsoft.sh
+```
+
+Verify that the `spack` command works and lists the correct FairSoft package [repository](https://spack.readthedocs.io/en/latest/repositories.html).
+
+```
+$ spack repo list
+==> 1 package repository.
+fairsoft    ~/FairSoft
 ```
 
 ### II.2. Configure Spack directories
@@ -60,26 +68,6 @@ The source_cache directory is used by Spack to store the downloaded packages,
 while the install_tree holds the whole installation tree.
 
 Verify the config changes are recognized by running `spack config blame config`.
-
-### II.3. Bootstrap Spack
-
-```
-spack -C ./config bootstrap
-```
-
-### II.4. Add the FairSoft [repository](https://spack.readthedocs.io/en/latest/repositories.html)
-
-```
-spack repo add .
-```
-
-Verify
-
-```
-$ spack repo list
-fairsoft    ~/FairSoft
-builtin     ~/FairSoft/spack/var/spack/repos/builtin
-```
 
 ## III. Installation
 
