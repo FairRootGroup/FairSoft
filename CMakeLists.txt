@@ -98,6 +98,7 @@ fs_test_simple(NAME odc         SPEC odc)
 fs_test_env(NAME dev.threads_nox_noopengl ENVFILE env/dev/sim_threads_no-x_no-opengl.yaml)
 fs_test_env(NAME dev.threads              ENVFILE env/dev/sim_threads.yaml)
 fs_test_env(NAME dev.nothreads            ENVFILE env/dev/sim_no-threads.yaml)
+fs_test_env(NAME dev.fairroot_develop     ENVFILE env/dev/fairroot_develop.yaml)
 
 fs_test_env(NAME jun19.threads   ENVFILE env/jun19/sim_threads.yaml)
 fs_test_env(NAME jun19.nothreads ENVFILE env/jun19/sim_no-threads.yaml)
