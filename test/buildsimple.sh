@@ -2,6 +2,8 @@
 
 . test/buildsetup.sh
 
+echo "*** Spec to be build .....:" "$@"
+
 spack -C ./config spec -I "$@"
 retval=$?
 

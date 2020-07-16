@@ -11,8 +11,8 @@ then
 	fi
 fi
 
-echo "*** LABEL: $LABEL"
-echo -n "*** Host : "
+echo "*** LABEL ................: $LABEL"
+echo -n "*** Host .................: "
 hostname -f
 
 # echo "==> Environment:"
