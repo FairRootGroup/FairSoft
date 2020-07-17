@@ -3,17 +3,18 @@
 def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
   def nodes = [:]
   for (spec in specs) {
+    def node_alloc_label = node_type
     def label = spec.os
     def jobsh = "job_${label}.sh"
     def title = "build/${label}"
     def container = ""
     if (node_type == 'macos') {
-      node_type = label
+      node_alloc_label = label
     } else {
       container = spec.container
     }
     nodes[title] = {
-      node(node_type) {
+      node(node_alloc_label) {
         githubNotify(context: title, description: 'Building ...', status: 'PENDING')
         try {
           checkout scm
@@ -88,6 +89,7 @@ pipeline {
           def macos_jobs = jobMatrix('macos', ctestcmd, specs_list)
           { spec, label, jobsh ->
             sh """
+              hostname -f
               export LABEL=${label}
               ${ctestcmd}
             """
