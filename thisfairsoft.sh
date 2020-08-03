@@ -10,9 +10,14 @@ fi
 . "${fairsoft_basedir}/spack/share/spack/setup-env.sh"
 spack compiler find
 
-if [ "$(spack repo list | sed -n -e "/^fairsoft / { s/^[^ ]* *//; p; }")" != "$fairsoft_basedir" ]
-then
-	spack repo add --scope site "$fairsoft_basedir"
-fi
+fairsoft_repo() {
+	if [ "$(spack repo list | sed -n -e "/^$1 / { s/^[^ ]* *//; p; }")" != "${fairsoft_basedir}/repos/$2" ]
+	then
+		spack repo add --scope site "${fairsoft_basedir}/repos/$2"
+	fi
+}
 
+fairsoft_repo "fairsoft" "fairsoft"
+
+unset -f fairsoft_repo
 unset fairsoft_basedir
