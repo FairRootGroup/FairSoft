@@ -68,16 +68,14 @@ EOF
 	mkdir -v -p "$HOME/install-tree"
 	mkdir -v -p "$HOME/stage"
 
-	. spack/share/spack/setup-env.sh
+	. thisfairsoft.sh
 
 	if (hostname --all-fqdns 2>/dev/null || hostname -f) | grep '[.]gsi[.]de *$' >/dev/null
 	then
 		spack mirror add test http://citpc008.gsi.de/spack/source-cache
 	fi
-
-	spack repo add .
 else
-	. spack/share/spack/setup-env.sh
+	. thisfairsoft.sh
 fi
 
 echo "*** [$(date +%H:%M:%S)] Starting"
