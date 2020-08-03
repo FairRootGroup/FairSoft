@@ -48,7 +48,8 @@ Verify that the `spack` command works and lists the correct FairSoft package [re
 ```
 $ spack repo list
 ==> 1 package repository.
-fairsoft    ~/FairSoft
+fairsoft    ~/FairSoft/repos/fairsoft
+builtin     ~/FairSoft/spack/var/spack/repos/builtin
 ```
 
 ### II.2. Configure Spack directories
