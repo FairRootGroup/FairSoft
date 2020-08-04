@@ -17,6 +17,7 @@ fairsoft_repo() {
 	fi
 }
 
+fairsoft_repo "fairsoft_backports" "fairsoft-backports"
 fairsoft_repo "fairsoft" "fairsoft"
 
 unset -f fairsoft_repo
