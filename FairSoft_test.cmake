@@ -6,6 +6,9 @@
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 
+message(STATUS " Starting CTest script : FairSoft_test.cmake")
+message(STATUS " CMake Version ........: ${CMAKE_VERSION}")
+
 if (USE_TEMPDIR)
     execute_process(COMMAND mktemp -d --tmpdir fairsoft_ctest.XXXXXX
                     OUTPUT_VARIABLE FS_TEST_WORKDIR
@@ -38,11 +41,12 @@ endif()
 
 set(CTEST_BINARY_DIRECTORY build)
 set(CTEST_TEST_TIMEOUT 10800)
+set(CTEST_CUSTOM_MAXIMUM_PASSED_TEST_OUTPUT_SIZE 204800)
 set(CTEST_USE_LAUNCHERS ON)
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 cmake_host_system_information(RESULT fqdn QUERY FQDN)
 
-message(STATUS "Running on host: ${fqdn}")
+message(STATUS " Running on host ......: ${fqdn}")
 if ("$ENV{CTEST_SITE}" STREQUAL "")
   set(CTEST_SITE "${fqdn}")
 else()
@@ -71,8 +75,8 @@ if (NOT "$ENV{JOB_BASE_NAME}" STREQUAL "")
     set(CTEST_BUILD_NAME "$ENV{JOB_BASE_NAME} ${CTEST_BUILD_NAME}")
 endif()
 
-message(STATUS "BRANCH_NAME: $ENV{BRANCH_NAME}")
-message(STATUS "CHANGE_ID: $ENV{CHANGE_ID}")
+message(STATUS " BRANCH_NAME ..........: $ENV{BRANCH_NAME}")
+message(STATUS " CHANGE_ID ............: $ENV{CHANGE_ID}")
 set(cdash_group "Experimental")
 if (NOT "$ENV{BRANCH_NAME}" STREQUAL "")
     set(cdash_group "Continuous")
@@ -80,7 +84,7 @@ if (NOT "$ENV{BRANCH_NAME}" STREQUAL "")
         set(cdash_group "Nightly")
     endif()
 endif()
-message(STATUS "cdash_group: ${cdash_group}")
+message(STATUS " cdash_group ..........: ${cdash_group}")
 
 
 # The cache contains the name of the source directory.

@@ -22,8 +22,8 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
           if (node_type == 'slurm') {
             sh """
               echo '#! /bin/bash' > ${jobsh}
-              echo 'echo "*** Job started at: \$(date -R)"' >> ${jobsh}
-              echo 'echo "*** Job ID: \$SLURM_JOB_ID"' >> ${jobsh}
+              echo 'echo "*** Job started at .......: \$(date -R)"' >> ${jobsh}
+              echo 'echo "*** Job ID ...............: \$SLURM_JOB_ID"' >> ${jobsh}
               echo "source <(sed -e '/^#/d' -e '/^export/!s/^.*=/export &/' /etc/environment)" >> ${jobsh}
               echo "export LABEL=${label}" >> ${jobsh}
               echo "${env.SINGULARITY_CONTAINER_ROOT}/run_container ${container} ${ctestcmd}" >> ${jobsh}
@@ -70,7 +70,7 @@ pipeline {
             ctestcmd + " -DUSE_TEMPDIR:BOOL=ON", specs_list
           ) { spec, label, jobsh ->
             sh """
-              echo "*** Submitting at: \$(date -R)"
+              echo "*** Submitting job at ....: \$(date -R)"
               srun -p main -c 64 -n 1 -t 400 --job-name="${label}" bash ${jobsh}
             """
           }

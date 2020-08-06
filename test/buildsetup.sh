@@ -78,4 +78,8 @@ else
 	. thisfairsoft.sh
 fi
 
-echo "*** [$(date +%H:%M:%S)] Starting"
+echo -n "*** spack version ........: "
+spack --version
+
+echo -n "*** Actual test start time: "
+date +%H:%M:%S
