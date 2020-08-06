@@ -1,3 +1,6 @@
 [submodule "spack"]
 	path = spack
 	url = https://github.com/FairRootGroup/spack.git
+[submodule "vae/spack"]
+	path = vae/spack
+	url = https://github.com/FairRootGroup/spack.git
