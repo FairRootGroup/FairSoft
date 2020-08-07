@@ -11,8 +11,10 @@ class Pythia8(AutotoolsPackage):
        i.e. for the description of collisions at high energies between elementary
        particles such as e+, e-, p and pbar in various combinations."""
 
-    homepage = "http://home.thep.lu.se/~torbjorn/Pythia.html"
+    homepage = "http://home.thep.lu.se/Pythia/"
     url      = "http://home.thep.lu.se/~torbjorn/pythia8/pythia8244.tgz"
+
+    maintainers = ['ChristianTackeGSI']
 
     version('8302', sha256='7372e4cc6f48a074e6b7bc426b040f218ec4a64b0a55e89da6af56933b5f5085')
     version('8301', sha256='51382768eb9aafb97870dca1909516422297b64ef6a6b94659259b3e4afa7f06')
