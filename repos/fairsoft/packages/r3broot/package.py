@@ -23,7 +23,7 @@ class R3broot(CMakePackage):
     depends_on('fairlogger')
     depends_on('geant3')
     depends_on('geant4~threads')
-    depends_on('geant4_vmc')
+    depends_on('geant4-vmc')
     depends_on('pythia6')
     depends_on('pythia8')
 

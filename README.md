@@ -135,7 +135,7 @@ fairmq@1.4.3
 fairroot@18.2.1 +sim
 geant3@2-7_fairsoft
 geant4@10.05.p01 ~clhep~data~motif~opengl~qt+threads~vecgeom~x11
-geant4_vmc@4-0-p1
+geant4-vmc@4-0-p1
 googletest@1.8.1
 hepmc@2.06.09  length=CM momentum=GEV
 pcre +jit
@@ -169,7 +169,7 @@ fairmq@1.4.3
 fairroot@18.2.1 +sim
 geant3@2-7_fairsoft
 geant4@10.05.p01 ~clhep~data~motif~opengl~qt+threads~vecgeom~x11
-geant4_vmc@4-0-p1
+geant4-vmc@4-0-p1
 googletest@1.8.1
 hepmc@2.06.09  length=CM momentum=GEV
 pcre +jit
@@ -190,7 +190,7 @@ expat@2.2.9        g4tendl@1.3.2            libiconv@1.16         mesa@18.3.6   
 fairlogger@1.4.0   geant3@2-7_fairsoft      libpciaccess@0.13.5   mesa-glu@9.0.0      vgm@4-5
 fairmq@1.4.3       geant4@10.05.p01         libpng@1.6.37         msgpack-c@3.1.1     xerces-c@3.2.2
 fairroot@18.2.1    geant4-data@10.05        libpthread-stubs@0.4  nanomsg@1.1.5       xextproto@7.3.0
-font-util@1.3.2    geant4_vmc@4-0-p1        libsm@1.2.2           ncurses@6.1         xproto@7.0.31
+font-util@1.3.2    geant4-vmc@4-0-p1        libsm@1.2.2           ncurses@6.1         xproto@7.0.31
 fontconfig@2.12.3  gettext@0.20.1           libsodium@1.0.17      nettle@3.4.1        xxhash@0.6.5
 freetype@2.10.1    gmp@6.1.2                libuuid@1.0.3         openblas@0.3.7      xz@5.2.4
 g4abla@3.1         gnutls@3.6.8             libx11@1.6.7          openssl@1.1.1d      zeromq@4.3.2
@@ -240,7 +240,7 @@ Following command will run development build of FairRoot with dependencies equiv
 ```
 spack -C ./config dev-build -j JOBS -d SOURCE_PATH fairroot@18.2.1+sim+examples ^pcre+jit ^python@2.7.16 ^py-numpy@1.16.5 ^googletest@1.8.1 ^boost@1.68.0 ^fairlogger@1.4.0 \
 ^dds@2.4 ^fairmq@1.4.3 ^pythia6@428-alice1 ^hepmc@2.06.09 length=CM momentum=GEV ^pythia8@8240 ^geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep~threads \
-^root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+xrootd+aqua ^geant3@2-7_fairsoft ^vgm@4-5 ^geant4_vmc@4-0-p1
+^root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+xrootd+aqua ^geant3@2-7_fairsoft ^vgm@4-5 ^geant4-vmc@4-0-p1
 ```
 
 ## VI. [Troubleshooting](docs/troubleshooting.md)

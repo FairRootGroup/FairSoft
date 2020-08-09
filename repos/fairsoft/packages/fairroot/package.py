@@ -54,7 +54,7 @@ class Fairroot(CMakePackage):
 
     depends_on('geant3', when="+sim")
     depends_on('vgm', when="+sim")
-    depends_on('geant4_vmc', when="+sim")
+    depends_on('geant4-vmc', when="+sim")
 
     depends_on('fairlogger@1.4.0:')
     depends_on('fairmq@1.4.3:')
