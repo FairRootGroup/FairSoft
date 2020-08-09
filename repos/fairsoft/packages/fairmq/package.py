@@ -52,7 +52,9 @@ class Fairmq(CMakePackage):
     depends_on('boost@1.64: +container+program_options+filesystem+date_time+regex', when='@1.4:')
     conflicts('^boost@1.70:', when='^cmake@:3.14')
     depends_on('fairlogger@1.2:1.5', when='@:1.4.7')
-    depends_on('fairlogger@1.2:', when='@1.4.8:')
+    depends_on('fairlogger@1.2:', when='@1.4.8:1.4.10')
+    depends_on('fairlogger@1.4:', when='@1.4.11:')
+    depends_on('fairlogger@1.6:', when='@develop')
     if Version(spack_version) >= Version('0.14'):
         depends_on('libzmq@4.1.5:')
     else:
