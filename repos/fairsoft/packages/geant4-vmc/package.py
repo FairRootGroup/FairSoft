@@ -12,6 +12,13 @@ class Geant4Vmc(CMakePackage):
     homepage = "https://github.com/vmc-project/geant4_vmc"
     url = "https://github.com/vmc-project/geant4_vmc/archive/v3-6.tar.gz"
 
+    version('5-2',    sha256='5bd0e4a4f938048b35724f06075952ecfbc8a97ffc979630cfe2788323845b13')
+    version('5-1-p1', sha256='2e3e4705134ea464e993156f71d478cb7d3817f5b6026bf8d9a37d32ec97590b')
+    version('5-1',    sha256='ede71f360397dc4d045ec0968acf23b564fa81059c94eb40942b552eea8b5e00')
+    version('5-0-p5', sha256='296340042b0bbfab0dec8f7f15a3b15cfab3fdb34aff97f80c1d52c2a25200cb')
+    version('5-0-p4', sha256='0c13848b5cf5951e3d5d2d5abcc4082c75ea37c83bb92a15b82ecae03045fe1e')
+    version('5-0-p3', sha256='91df73e992bf9ae7e1b6b3c3deb12cd6661c7dd5153fa233eb28b8d8e1164ccb')
+    version('5-0-p2', sha256='34578c5468173615de3fc077e85be3bf68f4aff4b4f37523ab67304dbc153d5f')
     version('5-0-p1', sha256='b66cbf86a96b6efe1643753a7606b1c4ebb9d45cca9f6b8e933762920f32831f')
     version('3-6', '01507945dfcc21827628d0eb6b233931')
     version('4-0-p1', 'd7e88a3ef11ea62bec314b5f251c91b1')
