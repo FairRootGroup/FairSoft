@@ -11,17 +11,9 @@ class Flatbuffers(CMakePackage):
     """
 
     homepage = "http://google.github.io/flatbuffers/"
-    url      = "https://github.com/google/flatbuffers/archive/v1.9.0.tar.gz"
+    git = 'https://github.com/google/flatbuffers.git'
 
-    version('1.11.0', sha256='3f4a286642094f45b1b77228656fbd7ea123964f19502f9ecfd29933fd23a50b')
-    version('1.10.0', '3714e3db8c51e43028e10ad7adffb9a36fc4aa5b1a363c2d0c4303dd1be59a7c')
-    version('1.9.0', '8be7513bf960034f6873326d09521a4b')
-    version('1.8.0', '276cab8303c4189cbe3b8a70e0515d65')
-
-
-    # Remove unnecessary const qualifier
-    # https://github.com/google/flatbuffers/pull/4698
-    patch('remove_unnecessary_const_qualifier.patch', when='@1.9.0')
+    version('1.11.0', tag='v1.11.0', commit='9e7e8cbe9f675123dd41b7c62868acad39188cae', submodules=True, no_cache=True)
 
     # Silence false positive "-Wstringop-overflow" on GCC 10.0 to 11.0
     # https://github.com/google/flatbuffers/commit/515a4052a750dfe6df8d143c8f23cd8aaf51f9d7
