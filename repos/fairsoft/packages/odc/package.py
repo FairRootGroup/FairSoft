@@ -24,9 +24,7 @@ class Odc(CMakePackage):
     depends_on('grpc +codegen+shared')
     depends_on('dds@develop')
     depends_on('fairmq@develop')
-    depends_on('fairlogger@:1.5') # TODO Remove version restriction once ODC
-                                  # supports FairLogger 1.6+ (can handle the
-                                  # transitive fmt dependency)
+    depends_on('fairlogger')
 
     depends_on('cmake@3.12:', type='build')
     depends_on('git', type='build')
