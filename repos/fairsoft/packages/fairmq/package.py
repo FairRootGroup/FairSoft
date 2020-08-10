@@ -17,6 +17,15 @@ class Fairmq(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='dev', submodules=True, get_full_repo=True)
+    version('1.4.21', tag='v1.4.21', commit='3eca8e9defd7e3b10f7b1ab02c2e45ec68911092', submodules=True, no_cache=True)
+    version('1.4.20', tag='v1.4.20', commit='78b1c188bfb6158a7c1a8db2745a88099dff19da', submodules=True, no_cache=True)
+    version('1.4.19', tag='v1.4.19', commit='c60dd9965c02011684994ac4a698c8d644a56ac1', submodules=True, no_cache=True)
+    version('1.4.18', tag='v1.4.18', commit='b5bb476b0da55bfd5b0b72f3da52afac194b865b', submodules=True, no_cache=True)
+    version('1.4.17', tag='v1.4.17', commit='53a4d17f8b498a056199ce4b665dbeed847be6b2', submodules=True, no_cache=True)
+    version('1.4.16', tag='v1.4.16', commit='8cfc04721eeeade40723497cf5e6d26683804797', submodules=True, no_cache=True)
+    version('1.4.15', tag='v1.4.15', commit='4218c185a4018c36a5fbc32d7c845b1dc811a567', submodules=True, no_cache=True)
+    version('1.4.14', tag='v1.4.14', commit='960b612d802e755d75f902e55b42e32f0e0e1e53', submodules=True, no_cache=True)
+    version('1.4.13', tag='v1.4.13', commit='38eb9d22e4abe1c3c918aa457c1ac7abfeac5762', submodules=True, no_cache=True)
     version('1.4.12', tag='v1.4.12', commit='9f8a3553ba7e6c3ce5c9e378d77d3e16d7ce6daf', submodules=True, no_cache=True)
     version('1.4.11', tag='v1.4.11', commit='e6dede492e02d6966cfa68e6820f90f679b74592', submodules=True, no_cache=True)
     version('1.4.10', tag='v1.4.10', commit='f31be6d7a10ab0b7e4183576438268c8122117a5', submodules=True, no_cache=True)
@@ -59,8 +68,8 @@ class Fairmq(CMakePackage):
         depends_on('libzmq@4.1.5:')
     else:
         depends_on('zeromq@4.1.5:')
-    depends_on('nanomsg@1.1.5:')
-    depends_on('msgpack-c@3.1:')
+    depends_on('nanomsg@1.1.5:', when='@:1.4.16')
+    depends_on('msgpack-c@3.1:', when='@:1.4.16')
     depends_on('dds@2.2:2.4', when='@:1.4.9')
     depends_on('dds@2.5-odc', when='@1.4.10')
     depends_on('dds@3.0:', when='@1.4.11:')
