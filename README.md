@@ -249,7 +249,11 @@ spack dev-build -j JOBS -d SOURCE_PATH fairroot@18.2.1+sim+examples ^pcre+jit ^p
 
 Releases are defined as a Spack environment in the directory [`env/<release>/<variant>.yaml`](env/).
 
-`repo.yaml` + `packages/` constitute the FairSoft Spack package repository.
+`repos/<name>/{repo.yaml,packages/}` constitute the FairSoft Spack package repositories. `<name>` can be:
+* `fairsoft` which is the main FairSoft package repo, or
+* `fairsoft-backports` which contains all the (potentially customized) upstream package overrides.
+
+You may ignore the currently present `vae*` repository/ies which is for GSI/FAIR-internal use.
 
 `config/` contains some general configuration changes needed on some systems. It's merged into the spack site config directory.
 
