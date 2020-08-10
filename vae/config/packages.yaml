@@ -1,4 +1,5 @@
 packages:
   all:
     providers:
+      tbb: [fairsoft_backports.intel-tbb]
       blas: [fairsoft_backports.openblas]

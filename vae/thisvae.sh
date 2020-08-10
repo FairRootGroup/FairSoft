@@ -2,7 +2,7 @@
 
 fairsoft_basedir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fairsoft_spackdir=vae/spack
-fairsoft_configdir=../../../../config
+fairsoft_configdir=../../../config
 
 if command -v git >/dev/null 2>&1
 then
