@@ -38,7 +38,10 @@ class Dds(CMakePackage):
     # TODO Upstream the wn_bin fix
     patch('fix_uuid_init.patch', when='@2.5-odc:3.0')
 
-    depends_on('boost@1.67: +shared+log+thread+program_options+filesystem+system+regex+test', when='@2.4:')
+    depends_on('boost@1.67:1.72 +shared+log+thread+program_options+filesystem+system+regex+test', when='@2.4:')
+    # TODO No support for Boost 1.73, check if later releases will work
+    # https://github.com/FairRootGroup/DDS/commit/e5b8ca86c46220238d130ac1f3f15dff32e85a2a
+    # https://github.com/FairRootGroup/DDS/issues/305
     depends_on('boost@1.67:1.68 +shared+log+thread+program_options+filesystem+system+regex+test+signals', when='@:2.3')
     conflicts('^boost@1.70:', when='^cmake@:3.14')
 
