@@ -23,6 +23,10 @@ class Flatbuffers(CMakePackage):
     # https://github.com/google/flatbuffers/pull/4698
     patch('remove_unnecessary_const_qualifier.patch', when='@1.9.0')
 
+    # Silence false positive "-Wstringop-overflow" on GCC 10.0 to 11.0
+    # https://github.com/google/flatbuffers/commit/515a4052a750dfe6df8d143c8f23cd8aaf51f9d7
+    patch('silence_false_positive_gcc10_warning.patch', when='@:1.12.0%gcc@10:11')
+
     def cmake_args(self):
         args=[]
         args.append('-DFLATBUFFERS_BUILD_SHAREDLIB=ON')
