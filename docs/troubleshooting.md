@@ -73,3 +73,18 @@ compilers:
     extra_rpaths: []
 (...)
 ```
+
+## Warning: Failed to initialize repository
+
+**Warning**
+
+```
+==> Warning: Failed to initialize repository: '/home/user/FairSoft'.
+  No repo.yaml found in '/home/user/FairSoft'
+  To remove the bad repository, run this command:
+      spack repo rm /home/user/FairSoft
+```
+
+**Solution**
+
+At some point in the past we have split and moved the single top-level Spack package repo into multiple package repos below `repos/`. To silence the warning, run the command that is suggested in the message.
