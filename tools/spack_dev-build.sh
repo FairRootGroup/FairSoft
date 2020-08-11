@@ -23,7 +23,7 @@ if [[ "$#" -eq 1 ]]; then
     return
 fi
 
-coml="spack -C ./config dev-build -j 4 -d $2 $1@$3 $deps";
+coml="spack dev-build -j 4 -d $2 $1@$3 $deps";
 
 echo $coml;
 

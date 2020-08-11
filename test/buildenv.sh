@@ -14,7 +14,7 @@ spack env activate $envname
 ret=$?
 if [ "$ret" = 0 ]
 then
-	spack -C ./config install
+	spack install
 	ret=$?
 fi
 spack env deactivate

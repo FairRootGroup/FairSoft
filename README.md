@@ -150,7 +150,7 @@ vgm@4-5
 The `jun19` FairSoft release pins certain package version and build variants that have been carefully chosen to work well together. To install the packages in the environment run
 
 ```
-[jun19] $ spack -C ./config install
+[jun19] $ spack install
 ```
 
 This step usually takes a while - time for a coffee break ☕.
@@ -210,12 +210,12 @@ View is created by following command:
 
 Linux
 ```
-[jun19] $ spack -C ./config view --verbose --dependencies true symlink -i (YOUR_SIMPATH) fairroot
+[jun19] $ spack view --verbose --dependencies true symlink -i (YOUR_SIMPATH) fairroot
 ```
 
 macOS
 ```
-[jun19] $ spack -C ./config view --verbose --dependencies true -e libpng -e libjpeg-turbo -e libiconv -e sqlite symlink -i (YOUR_SIMPATH) fairroot
+[jun19] $ spack view --verbose --dependencies true -e libpng -e libjpeg-turbo -e libiconv -e sqlite symlink -i (YOUR_SIMPATH) fairroot
 ```
 
 The view creation has to be done within an [activated environment](#iii2-activate-the-spack-environment).
@@ -238,7 +238,7 @@ A package can be built in development mode - without checking it out from reposi
 Following command will run development build of FairRoot with dependencies equivalent to jun19 environemnt on macOS. Currently this has to be configured manually.
 
 ```
-spack -C ./config dev-build -j JOBS -d SOURCE_PATH fairroot@18.2.1+sim+examples ^pcre+jit ^python@2.7.16 ^py-numpy@1.16.5 ^googletest@1.8.1 ^boost@1.68.0 ^fairlogger@1.4.0 \
+spack dev-build -j JOBS -d SOURCE_PATH fairroot@18.2.1+sim+examples ^pcre+jit ^python@2.7.16 ^py-numpy@1.16.5 ^googletest@1.8.1 ^boost@1.68.0 ^fairlogger@1.4.0 \
 ^dds@2.4 ^fairmq@1.4.3 ^pythia6@428-alice1 ^hepmc@2.06.09 length=CM momentum=GEV ^pythia8@8240 ^geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep~threads \
 ^root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+xrootd+aqua ^geant3@2-7_fairsoft ^vgm@4-5 ^geant4-vmc@4-0-p1
 ```
@@ -251,7 +251,7 @@ Releases are defined as a Spack environment in the directory [`env/<release>/<va
 
 `repo.yaml` + `packages/` constitute the FairSoft Spack package repository.
 
-`config/` contains some general configuration changes needed on some systems, please use it with `spack -C ./config ...`.
+`config/` contains some general configuration changes needed on some systems. It's merged into the spack site config directory.
 
 `spack/` is a git submodule which references the Spack git repo which currently contains both the Spack software and the Spack builtin package repository. Because some of the packages a FairSoft release pins down come from the Spack builtin repository, the idea is to pin it, too, to provide a reproducible build experience which does not depend on the various possible combination of Spack and FairSoft. The referenced submodule might also contain some extra patches, that we were not yet able to integrate into the upstream Spack itself.
 

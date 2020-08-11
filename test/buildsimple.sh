@@ -4,7 +4,7 @@
 
 echo "*** Spec to be build .....:" "$@"
 
-spack -C ./config spec -I "$@"
+spack spec -I "$@"
 retval=$?
 
 if [ "$retval" != "0" ]
@@ -12,4 +12,4 @@ then
 	exit $retval
 fi
 
-spack -C ./config install "$@"
+spack install "$@"
