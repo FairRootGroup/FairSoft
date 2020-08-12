@@ -10,8 +10,8 @@ function handle_gitdifflist() {
 	do
 		echo "*** Looking at '$filename'"
 		case "$filename" in
-			packages/*)
-				pkg="${filename#packages/}"
+			repos/*/packages/*)
+				pkg="${filename#repos/*/packages/}"
 				pkg="${pkg%%/*}"
 				echo "    Would uninstall '$pkg'"
 				;;
