@@ -15,6 +15,15 @@ echo "*** LABEL ................: $LABEL"
 echo -n "*** Host .................: "
 hostname -f
 
+if command -v lsb_release >/dev/null 2>&1
+then
+	echo "*** lsb_release output ...: $(lsb_release -sd)"
+fi
+if command -v sw_vers >/dev/null 2>&1
+then
+	echo "*** sw_vers output .......: $(sw_vers -productName) $(sw_vers -productVersion) $(sw_vers -buildVersion)"
+fi
+
 # echo "==> Environment:"
 # env | sed -e 's/^/==>  | /'
 
