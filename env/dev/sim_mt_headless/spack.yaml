@@ -13,7 +13,7 @@ spack:
   - vmc@1-0-p1
   - geant3@3.0
   - vgm@4-7
-  - geant4-vmc@5-0-p1
+  - geant4-vmc@5-2
   - fairroot@18.4.0+sim+examples
   concretization: together
   view: false
