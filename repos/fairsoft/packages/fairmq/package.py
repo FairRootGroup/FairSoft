@@ -70,7 +70,7 @@ class Fairmq(CMakePackage):
         depends_on('zeromq@4.1.5:')
     depends_on('nanomsg@1.1.5:', when='@:1.4.16')
     depends_on('msgpack-c@3.1:', when='@:1.4.16')
-    depends_on('dds@2.2:2.4', when='@:1.4.9')
+    depends_on('dds@2.4', when='@:1.4.9')
     depends_on('dds@2.5-odc', when='@1.4.10')
     depends_on('dds@3.0:', when='@1.4.11:')
     depends_on('flatbuffers', when='@1.4.9:')
