@@ -1,2 +1,3 @@
 *.pyc
-
+.spack-env/
+spack.lock

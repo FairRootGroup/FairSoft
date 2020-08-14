@@ -13,12 +13,12 @@ In the process of installing of a package, Spack creates its list of dependencie
 forming the so-called installation tree. It is possible to install different packages/versions with [Spack](https://spack.readthedocs.io/en/latest/). Since they share a common installation tree, the Spack reuses already available software when installing new package.
 
 
-The following document is divided into:  
-[I. Preparation](#i-preparation) (download the package)  
-[II. Configuration](#ii-configuration) (set up Spack)  
-[III. Installation](#iii-installation) (install packages in environment)  
-[IV. Execution](#iv-execution) (using the framework)  
-[V. Troubleshooting](#v-troubleshooting)  
+The following document is divided into:
+[I. Preparation](#i-preparation) (download the package)
+[II. Configuration](#ii-configuration) (set up Spack)
+[III. Installation](#iii-installation) (install packages in environment)
+[IV. Execution](#iv-execution) (using the framework)
+[V. Troubleshooting](#v-troubleshooting)
 
 ---
 
@@ -76,7 +76,7 @@ Verify the config changes are recognized by running `spack config blame config`.
 ### III.1. Define a [spack environment](https://spack.readthedocs.io/en/latest/environments.html) for a FairSoft release
 
 ```
-spack env create jun19 env/jun19/sim_threads.yaml
+spack env create jun19 env/jun19/sim/spack.yaml
 ```
 
 `jun19` can be any name you choose. Verify
