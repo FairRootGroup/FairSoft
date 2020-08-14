@@ -11,6 +11,7 @@ spack:
     - py-setuptools@44.1.0
   specs:
   - $concretizer_hints
+  - fairsoft-config@jun19
   - googletest@1.8.1
   - boost@1.68.0
   - fairlogger@1.4.0
