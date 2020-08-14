@@ -1,26 +1,27 @@
 spack:
   definitions:
-    - when: platform == 'linux'
-      root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite ^mesa~llvm]
-    - when: platform == 'darwin'
-      root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite+aqua]
+  - when: platform == 'linux'
+    root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite
+        ^mesa~llvm]
+  - when: platform == 'darwin'
+    root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite+aqua]
   specs:
-    - py-numpy@1.16.6
-    - py-setuptools@44.1.0
-    - googletest@1.8.1
-    - boost@1.68.0
-    - fairlogger@1.4.0
-    - dds@3.0
-    - fairmq@1.4.11
-    - pythia6@428-alice1
-    - hepmc@2.06.09 length=CM momentum=GEV
-    - pythia8@8240
-    - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep~threads
-    - $root
-    - geant3@2-7_fairsoft
-    - vgm@4-5
-    - geant4-vmc@4-0-p1
-    - fairroot@18.2.1+sim
-    - r3broot
+  - py-numpy@1.16.6
+  - py-setuptools@44.1.0
+  - googletest@1.8.1
+  - boost@1.68.0
+  - fairlogger@1.4.0
+  - dds@3.0
+  - fairmq@1.4.11
+  - pythia6@428-alice1
+  - hepmc@2.06.09 length=CM momentum=GEV
+  - pythia8@8240
+  - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep~threads
+  - $root
+  - geant3@2-7_fairsoft
+  - vgm@4-5
+  - geant4-vmc@4-0-p1
+  - fairroot@18.2.1+sim
+  - r3broot
   concretization: together
   view: false
