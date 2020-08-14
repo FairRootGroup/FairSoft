@@ -5,7 +5,6 @@ spack:
     - when: platform == 'darwin'
       root: [root +fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite+aqua]
   specs:
-    - pcre+jit
     - hepmc length=CM momentum=GEV
     - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep+threads
     - $root

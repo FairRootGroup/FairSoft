@@ -57,7 +57,7 @@ class Fairroot(CMakePackage):
     depends_on('geant4-vmc', when="+sim")
 
     depends_on('fairlogger@1.4.0:')
-    depends_on('fairmq@1.4.3:')
+    depends_on('fairmq@1.4.11:')
 
     depends_on('protobuf')
     depends_on('flatbuffers')
