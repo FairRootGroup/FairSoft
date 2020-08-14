@@ -87,26 +87,26 @@ set_property(TEST test.start APPEND PROPERTY
 # Main tests
 # ----------
 
-fs_test_simple(NAME cmake       SPEC cmake)
-fs_test_simple(NAME grpc SPEC grpc)
-fs_test_simple(NAME flatbuffers SPEC flatbuffers)
-fs_test_env(NAME fairlogger ENVFILE test/env/fairlogger.yaml)
-fs_test_env(NAME dds        ENVFILE test/env/dds.yaml)
-fs_test_env(NAME fairmq     ENVFILE test/env/fairmq.yaml)
-fs_test_simple(NAME odc         SPEC odc)
+fs_test_simple(NAME cmake                   SPEC cmake)
+fs_test_simple(NAME grpc                    SPEC grpc)
+fs_test_simple(NAME flatbuffers             SPEC flatbuffers)
+fs_test_env(   NAME fairlogger              ENVFILE test/env/fairlogger/spack.yaml)
+fs_test_env(   NAME dds                     ENVFILE test/env/dds/spack.yaml)
+fs_test_env(   NAME fairmq                  ENVFILE test/env/fairmq/spack.yaml)
+fs_test_simple(NAME odc                     SPEC odc)
 
-fs_test_env(NAME dev.threads_nox_noopengl ENVFILE env/dev/sim_threads_no-x_no-opengl.yaml)
-fs_test_env(NAME dev.threads              ENVFILE env/dev/sim_threads.yaml)
-fs_test_env(NAME dev.nothreads            ENVFILE env/dev/sim_no-threads.yaml)
-fs_test_env(NAME dev.fairroot_develop     ENVFILE env/dev/fairroot_develop.yaml)
+fs_test_env(   NAME jun19.sim               ENVFILE env/jun19/sim/spack.yaml)
+fs_test_env(   NAME jun19.sim_mt            ENVFILE env/jun19/sim_mt/spack.yaml)
 
-fs_test_env(NAME jun19.threads   ENVFILE env/jun19/sim_threads.yaml)
-fs_test_env(NAME jun19.nothreads ENVFILE env/jun19/sim_no-threads.yaml)
-fs_test_env(NAME jun19.fairroot184 ENVFILE env/dev/jun19_fairroot-18.4.yaml)
+fs_test_env(   NAME dev.jun19_fairroot_18_4 ENVFILE env/dev/jun19_fairroot_18_4/spack.yaml)
+fs_test_env(   NAME dev.sim                 ENVFILE env/dev/sim/spack.yaml)
+fs_test_env(   NAME dev.sim_mt              ENVFILE env/dev/sim_mt/spack.yaml)
+fs_test_env(   NAME dev.sim_mt_headless     ENVFILE env/dev/sim_mt_headless/spack.yaml)
+fs_test_env(   NAME dev.fairroot_develop    ENVFILE env/dev/fairroot_develop/spack.yaml)
 
-fs_test_env(NAME r3broot ENVFILE env/dev/r3broot.yaml)
+fs_test_env(   NAME r3broot                 ENVFILE env/dev/r3broot/spack.yaml)
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    fs_test_env(NAME openmpi_3 ENVFILE test/env/openmpi_3.yaml)
+    fs_test_env(NAME openmpi_3 ENVFILE test/env/openmpi_3/spack.yaml)
     fs_test_might_fail(env.openmpi_3)
 endif()
 
