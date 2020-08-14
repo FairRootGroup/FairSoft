@@ -57,19 +57,22 @@ function(fs_test_props testname)
   set_property(TEST ${testname} APPEND PROPERTY
                TIMEOUT 10800)
 endfunction()
-function(fs_test_simple)
-  cmake_parse_arguments(ARGS "" "NAME" "SPEC" ${ARGN})
-  add_test(NAME simple.${ARGS_NAME}
-           COMMAND test/buildsimple.sh ${ARGS_SPEC}
+function(fs_test)
+  cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC" "" ${ARGN})
+  if(ARGS_ENV)
+    set(type env)
+    set(what ${ARGS_ENV}/spack.yaml)
+  elseif(ARGS_SPEC)
+    set(type spec)
+    set(what ${ARGS_SPEC})
+  endif()
+  add_test(NAME ${ARGS_NAME}
+           COMMAND test/build${type}.sh ${what}
            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-  fs_test_props(simple.${ARGS_NAME})
-endfunction()
-function(fs_test_env)
-  cmake_parse_arguments(ARGS "" "NAME;ENVFILE" "" ${ARGN})
-  add_test(NAME env.${ARGS_NAME}
-           COMMAND test/buildenv.sh ${ARGS_ENVFILE}
-           WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-  fs_test_props(env.${ARGS_NAME})
+  fs_test_props(${ARGS_NAME})
+  if(ARGS_MIGHT_FAIL)
+    fs_test_might_fail(${ARGS_NAME})
+  endif()
 endfunction()
 
 
@@ -87,29 +90,25 @@ set_property(TEST test.start APPEND PROPERTY
 # Main tests
 # ----------
 
-fs_test_simple(NAME cmake                   SPEC cmake)
-fs_test_simple(NAME grpc                    SPEC grpc)
-fs_test_simple(NAME flatbuffers             SPEC flatbuffers)
-fs_test_env(   NAME fairlogger              ENVFILE test/env/fairlogger/spack.yaml)
-fs_test_env(   NAME dds                     ENVFILE test/env/dds/spack.yaml)
-fs_test_env(   NAME fairmq                  ENVFILE test/env/fairmq/spack.yaml)
-fs_test_simple(NAME odc                     SPEC odc)
+fs_test(NAME test.cmake              SPEC cmake)
+fs_test(NAME test.grpc               SPEC grpc)
+fs_test(NAME test.flatbuffers        SPEC flatbuffers)
+fs_test(NAME test.fairlogger         ENV test/env/fairlogger)
+fs_test(NAME test.dds                ENV test/env/dds)
+fs_test(NAME test.fairmq             ENV test/env/fairmq)
+fs_test(NAME test.odc                SPEC odc)
+fs_test(NAME jun19.sim               ENV env/jun19/sim)
+fs_test(NAME jun19.sim_mt            ENV env/jun19/sim_mt)
+fs_test(NAME dev.jun19_fairroot_18_4 ENV env/dev/jun19_fairroot_18_4)
+fs_test(NAME dev.sim                 ENV env/dev/sim)
+fs_test(NAME dev.sim_mt              ENV env/dev/sim_mt)
+fs_test(NAME dev.sim_mt_headless     ENV env/dev/sim_mt_headless)
+fs_test(NAME dev.fairroot_develop    ENV env/dev/fairroot_develop)
 
-fs_test_env(   NAME jun19.sim               ENVFILE env/jun19/sim/spack.yaml)
-fs_test_env(   NAME jun19.sim_mt            ENVFILE env/jun19/sim_mt/spack.yaml)
-
-fs_test_env(   NAME dev.jun19_fairroot_18_4 ENVFILE env/dev/jun19_fairroot_18_4/spack.yaml)
-fs_test_env(   NAME dev.sim                 ENVFILE env/dev/sim/spack.yaml)
-fs_test_env(   NAME dev.sim_mt              ENVFILE env/dev/sim_mt/spack.yaml)
-fs_test_env(   NAME dev.sim_mt_headless     ENVFILE env/dev/sim_mt_headless/spack.yaml)
-fs_test_env(   NAME dev.fairroot_develop    ENVFILE env/dev/fairroot_develop/spack.yaml)
-
-fs_test_env(   NAME r3broot                 ENVFILE env/dev/r3broot/spack.yaml)
+fs_test(NAME dev.r3broot             ENV env/dev/r3broot)
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    fs_test_env(NAME openmpi_3 ENVFILE test/env/openmpi_3/spack.yaml)
-    fs_test_might_fail(env.openmpi_3)
+  fs_test(NAME test.openmpi_3 ENV test/env/openmpi_3 MIGHT_FAIL)
 endif()
-
 
 # Test cleanup
 # ------------
