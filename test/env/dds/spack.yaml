@@ -1,7 +1,7 @@
 spack:
   specs:
   - matrix:
-    - ['dds']
+    - [dds]
     - - '@2.2'
       - '@2.4'
       - '@2.5-odc'

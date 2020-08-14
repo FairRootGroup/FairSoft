@@ -1,13 +1,13 @@
 spack:
   definitions:
-    - when: platform == 'linux'
-      root: [root +fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite ^mesa~llvm]
-    - when: platform == 'darwin'
-      root: [root +fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite+aqua]
+  - when: platform == 'linux'
+    root: [root +fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite ^mesa~llvm]
+  - when: platform == 'darwin'
+    root: [root +fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite+aqua]
   specs:
-    - hepmc length=CM momentum=GEV
-    - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep+threads
-    - $root
-    - fairroot@develop+sim+examples
+  - hepmc length=CM momentum=GEV
+  - geant4@10.05.p01~qt~vecgeom~opengl~x11~motif~data~clhep+threads
+  - $root
+  - fairroot@develop+sim+examples
   concretization: together
   view: false
