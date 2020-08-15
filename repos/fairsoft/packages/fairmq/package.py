@@ -55,6 +55,7 @@ class Fairmq(CMakePackage):
 
     patch('fix_find_dds.patch', when='@1.4.0:1.4.4')
     patch('use_bundled_gtest_149.patch', when='@1.4.9:1.4.16')
+    patch('missing_stdexcept_header.patch', when='@:1.4.19')
 
     depends_on('googletest@1.7:', when='@:1.4.8')
     depends_on('boost@1.64: +container+program_options+thread+system+filesystem+regex+date_time', when='@1.3')
