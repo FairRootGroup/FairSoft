@@ -6,6 +6,7 @@ spack:
   - when: platform == 'darwin'
     root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite+aqua]
   specs:
+  - python@2.7.18
   - py-numpy@1.16.6
   - py-setuptools@44.1.0
   - googletest@1.8.1
