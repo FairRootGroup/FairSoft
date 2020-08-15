@@ -1,0 +1,36 @@
+diff --git a/fairmq/FairMQMessage.h b/fairmq/FairMQMessage.h
+index f4056534..5cca5016 100644
+--- a/fairmq/FairMQMessage.h
++++ b/fairmq/FairMQMessage.h
+@@ -11,6 +11,7 @@
+ 
+ #include <cstddef> // for size_t
+ #include <memory> // unique_ptr
++#include <stdexcept>
+ 
+ #include <fairmq/Transports.h>
+ 
+diff --git a/fairmq/FairMQPoller.h b/fairmq/FairMQPoller.h
+index d8a58983..c04c2695 100644
+--- a/fairmq/FairMQPoller.h
++++ b/fairmq/FairMQPoller.h
+@@ -9,6 +9,7 @@
+ #ifndef FAIRMQPOLLER_H_
+ #define FAIRMQPOLLER_H_
+ 
++#include <stdexcept>
+ #include <string>
+ #include <memory>
+ 
+diff --git a/fairmq/FairMQSocket.h b/fairmq/FairMQSocket.h
+index dee98c16..2a379192 100644
+--- a/fairmq/FairMQSocket.h
++++ b/fairmq/FairMQSocket.h
+@@ -9,6 +9,7 @@
+ #ifndef FAIRMQSOCKET_H_
+ #define FAIRMQSOCKET_H_
+ 
++#include <stdexcept>
+ #include <string>
+ #include <vector>
+ #include <memory>
