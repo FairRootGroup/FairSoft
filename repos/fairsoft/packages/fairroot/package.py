@@ -68,6 +68,7 @@ class Fairroot(CMakePackage):
 
     patch('cmake_utf8.patch', when='@18.2.1')
     patch('fairlogger_incdir.patch', level=0, when='@18.2.1')
+    patch('find_pythia8_cmake.patch', when='@:18 +sim')
 
     def setup_build_environment(self, env):
         super(Fairroot, self).setup_build_environment(env)
