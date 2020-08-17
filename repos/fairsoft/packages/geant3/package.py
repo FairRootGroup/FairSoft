@@ -12,19 +12,19 @@ class Geant3(CMakePackage):
     homepage = "https://root.cern.ch/vmc"
     git      = "https://github.com/FairRootGroup/geant3.git"
 
-    version('2-5-gcc8', tag='v2-5-gcc8')
-    version('2-7_fairsoft', tag='v2-7_fairsoft')
-    version('3-0_fairsoft', tag='v3-0_fairsoft')
+    version('3.0', tag='v3-0_fairsoft', commit='be5ef650befe0927a9f762b98f4ea5dfb4af0624')
+    version('2.7', tag='v2-7_fairsoft', commit='f4eb0984938c5a0e8795324bac495d319cf0397e')
 
     variant('build_type', default='Nightly',
             description='CMake build type',
             values=('Nightly'))
 
     depends_on('root')
-    depends_on('vmc', when='@3-0_fairsoft:')
+    depends_on('vmc', when='@3:')
 
     patch('gcalor_stringsize.patch', level=0)
-    patch('dict_fixes_30.patch', when='@v3-0_fairsoft')
+    patch('dict_fixes_30.patch', when='@3.0')
+    patch('gfortran10_support.patch', when='@:3.6')
 
     def cmake_args(self):
         spec = self.spec
