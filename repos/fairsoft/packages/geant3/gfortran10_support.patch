@@ -1,0 +1,31 @@
+commit bce62320af0cdce0bbc4bd9641868147dbed63b6
+Author: Dennis Klein <d.klein@gsi.de>
+Date:   Wed Aug 19 13:05:49 2020 +0200
+
+    Allow non-standard-conform BOZ literal constants in GCC >=10 (#18)
+    
+    -fallow-invalid-boz
+    
+    A BOZ literal constant can occur in a limited number of contexts in standard
+    conforming Fortran. This option degrades an error condition to a warning, and
+    allows a BOZ literal constant to appear where the Fortran standard would
+    otherwise prohibit its use.
+    
+    See https://gcc.gnu.org/onlinedocs/gfortran/Fortran-Dialect-Options.html
+
+diff --git a/cmake/Geant3BuildLibrary.cmake b/cmake/Geant3BuildLibrary.cmake
+index 92f6fec..61dc32c 100644
+--- a/cmake/Geant3BuildLibrary.cmake
++++ b/cmake/Geant3BuildLibrary.cmake
+@@ -113,6 +113,11 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/TGeant3/*.h)
+ add_definitions(-DCERNLIB_BLDLIB -DCERNLIB_CZ)
+ # add flags to make gfortran build stable at -O2
+ set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -finit-local-zero -fno-strict-overflow")
++# allow non-standard-conform BOZ literal constants in GCC >=10
++if (        "${CMAKE_Fortran_COMPILER_ID}" STREQUAL "GNU"
++    AND NOT "${CMAKE_Fortran_COMPILER_VERSION}" VERSION_LESS 10)
++  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fallow-invalid-boz")
++endif()
+ # Architecture dependent not ported flags:
+ # -DCERNLIB_LINUX (linux, linuxx8664icc, linuxicc, macosx, macosxxlc, macosicc)
+ # -DCERNLIB_PPC (macosx64, macosxxlc, macosicc)
