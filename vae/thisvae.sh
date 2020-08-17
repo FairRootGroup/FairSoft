@@ -55,6 +55,8 @@ fairsoft_repo "vae_backports" "vae-backports"
 fairsoft_repo "fairsoft_backports" "fairsoft-backports"
 fairsoft_repo "fairsoft" "fairsoft"
 
+spack clean -ms
+
 unset -f fairsoft_repo
 unset fairsoft_basedir
 unset fairsoft_spackdir
