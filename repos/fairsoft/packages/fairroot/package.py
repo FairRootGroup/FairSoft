@@ -64,6 +64,8 @@ class Fairroot(CMakePackage):
 #    depends_on('millepede')
     depends_on('yaml-cpp', when='@18.2:')
 
+    depends_on('fairsoft-config', when='@:18,develop')
+
     patch('cmake_utf8.patch', when='@18.2.1')
     patch('fairlogger_incdir.patch', level=0, when='@18.2.1')
 
