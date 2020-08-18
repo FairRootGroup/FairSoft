@@ -11,11 +11,17 @@ jobsh="$2"
 
 [ -e "build/${label}-last-exit-code" ] && rm "build/${label}-last-exit-code"
 
+if [ -z "$ALFACI_SLURM_CPUS" ]
+then
+	ALFACI_SLURM_CPUS=32
+fi
+
 echo "*** Working directory ....: $PWD"
+echo "*** Requesting CPUs ......: $ALFACI_SLURM_CPUS"
 echo "*** Submitting job at ....: $(date -R)"
 (
 	set -x
-	srun -p main -c 64 -n 1 -t 400 --job-name="${label}" bash "${jobsh}"
+	srun -p main -c $ALFACI_SLURM_CPUS -n 1 -t 400 --job-name="${label}" bash "${jobsh}"
 )
 retval=$?
 if [ "$retval" != 0 ]
