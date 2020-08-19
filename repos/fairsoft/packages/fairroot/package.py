@@ -37,6 +37,7 @@ class Fairroot(CMakePackage):
     depends_on('geant4', when="+sim")
     depends_on('geant4-vmc', when="+sim")
     depends_on('googletest@1.7.0:')
+    depends_on('msgpack-c@3.1:', when='+examples')
     depends_on('protobuf')
     depends_on('pythia6', when='+sim')
     depends_on('pythia8', when='+sim')
