@@ -27,35 +27,23 @@ class Fairroot(CMakePackage):
             description='Install examples')
 
     depends_on('cmake@3.13.4:', type='build')
-    depends_on('googletest@1.8.1:')
-
-    depends_on('pythia6', when='+sim')
-    depends_on('pythia8', when='+sim')
-
-    # mesa and libxml2 are dependencies of root which have to be build extra due to the
-    # extra build options
-    depends_on('libxml2~python')
-
+    depends_on('boost@1.68.0: +container')
     depends_on('boost@1.68.0: cxxstd=11 +container')
-
-    depends_on('vmc', when='@18.4: ^root@6.18:')
-
-    depends_on('geant4', when="+sim")
-
-    depends_on('root+http')
-
-    depends_on('geant3', when="+sim")
-    depends_on('vgm', when="+sim")
-    depends_on('geant4-vmc', when="+sim")
-
     depends_on('fairlogger@1.4.0:')
     depends_on('fairmq@1.4.11:')
-
-    depends_on('protobuf')
-    depends_on('flatbuffers')
-    depends_on('yaml-cpp', when='@18.2:')
-
     depends_on('fairsoft-config', when='@:18,develop')
+    depends_on('flatbuffers')
+    depends_on('geant3', when="+sim")
+    depends_on('geant4', when="+sim")
+    depends_on('geant4-vmc', when="+sim")
+    depends_on('googletest@1.7.0:')
+    depends_on('protobuf')
+    depends_on('pythia6', when='+sim')
+    depends_on('pythia8', when='+sim')
+    depends_on('root+http')
+    depends_on('vgm', when="+sim")
+    depends_on('vmc', when='@18.4: ^root@6.18:')
+    depends_on('yaml-cpp', when='@18.2:')
 
     patch('cmake_utf8.patch', when='@18.2.1')
     patch('fairlogger_incdir.patch', level=0, when='@18.2.1')
