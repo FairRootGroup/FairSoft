@@ -58,7 +58,7 @@ function(fs_test_props testname)
                TIMEOUT 10800)
 endfunction()
 function(fs_test)
-  cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC" "" ${ARGN})
+  cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST" "" ${ARGN})
   if(ARGS_ENV)
     set(type env)
     set(what ${ARGS_ENV}/spack.yaml)
@@ -67,7 +67,7 @@ function(fs_test)
     set(what ${ARGS_SPEC})
   endif()
   add_test(NAME ${ARGS_NAME}
-           COMMAND test/build${type}.sh ${what}
+           COMMAND test/build${type}.sh ${what} ${ARGS_POST}
            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
   fs_test_props(${ARGS_NAME})
   if(ARGS_MIGHT_FAIL)
@@ -109,6 +109,11 @@ fs_test(NAME dev.r3broot             ENV env/dev/r3broot)
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   fs_test(NAME test.openmpi_3 ENV test/env/openmpi_3 MIGHT_FAIL)
 endif()
+
+fs_test(NAME workflow.classic_developer_jun19 ENV env/jun19/sim
+                                              POST test/workflow/classic_developer.sh)
+fs_test(NAME workflow.classic_developer_dev   ENV env/dev/sim
+                                              POST test/workflow/classic_developer.sh)
 
 # Test cleanup
 # ------------
