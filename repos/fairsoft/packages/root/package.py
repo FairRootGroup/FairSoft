@@ -30,6 +30,8 @@ class Root(CMakePackage):
             preferred=True)
 
     # Old versions
+    version('6.18.02', sha256='50ffffdbf2585a536c77a03f54aa631926138275ffeee02e5a16dde87e978c1d')
+    version('6.18.00', sha256='e6698d6cfe585f186490b667163db65e7d1b92a2447658d77fa831096383ea71')
     version('6.16.00', sha256='2a45055c6091adaa72b977c512f84da8ef92723c30837c7e2643eecc9c5ce4d8')
     version('6.14.08', sha256='1b63b51cfb4dc20f1f5749faac6bbd1098eccab777f8b49911257d77186c73c4')
     version('6.14.06', sha256='0fb943b61396f282b289e35c455a9ab60126229be1bd3f04a8f00b37c13ab432')
@@ -61,16 +63,6 @@ class Root(CMakePackage):
     # 6.16.00 fails to handle particular build option combinations, _cf_
     # https://github.com/root-project/ROOT/commit/e0ae0483985d90a71a6cabd10d3622dfd1c15611.
     patch('root7-webgui.patch', level=1, when='@6.16.00')
-
-    # Pass X11 include directories to build system when building builtin glew
-    patch('builtin_glew.patch', level=0, when='@:6.16.00')
-    patch('builtin_ftgl.patch', level=0, when='@:6.16.00')
-    patch('graf3d_gl.patch', level=0, when='@:6.16.00')
-    patch('builtin_glew_6.18.patch', level=0, when='@6.18:')
-    patch('builtin_ftgl_6.18.patch', level=0, when='@6.18:')
-    patch('graf3d_gl_6.18.patch', level=0, when='@6.18:')
-    patch('graf2d.patch', level=0)
-    patch('external_zlib.patch', level=0, when='@6.12.06')
 
     if sys.platform == 'darwin':
         # Resolve non-standard use of uint, _cf_
@@ -198,7 +190,8 @@ class Root(CMakePackage):
 
     # ###################### Dependencies ######################
 
-    depends_on('cmake@3.4.3:', type='build')
+    depends_on('cmake@3.4.3:', type='build', when='@:6.16.99')
+    depends_on('cmake@3.9:', type='build', when='@6.18.00:')
     depends_on('pkgconfig', type='build')
 
     depends_on('blas')
@@ -222,8 +215,8 @@ class Root(CMakePackage):
     depends_on('libsm',   when="+x")
 
     # OpenGL
-#    depends_on('ftgl@2.1.3-rc5',  when="+x+opengl")
-#    depends_on('glew',  when="+x+opengl")
+    depends_on('ftgl@2.4.0:',  when="+x+opengl")
+    depends_on('glew',  when="+x+opengl")
     depends_on('gl',    when="+x+opengl")
     depends_on('glu',   when="+x+opengl")
 #    depends_on('gl2ps', when="+x+opengl")
@@ -232,6 +225,8 @@ class Root(CMakePackage):
     depends_on('qt@:4.999', when='+qt4')
 
     # Python
+    depends_on('python@2.7:2.99',     when='@6.16', type=('build', 'run'))
+    depends_on('python@2.7:', when='@6.18:+python', type=('build', 'run'))
     depends_on('py-numpy', type=('build', 'run'), when='+tmva')
 
     # Asimage variant would need one of these two
@@ -259,8 +254,6 @@ class Root(CMakePackage):
     depends_on('postgresql', when='+postgres')
     depends_on('pythia6',  when='+pythia6')
     depends_on('pythia8',   when='+pythia8')
-    depends_on('python@2.7:2.99',     when='@6.16', type=('build', 'run'))
-    depends_on('python@2.7:', when='@6.18:+python', type=('build', 'run'))
     depends_on('r',         when='+r', type=('build', 'run'))
     depends_on('r-cpp',     when='+r', type=('build', 'run'))
     depends_on('r-inside',  when='+r', type=('build', 'run'))
@@ -308,26 +301,28 @@ class Root(CMakePackage):
 
         # #################### Base Settings #######################
 
-        # Options related to ROOT's ability to download and build its own
-        # dependencies. Per Spack convention, this should generally be avoided.
-
-        options = [
+        options.extend([
             '-Dexplicitlink=ON',
             '-Dexceptions=ON',
             '-Dfail-on-missing=ON',
             '-Dshared=ON',
             '-Dsoversion=ON',
-            '-Dbuiltin_llvm=ON',
-            '-Dbuiltin_afterimage=ON',
             '-Dasimage:BOOL=ON',  # if afterimage is taken from builtin
             '-Dastiff:BOOL=ON',   # asimage and astiff must be ON too
+        ])
+
+        # Options related to ROOT's ability to download and build its own
+        # dependencies. Per Spack convention, this should generally be avoided.
+        options.extend([
+            '-Dbuiltin_llvm=ON',
+            '-Dbuiltin_afterimage=ON',
             '-Dbuiltin_cfitsio:BOOL=OFF',
             '-Dbuiltin_davix:BOOL=OFF',
             '-Dbuiltin_fftw3:BOOL=OFF',
             '-Dbuiltin_freetype:BOOL=OFF',
-            '-Dbuiltin_ftgl:BOOL=ON',
+            '-Dbuiltin_ftgl:BOOL=OFF',
             '-Dbuiltin_gl2ps:BOOL=ON',
-            '-Dbuiltin_glew:BOOL=ON',
+            '-Dbuiltin_glew:BOOL=OFF',
             '-Dbuiltin_gsl:BOOL=OFF',
             '-Dbuiltin_lzma:BOOL=OFF',
             '-Dbuiltin_openssl:BOOL=OFF',
@@ -339,7 +334,7 @@ class Root(CMakePackage):
             '-Dbuiltin_veccore:BOOL=OFF',
             '-Dbuiltin_xrootd:BOOL=OFF',
             '-Dbuiltin_zlib:BOOL=OFF'
-        ]
+        ])
 
         # LZ4 and xxhash do not work as external deps for older versions
         options.extend([
@@ -568,6 +563,15 @@ class Root(CMakePackage):
         add_include_path('zlib')
         add_include_path('libpng')
         add_include_path('jpeg')
+
+        # With that done, let's go fixing those deps
+        if '+x' in self.spec:
+            add_include_path('fontconfig')
+            add_include_path('libx11')
+            add_include_path('xproto')
+        if '+opengl' in self.spec:
+            add_include_path('glew')
+            add_include_path('mesa-glu')
 
     def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
         spack_env.set('ROOTSYS', self.prefix)
