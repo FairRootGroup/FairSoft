@@ -14,11 +14,12 @@ forming the so-called installation tree. It is possible to install different pac
 
 
 The following document is divided into:
-[I. Preparation](#i-preparation) (download the package)
-[II. Configuration](#ii-configuration) (set up Spack)
-[III. Installation](#iii-installation) (install packages in environment)
-[IV. Execution](#iv-execution) (using the framework)
-[V. Troubleshooting](#v-troubleshooting)
+* [I. Preparation](#i-preparation) (download the package)
+* [II. Configuration](#ii-configuration) (set up Spack)
+* [III. Installation](#iii-installation) (install packages in environment)
+* [IV. Execution](#iv-execution) (using the framework)
+* [V. Development](#v-development)
+* [VI. Troubleshooting](#vi-troubleshooting)
 
 ---
 
@@ -205,22 +206,22 @@ g4ndl@4.5          hwloc@2.0.2              libxext@1.3.3         pythia8@8240
 ### IV.1. Spack view
 
 Symbolic links to packages in install tree can be placed to a common installation prefix using view command.
-This will create a directory, which can be used as SIMPATH or FAIRROOTPATH in order to build experiment-specific frameworks.
+This will create a directory, which can be used as SIMPATH and FAIRROOTPATH in order to build experiment-specific frameworks.
 View is created by following command:
 
 Linux
 ```
-[jun19] $ spack view --verbose --dependencies true symlink -i (YOUR_SIMPATH) fairroot
+[jun19] $ spack view --dependencies true symlink -i (YOUR_SIMPATH) fairroot
 ```
 
 macOS
 ```
-[jun19] $ spack view --verbose --dependencies true -e libpng -e libjpeg-turbo -e libiconv -e sqlite symlink -i (YOUR_SIMPATH) fairroot
+[jun19] $ spack view --dependencies true -e libpng -e libjpeg-turbo -e libiconv -e sqlite symlink -i (YOUR_SIMPATH) fairroot
 ```
 
 The view creation has to be done within an [activated environment](#iii2-activate-the-spack-environment).
 
-### IV.2. Spack load
+### IV.2. Spack load (beta)
 
 As an alternative to the view the Spack offers the [module mechanism](https://spack.readthedocs.io/en/latest/module_file_support.html), allowing the user to set the running environment using the load command:
 
@@ -232,7 +233,24 @@ This will set the corrects paths to run the environment.
 
 __This functionally is not yet fully supported.__
 
-## V. Development build
+## V. Development
+
+### V.1. Classic "cmake -> make -> make install" workflow (FairRoot and/or Experiment)
+
+```
+[jun19] $ export SIMPATH=<path of your choice>
+[jun19] $ spack view --dependencies true [-e fairroot] symlink -i $SIMPATH fairroot [cmake]
+```
+
+The above will create a directory structure at the path of your choice that can be used as
+* $SIMPATH - with `-e fairroot`, or
+* $SIMPATH and $FAIRROOTPATH - without `-e fairroot`.
+
+If you need a newer CMake version than your system provides, add `cmake` at the end of the `spack view` command which will make a recent version available at `$SIMPATH/bin/cmake`.
+
+A $SIMPATH created as shown above may be removed by a simple `rm -rf $SIMPATH`. This will **not** uninstall the packages themselves and you may recreate the view without recompilation.
+
+### V.2. Spack dev-build (single-package)
 
 A package can be built in development mode - without checking it out from repository. In this case the code will be taken from local directory SOURCE_PATH.
 Following command will run development build of FairRoot with dependencies equivalent to jun19 environemnt on macOS. Currently this has to be configured manually.
