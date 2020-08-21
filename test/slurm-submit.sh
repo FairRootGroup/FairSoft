@@ -15,24 +15,40 @@ if [ -z "$ALFACI_SLURM_CPUS" ]
 then
 	ALFACI_SLURM_CPUS=32
 fi
+if [ -z "$ALFACI_SLURM_TIMEOUT" ]
+then
+	ALFACI_SLURM_TIMEOUT=480
+fi
+if [ -z "$ALFACI_SLURM_QUEUE" ]
+then
+	ALFACI_SLURM_QUEUE=main
+fi
 
-echo "*** Working directory ....: $PWD"
-echo "*** Requesting CPUs ......: $ALFACI_SLURM_CPUS"
+echo "*** Slurm request options :"
+echo "***   Working directory ..: $PWD"
+echo "***   Queue ..............: $ALFACI_SLURM_QUEUE"
+echo "***   CPUs ...............: $ALFACI_SLURM_CPUS"
+echo "***   Wall Time ..........: $ALFACI_SLURM_TIMEOUT min"
 echo "*** Submitting job at ....: $(date -R)"
 (
 	set -x
-	srun -p main -c $ALFACI_SLURM_CPUS -n 1 -t 400 --job-name="${label}" bash "${jobsh}"
+	srun -p $ALFACI_SLURM_QUEUE -c $ALFACI_SLURM_CPUS -n 1 \
+		-t $ALFACI_SLURM_TIMEOUT --job-name="${label}" \
+		bash "${jobsh}"
 )
 retval=$?
 if [ "$retval" != 0 ]
 then
-	echo "*** Exit Code ............: $retval"
-	exit $retval
+	echo "*** srun Exit Code .......: $retval"
+	# exit $retval
+	echo "***"
+	echo "***  /!\  Ignoring it, because it used to be unreliable."
+	echo "***"
 fi
 
 if [ "!" -r "build/${label}-last-exit-code" ]
 then
-	echo "*** Error reason .........: build/${label}-last-exit-code missing"
+	echo "*** ERROR reason .........: build/${label}-last-exit-code missing"
 	exit 1
 fi
 
