@@ -106,9 +106,9 @@ fs_test(NAME dev.sim_mt_headless     ENV env/dev/sim_mt_headless)
 fs_test(NAME dev.fairroot_develop    ENV env/dev/fairroot_develop)
 
 fs_test(NAME dev.r3broot             ENV env/dev/r3broot)
-if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  fs_test(NAME test.openmpi_3 ENV test/env/openmpi_3 MIGHT_FAIL)
-endif()
+# if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  # fs_test(NAME test.openmpi_3 ENV test/env/openmpi_3 MIGHT_FAIL)
+# endif()
 
 fs_test(NAME workflow.classic_developer_jun19 ENV env/jun19/sim
                                               POST test/workflow/classic_developer.sh)
