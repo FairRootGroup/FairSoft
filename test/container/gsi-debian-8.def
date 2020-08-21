@@ -16,3 +16,6 @@ From: debian:8
 
 %files
     gsi-debian-8-gcc.yaml /etc/spack/compilers.yaml
+
+%environment
+    PATH="/cvmfs/it.gsi.de/cmake/3.15.3/bin:$PATH"
