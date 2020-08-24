@@ -15,14 +15,14 @@ class Geant4(CMakePackage):
     science."""
 
     homepage = "http://geant4.cern.ch/"
-    url = "http://geant4.cern.ch/support/source/geant4.10.01.p03.tar.gz"
+    url = "https://cern.ch/geant4-data/releases/geant4.10.06.tar.gz"
 
     version('10.06', sha256='1424c5a0e37adf577f265984956a77b19701643324e87568c5cb69adc59e3199')
-    version('10.05.p01', '8a5fa524b5e6e427452e7680d49d5471')
-    version('10.04.p03', 'e60a321b691f6b58de54c8a2139b21fa')
-    version('10.04.p01', '3f9f5f61d956b2d1d12f009ddd810fd0')
-    version('10.04', 'b84beeb756821d0c61f7c6c93a2b83de')
-    version('10.03.p03', 'ccae9fd18e3908be78784dc207f2d73b')
+    version('10.05.p01', sha256='f4a292220500fad17e0167ce3153e96e3410ecbe96284e572dc707f63523bdff')
+    version('10.04.p03', sha256='31a452374c86b58b3ec5bd3fa851279e396c7e5a3b5a43d61111913d611029c8')
+    version('10.04.p01', sha256='a3eb13e4f1217737b842d3869dc5b1fb978f761113e74bd4eaf6017307d234dd')
+    version('10.04', sha256='f6d883132f110eb036c69da2b21df51f13c585dc7b99d4211ddd32f4ccee1670')
+    version('10.03.p03', sha256='a164f49c038859ab675eec474d08c9d02be8c4be9c0c2d3aa8e69adf89e1e138')
 
     variant('qt', default=False, description='Enable Qt support')
     variant('vecgeom', default=False, description='Enable vecgeom support')
@@ -150,7 +150,7 @@ class Geant4(CMakePackage):
 
     def url_for_version(self, version):
         """Handle Geant4's unusual version string."""
-        return ("http://geant4.cern.ch/support/source/geant4.%s.tar.gz" % version)
+        return ("https://cern.ch/geant4-data/releases/geant4.%s.tar.gz" % version)
 
     @run_before('cmake')
     def make_data_links(self):
