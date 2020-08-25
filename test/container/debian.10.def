@@ -7,7 +7,7 @@ From: debian:10
 %post
     apt-get update
     apt-get -y upgrade
-    apt-get -y --no-install-recommends install sed curl ca-certificates wget xz-utils bzip2 gzip unzip tar
+    apt-get -y --no-install-recommends install sed curl ca-certificates wget xz-utils bzip2 gzip unzip tar file
     apt-get -y --no-install-recommends install python3 g++ gcc gfortran make patch git
     # Things for our testing system:
     apt-get -y --no-install-recommends install cmake hostname lsb-release
