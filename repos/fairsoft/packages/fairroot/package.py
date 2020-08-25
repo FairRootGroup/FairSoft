@@ -27,7 +27,6 @@ class Fairroot(CMakePackage):
             description='Install examples')
 
     depends_on('cmake@3.13.4:', type='build')
-    depends_on('boost@1.68.0: +container')
     depends_on('boost@1.68.0: cxxstd=11 +container')
     depends_on('fairlogger@1.4.0:')
     depends_on('fairmq@1.4.11:')
@@ -52,35 +51,22 @@ class Fairroot(CMakePackage):
 
     def setup_build_environment(self, env):
         super(Fairroot, self).setup_build_environment(env)
-        stdversion = ('-std=c++%s' % self.spec.variants['cxxstd'].value)
-        env.append_flags('CXXFLAGS',
-                         '-std=c++%s' % self.spec.variants['cxxstd'].value)
+        if self.spec.satisfies('@:18,develop'):
+            env.append_flags('CXXFLAGS',
+                '-std=c++%s' % self.spec.variants['cxxstd'].value)
         env.unset('SIMPATH')
         env.unset('FAIRSOFT_ROOT')
 
     def cmake_args(self):
-        spec = self.spec
         options = []
-        options.append('-DROOTSYS={0}'.format(self.spec['root'].prefix))
-        options.append('-DROOT_CONFIG_SEARCHPATH={0}'.format(
-            self.spec['root'].prefix))
-        options.append('-DPythia6_LIBRARY_DIR={0}/lib'.format(
-            self.spec['pythia6'].prefix))
-        options.append('-DPYTHIA8_DIR={0}'.format(self.spec['pythia8'].prefix))
-        options.append('-DGeant3_DIR={0}'.format(self.spec['geant3'].prefix))
-        options.append('-DGeant4_DIR={0}'.format(self.spec['geant4'].prefix))
-        options.append('-DBOOST_ROOT={0}'.format(self.spec['boost'].prefix))
-        options.append('-DBOOST_INCLUDEDIR={0}/include'.format(
-            self.spec['boost'].prefix))
-        options.append('-DBOOST_LIBRARYDIR={0}/lib'.format(
-            self.spec['boost'].prefix))
-        options.append('-DFlatbuffers_DIR={0}'.format(
-            self.spec['flatbuffers'].prefix))
-        options.append('-DDISABLE_GO=ON')
+        if self.spec.satisfies('@:18,develop'):
+            options.append('-DROOTSYS={0}'.format(self.spec['root'].prefix))
+            options.append('-DPYTHIA8_DIR={0}'.format(
+                self.spec['pythia8'].prefix))
+
         options.append('-DBUILD_EXAMPLES:BOOL=%s' %
                        ('ON' if '+examples' in self.spec else 'OFF'))
-        options.append('-DFAIRROOT_MODULAR_BUILD=ON')
-        options.append('-DCMAKE_EXPORT_COMPILE_COMMANDS=ON')
+
         if self.spec.satisfies('^boost@:1.69.99'):
             options.append('-DBoost_NO_BOOST_CMAKE=ON')
 
