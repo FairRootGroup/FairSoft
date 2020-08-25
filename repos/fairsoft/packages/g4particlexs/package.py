@@ -1,4 +1,4 @@
-# Copyright 2013-2019 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -15,7 +15,7 @@ class G4particlexs(Package):
     url = "http://geant4-data.web.cern.ch/geant4-data/datasets/G4PARTICLEXS.1.1.tar.gz"
 
     version('2.1', sha256='094d103372bbf8780d63a11632397e72d1191dc5027f9adabaf6a43025520b41')
-    version('1.1', '100a11c9ed961152acfadcc9b583a9f649dda4e48ab314fcd4f333412ade9d62')
+    version('1.1', sha256='100a11c9ed961152acfadcc9b583a9f649dda4e48ab314fcd4f333412ade9d62')
 
     def install(self, spec, prefix):
         mkdirp(join_path(prefix.share, 'data'))
