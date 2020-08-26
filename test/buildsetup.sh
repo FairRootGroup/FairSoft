@@ -55,6 +55,12 @@ fi
 
 export HOME="$FS_TEST_WORKDIR"
 
+if [ -z "$FS_TEST_INSTALLTREE" ]
+then
+	FS_TEST_INSTALLTREE="$FS_TEST_WORKDIR/install-tree"
+fi
+echo "*** Install tree .........: $FS_TEST_INSTALLTREE"
+
 if [ ! -d "$HOME/.spack/" ]
 then
 	echo "*** Setting up spack"
@@ -62,9 +68,9 @@ then
 	cat >"$HOME/.spack/config.yaml" <<EOF
 config:
   db_lock_timeout: 15
-  install_tree: '$HOME/install-tree'
+  install_tree: '$FS_TEST_INSTALLTREE'
   module_roots:
-    tcl: '$HOME/install-tree/modules'
+    tcl: '$FS_TEST_INSTALLTREE/modules'
   source_cache: '$HOME/source-cache'
   build_stage:
   - '$HOME/stage'
@@ -86,7 +92,7 @@ EOF
 	fi
 
 	cat "$HOME/.spack/config.yaml"
-	mkdir -v -p "$HOME/install-tree"
+	mkdir -v -p "$FS_TEST_INSTALLTREE"
 	mkdir -v -p "$HOME/stage"
 
 	. thisfairsoft.sh --setup
