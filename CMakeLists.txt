@@ -50,6 +50,8 @@ function(fs_test_props_base testname)
   set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
                FS_TEST_WORKDIR=${FS_TEST_WORKDIR})
   set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
+               FS_TEST_INSTALLTREE=${FS_TEST_INSTALLTREE})
+  set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
                CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR})
 endfunction()
 function(fs_test_props testname)
