@@ -39,12 +39,12 @@ fi
 # echo -n "*** Number of threads per python: "
 # python3 -c 'import multiprocessing; print(multiprocessing.cpu_count())'
 
-if [ ! -d "$TARGETDIR" ]
+if [ ! -d "$FS_TEST_WORKDIR" ]
 then
-	TARGETDIR="$(mktemp -d)"
-	echo "*** Created test directory: $TARGETDIR"
+	FS_TEST_WORKDIR="$(mktemp -d)"
+	echo "*** Created test directory: $FS_TEST_WORKDIR"
 else
-	echo "*** Reusing test directory: $TARGETDIR"
+	echo "*** Reusing test directory: $FS_TEST_WORKDIR"
 fi
 
 if [ "$SPACK_CCACHE" = "true" ]
@@ -53,7 +53,7 @@ then
   CCACHE_MAXSIZE="$(ccache -k max_size)"
 fi
 
-export HOME="$TARGETDIR"
+export HOME="$FS_TEST_WORKDIR"
 
 if [ ! -d "$HOME/.spack/" ]
 then

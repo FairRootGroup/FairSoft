@@ -46,7 +46,7 @@ macro(fs_test_might_fail testname)
 endmacro()
 function(fs_test_props_base testname)
   set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
-               TARGETDIR=${FS_TEST_WORKDIR})
+               FS_TEST_WORKDIR=${FS_TEST_WORKDIR})
   set_property(TEST ${testname} APPEND PROPERTY ENVIRONMENT
                CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR})
 endfunction()
