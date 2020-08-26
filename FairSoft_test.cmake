@@ -9,21 +9,31 @@
 message(STATUS " Starting CTest script : FairSoft_test.cmake")
 message(STATUS " CMake Version ........: ${CMAKE_VERSION}")
 
+
+# Set some default values, etc.
+set(CTEST_BINARY_DIRECTORY build)
+set(CTEST_TEST_TIMEOUT 10800)
+set(CTEST_CUSTOM_MAXIMUM_PASSED_TEST_OUTPUT_SIZE 204800)
+set(CTEST_USE_LAUNCHERS ON)
+set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
+
+
 if (USE_TEMPDIR)
     execute_process(COMMAND mktemp -d --tmpdir fairsoft_ctest.XXXXXX
-                    OUTPUT_VARIABLE FS_TEST_WORKDIR
+                    OUTPUT_VARIABLE FS_TEST_WORKDIR_TEMP
                     OUTPUT_STRIP_TRAILING_WHITESPACE
                     RESULT_VARIABLE res)
     if (res)
         execute_process(COMMAND mktemp -d
-                        OUTPUT_VARIABLE FS_TEST_WORKDIR
+                        OUTPUT_VARIABLE FS_TEST_WORKDIR_TEMP
                         OUTPUT_STRIP_TRAILING_WHITESPACE
                         RESULT_VARIABLE res)
     endif()
     if (res)
         message(FATAL_ERROR "Temp dir creation failed: ${res}")
     endif()
-    message(STATUS " CTest workdir ........: ${FS_TEST_WORKDIR}")
+    set(FS_TEST_WORKDIR "${FS_TEST_WORKDIR_TEMP}")
+    message(STATUS " CTest workdir (temp) .: ${FS_TEST_WORKDIR}")
 else()
     set(FS_TEST_WORKDIR "")
 endif()
@@ -43,11 +53,6 @@ else()
     message(STATUS "${timestamp} ... done")
 endif()
 
-set(CTEST_BINARY_DIRECTORY build)
-set(CTEST_TEST_TIMEOUT 10800)
-set(CTEST_CUSTOM_MAXIMUM_PASSED_TEST_OUTPUT_SIZE 204800)
-set(CTEST_USE_LAUNCHERS ON)
-set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 cmake_host_system_information(RESULT fqdn QUERY FQDN)
 
 message(STATUS " Running on host ......: ${fqdn}")
@@ -105,10 +110,10 @@ ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR}")
 ctest_test(RETURN_VALUE _ctest_test_ret_val)
 ctest_submit()
 
-if (NOT "${FS_TEST_WORKDIR}" STREQUAL "")
+if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")
     string(TIMESTAMP timestamp "[%H:%M:%S]")
-    message(STATUS "${timestamp} Removing directory: ${FS_TEST_WORKDIR}")
-    file(REMOVE_RECURSE "${FS_TEST_WORKDIR}")
+    message(STATUS "${timestamp} Removing directory: ${FS_TEST_WORKDIR_TEMP}")
+    file(REMOVE_RECURSE "${FS_TEST_WORKDIR_TEMP}")
 endif()
 
 if (_ctest_test_ret_val)
