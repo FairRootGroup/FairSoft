@@ -86,7 +86,7 @@ EOF
 	mkdir -v -p "$HOME/install-tree"
 	mkdir -v -p "$HOME/stage"
 
-	. thisfairsoft.sh
+	. thisfairsoft.sh --setup
 
 	if (hostname --all-fqdns 2>/dev/null || hostname -f) | grep '[.]gsi[.]de *$' >/dev/null
 	then
