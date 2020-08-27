@@ -102,7 +102,7 @@ ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR}")
 # ctest_submit(PARTS Start Configure)
 
 # ctest_build()
-ctest_test(RETURN_VALUE _ctest_test_ret_val)
+ctest_test(RETURN_VALUE _ctest_test_ret_val PARALLEL_LEVEL 3)
 ctest_submit()
 
 if (NOT "${FS_TEST_WORKDIR}" STREQUAL "")
