@@ -30,30 +30,31 @@ then
 fi
 if [ "$ret" = 0 -a -n "$2" ]
 then
-  uname="$(uname)"
-  if [ "$uname" = Linux ]
-  then
-    postworkdir="$(mktemp -d -p $HOME XXXXXX)"
-  elif [ "$uname" = Darwin ]
-  then
-    pushd $HOME
-    postworkdir="$(realpath ./$(mktemp -d XXXXXX))"
-    popd
-  else
-    echo "*** ERROR: Unsupported system: $uname"
-    exit 1
-  fi
-  echo "*** Post script workdir ..: $postworkdir"
-  echo "*** Post script ..........: $2"
-  echo "*** Contents:"
-  sed -e 's/^/    /' "$2"
-  postscript="$(realpath $2)"
-  pushd $postworkdir
+	uname="$(uname)"
+	if [ "$uname" = Linux ]
+	then
+		postworkdir="$(mktemp -d -p $HOME XXXXXX)"
+	elif [ "$uname" = Darwin ]
+	then
+		pushd $HOME
+		postworkdir="$(realpath ./$(mktemp -d XXXXXX))"
+		popd
+	else
+		echo "*** ERROR: Unsupported system: $uname"
+		exit 1
+	fi
+	echo "*** Post script workdir ..: $postworkdir"
+	echo "*** Post script ..........: $2"
+	echo "*** Contents:"
+	sed -e 's/^/    /' "$2"
+	postscript="$(realpath $2)"
+	pushd $postworkdir
+	export ENVNAME=$envname
 	$postscript
 	ret=$?
-  popd
+	popd
 else
-  echo "*** Skipping post script"
+	echo "*** Skipping post script"
 fi
 spack env deactivate
 spack env rm -y $envname
