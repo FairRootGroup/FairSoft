@@ -58,7 +58,7 @@ function(fs_test_props testname)
                TIMEOUT 10800)
 endfunction()
 function(fs_test)
-  cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST" "" ${ARGN})
+  cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST;DEPENDS" "" ${ARGN})
   if(ARGS_ENV)
     set(type env)
     set(what ${ARGS_ENV}/spack.yaml)
@@ -72,6 +72,10 @@ function(fs_test)
   fs_test_props(${ARGS_NAME})
   if(ARGS_MIGHT_FAIL)
     fs_test_might_fail(${ARGS_NAME})
+  endif()
+  if(ARGS_DEPENDS)
+    set_property(TEST ${ARGS_NAME} APPEND PROPERTY
+                 DEPENDS ${ARGS_DEPENDS})
   endif()
 endfunction()
 
@@ -109,9 +113,9 @@ fs_test(NAME test.r3broot             ENV test/env/r3broot)
   # fs_test(NAME test.openmpi_3 ENV test/env/openmpi_3 MIGHT_FAIL)
 # endif()
 
-fs_test(NAME workflow.classic_developer_jun19 ENV env/jun19/sim
+fs_test(NAME workflow.classic_developer_jun19 ENV env/jun19/sim DEPENDS jun19.sim
                                               POST test/workflow/classic_developer.sh)
-fs_test(NAME workflow.classic_developer_dev   ENV env/dev/sim
+fs_test(NAME workflow.classic_developer_dev   ENV env/dev/sim   DEPENDS dev.sim
                                               POST test/workflow/classic_developer.sh)
 
 # Test cleanup

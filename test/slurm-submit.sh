@@ -48,6 +48,7 @@ echo "*** Submitting job at ....: $(date -R)"
 	srun -p $ALFACI_SLURM_QUEUE -c $ALFACI_SLURM_CPUS -n 1 \
 		-t $ALFACI_SLURM_TIMEOUT \
 		--job-name="${slurmlabel}" \
+		--hint=compute_bound \
 		bash "${jobsh}"
 )
 retval=$?

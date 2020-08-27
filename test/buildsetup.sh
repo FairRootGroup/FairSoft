@@ -77,9 +77,11 @@ EOF
 		ccache -o "max_size=$CCACHE_MAXSIZE"
 	fi
 
-	if [ -n "$SLURM_CPUS_PER_TASK" ]
+	if [ -n "$SPACK_BUILD_JOBS" ]
 	then
-		echo "  build_jobs: $SLURM_CPUS_PER_TASK" >>"$HOME/.spack/config.yaml"
+		# Reduce build jobs on large number of cpus because we run tests in parallel
+		cpus=$(( $SPACK_BUILD_JOBS > 5 ? $SPACK_BUILD_JOBS * 2 / 3 : $SPACK_BUILD_JOBS ))
+		echo "  build_jobs: $cpus" >>"$HOME/.spack/config.yaml"
 	fi
 
 	cat "$HOME/.spack/config.yaml"
