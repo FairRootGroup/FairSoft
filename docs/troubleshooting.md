@@ -1,5 +1,13 @@
 # Troubleshooting
 
+## Generally
+
+spack sometimes doesn't clean up things properly, or things get out of sync. Try to call the setup script again. It cleans up some things:
+```
+$ source thisfairsoft.sh --setup
+```
+
+
 ## Building DDS fails with external (non-spack) non-system compiler
 
 **Error**
