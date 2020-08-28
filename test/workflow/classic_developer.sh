@@ -11,6 +11,7 @@ fi
 unset FAIRSOFT_ROOT
 export SIMPATH="$(realpath ./fairsoft)"
 cmake="$SIMPATH/bin/cmake"
+ctest="$SIMPATH/bin/ctest"
 
 if [ "$(uname)" = Darwin ]
 then
@@ -25,6 +26,8 @@ $cmake -S. -Bbuild \
   -DUSE_DIFFERENT_COMPILER=ON \
   ${no_boost_cmake:+-DBoost_NO_BOOST_CMAKE=ON} \
   -DCMAKE_INSTALL_PREFIX=$FAIRROOTPATH
-$cmake --build build --target install -j $SLURM_CPUS_PER_TASK
-$cmake --build build --target test
+$cmake --build build --target install -j $SPACK_BUILD_JOBS
+pushd build
+$ctest --output-on-failure
+popd
 popd
