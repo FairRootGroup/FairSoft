@@ -1,8 +1,14 @@
 #! /bin/bash
 
-echo "*** Setting things up:"
+echo "***"
+echo "***       Setting things up"
+echo "***       ================="
+echo "***"
 
 . test/buildsetup.sh
+
+echo "*** 'spack debug report'"
+spack debug report | sed -e 's/^/    /'
 
 
 function handle_gitdifflist() {
@@ -35,3 +41,8 @@ then
 	git diff --name-only -z "origin/$CHANGE_TARGET" HEAD -- \
 		| handle_gitdifflist
 fi
+
+echo "***"
+echo "***       Done with settings things up"
+echo "***       ============================"
+echo "***"

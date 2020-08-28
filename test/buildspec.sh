@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. test/buildsetup.sh
+. test/build-main-tests-common.sh
 
 echo "*** Spec to be build .....:" "$@"
 

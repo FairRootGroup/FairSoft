@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. test/buildsetup.sh
+. test/build-main-tests-common.sh
 
 envname="$(echo "${1}" | \
 	sed \
