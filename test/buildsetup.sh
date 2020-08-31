@@ -61,6 +61,7 @@ then
 	mkdir -p "$HOME/.spack/"
 	cat >"$HOME/.spack/config.yaml" <<EOF
 config:
+  db_lock_timeout: 15
   install_tree: '$HOME/install-tree'
   module_roots:
     tcl: '$HOME/install-tree/modules'
