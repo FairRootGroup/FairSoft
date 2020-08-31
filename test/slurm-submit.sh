@@ -9,6 +9,18 @@ fi
 label="$1"
 jobsh="$2"
 
+slurmlabel="$label"
+if [ -n "$JOB_NAME" ]
+then
+	jobname="$(echo $JOB_NAME | sed -e 's/^.*\/\([^\/]*\/[^\/]*\)/\1/')"
+	slurmlabel="$jobname $slurmlabel"
+fi
+if [ -n "$BUILD_DISPLAY_NAME" ]
+then
+	slurmlabel="$slurmlabel $BUILD_DISPLAY_NAME"
+fi
+
+
 [ -e "build/${label}-last-exit-code" ] && rm "build/${label}-last-exit-code"
 
 if [ -z "$ALFACI_SLURM_CPUS" ]
@@ -29,11 +41,13 @@ echo "***   Working directory ..: $PWD"
 echo "***   Queue ..............: $ALFACI_SLURM_QUEUE"
 echo "***   CPUs ...............: $ALFACI_SLURM_CPUS"
 echo "***   Wall Time ..........: $ALFACI_SLURM_TIMEOUT min"
+echo "***   Job Name ...........: ${slurmlabel}"
 echo "*** Submitting job at ....: $(date -R)"
 (
 	set -x
 	srun -p $ALFACI_SLURM_QUEUE -c $ALFACI_SLURM_CPUS -n 1 \
-		-t $ALFACI_SLURM_TIMEOUT --job-name="${label}" \
+		-t $ALFACI_SLURM_TIMEOUT \
+		--job-name="${slurmlabel}" \
 		bash "${jobsh}"
 )
 retval=$?
