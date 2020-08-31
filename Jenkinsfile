@@ -20,9 +20,9 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
           checkout scm
 
           if (node_type == 'slurm') {
-            sh """
+            sh(label: "Create Slurm Job Script", script: """
               exec test/slurm-create-jobscript.sh "${label}" "${container}" "${ctestcmd}" "${jobsh}"
-            """
+            """)
           }
 
           callback.call(spec, label, jobsh)
@@ -65,9 +65,9 @@ pipeline {
           def linux_jobs = jobMatrix('slurm',
             ctestcmd + " -DUSE_TEMPDIR:BOOL=ON", specs_list
           ) { spec, label, jobsh ->
-            sh """
+            sh(label: "Submit Slurm Job", script: """
               exec test/slurm-submit.sh "${label}" "${jobsh}"
-            """
+            """)
           }
 
           if (env.CHANGE_ID != null) {
