@@ -8,21 +8,21 @@ echo "*** Setting things up:"
 function handle_gitdifflist() {
 	while read -d "" filename
 	do
-		echo "*** Looking at '$filename'"
+		echo "***    | + '$filename'"
 		case "$filename" in
 			repos/*/packages/*)
 				pkg="${filename#repos/*/packages/}"
 				pkg="${pkg%%/*}"
-				echo "    Would uninstall '$pkg'"
+				echo "***    |   uninstall '$pkg'"
 				;;
-			spack)
-				echo "    spack was changed, needing to wipe everything"
+			spack|config/*)
+				echo "***    |   spack was changed, needing to wipe everything"
 				;;
-			env/*.yaml)
-				echo "    Ignoring"
+			env/*.yaml|Jenkinsfile|CMakeLists.txt|*.cmake|test/*)
+				echo "***    |   Ignoring"
 				;;
 			*)
-				echo "    Don't know about this one"
+				echo "***    |   /!\ Don't know about this one"
 				;;
 		esac
 	done
@@ -31,8 +31,6 @@ function handle_gitdifflist() {
 
 if [ -n "$CHANGE_ID" -a -n "$CHANGE_TARGET" ]
 then
-	echo "*** Trying to list changed files (origin/$CHANGE_TARGET -> HEAD)"
-	git diff --name-only "origin/$CHANGE_TARGET" HEAD --
 	echo "*** Analyzing list and acting"
 	git diff --name-only -z "origin/$CHANGE_TARGET" HEAD -- \
 		| handle_gitdifflist
