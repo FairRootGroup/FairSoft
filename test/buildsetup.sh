@@ -11,6 +11,15 @@ then
 	fi
 fi
 
+if [ -n "$BUILD_URL" ]
+then
+	echo "*** BUILD Url ............: $BUILD_URL"
+fi
+if [ -n "$RUN_CHANGES_DISPLAY_URL" ]
+then
+	echo "*** Changes in this run ..: $RUN_CHANGES_DISPLAY_URL"
+fi
+
 echo "*** LABEL ................: $LABEL"
 echo -n "*** Host .................: "
 hostname -f
