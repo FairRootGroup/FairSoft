@@ -113,10 +113,10 @@ fs_test(NAME test.r3broot             ENV test/env/r3broot)
   # fs_test(NAME test.openmpi_3 ENV test/env/openmpi_3 MIGHT_FAIL)
 # endif()
 
-fs_test(NAME workflow.classic_developer_jun19 ENV env/jun19/sim DEPENDS jun19.sim
-                                              POST test/workflow/classic_developer.sh)
-fs_test(NAME workflow.classic_developer_dev   ENV env/dev/sim   DEPENDS dev.sim
-                                              POST test/workflow/classic_developer.sh)
+# fs_test(NAME workflow.classic_developer_jun19 ENV env/jun19/sim DEPENDS jun19.sim
+                                              # POST test/workflow/classic_developer.sh)
+# fs_test(NAME workflow.classic_developer_dev   ENV env/dev/sim   DEPENDS dev.sim
+                                              # POST test/workflow/classic_developer.sh)
 
 # Test cleanup
 # ------------
