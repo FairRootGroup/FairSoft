@@ -11,7 +11,12 @@ fi
 unset FAIRSOFT_ROOT
 export SIMPATH="$(realpath ./fairsoft)"
 cmake="$SIMPATH/bin/cmake"
-spack view --dependencies true -e fairroot symlink -i $SIMPATH fairroot cmake
+
+if [ "$(uname)" = Darwin ]
+then
+  extra_excludes="-e libpng -e libjpeg-turbo -e libiconv -e sqlite"
+fi
+spack view --dependencies true $extra_excludes -e fairroot symlink -i $SIMPATH fairroot cmake
 
 git clone --branch dev https://github.com/FairRootGroup/FairRoot
 pushd FairRoot
