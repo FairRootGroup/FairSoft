@@ -22,7 +22,12 @@ message(STATUS " Running on host ......: ${fqdn}")
 
 
 if (USE_TEMPDIR)
-    execute_process(COMMAND mktemp -d --tmpdir fairsoft_ctest.XXXXXX
+    if ("$ENV{BUILD_TAG}" STREQUAL "")
+        set(tempdirspec "fairsoft_ctest.XXXXXX")
+    else()
+        set(tempdirspec "$ENV{BUILD_TAG}.XXX")
+    endif()
+    execute_process(COMMAND mktemp -d --tmpdir ${tempdirspec}
                     OUTPUT_VARIABLE FS_TEST_WORKDIR_TEMP
                     OUTPUT_STRIP_TRAILING_WHITESPACE
                     RESULT_VARIABLE res)
