@@ -17,6 +17,9 @@ set(CTEST_CUSTOM_MAXIMUM_PASSED_TEST_OUTPUT_SIZE 204800)
 set(CTEST_USE_LAUNCHERS ON)
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 
+cmake_host_system_information(RESULT fqdn QUERY FQDN)
+message(STATUS " Running on host ......: ${fqdn}")
+
 
 if (USE_TEMPDIR)
     execute_process(COMMAND mktemp -d --tmpdir fairsoft_ctest.XXXXXX
@@ -34,13 +37,9 @@ if (USE_TEMPDIR)
     endif()
     set(FS_TEST_WORKDIR "${FS_TEST_WORKDIR_TEMP}")
     message(STATUS " CTest workdir (temp) .: ${FS_TEST_WORKDIR}")
-else()
-    set(FS_TEST_WORKDIR "")
-endif()
 
-if ("${FS_TEST_WORKDIR}" STREQUAL "")
-    set(CTEST_SOURCE_DIRECTORY .)
-else()
+    # Relocate complete tree into temp directory
+
     set(CTEST_SOURCE_DIRECTORY "${FS_TEST_WORKDIR}/FairSoft")
     message(STATUS " Relocating to ........: ${CTEST_SOURCE_DIRECTORY}")
 
@@ -51,11 +50,12 @@ else()
 
     string(TIMESTAMP timestamp "[%H:%M:%S]")
     message(STATUS "${timestamp} ... done")
+else()
+    # No temporary directory created
+    set(FS_TEST_WORKDIR "")
+    set(CTEST_SOURCE_DIRECTORY .)
 endif()
 
-cmake_host_system_information(RESULT fqdn QUERY FQDN)
-
-message(STATUS " Running on host ......: ${fqdn}")
 if ("$ENV{CTEST_SITE}" STREQUAL "")
   set(CTEST_SITE "${fqdn}")
 else()
@@ -96,11 +96,16 @@ endif()
 message(STATUS " cdash_group ..........: ${cdash_group}")
 
 
+# Full cleaning:
+#  ctest_empty_binary_directory("${CTEST_BINARY_DIRECTORY}")
+#
 # The cache contains the name of the source directory.
 # As we might create a temporary source directory, this does
 # not any more match. So remove the cache before start / configure.
 file(REMOVE "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt")
-# ctest_empty_binary_directory("${CTEST_BINARY_DIRECTORY}")
+# Remove workdir (keep in sync with CMakeLists.txt)
+file(REMOVE_RECURSE "${CTEST_BINARY_DIRECTORY}/test_workdir")
+
 
 ctest_start(Continuous TRACK ${cdash_group})
 ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR}")
