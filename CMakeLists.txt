@@ -59,7 +59,7 @@ function(fs_test_props testname)
   set_property(TEST ${testname} APPEND PROPERTY
                FIXTURES_REQUIRED fixture.main)
   set_property(TEST ${testname} APPEND PROPERTY
-               TIMEOUT 10800)
+               TIMEOUT 14400)
 endfunction()
 function(fs_test)
   cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST;DEPENDS" "" ${ARGN})
