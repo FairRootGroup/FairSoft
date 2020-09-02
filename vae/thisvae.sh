@@ -4,7 +4,7 @@ fairsoft_basedir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fairsoft_spackdir=vae/spack
 fairsoft_configdir=../../../config
 
-if [ "$1" == "--setup" ]
+if [ "$1" = "--setup" ]
 then
 	fairsoft_do_setup=true
 else
