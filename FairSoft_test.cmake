@@ -22,6 +22,13 @@ cmake_host_system_information(RESULT fqdn QUERY FQDN)
 message(STATUS " Running on host ......: ${fqdn}")
 
 
+# Detect current git SHA
+execute_process(COMMAND git rev-parse --verify HEAD
+                OUTPUT_VARIABLE FS_GIT_SHA
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
+message(STATUS " Git SHA-1 ............: ${FS_GIT_SHA}")
+
+
 if (USE_TEMPDIR)
     if ("$ENV{BUILD_TAG}" STREQUAL "")
         set(tempdirspec "fairsoft_ctest.XXXXXX")
@@ -61,6 +68,21 @@ else()
     set(FS_TEST_WORKDIR "")
     set(CTEST_SOURCE_DIRECTORY .)
 endif()
+
+if ("${FS_TEST_INSTALLTREE}" STREQUAL "")
+    if ("${FS_TEST_WORKDIR}" STREQUAL "")
+        get_filename_component(FS_TEST_INSTALLTREE
+                               "${CTEST_BINARY_DIRECTORY}/install-tree"
+                               ABSOLUTE)
+    else()
+        set(FS_TEST_INSTALLTREE "${FS_TEST_WORKDIR}/install-tree")
+    endif()
+endif()
+file(MAKE_DIRECTORY "${FS_TEST_INSTALLTREE}")
+file(LOCK "${FS_TEST_INSTALLTREE}" DIRECTORY TIMEOUT 300)
+# Make a note, which SHA-1 is going to modify the install tree:
+file(APPEND "${FS_TEST_INSTALLTREE}/sha1-stamps" "${FS_GIT_SHA}\n")
+
 
 if ("$ENV{CTEST_SITE}" STREQUAL "")
   set(CTEST_SITE "${fqdn}")
@@ -114,12 +136,19 @@ file(REMOVE_RECURSE "${CTEST_BINARY_DIRECTORY}/test_workdir")
 
 
 ctest_start(Continuous TRACK ${cdash_group})
-ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR}")
+ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR};-DFS_TEST_INSTALLTREE=${FS_TEST_INSTALLTREE}")
 # ctest_submit(PARTS Start Configure)
 
 # ctest_build()
 ctest_test(RETURN_VALUE _ctest_test_ret_val PARALLEL_LEVEL 3)
 ctest_submit()
+
+if (NOT _ctest_test_ret_val)
+    # When we're here, then the complete build was successful.
+    # So the install-tree represents a clean build for the
+    # current SHA1:
+    file(WRITE "${FS_TEST_INSTALLTREE}/sha1-stamps" "${FS_GIT_SHA}\n")
+endif()
 
 if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")
     string(TIMESTAMP timestamp "[%H:%M:%S]")

@@ -49,6 +49,17 @@ then
 		| handle_gitdifflist
 fi
 
+if [ -r "$FS_TEST_INSTALLTREE/sha1-stamps" ]
+then
+	cat "$FS_TEST_INSTALLTREE/sha1-stamps" | sort | uniq \
+	| while read sha1
+	do
+		echo "***    Comparing $sha1 to worktree"
+		git diff --name-only -z "$sha1" \
+			| handle_gitdifflist
+	done
+fi
+
 echo "***"
 echo "***       Done with settings things up"
 echo "***       ============================"
