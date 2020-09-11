@@ -28,6 +28,8 @@ $cmake -S. -Bbuild \
   -DCMAKE_INSTALL_PREFIX=$FAIRROOTPATH
 $cmake --build build --target install -j $SPACK_BUILD_JOBS
 pushd build
-$ctest --output-on-failure
+# Excluding the geant3 tests because they just fail too often,
+# see https://github.com/FairRootGroup/FairRoot/issues/995
+$ctest --output-on-failure -E TGeant3 -E sim_tutorial2 -E MQ_pixel
 popd
 popd
