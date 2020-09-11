@@ -17,6 +17,7 @@ class Fairmq(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='dev', submodules=True, get_full_repo=True)
+    version('1.4.22', tag='v1.4.22', commit='690e8a037098ed4b7097f687d853d20a2b8cc028', submodules=True, no_cache=True)
     version('1.4.21', tag='v1.4.21', commit='3eca8e9defd7e3b10f7b1ab02c2e45ec68911092', submodules=True, no_cache=True)
     version('1.4.20', tag='v1.4.20', commit='78b1c188bfb6158a7c1a8db2745a88099dff19da', submodules=True, no_cache=True)
     version('1.4.19', tag='v1.4.19', commit='c60dd9965c02011684994ac4a698c8d644a56ac1', submodules=True, no_cache=True)
@@ -79,8 +80,8 @@ class Fairmq(CMakePackage):
 
     depends_on('cmake@3.9.4:', type='build', when='@1.3')
     depends_on('cmake@3.10:', type='build', when='@1.4.0:1.4.7')
-    depends_on('cmake@3.11:', type='build', when='@1.4.8:')
-    depends_on('cmake@3.12:', type='build', when='@develop')
+    depends_on('cmake@3.11:', type='build', when='@1.4.8:1.4.12')
+    depends_on('cmake@3.12:', type='build', when='@1.4.13:,develop')
     depends_on('git', type='build')
     depends_on('ninja', type='build')
 
