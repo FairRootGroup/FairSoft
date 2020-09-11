@@ -6,7 +6,7 @@ The newly released FairSoft modernizes and reorganizes the framework installatio
 All needed packages, including the FairRoot package itself,
 are now installed using [Spack](https://spack.readthedocs.io/en/latest/).
 
-The packages are installed by Spack automatically using package [recipes](https://spack-tutorial.readthedocs.io/en/latest/tutorial_packaging.html), stored in the corresponding folders of the [packages](./packages) directory. The [recipe](https://spack-tutorial.readthedocs.io/en/latest/tutorial_packaging.html)
+The packages are installed by Spack automatically using package [recipes](https://spack-tutorial.readthedocs.io/en/latest/tutorial_packaging.html), stored in the corresponding folders of the [packages](./repos/fairsoft/packages) directory. The [recipe](https://spack-tutorial.readthedocs.io/en/latest/tutorial_packaging.html)
 lists the dependencies of the given package and describes its installation procedure. A collection of packages that form the software framework is called [spack environment](https://spack.readthedocs.io/en/latest/environments.html)  - examples of such are located in the [env](./env) directories.
 
 In the process of installing of a package, Spack creates its list of dependencies,
@@ -15,11 +15,11 @@ forming the so-called installation tree. It is possible to install different pac
 
 The following document is divided into:
 * [I. Preparation](#i-preparation) (download the package)
-* [II. Configuration](#ii-configuration) (set up Spack)
-* [III. Installation](#iii-installation) (install packages in environment)
-* [IV. Execution](#iv-execution) (using the framework)
-* [V. Development](#v-development)
-* [VI. Troubleshooting](#vi-troubleshooting)
+* [II. Installation](#ii-installation) (install packages in environment)
+* [III. Execution](#iii-execution) (using the framework)
+* [IV. Development](#iv-development)
+* [V. Troubleshooting](#v-troubleshooting)
+* [VI. Advanced topics](#vi-advanced-topics)
 
 ---
 
@@ -37,7 +37,7 @@ git submodule update --init
 ### I.3. Run the setup
 
 ```
-$ source thisfairsoft --setup
+$ source thisfairsoft.sh --setup
 ==> Added 1 new compiler to /home/user/.spack/linux/compilers.yaml
     gcc@8.3.0
 ==> Compilers are defined in the following files:
@@ -58,9 +58,9 @@ Notes:
   * It calls `spack clean` with some useful options.
 
 
-## II. Configuration
+### I.4. Activate Spack in your current shell
 
-### II.1. Activate Spack in your current shell
+Only needed in new shells where you have not just performed the previous step.
 
 ```
 source thisfairsoft.sh
@@ -76,27 +76,9 @@ fairsoft_backports    ~/FairSoft/repos/fairsoft-backports
 builtin               ~/FairSoft/spack/var/spack/repos/builtin
 ```
 
-### II.2. Configure Spack directories
+## II. Installation
 
-We recommend to create a [per-user configuration file](https://spack.readthedocs.io/en/latest/config_yaml.html#config-yaml) and point certain paths to a directory outside of the FairSoft source repo because these directories can grow quite large:
-
-```
-$ mkdir -p $HOME/.spack
-$ EDITOR=vim spack config edit config
-$ cat $HOME/.spack/config.yaml
-config:
-  install_tree: ~/.spack/install_tree
-  source_cache: ~/.spack/source_cache
-```
-
-The source_cache directory is used by Spack to store the downloaded packages,
-while the install_tree holds the whole installation tree.
-
-Verify the config changes are recognized by running `spack config blame config`.
-
-## III. Installation
-
-### III.1. Define a [spack environment](https://spack.readthedocs.io/en/latest/environments.html) for a FairSoft release
+### II.1. Define a [spack environment](https://spack.readthedocs.io/en/latest/environments.html) for a FairSoft release
 
 ```
 spack env create jun19 env/jun19/sim/spack.yaml
@@ -110,7 +92,7 @@ $ spack env list
     jun19
 ```
 
-### III.2. Activate the Spack environment
+### II.2. Activate the Spack environment
 
 In order to work with the previously defined environment, it needs to be activated in any given shell instance
 
@@ -141,7 +123,7 @@ or
 despacktivate
 ```
 
-### III.3. Compile and install the packages defined in the active [spack environment](https://spack.readthedocs.io/en/latest/environments.html)
+### II.3. Compile and install the packages defined in the active [spack environment](https://spack.readthedocs.io/en/latest/environments.html)
 
 Inspect the active environment
 
@@ -178,7 +160,7 @@ The `jun19` FairSoft release pins certain package version and build variants tha
 
 This step usually takes a while - time for a coffee break ☕.
 
-### III.4. Verify the installation
+### II.4. Verify the installation
 
 ```
 [jun19] $ spack find
@@ -223,9 +205,9 @@ g4incl@1.0         hepmc@2.06.09            libxdmcp@1.1.2        pythia6@428-al
 g4ndl@4.5          hwloc@2.0.2              libxext@1.3.3         pythia8@8240
 ```
 
-## IV. Execution
+## III. Execution
 
-### IV.1. Spack view
+### III.1. Spack view
 
 Symbolic links to packages in install tree can be placed to a common installation prefix using view command.
 This will create a directory, which can be used as SIMPATH and FAIRROOTPATH in order to build experiment-specific frameworks.
@@ -243,7 +225,7 @@ macOS
 
 The view creation has to be done within an [activated environment](#iii2-activate-the-spack-environment).
 
-### IV.2. Spack load (beta)
+### III.2. Spack load (beta)
 
 As an alternative to the view the Spack offers the [module mechanism](https://spack.readthedocs.io/en/latest/module_file_support.html), allowing the user to set the running environment using the load command:
 
@@ -255,9 +237,9 @@ This will set the corrects paths to run the environment.
 
 __This functionally is not yet fully supported.__
 
-## V. Development
+## IV. Development
 
-### V.1. Classic "cmake -> make -> make install" workflow (FairRoot and/or Experiment)
+### IV.1. Classic "cmake -> make -> make install" workflow (FairRoot and/or Experiment)
 
 ```
 [jun19] $ export SIMPATH=<path of your choice>
@@ -272,7 +254,7 @@ If you need a newer CMake version than your system provides, add `cmake` at the 
 
 A $SIMPATH created as shown above may be removed by a simple `rm -rf $SIMPATH`. This will **not** uninstall the packages themselves and you may recreate the view without recompilation.
 
-### V.2. Spack dev-build (single-package)
+### IV.2. Spack dev-build (single-package)
 
 A package can be built in development mode - without checking it out from repository. In this case the code will be taken from local directory SOURCE_PATH.
 Following command will run development build of FairRoot with dependencies equivalent to jun19 environemnt on macOS. Currently this has to be configured manually.
@@ -283,7 +265,13 @@ spack dev-build -j JOBS -d SOURCE_PATH fairroot@18.2.1+sim+examples ^pcre+jit ^p
 ^root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+xrootd+aqua ^geant3@2-7_fairsoft ^vgm@4-5 ^geant4-vmc@4-0-p1
 ```
 
-## VI. [Troubleshooting](docs/troubleshooting.md)
+## V. Troubleshooting
+
+Go to the [Troubleshooting](docs/troubleshooting.md) page.
+
+## VI. Advanced topics
+
+Go to the [Advanced topics](docs/advanced.md) page.
 
 ## Structure of this repo
 
