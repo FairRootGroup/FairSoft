@@ -1,8 +1,29 @@
 # Advanced Installation Guide
 
-This guide assumes that the user is familiar with Spack. See the [Spack documentation](https://spack.readthedocs.io/en/latest/index.html) if you want to learn more about Spack.
+This guide assumes that the user is somewhat familiar with Spack. See the [Spack documentation](https://spack.readthedocs.io/en/latest/index.html) if you want to learn more about Spack.
 
-TODO Update this guide
+## Configure Spack directories
+
+Over time, the install tree and source cache of Spack may grow quite large (multiple Gigabytes). With the following commands it is possible to specify locations outside of the FairSoft git repo:
+
+```
+$ spack config --scope site add config:install_tree:/path/of/your/choice
+$ spack config --scope site add config:source_cache:/path/of/your/choice2
+```
+
+Verify your settings:
+
+```
+$ spack config blame config | grep -e source_cache -e install_tree
+~/FairSoft/spack/etc/spack/defaults/config.yaml:23     install_tree: /path/of/your/choice
+~/FairSoft/spack/etc/spack/defaults/config.yaml:118    source_cache: /path/of/your/choice2
+```
+
+Re-location of an already existing install tree is not supported.
+
+---
+
+TODO Update this guide from here down
 
 ## Setup your Spack environment
 
