@@ -12,6 +12,7 @@ class Geant3(CMakePackage):
     homepage = "https://root.cern.ch/vmc"
     git      = "https://github.com/FairRootGroup/geant3.git"
 
+    version('3.7', tag='v3-7_fairsoft', commit='12092fb6d0ab5249699c8fd2d3af409ac878f262')
     version('3.0', tag='v3-0_fairsoft', commit='be5ef650befe0927a9f762b98f4ea5dfb4af0624')
     version('2.7', tag='v2-7_fairsoft', commit='f4eb0984938c5a0e8795324bac495d319cf0397e')
 
@@ -22,16 +23,17 @@ class Geant3(CMakePackage):
     depends_on('root')
     depends_on('vmc', when='@3:')
 
-    patch('gcalor_stringsize.patch', level=0)
+    patch('gcalor_stringsize.patch', level=0, when='@:3.6')
     patch('dict_fixes_30.patch', when='@3.0')
     patch('gfortran10_support.patch', when='@:3.6')
 
     def cmake_args(self):
-        spec = self.spec
         options = []
         options.append('-DCMAKE_INSTALL_LIBDIR:PATH=lib')
         options.append('-DROOT_DIR={0}'.format(
                 self.spec['root'].prefix))
+        if self.spec.satisfies('@3.7:'):
+            options.append('-DBUILD_GCALOR=ON')
 
         return options
 
