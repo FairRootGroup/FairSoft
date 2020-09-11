@@ -1,0 +1,35 @@
+commit 454d3c119b71f236e9c2f6090ed4f72c8eb3d50e
+Author: Mohammad Al-Turany <MohammadAlTurany@users.noreply.github.com>
+Date:   Mon Aug 31 15:50:59 2020 +0200
+
+    Solve problem with Geane propagator (#23)
+    
+    Using Option_t  in Ertrak cause an inconsistent character options error
+    on the FORTRAN side (On MAC OS), using const char instead of Option_t solve the problem
+
+diff --git a/TGeant3/TGeant3.cxx b/TGeant3/TGeant3.cxx
+index 66040e4..02aee1a 100644
+--- a/TGeant3/TGeant3.cxx
++++ b/TGeant3/TGeant3.cxx
+@@ -5511,7 +5511,7 @@ void TGeant3::Ertrgo()
+ 
+ //______________________________________________________________________
+ void TGeant3::Ertrak(const Float_t *x1, const Float_t *p1, const Float_t *x2, const Float_t *p2, Int_t ipa,
+-                     Option_t *chopt)
++                     const char *chopt)
+ {
+    //************************************************************************
+    //*                                                                      *
+diff --git a/TGeant3/TGeant3.h b/TGeant3/TGeant3.h
+index 759522f..de19b71 100644
+--- a/TGeant3/TGeant3.h
++++ b/TGeant3/TGeant3.h
+@@ -1028,7 +1028,7 @@ public:
+ 
+    virtual void Ertrgo();
+    virtual void
+-   Ertrak(const Float_t *x1, const Float_t *p1, const Float_t *x2, const Float_t *p2, Int_t ipa, Option_t *chopt);
++   Ertrak(const Float_t *x1, const Float_t *p1, const Float_t *x2, const Float_t *p2, Int_t ipa,  const char *chopt);
+    virtual void Erxyzc();
+    virtual void Eufill(Int_t n, Float_t *ein, Float_t *xlf);
+    virtual void Eufilp(const Int_t n, Float_t *ein, Float_t *pli, Float_t *plf);
