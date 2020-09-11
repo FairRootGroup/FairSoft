@@ -26,6 +26,8 @@ class Geant3(CMakePackage):
     patch('gcalor_stringsize.patch', level=0, when='@:3.6')
     patch('dict_fixes_30.patch', when='@3.0')
     patch('gfortran10_support.patch', when='@:3.6')
+    patch('fix_geane_propagator_v2-7_fairsoft.patch', when="@2.7")
+    patch('fix_geane_propagator_v3-0_fairsoft.patch', when="@3.0")
 
     def cmake_args(self):
         options = []
