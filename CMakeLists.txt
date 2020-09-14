@@ -113,9 +113,6 @@ fs_test(NAME dev.sim_mt_headless      ENV env/dev/sim_mt_headless)
 fs_test(NAME test.jun19_fairroot_18_4 ENV test/env/jun19_fairroot_18_4)
 fs_test(NAME test.fairroot_develop    ENV test/env/fairroot_develop)
 fs_test(NAME test.r3broot             ENV test/env/r3broot)
-# if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  # fs_test(NAME test.openmpi_3 ENV test/env/openmpi_3 MIGHT_FAIL)
-# endif()
 
 fs_test(NAME workflow.classic_developer_jun19
         ENV env/jun19/sim DEPENDS jun19.sim
