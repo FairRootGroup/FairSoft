@@ -1,7 +1,7 @@
 #!/bin/bash
 
 fairsoft_basedir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-fairsoft_spackdir=vae/spack
+fairsoft_spackdir=spack
 fairsoft_configdir=../../../config
 
 if [ "$1" = "--setup" ]
@@ -84,8 +84,7 @@ fairsoft_repo() {
 }
 
 fairsoft_repo "vae_backports" "vae-backports"
-fairsoft_repo "fairsoft_backports" "fairsoft-backports"
-fairsoft_repo "fairsoft" "fairsoft"
+fairsoft_repo "vae" "vae"
 
 if $fairsoft_do_setup
 then
