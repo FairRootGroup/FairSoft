@@ -1,5 +1,0 @@
-packages:
-  all:
-    providers:
-      tbb: [vae_backports.intel-tbb]
-      blas: [vae_backports.openblas]
