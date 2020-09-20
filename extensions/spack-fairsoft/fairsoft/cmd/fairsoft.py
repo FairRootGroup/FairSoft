@@ -13,6 +13,7 @@ from llnl.util.tty.colify import colify
 from spack.cmd.clean import clean
 from spack.cmd.compiler import compiler_find
 from spack.cmd.repo import repo_list
+import spack.environment as ev
 import spack.extensions.fairsoft as ext
 from spack.spec import version_color
 from spack.util.executable import which
@@ -53,7 +54,7 @@ def _spack_repo_list():
 
 def avail(_args):
     """show available FairSoft distros"""
-    distros = sorted(ext.get_distros())
+    distros = sorted(ext.get_available_distros())
 
     if sys.stdout.isatty():
         if not distros:
@@ -91,9 +92,18 @@ def info(args):
     color.cprint('')
 
 
-def install(_args):
+def install(args):
     """install a FairSoft distro"""
-    raise NotImplementedError('NOT YET IMPLEMENTED')
+    env = ext.create_distro(args.distro)
+    with env.write_transaction():
+        concretized_specs = env.concretize()
+        ev.display_specs(concretized_specs)
+        env.write(regenerate_views=False)
+
+    tty.msg("Installing environment %s" % env.name)
+    env.install_all()
+    with env.write_transaction():
+        env.regenerate_views()
 
 
 def list(_args):
@@ -200,10 +210,13 @@ def setup_parser(parser):
 
     info_cmd = _add_cmd(subcmds, 'info')
     info_cmd.add_argument('distro',
-                          choices=ext.get_distros(),
+                          choices=ext.get_available_distros(),
                           help='name of distro to print details about')
 
-    _add_cmd(subcmds, 'install')
+    install_cmd = _add_cmd(subcmds, 'install')
+    install_cmd.add_argument('distro',
+                             choices=ext.get_available_distros(),
+                             help='name of distro to install')
 
     _add_cmd(subcmds, 'list')
 

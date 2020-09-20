@@ -12,19 +12,22 @@ env_dir   Abs. path to /env directory
 repos_dir Abs. path to /repos directory
 
 configure_repos()            Enforce correct repo config.
-get_distros()                Return list of '<release>.<variant>' distro names.
+get_available_distros()      Return list of '<release>.<variant>' distro names.
 get_distro_info(distro)      Return an info dictionary about given distro.
 manage_site_config_dir(config_dir)
     Manage symlinks from spack site config dir to given config_dir entries.
 """
 
+import functools
 import os
 
 import llnl.util.tty as tty
 from ruamel.yaml.main import safe_load
 import spack.paths
 from spack.config import config
+import spack.environment as ev
 from spack.repo import Repo, RepoPath
+from spack.util.executable import which
 
 root_dir = os.path.abspath(
     os.path.join(os.path.dirname(__file__), *([os.pardir] * 3)))
@@ -90,7 +93,53 @@ def configure_repos():
     return res
 
 
-def get_distros():
+def create_distro(distro):
+    """Create given distro by (re-)creating a named environment"""
+    active_env = ev.get_env({'env': distro}, '')
+    release, variant = distro.split('.')
+    env_name = 'fairsoft_{}_{}'.format(release, variant)
+    env_path = os.path.join(env_dir, release, variant, 'spack.yaml')
+    commit_file = os.path.join(ev.root(env_name), 'commit_hash')
+
+    if active_env:
+        tty.die('Found active environment `{}`.'.format(active_env.name),
+                'This is not supported by this command.',
+                'Please deactivate to continue:',
+                '    spack env deactivate')
+
+    git = which('git', required=True)
+    commit_hash = git('-C', root_dir, 'rev-parse', 'HEAD', output=str)
+    last_commit_hash = None
+
+    if ev.exists(env_name):
+        if os.path.exists(commit_file):
+            with open(commit_file, 'r') as f:
+                last_commit_hash = f.read()
+        if last_commit_hash != commit_hash:
+            tty.debug('Removing environment `{}` because \
+                      {} ({}) != {} (current `git rev-parse HEAD`)'.format(
+                          env_name, last_commit_hash, commit_file, commit_hash))
+            env = ev.read(env_name)
+            env.destroy()
+
+    env = None
+    if ev.exists(env_name):
+        env = ev.read(env_name)
+    else:
+        tty.debug('Creating environment `{}` from {}'.format(env_name,
+                                                             env_path))
+        env = ev.create(env_name, env_path)
+        with env.write_transaction():
+            env.write()
+            tty.debug('Writing commit_hash {} to {}'.format(commit_hash, commit_file))
+            with open(commit_file, 'w') as f:
+                f.write(commit_hash)
+
+    return env
+
+
+@functools.lru_cache(maxsize=100, typed=False)
+def get_available_distros():
     """Return list of '<release>.<variant>' distro names.
 
     List is generated from the directory names in `/env/<release>/<variant>`.
