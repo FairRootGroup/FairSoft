@@ -8,12 +8,15 @@ import argparse
 import sys
 
 import llnl.util.tty as tty
+import llnl.util.tty.color as color
 from llnl.util.tty.colify import colify
 from spack.cmd.clean import clean
 from spack.cmd.compiler import compiler_find
 from spack.cmd.repo import repo_list
 import spack.extensions.fairsoft as ext
+from spack.spec import version_color
 from spack.util.executable import which
+from textwrap import wrap
 
 description = 'manage FairSoft distros'
 section = 'FairSoft distro'
@@ -61,9 +64,31 @@ def avail(_args):
     colify(distros, indent=4, cols=1)
 
 
-def info(_args):
+def info(args):
     """show info on a FairSoft distro"""
-    raise NotImplementedError('NOT YET IMPLEMENTED')
+    cl_header = '@*b'
+    cl_plain = '@.'
+    cl_version = version_color
+    info = ext.get_distro_info(args.distro)
+
+    color.cprint('{}Distro:{}   {}'.format(cl_header, cl_plain, info['name']))
+    color.cprint('')
+    color.cprint('{}Description:{}'.format(cl_header, cl_plain))
+    colify(wrap(info['description'], width=70), indent=4, cols=1)
+    color.cprint('')
+    color.cprint('{}Release:{} {}{}{}'.format(cl_header, cl_plain, cl_version,
+                                              info['release'], cl_plain))
+    color.cprint('')
+    color.cprint('{}Variant:{} {}'.format(cl_header, cl_plain,
+                                          info['variant']))
+    color.cprint('')
+    color.cprint('{}Packages:{} {}'.format(cl_header, cl_plain, 'TODO'))
+    color.cprint('')
+    color.cprint('{}Prerequisites installed:{} {}'.format(
+        cl_header, cl_plain, 'TODO'))
+    color.cprint('')
+    color.cprint('{}Installed:{} {}'.format(cl_header, cl_plain, 'TODO'))
+    color.cprint('')
 
 
 def install(_args):
@@ -173,7 +198,10 @@ def setup_parser(parser):
                                     dest='fairsoft_subcommand')
     _add_cmd(subcmds, 'avail')
 
-    _add_cmd(subcmds, 'info')
+    info_cmd = _add_cmd(subcmds, 'info')
+    info_cmd.add_argument('distro',
+                          choices=ext.get_distros(),
+                          help='name of distro to print details about')
 
     _add_cmd(subcmds, 'install')
 

@@ -11,8 +11,9 @@ root_dir  Abs. path to the root of the FairSoft repo
 env_dir   Abs. path to /env directory
 repos_dir Abs. path to /repos directory
 
-configure_repos()  Enforce correct repo config.
-get_distros()      Return list of '<release>.<variant>' distro names.
+configure_repos()            Enforce correct repo config.
+get_distros()                Return list of '<release>.<variant>' distro names.
+get_distro_info(distro)      Return an info dictionary about given distro.
 manage_site_config_dir(config_dir)
     Manage symlinks from spack site config dir to given config_dir entries.
 """
@@ -20,6 +21,7 @@ manage_site_config_dir(config_dir)
 import os
 
 import llnl.util.tty as tty
+from ruamel.yaml.main import safe_load
 import spack.paths
 from spack.config import config
 from spack.repo import Repo, RepoPath
@@ -98,6 +100,25 @@ def get_distros():
         for variant in os.listdir(os.path.join(env_dir, release)):
             envs.append('{}.{}'.format(release.lower(), variant.lower()))
     return envs
+
+
+def get_distro_info(distro):
+    """Return an info dictionary about given distro."""
+    release, variant = distro.split('.')
+    info_file = os.path.join(env_dir, release, variant, 'info.yaml')
+    data = {'info': {}}
+    if os.path.exists(info_file):
+        tty.debug('Reading distro info file {}'.format(info_file))
+        with open(info_file) as f:
+            data = safe_load(f)
+
+    info = data['info']
+    return {
+        'name': distro,
+        'release': release,
+        'variant': variant,
+        'description': info['description'] if 'description' in info else 'None'
+    }
 
 
 def manage_site_config_dir(config_dir):
