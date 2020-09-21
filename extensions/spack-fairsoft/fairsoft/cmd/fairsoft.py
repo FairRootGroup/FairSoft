@@ -9,7 +9,8 @@ import sys
 
 import llnl.util.tty as tty
 import llnl.util.tty.color as color
-from llnl.util.tty.colify import colify
+from llnl.util.tty.colify import colify, colify_table
+from llnl.util.tty.color import colorize, cescape
 from spack.cmd.clean import clean
 from spack.cmd.compiler import compiler_find
 from spack.cmd.repo import repo_list
@@ -108,7 +109,53 @@ def install(args):
 
 def list(_args):
     """list installed FairSoft distros"""
-    raise NotImplementedError('NOT YET IMPLEMENTED')
+    available = ext.get_available_distros()
+    created = sorted([d for d in available if ev.exists(ext.get_distro_env_name(d))])
+
+    table = []
+    for distro in created:
+        row = []
+        row.append(distro)
+
+        env = ev.read(ext.get_distro_env_name(distro))
+        # Make sure it is concretized
+        with env.write_transaction():
+            env.concretize()
+            env.write(regenerate_views=False)
+
+        # Count all and installed packages
+        all = set()
+        installed = set()
+        for spec in env.all_specs():
+            nodes = spec.traverse(root=False, cover='nodes')
+            for node in nodes:
+                all.add(node)
+                if node.package.installed:
+                    installed.add(node)
+
+        num_all = len(all)
+        num_installed = len(installed)
+        if (num_installed < num_all):
+            row.append(colorize('@b[{}/{} installed packages]@.'.format(
+                num_installed, num_all), color=sys.stdout.isatty()))
+        else:
+            row.append(colorize('@b[{} installed packages]@.'.format(
+                num_installed), color=sys.stdout.isatty()))
+
+        row.append(colorize('@m{}@.'.format(env.all_specs()[0].architecture),
+                            color=sys.stdout.isatty()))
+        row.append(colorize('@g{}@.'.format(cescape(env.all_specs()[0].compiler)),
+                            color=sys.stdout.isatty()))
+        table.append(row)
+
+    if sys.stdout.isatty():
+        if not table:
+            tty.msg('No distros installed')
+        else:
+            tty.msg('{} distros installed'.format(len(table)))
+
+    if table:
+        colify_table(table, indent=4)
 
 
 def setup(args):
