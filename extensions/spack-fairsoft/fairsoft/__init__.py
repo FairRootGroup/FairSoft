@@ -13,6 +13,7 @@ repos_dir Abs. path to /repos directory
 
 configure_repos()            Enforce correct repo config.
 get_available_distros()      Return list of '<release>.<variant>' distro names.
+get_distro_env_name(distro)  Compute the environment name for the given distro name.
 get_distro_info(distro)      Return an info dictionary about given distro.
 manage_site_config_dir(config_dir)
     Manage symlinks from spack site config dir to given config_dir entries.
@@ -97,7 +98,7 @@ def create_distro(distro):
     """Create given distro by (re-)creating a named environment"""
     active_env = ev.get_env({'env': distro}, '')
     release, variant = distro.split('.')
-    env_name = 'fairsoft_{}_{}'.format(release, variant)
+    env_name = get_distro_env_name(distro)
     env_path = os.path.join(env_dir, release, variant, 'spack.yaml')
     commit_file = os.path.join(ev.root(env_name), 'commit_hash')
 
@@ -168,6 +169,12 @@ def get_distro_info(distro):
         'variant': variant,
         'description': info['description'] if 'description' in info else 'None'
     }
+
+
+@functools.lru_cache(maxsize=100, typed=False)
+def get_distro_env_name(distro):
+    """Compute the environment name for the given distro name."""
+    return 'fairsoft_{}_{}'.format(*distro.split('.'))
 
 
 def manage_site_config_dir(config_dir):
