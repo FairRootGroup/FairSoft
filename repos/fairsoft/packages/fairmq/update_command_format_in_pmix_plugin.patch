@@ -1,0 +1,25 @@
+commit 5ea8ffeb34d813dd8498e8872512c5dba6455329
+Author: Alexey Rybalchenko <alexryba@gmail.com>
+Date:   Wed Sep 16 22:44:52 2020 +0200
+
+    Update command format in PMIx plugin
+
+diff --git a/fairmq/plugins/PMIx/PMIxPlugin.cxx b/fairmq/plugins/PMIx/PMIxPlugin.cxx
+index c4bc02de..b59eea61 100644
+--- a/fairmq/plugins/PMIx/PMIxPlugin.cxx
++++ b/fairmq/plugins/PMIx/PMIxPlugin.cxx
+@@ -148,12 +148,12 @@ auto PMIxPlugin::SubscribeForCommands() -> void
+                     Transition transition = static_cast<ChangeState&>(*cmd).GetTransition();
+                     if (ChangeDeviceState(transition)) {
+                         fCommands.Send(
+-                            Cmds(make<TransitionStatus>(fDeviceId, 0, Result::Ok, transition))
++                            Cmds(make<TransitionStatus>(fDeviceId, 0, Result::Ok, transition, GetCurrentDeviceState()))
+                                 .Serialize(Format::JSON),
+                             {sender});
+                     } else {
+                         fCommands.Send(
+-                            Cmds(make<TransitionStatus>(fDeviceId, 0, Result::Failure, transition))
++                            Cmds(make<TransitionStatus>(fDeviceId, 0, Result::Failure, transition, GetCurrentDeviceState()))
+                                 .Serialize(Format::JSON),
+                             {sender});
+                     }
