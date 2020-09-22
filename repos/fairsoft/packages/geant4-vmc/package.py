@@ -26,8 +26,8 @@ class Geant4Vmc(CMakePackage):
 
     depends_on('root')
     depends_on('geant4')
-    depends_on('geant4@10.05:', when='@5-0:')
-    depends_on('geant4@10.06:', when='@5-2:')
+    depends_on('geant4@10.5:', when='@5-0:')
+    depends_on('geant4@10.6:', when='@5-2:')
     depends_on('vgm')
     depends_on('vmc', when='@5-0:')
 
