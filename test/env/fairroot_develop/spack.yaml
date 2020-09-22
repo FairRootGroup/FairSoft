@@ -6,7 +6,7 @@ spack:
     root: [root +fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+xrootd+sqlite+aqua]
   specs:
   - hepmc length=CM momentum=GEV
-  - geant4 ~qt~vecgeom~opengl~x11~motif~data~clhep+threads
+  - geant4 ~qt~vecgeom~opengl~x11~motif+threads
   - $root
   - fairroot@develop+sim+examples
   concretization: together
