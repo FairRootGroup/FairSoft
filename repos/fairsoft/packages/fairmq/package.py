@@ -17,6 +17,8 @@ class Fairmq(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='dev', submodules=True, get_full_repo=True)
+    version('1.4.24', tag='v1.4.24', commit='35c7959c530c010da718892fd3948467f104d267', submodules=True, no_cache=True)
+    version('1.4.23', tag='v1.4.23', commit='5e97d8595659edeb87ea6aa47a64340e3c9f2ed8', submodules=True, no_cache=True)
     version('1.4.22', tag='v1.4.22', commit='690e8a037098ed4b7097f687d853d20a2b8cc028', submodules=True, no_cache=True)
     version('1.4.21', tag='v1.4.21', commit='3eca8e9defd7e3b10f7b1ab02c2e45ec68911092', submodules=True, no_cache=True)
     version('1.4.20', tag='v1.4.20', commit='78b1c188bfb6158a7c1a8db2745a88099dff19da', submodules=True, no_cache=True)
@@ -58,6 +60,7 @@ class Fairmq(CMakePackage):
     patch('use_bundled_gtest_149.patch', when='@1.4.9:1.4.16')
     patch('missing_stdexcept_header.patch', when='@:1.4.19')
     patch('fix_cpp17moveinsertable_assertion_xcode12.patch', when='@1.4.8:1.4.23')
+    patch('update_command_format_in_pmix_plugin.patch', when='@1.4.23')
 
     depends_on('googletest@1.7:', when='@:1.4.8')
     depends_on('boost@1.64: +container+program_options+thread+system+filesystem+regex+date_time', when='@1.3')
