@@ -23,7 +23,32 @@ then
 	echo "*** New install tree .....: ${installtree}"
 	bindmounts="${bindmounts},${installtree}:/opt/spack/install-tree"
 	ctestcmd="${ctestcmd} -DFS_TEST_INSTALLTREE:PATH=/opt/spack/install-tree"
+
+	installtreecache="$FS_INSTALLTREE_BASE/cache/${LABEL}/job-${JOB_BASE_NAME}"
+	if [ -d "$installtreecache" ]
+	then
+		echo "*** Found cache - copying : ${installtreecache}"
+		cp -a --reflink=auto "$installtreecache/." "$installtree/."
+	fi
 fi
 
-set -x
-exec singularity run -B"$bindmounts" "$image" ${ctestcmd}
+(
+	set -x
+	singularity run -B"$bindmounts" "$image" ${ctestcmd}
+)
+retval=$?
+
+if [ -d "$FS_INSTALLTREE_BASE" ] && [ -d "$installtree" ]
+then
+	mkdir -v -p "$FS_INSTALLTREE_BASE/cache/${LABEL}"
+	mkdir -v -p "$FS_INSTALLTREE_BASE/old/${LABEL}"
+	rm -rf "$FS_INSTALLTREE_BASE/old/${LABEL}/job-${JOB_BASE_NAME}"
+	if [ -d "$installtreecache" ]
+	then
+		mv -v "$installtreecache" \
+		   "$FS_INSTALLTREE_BASE/old/${LABEL}/job-${JOB_BASE_NAME}"
+	fi
+	mv -v "$installtree" "$installtreecache"
+fi
+
+exit $retval
