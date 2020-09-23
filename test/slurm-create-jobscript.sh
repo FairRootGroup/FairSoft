@@ -20,7 +20,7 @@ echo "*** Creating job script ..: ${jobsh}"
 	echo 'echo "*** Job ID ...............: $SLURM_JOB_ID"'
 	echo 'export SPACK_BUILD_JOBS=$SLURM_CPUS_PER_TASK'
 	echo "source <(sed -e '/^#/d' -e '/^export/!s/^.*=/export &/' /etc/environment)"
-	echo "${SINGULARITY_CONTAINER_ROOT}/run_container ${container} ${ctestcmd}"
+	printf './test/test-start-container.sh %q %q\n' "${container}" "${ctestcmd}"
 	echo 'retval=$?'
 	echo 'mkdir -p build'
 	echo 'echo $retval >"build/${LABEL}-last-exit-code"'
