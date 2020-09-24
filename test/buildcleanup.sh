@@ -2,8 +2,8 @@
 
 . test/buildsetup.sh
 
-installedMB="$(cd $HOME/install-tree && du -ms . | sed -e 's/[	 ].*$//')"
-# rm -rf "$HOME/install-tree"
+installedMB="$(cd "$FS_TEST_INSTALLTREE" && du -ms . | sed -e 's/[	 ].*$//')"
+# rm -rf "$FS_TEST_INSTALLTREE"
 
 # stageKB="$(cd $HOME/stage && du -ks . | sed -e 's/[	 ].*$//')"
 (cd "$HOME" && du -sh stage)
