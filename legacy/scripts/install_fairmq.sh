@@ -13,6 +13,9 @@ if (not_there FairMQ $checkfile);
 then
   cd FairMQ
   git checkout $FAIRMQ_VERSION
+
+  mypatch ../fairmq_fix_cpp17moveinsertable_assertion_xcode12.patch
+
   if [ ! -d  build ];
   then
     mkdir build
