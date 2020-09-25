@@ -1,5 +1,13 @@
 #!groovy
 
+// Default quiet period for branches
+Integer our_quiet_period = 600;
+if (env.CHANGE_ID != null) {
+    // Pull Requests get default
+    our_quiet_period = 5;
+}
+
+
 def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
   def nodes = [:]
   for (spec in specs) {
@@ -39,8 +47,20 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
 }
 
 pipeline {
+  options {
+    quietPeriod(our_quiet_period)
+  }
   agent none
   stages {
+    stage('Info Stage') {
+      steps {
+        echo "BRANCH_NAME: ${BRANCH_NAME}"
+        echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
+        echo "env.CHANGE_ID: ${env.CHANGE_ID}"
+        echo "getBuildCauses: ${currentBuild.getBuildCauses()}"
+        echo "our_quiet_period: ${our_quiet_period}"
+      }
+    }
     stage('Run CI Matrix') {
       steps{
         script {
