@@ -195,12 +195,12 @@ def manage_site_config_dir(config_dir):
         if os.path.islink(symlink):
             readlink = os.readlink(symlink)
             if readlink != target:
-                tty.debug('Removing unexpected symlink {} to {} (expected {})'.
-                          format(symlink, readlink, target))
+                tty.msg('Removing unexpected symlink {} to {} (expected {})'.format(
+                    symlink, readlink, target))
                 os.remove(symlink)
             if not os.path.exists(os.path.abspath(os.path.join(site,
                                                                readlink))):
-                tty.debug('Removing dangling symlink {} to {}'.format(
+                tty.msg('Removing dangling symlink {} to {}'.format(
                     symlink, readlink))
                 os.remove(symlink)
 
@@ -208,5 +208,5 @@ def manage_site_config_dir(config_dir):
     for entry in os.listdir(fairsoft):
         symlink, target = compute_symlink_and_target(site, fairsoft, entry)
         if not (os.path.islink(symlink) and os.readlink(symlink) == target):
-            tty.debug('Add missing symlink {} to {}'.format(symlink, target))
+            tty.msg('Add missing symlink {} to {}'.format(symlink, target))
             os.symlink(target, symlink)
