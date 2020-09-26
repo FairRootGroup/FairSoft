@@ -62,7 +62,7 @@ function(fs_test_props testname)
                TIMEOUT 14400)
 endfunction()
 function(fs_test)
-  cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST;DEPENDS" "" ${ARGN})
+  cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST" "DEPENDS" ${ARGN})
   if(ARGS_ENV)
     set(type env)
     set(what ${ARGS_ENV}/spack.yaml)
@@ -115,10 +115,12 @@ fs_test(NAME test.fairroot_develop    ENV test/env/fairroot_develop)
 fs_test(NAME test.r3broot             ENV test/env/r3broot)
 
 fs_test(NAME workflow.classic_developer_jun19
-        ENV env/jun19/sim DEPENDS jun19.sim
+        ENV env/jun19/sim
+        DEPENDS jun19.sim
         POST test/workflow/classic_developer.sh)
 fs_test(NAME workflow.classic_developer_dev
-        ENV env/dev/sim   DEPENDS dev.sim
+        ENV env/dev/sim
+        DEPENDS "dev.sim;workflow.classic_developer_jun19"
         POST test/workflow/classic_developer.sh)
 
 # Test cleanup
