@@ -26,8 +26,12 @@ class Root(CMakePackage):
     # Development version (when more recent than production).
 
     # Production version
-    version('6.18.04', sha256='315a85fc8363f8eb1bffa0decbf126121258f79bd273513ed64795675485cfa4',
-            preferred=True)
+    version('6.20.08', sha256='d02f224b4908c814a99648782b927c353d44db79dea2cadea86138c1afc23ae9')
+    version('6.20.06', sha256='9a734758a91598d8a58a3d64d7d606aeb17bdf6fd8214e33f5c4d9947d391951')
+    version('6.20.04', sha256='1f8c76ccdb550e64e6ddb092b4a7e9d0a10655ef80044828cba12d5e7c874472')
+    version('6.20.02', sha256='0997586bf097c0afbc6f08edbffcebf5eb6a4237262216114ba3f5c8087dcba6')
+    version('6.20.00', sha256='68421eb0434b38b66346fa8ea6053a0fdc9a6d254e4a72019f4e3633ae118bf0')
+    version('6.18.04', sha256='315a85fc8363f8eb1bffa0decbf126121258f79bd273513ed64795675485cfa4')
 
     # Old versions
     version('6.18.02', sha256='50ffffdbf2585a536c77a03f54aa631926138275ffeee02e5a16dde87e978c1d')
@@ -117,6 +121,9 @@ class Root(CMakePackage):
     # otherwise it crashes with the internal minuit library
     variant('minuit', default=True,
             description='Automatically search for support libraries')
+    variant('mlp', default=False,
+            description="Enable support for TMultilayerPerceptron "
+            "classes' federation")
     variant('mysql', default=False)
     variant('odbc', default=False,
             description='Enable ODBC support')
@@ -157,7 +164,7 @@ class Root(CMakePackage):
             description='Enable using thread library')
     variant('tiff', default=True,
             description='Include Tiff support in image processing')
-    variant('tmva', default=True,
+    variant('tmva', default=False,
             description='Build TMVA multi variate analysis library')
     variant('unuran', default=True,
             description='Use UNURAN for random number generation')
@@ -201,6 +208,7 @@ class Root(CMakePackage):
     depends_on('xxhash', when='@6.13.02:')  # See cmake_args, below.
     depends_on('xz')
     depends_on('zlib')
+    depends_on('zstd', when='@6.20:')
 
     # X-Graphics
     depends_on('libx11',  when="+x")
@@ -224,6 +232,11 @@ class Root(CMakePackage):
     depends_on('python@2.7:2.99',     when='@6.16', type=('build', 'run'))
     depends_on('python@2.7:', when='@6.18:+python', type=('build', 'run'))
     depends_on('py-numpy', type=('build', 'run'), when='+tmva')
+    # This numpy dependency was not intended and will hopefully
+    # be fixed in 6.20.06.
+    # See: https://sft.its.cern.ch/jira/browse/ROOT-10626
+    depends_on('py-numpy', type=('build', 'run'),
+               when='@6.20.00:6.20.05 +python')
 
     # Asimage variant would need one of these two
     # For the moment, we use the libafterimage provided by the root sources
@@ -285,6 +298,7 @@ class Root(CMakePackage):
     # Incompatible variants
     conflicts('+opengl', when='~x', msg='OpenGL requires X')
     conflicts('+tmva', when='~gsl', msg="TVMA requires GSL")
+    conflicts('+tmva', when='~mlp', msg='TVMA requires MLP')
     conflicts('cxxstd=11', when='+root7', msg="root7 requires at least C++14")
 
     # Feature removed in 6.18:
@@ -401,6 +415,8 @@ class Root(CMakePackage):
                 'ON' if '+minuit' in spec else 'OFF'),
             '-Dminuit2:BOOL=%s' % (
                 'ON' if '+minuit' in spec else 'OFF'),
+            '-Dmlp:BOOL=%s' % (
+                'ON' if '+mlp' in spec else 'OFF'),
             '-Dmysql:BOOL=%s' % (
                 'ON' if '+mysql' in spec else 'OFF'),
             '-Dodbc:BOOL=%s' % (
@@ -494,6 +510,12 @@ class Root(CMakePackage):
             '-Dtcmalloc:BOOL=OFF'
 
         ])
+
+        # Some special features
+        if self.spec.satisfies('@6.20:'):
+            options.append(self.define_from_variant('pyroot', 'python'))
+        else:
+            options.append(self.define_from_variant('python'))
 
         # #################### Compiler options ####################
 
