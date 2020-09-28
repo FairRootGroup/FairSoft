@@ -15,7 +15,7 @@ class Root(CMakePackage):
     homepage = "https://root.cern.ch"
     url      = "https://root.cern/download/root_v6.16.00.source.tar.gz"
 
-    maintainers = ['chissg', 'HadrienG2', 'drbenmorgan']
+    maintainers = ['chissg', 'HadrienG2', 'drbenmorgan', 'vvolkl']
 
     # ###################### Versions ##########################
 
@@ -59,7 +59,7 @@ class Root(CMakePackage):
     # Some ROOT versions did not honor the option to avoid building an
     # internal version of unuran, _cf_
     # https://github.com/root-project/ROOT/commit/3e60764f133218b6938e5aa4986de760e8f058d9.
-    patch('honor-unuran-switch.patch', level=1, when='@:6.13.99')
+    patch('honor-unuran-switch.patch', level=1, when='@6.08.06:6.13.99')
     # 6.16.00 fails to handle particular build option combinations, _cf_
     # https://github.com/root-project/ROOT/commit/e0ae0483985d90a71a6cabd10d3622dfd1c15611.
     patch('root7-webgui.patch', level=1, when='@6.16.00')
@@ -78,10 +78,6 @@ class Root(CMakePackage):
         description='Compile with avahi')
     variant('aqua', default=False,
             description='Enable Aqua interface')
-    # No need for a specific variant: libafterimage is not provided by spack
-    # By default always true, we get the builtin included in the source
-    # variant('asimage', default=True,
-    #    description='Enable image processing support')
     variant('davix', default=True,
             description='Compile with external Davix')
     variant('emacs', default=False,
@@ -257,6 +253,7 @@ class Root(CMakePackage):
     depends_on('r',         when='+r', type=('build', 'run'))
     depends_on('r-cpp',     when='+r', type=('build', 'run'))
     depends_on('r-inside',  when='+r', type=('build', 'run'))
+    depends_on('readline',  when='+r')
     depends_on('shadow',    when='+shadow')
     depends_on('sqlite',    when='+sqlite')
     depends_on('tbb',       when='+tbb')
@@ -265,7 +262,7 @@ class Root(CMakePackage):
     depends_on('veccore',   when='+veccore')
     depends_on('vdt',       when='+vdt')
     depends_on('libxml2~python',   when='+xml')
-    depends_on('xrootd',    when='+xrootd')
+    depends_on('xrootd@:4.99.99',    when='+xrootd')
     # depends_on('hdfs') - supported (TODO)
 
     # Not supported
@@ -286,14 +283,14 @@ class Root(CMakePackage):
     conflicts('%intel')
 
     # Incompatible variants
+    conflicts('+opengl', when='~x', msg='OpenGL requires X')
     conflicts('+tmva', when='~gsl', msg="TVMA requires GSL")
     conflicts('cxxstd=11', when='+root7', msg="root7 requires at least C++14")
 
-    # Feature removed:
-    conflicts('+memstat', when='@6.18.00:',
-              msg="Obsolete option +memstat selected.")
-    conflicts('+memstat', when='@master',
-              msg="Obsolete option +memstat selected.")
+    # Feature removed in 6.18:
+    [(conflicts('+{0}'.format(pkg), when='@6.18.00:',
+                msg='Obsolete option +{0} selected.'.format(pkg))) for pkg in
+     ('memstat', 'qt4', 'table')]
 
     def cmake_args(self):
         spec = self.spec
@@ -313,28 +310,31 @@ class Root(CMakePackage):
 
         # Options related to ROOT's ability to download and build its own
         # dependencies. Per Spack convention, this should generally be avoided.
-        options.extend([
-            '-Dbuiltin_llvm=ON',
-            '-Dbuiltin_afterimage=ON',
-            '-Dbuiltin_cfitsio:BOOL=OFF',
-            '-Dbuiltin_davix:BOOL=OFF',
-            '-Dbuiltin_fftw3:BOOL=OFF',
-            '-Dbuiltin_freetype:BOOL=OFF',
-            '-Dbuiltin_ftgl:BOOL=OFF',
-            '-Dbuiltin_gl2ps:BOOL=ON',
-            '-Dbuiltin_glew:BOOL=OFF',
-            '-Dbuiltin_gsl:BOOL=OFF',
-            '-Dbuiltin_lzma:BOOL=OFF',
-            '-Dbuiltin_openssl:BOOL=OFF',
-            '-Dbuiltin_pcre:BOOL=OFF',
-            '-Dbuiltin_tbb:BOOL=OFF',
-            '-Dbuiltin_unuran:BOOL=OFF',
-            '-Dbuiltin_vc:BOOL=OFF',
-            '-Dbuiltin_vdt:BOOL=OFF',
-            '-Dbuiltin_veccore:BOOL=OFF',
-            '-Dbuiltin_xrootd:BOOL=OFF',
-            '-Dbuiltin_zlib:BOOL=OFF'
-        ])
+        builtin_opts\
+            = [
+                ['builtin_llvm', True],
+                ['builtin_afterimage', True],
+                ['builtin_cfitsio', False],
+                ['builtin_davix', False],
+                ['builtin_fftw3', False],
+                ['builtin_freetype', False],
+                ['builtin_ftgl', False],
+                ['builtin_gl2ps:BOOL', True],
+                ['builtin_glew', False],
+                ['builtin_gsl', False],
+                ['builtin_lzma', False],
+                ['builtin_openssl', False],
+                ['builtin_pcre', False],
+                ['builtin_tbb', False],
+                ['builtin_unuran', False],
+                ['builtin_vc', False],
+                ['builtin_vdt', False],
+                ['builtin_veccore', False],
+                ['builtin_xrootd', False],
+                ['builtin_zlib', False]
+            ]
+        for opt_key, opt_val in builtin_opts:
+            options.append(self.define(opt_key, opt_val))
 
         # LZ4 and xxhash do not work as external deps for older versions
         options.extend([
