@@ -1,7 +1,7 @@
 #!groovy
 
 // Default quiet period for branches
-Integer our_quiet_period = 600;
+Integer our_quiet_period = 3 * 3600;
 if (env.CHANGE_ID != null) {
     // Pull Requests get default
     our_quiet_period = 5;
