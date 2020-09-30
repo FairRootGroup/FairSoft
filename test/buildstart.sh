@@ -29,7 +29,7 @@ function handle_gitdifflist() {
 				pkg="${filename#repos/*/packages/}"
 				pkg="${pkg%%/*}"
 				echo "***    |   uninstall '$pkg'"
-				spack uninstall --all --dependents -y "$pkg"
+				spack uninstall --all --dependents --force -y "$pkg"
 				;;
 			spack|config/*)
 				echo ""
@@ -58,6 +58,14 @@ function showhist() {
 	echo "***    |"
 }
 
+
+echo "*** Checking for old envs from previous runs and removing"
+spack env list | sed -n -e 's/^ *//' -e 's/ *$//' -e '/^fs_test_/p' \
+	| while read env
+	do
+		echo "***    $env"
+		spack env rm -y "$env"
+	done
 
 echo "*** Checking changes and deleting out-dated packages"
 
