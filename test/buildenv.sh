@@ -7,7 +7,8 @@ envname="$(echo "${1}" | \
 		-e 's/\<env[/]//' \
 		-e 's/[.]yaml$//' \
 		-e 's/spack$//' \
-		-e 's/[^a-z0-9]*//g')"
+		-e 's/[^a-z0-9_]*//g' \
+		-e 's/^/fs_test_/')"
 echo "*** Name for environment .: $envname"
 
 echo "*** Environment file .....: $1"
