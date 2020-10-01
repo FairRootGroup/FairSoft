@@ -78,8 +78,6 @@ class Root(CMakePackage):
 
     # ###################### Variants ##########################
 
-    variant('avahi', default=False,
-        description='Compile with avahi')
     variant('aqua', default=False,
             description='Enable Aqua interface')
     variant('davix', default=True,
@@ -244,7 +242,6 @@ class Root(CMakePackage):
     # depends_on('afterstep@2.2.11', when='+asimage') - not supported
 
     # Optional dependencies
-    depends_on('avahi',     when='+avahi')
     depends_on('davix @0.7.1:', when='+davix')
     depends_on('cfitsio',   when='+fits')
     depends_on('fftw',      when='+fftw')
@@ -366,8 +363,7 @@ class Root(CMakePackage):
                 'ON' if '+x' in spec else 'OFF'),
             '-Dxft:BOOL=%s' % (
                 'ON' if '+x' in spec else 'OFF'),
-            '-Dbonjour:BOOL=%s' % (
-                'ON' if '+avahi' in spec else 'OFF'),
+            '-Dbonjour:BOOL=OFF',
             '-Dcocoa:BOOL=%s' % (
                 'ON' if '+aqua' in spec else 'OFF'),
             # -Dcxxmodules=OFF # use clang C++ modules
