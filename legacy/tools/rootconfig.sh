@@ -21,7 +21,7 @@
    if [ "$compiler" = "Clang" ]; then
      root_comp_flag="-DCMAKE_C_COMPILER=clang -DCMAKE_CXXCOMPILER=clang"
      if [ $haslibcxx ]; then
-       root_comp_flag="-DCMAKE_C_COMPILER=clang -DCMAKE_CXXCOMPILER=clang -Dcxx11=ON -Dlibcxx=ON"
+       root_comp_flag="-DCMAKE_C_COMPILER=clang -DCMAKE_CXXCOMPILER=clang -DCMAKE_CXX_STANDARD=11 -Dlibcxx=ON"
      fi
      if [ "$platform" = "linux" ]; then
        OPENGL="-DOPENGL_INCLUDE_DIR=$SIMPATH_INSTALL/include -DOPENGL_gl_LIBRARY=$SIMPATH_INSTALL/lib"
@@ -61,7 +61,6 @@
                     -Dreflex=OFF \
                     -Dcintex=OFF \
                     -Drpath=ON \
-                    -Dmemstat=ON \
                     -Ddavix=OFF \
                      $VC \
                     -Dhttp=ON \

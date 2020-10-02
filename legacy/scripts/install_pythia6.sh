@@ -10,7 +10,7 @@ then
     echo "*** Downloading pythia6 sources ***"
     download_file $PYTHIA6_LOCATION/$PYTHIA6VERSION.tar.gz
   fi
-  untar pythia6 $PYTHIA6VERSION.tar.gz
+  untar pythia6-$PYTHIA6VERSION $PYTHIA6VERSION.tar.gz
 fi
 
 install_prefix=$SIMPATH_INSTALL
@@ -25,8 +25,11 @@ fi
 if (not_there Pythia6 $checkfile);
 then
 
-  cd $SIMPATH/generators/pythia6
-  cp ../CMakeLists.txt_pythia6 CMakeLists.txt
+  cd $SIMPATH/generators/pythia6-$PYTHIA6VERSION
+
+  mypatch ../add_missing_extern_keyword.patch
+
+#  cp ../CMakeLists.txt_pythia6 CMakeLists.txt
   mkdir build
   cd build
 
@@ -51,9 +54,9 @@ then
       fi
   fi
 
-  if [ ! -e libpythia6.so ]; then
-    ln -s libPythia6.so libpythia6.so
-  fi
+#  if [ ! -e libpythia6.so ]; then
+#    ln -s libPythia6.so libpythia6.so
+#  fi
 
   check_all_libraries $install_prefix/lib
 

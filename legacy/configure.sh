@@ -288,6 +288,13 @@ then
   source scripts/install_root6.sh
 fi
 
+##################### VMC ##############################################
+
+if [ "$check" = "1" -a "$onlyreco" = "0" -a "$mqonly" = "0" ];
+then
+  source scripts/install_vmc.sh
+fi
+
 ##################### G4Py #############################################
 
 if [ "$build_python" = "yes" ];

@@ -3,10 +3,16 @@
 
 if [ ! -d  $SIMPATH/transport/geant4_vmc ]; then
   cd $SIMPATH/transport
-  git clone $GEANT4VMC_LOCATION
-
-  cd $SIMPATH/transport/geant4_vmc
-  git checkout -b $GEANT4VMCBRANCH $GEANT4VMCBRANCH
+  if [ ! -e v$GEANT4VMCVERSION.tar.gz ];
+  then
+      echo "*** Downloading geant4_vmc sources ***"
+      download_file $GEANT4VMC_LOCATION/v$GEANT4VMCVERSION.tar.gz
+  fi
+  untar geant4_vmc-$GEANT4VMCVERSION v$GEANT4VMCVERSION.tar.gz
+  if [ -d geant4_vmc-$GEANT4VMCVERSION ];
+  then
+      ln -s geant4_vmc-$GEANT4VMCVERSION geant4_vmc
+  fi
 fi
 
 install_prefix=$SIMPATH_INSTALL
@@ -30,6 +36,7 @@ then
         -DGeant4_DIR=$SIMPATH_INSTALL \
         -DROOT_DIR=$SIMPATH_INSTALL \
         -DVGM_DIR=$SIMPATH_INSTALL/lib/$VGMDIR \
+        -DVMC_DIR=$SIMPATH_INSTALL \
         ..
 
   make install -j$number_of_processes

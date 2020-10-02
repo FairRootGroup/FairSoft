@@ -28,7 +28,7 @@ then
 
   cd $SIMPATH/generators/pythia8
 
-  USRLDFLAGSSHARED="$CXXFLAGS" ./configure  --enable-shared --with-hepmc2=$HEPINSTALLDIR
+  USRLDFLAGSSHARED="$CXXFLAGS" ./configure  --with-hepmc2=$HEPINSTALLDIR
 
   if [ "$compiler" = "PGI" ];
   then

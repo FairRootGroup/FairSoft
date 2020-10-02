@@ -8,10 +8,16 @@
 if [ ! -d  $SIMPATH/transport/geant4 ];
 then
   cd $SIMPATH/transport
-  git clone $GEANT4_LOCATION
-
-  cd geant4
-  git checkout $GEANT4VERSION
+  if [ ! -e geant4-v$GEANT4VERSION.tar.gz ]
+  then
+      echo "*** Downloading Geant4 sources ***"
+      download_file $GEANT4_LOCATION/v$GEANT4VERSION/geant4-v$GEANT4VERSION.tar.gz
+  fi
+  untar geant4-v$GEANT4VERSION geant4-v$GEANT4VERSION.tar.gz
+  if [ -d geant4-v$GEANT4VERSION ]
+  then
+      ln -s geant4-v$GEANT4VERSION geant4
+  fi
 fi
 
 # Full output during compilation and linking to check for the
@@ -90,7 +96,7 @@ then
   then
     # create unique links which is independent of the Geant4 version
     if [ ! -L $install_prefix/share/Geant4 ]; then
-      ln -s $install_prefix/share/$GEANT4VERSIONp $install_prefix/share/Geant4
+      ln -s $install_prefix/share/Geant4-$GEANT4VERSION $install_prefix/share/Geant4
     fi
     # create unique links for the data directories which are
     # independent of the actual data versions
@@ -130,14 +136,14 @@ then
 
   fi
 
-  . $install_prefix/share/$GEANT4VERSIONp/geant4make/geant4make.sh
+  . $install_prefix/share/Geant4-$GEANT4VERSION/geant4make/geant4make.sh
 
   check_success geant4 $checkfile
   check=$?
 
 else
 
-  . $install_prefix/share/$GEANT4VERSIONp/geant4make/geant4make.sh
+  . $install_prefix/share/Geant4-$GEANT4VERSION/geant4make/geant4make.sh
 
 fi
 

@@ -19,14 +19,14 @@ export ICUVERSION=icu4c-63_1
 export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.68.0/"
 export BOOSTVERSION=boost_1_68_0
 
-export PYTHIA6_LOCATION="https://root.cern.ch/download/"
-export PYTHIA6VERSION=pythia6
+export PYTHIA6_LOCATION="https://github.com/alisw/pythia6/archive"
+export PYTHIA6VERSION=428-alice1
 
 export HEPMC_LOCATION="https://hepmc.web.cern.ch/hepmc/releases"
 export HEPMCVERSION=2.06.09
 
 export PYTHIA8_LOCATION="http://home.thep.lu.se/~torbjorn/pythia8/"
-export PYTHIA8VERSION=pythia8240
+export PYTHIA8VERSION=pythia8303
 
 export XERCESC_LOCATION="https://archive.apache.org/dist/xerces/c/3/sources/"
 export XERCESCVERSION=3.1.2
@@ -34,22 +34,24 @@ export XERCESCVERSION=3.1.2
 export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10.3/"
 export MESAVERSION=MesaLib-7.10.3
 
-export GEANT4_LOCATION="https://github.com/Geant4/geant4.git/"
-export GEANT4VERSION=geant4-10.5-release
-export GEANT4VERSIONp=Geant4-10.5.1
+export GEANT4_LOCATION="https://gitlab.cern.ch/geant4/geant4/-/archive"
+export GEANT4VERSION=10.6.2
 
-export ROOT_LOCATION="https://github.com/root-project/root"
-export ROOTVERSION=v6-16-00
+export ROOT_LOCATION="https://root.cern/download"
+export ROOTVERSION=6.20.08
+
+export VMC_LOCATION="https://github.com/vmc-project/vmc/archive"
+export VMC_VERSION=1-0-p1
 
 export GEANT3_LOCATION="https://github.com/FairRootGroup/geant3.git"
-export GEANT3BRANCH=v2-7_fairsoft
+export GEANT3BRANCH=v3-7_fairsoft
 
 export VGM_LOCATION="https://github.com/vmc-project/vgm"
-export VGMVERSION=v4-5
-export VGMDIR=VGM-4.5.0
+export VGMVERSION=v4-7
+export VGMDIR=VGM-4.7.0
 
-export GEANT4VMC_LOCATION="https://github.com/vmc-project/geant4_vmc.git"
-export GEANT4VMCBRANCH=v4-0-p1
+export GEANT4VMC_LOCATION="https://github.com/vmc-project/geant4_vmc/archive"
+export GEANT4VMCVERSION=5-2
 
 export MILLEPEDE_LOCATION="http://svnsrv.desy.de/public/MillepedeII/tags/"
 export MILLEPEDE_VERSION=V04-03-10
@@ -79,23 +81,23 @@ export YAMLCPP_VERSION=0.6.2
 
 ############## Gent4 Data files
 
-export G4NDL_VERSION=G4NDL4.5
-export G4NDL_TAR=G4NDL.4.5.tar.gz
+export G4NDL_VERSION=G4NDL4.6
+export G4NDL_TAR=G4NDL.4.6.tar.gz
 
-export G4EMLOW_VERSION=G4EMLOW7.7
-export G4EMLOW_TAR=G4EMLOW.7.7.tar.gz
+export G4EMLOW_VERSION=G4EMLOW7.9.1
+export G4EMLOW_TAR=G4EMLOW.7.9.1.tar.gz
 
-export PhotonEvaporation_VERSION=PhotonEvaporation5.3
-export PhotonEvaporation_TAR=G4PhotonEvaporation.5.3.tar.gz
+export PhotonEvaporation_VERSION=PhotonEvaporation5.5
+export PhotonEvaporation_TAR=G4PhotonEvaporation.5.5.tar.gz
 
-export RadioactiveDecay_VERSION=RadioactiveDecay5.3
-export RadioactiveDecay_TAR=G4RadioactiveDecay5.3.tar.gz
+export RadioactiveDecay_VERSION=RadioactiveDecay5.4
+export RadioactiveDecay_TAR=G4RadioactiveDecay5.4.tar.gz
 
 export G4SAIDDATA_VERSION=G4SAIDDATA2.0
 export G4SAIDDATA_TAR=G4SAIDDATA.2.0.tar.gz
 
-export G4PARTICLEXS_VERSION=G4PARTICLEXS1.1
-export G4PARTICLEXS_TAR=G4PARTICLEXS1.1.tar.gz
+export G4PARTICLEXS_VERSION=G4PARTICLEXS2.1
+export G4PARTICLEXS_TAR=G4PARTICLEXS2.1.tar.gz
 
 export G4ABLA_VERSION=G4ABLA3.1
 export G4ABLA_TAR=G4ABLA3.1.tar.gz
