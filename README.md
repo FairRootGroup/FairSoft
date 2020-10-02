@@ -2,13 +2,14 @@
 
 The FairSoft distribution provides the software packages needed to compile and run the [FairRoot framework](https://github.com/FairRootGroup/FairRoot) and experiment packages based on FairRoot. FairSoft is a source distribution with recurring releases for macOS and Linux.
 
-## [Spack based](docs/README.md) (EXPERIMENTAL) or [Legacy](legacy/README.md) installation
+## Installation method
 
-This release features both, a classic (called "Legacy") installation method, and a new spack based one.
+Choose between the classic (called "Legacy") installation method or the new Spack-based one:
 
-* **Spack based**: This is to be considered EXPERIMENTAL. It is still being developed. There are no guarantees for stability of workflows/etc. Most things are already working, but there are a bunch of issues. Spack itself is also still in heavy development. If you're interested in this new system, please continue [here](docs/README.md), and consider getting in contact with the maintainers.
-
-* **Legacy**: This is the known, and proven shell based setup system. Please continue [here](legacy/README.md).
+|  **[Legacy](legacy/README.md)** | **[Spack](docs/README.md) (EXPERIMENTAL)** |
+| -- | -- |
+| This is the homegrown bash/cmake based setup system. | This is an ongoing standardization and modernization effort based on Spack (which itself is still under heavy development). Most things are already working. For early adopters. |
+| ► [continue](legacy/README.md) | ► [continue](docs/README.md) |
 
 ## Contributing
 
