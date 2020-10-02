@@ -1,6 +1,6 @@
 ## I. Preparation
 
-### I.1. Install the [prerequisites](docs/prerequisites.md).
+### I.1. Install the [prerequisites](prerequisites.md).
 
 ### I.2. Clone the repo
 ```

@@ -31,54 +31,55 @@ This Release was tested on following systems:
 ## Guided Installation
 
 To start the installation procedure one has to run the configure.sh script which is
-found in the main directory of FairSoft from within this directory. If the script is
+found in the current directory of FairSoft from within this directory. If the script is
 called without parameters one is guided through some menus to choose the appropriate
 setup.
 
-  FairSoft> ./configure.sh
+```
+$ ./configure.sh
+```
 
-In the first menu one has to define the compiler which should be used for the
-installation. The normal choices would be _gcc_ for Linux and _Clang_ for Mac OSX.
-The compiler must be installed on the system. If one choose a compiler which is not
-installed, the installation procedure will stop when checking for the prerequisites
-defined above.
+* In the first menu one has to define the compiler which should be used for the
+  installation. The normal choices would be _gcc_ for Linux and _Clang_ for Mac OSX.
+  The compiler must be installed on the system. If one choose a compiler which is not
+  installed, the installation procedure will stop when checking for the prerequisites
+  defined above.
 
-In the second menu one has to decide if the packages should be installed in
-debug, normal or optimization mode. If one choose the optimization mode one
-should also define the correct optimization flags in the file
-scripts/check_system.sh, even if there are some default settings.
-If unsure don't use the optimization option.
+* In the second menu one has to decide if the packages should be installed in
+  debug, normal or optimization mode. If one choose the optimization mode one
+  should also define the correct optimization flags in the file
+  scripts/check_system.sh, even if there are some default settings.
+  If unsure don't use the optimization option.
 
-In the third menu you can choose to install FairMQ only components,
-if you choose _Yes_ then you just need to specify the installation directory. This installation will skip all the simulation stuff and ROOT 6 installation.
+* In the third menu you can choose to install FairMQ only components,
+  if you choose _Yes_ then you just need to specify the installation directory. This installation will skip all the simulation stuff and ROOT 6 installation.
 
-In the fourth menu one has to define if one needs to install all packages to
-run a simulation. If unsure choose _Yes_.
+* In the fourth menu one has to define if one needs to install all packages to
+  run a simulation. If unsure choose _Yes_.
 
-If the previous choice was _Yes_ one has to define in the next menu how to handle the
-Geant4 data files. These files have after installation a size of approximately 650 MB.
-If you don't intent to use Geant4 you should choose _Don't install_, if unsure choose
-one of the other options described below.
+* If the previous choice was _Yes_ one has to define in the next menu how to handle the
+  Geant4 data files. These files have after installation a size of approximately 650 MB.
+  If you don't intent to use Geant4 you should choose _Don't install_, if unsure choose
+  one of the other options described below.
 
-If the data files should be installed it is normally save to choose the
-option Internet which will download the files and does the installation
-automatically when installing Geant4.
-Only if your system cannot download the files during installation, choose the
-Directory option.  In this case one has to put the files into the transport directory
-so that they can be installed. One can download the files from the following webpage.
+  If the data files should be installed it is normally save to choose the
+  option Internet which will download the files and does the installation
+  automatically when installing Geant4.
+  Only if your system cannot download the files during installation, choose the
+  Directory option.  In this case one has to put the files into the transport directory
+  so that they can be installed. One can download the files from the following webpage.
 
-http://geant4.cern.ch/support/download.shtml
+  http://geant4.cern.ch/support/download.shtml
 
+* In the next menu one has to decide if the python bindings for Geant4 and Root should
+  be installed. The python bindings are only needed for the Ship experiment,
+  so if unsure choose _No_.
 
-In the next menu one has to decide if the python bindings for Geant4 and Root should
-be installed. The python bindings are only needed for the Ship experiment,
-so if unsure choose _No_.
-
-In the last menu one has to define the installation directory. All the programs will be
-installed into this directory. One shouldn't use as installation directory a directory
-which is used by the system (e.g. /usr or /usr/local). Since it is possible to install
-several version of "FairSoft" in parallel it is advisable to use a name tag in the
-directory name (e.g. <install_dir>/fairsoft_mar15)
+* In the last menu one has to define the installation directory. All the programs will be
+  installed into this directory. One shouldn't use as installation directory a directory
+  which is used by the system (e.g. /usr or /usr/local). Since it is possible to install
+  several version of "FairSoft" in parallel it is advisable to use a name tag in the
+  directory name (e.g. <install_dir>/fairsoft_mar15)
 
 After passing all menus the installation process will check if all needed system
 packages are installed. If one or more packages are missing the installation process
@@ -148,10 +149,14 @@ geant4, vgm and geant4_vmc will be removed since these packages depend on root.
 
 The script is either called with one parameter which is the package name
 
-   ./make_clean.sh root
+```
+$ ./make_clean.sh root
+```
 
 to remove only the temporary files or with the second parameter _all_
 
-  ./make_clean.sh root all
+```
+$ ./make_clean.sh root all
+```
 
 which will also remove the files installed into the installation directory.
