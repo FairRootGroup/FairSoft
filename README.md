@@ -6,7 +6,7 @@ The FairSoft distribution provides the software packages needed to compile and r
 
 This release features both, a classic (called "Legacy") installation method, and a new spack based one.
 
-* **Spack based**: This is to be considered EXPERIMENTAL. It is still being developed. Most things are already working, but there are a bunch of issues. Spack itself is also still in heavy development. If you're interested in this new system, please continue [here](docs/README.md)
+* **Spack based**: This is to be considered EXPERIMENTAL. It is still being developed. There are no guarantees for stability of workflows/etc. Most things are already working, but there are a bunch of issues. Spack itself is also still in heavy development. If you're interested in this new system, please continue [here](docs/README.md), and consider getting in contact with the maintainers.
 
 * **Legacy**: This is the known, and proven shell based setup system. Please continue [here](legacy/README.md).
 
