@@ -33,6 +33,7 @@ then
         -DCMAKE_CXX_COMPILER=$CXX \
         -DCMAKE_C_COMPILER=$CC \
         -DROOT_DIR=$SIMPATH_INSTALL \
+        -DVMC_DIR=$SIMPATH_INSTALL \
         ..
 
   make install -j$number_of_processes

@@ -16,7 +16,17 @@ then
   cd $SIMPATH/tools
   # git clone --shallow-since=2017-09-25 --branch $ROOTVERSION $ROOT_LOCATION
   # older git versions dont support --shallow-since, but --depth 1000 will most probably work for the lifetime the root patch branch with almost same repo size
-  git clone --depth=10 --branch $ROOTVERSION $ROOT_LOCATION
+  # git clone --depth=10 --branch $ROOTVERSION $ROOT_LOCATION
+  if [ ! -e root_v$ROOTVERSION.source.tar.gz ]
+  then
+      echo "*** Downloading ROOT sources ***"
+      download_file $ROOT_LOCATION/root_v$ROOTVERSION.source.tar.gz
+  fi
+  untar root-$ROOTVERSION root_v$ROOTVERSION.source.tar.gz
+  if [ -d root-$ROOTVERSION ]
+  then
+      ln -s root-$ROOTVERSION root
+  fi
 fi
 
 install_prefix=$SIMPATH_INSTALL
@@ -53,7 +63,7 @@ then
   echo "Configure Root .........................................." | tee -a $logfile
 
   # patch XRootD - installation of binary files and GCC 9 support
-  mypatch ../root6_16_xrootd.patch
+  # mypatch ../root6_16_xrootd.patch
 
   cd build_for_fair/
   . rootconfig.sh
