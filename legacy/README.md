@@ -1,4 +1,17 @@
-# FairSoft
+# FairSoft (Legacy)
+
+## Preface
+
+This will be the last release featuring the bash/cmake
+based setup system. Upcoming releases are planned to use
+spack instead (for more information see
+[here](../docs/README.md)).
+
+The remainder of this README is basically the main README
+from the last releases. All file references should be read
+as relative to the `/legacy/` folder.
+
+## Introduction
 
 This repository contains the installation routines of all the external software needed
 to compile and use FairRoot.
