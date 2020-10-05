@@ -1,7 +1,14 @@
 ## Spack based FairSoft
 
+### Preface
+
 This release of FairSoft will be the last featuring the classic
-(or "Legacy") FairSoft installation method. 
+(or "Legacy") FairSoft installation method.
+It is planned to be replaced by a spack based system.
+This is currently in an EXPERIMENTAL state, and meant for
+early adopters.
+
+### Introduction
 
 The newly released FairSoft modernizes and reorganizes the framework installation.
 All needed packages, including the FairRoot package itself,
