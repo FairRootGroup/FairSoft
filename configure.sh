@@ -7,12 +7,10 @@ function init_dialog() {
   DIALOG_EXTRA=3
   DIALOG_ITEM_HELP=4
   DIALOG_ESC=255
-  W=70
-  H=30
+  export DIALOGRC="${basedir}/legacy/dialog.rc"
 }
 
 function dialog_default_handlers() {
-  echo $1
   case $1 in
     $DIALOG_OK)
       echo "OK pressed. Not implemented."
@@ -40,7 +38,7 @@ function check_cmd() {
   local cmd=$1
   local src=$2
 
-  which $cmd > /dev/null
+  command -v $cmd &> /dev/null
 
   if [ $? -ne 0 ]
   then
@@ -54,40 +52,64 @@ function check_cmd() {
     echo "  CentOS/OpenSuse: yum install $cmd"
     echo "           Source: $src"
     echo ""
+    echo "Exiting now."
+    exit 1
   fi
 }
 
 function show_dialog() {
   exec 3>&1
   result=$(dialog --backtitle "FairSoft Configurator" "$@" 2>&1 1>&3)
+  ret=$?
   exec 3>&-
   clear
+  return $ret
 }
 
 ### sanity checks
+check_cmd "curl" "https://curl.haxx.se/download.html"
 check_cmd "dialog" "https://invisible-island.net/dialog/dialog.html"
-check_cmd "cmake" "https://cmake.org/download/"
 check_cmd "git" "https://git-scm.com/downloads"
 
 ### init
 basedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ncpus="$(command -v nproc &> /dev/null && nproc --all || echo 4)"
 init_dialog
 
-### compiler
-compiler="gcc"
+### packages
+packages=full
 
-show_dialog --title "Compiler" \
-  --radiolist "Choose the compiler to compile the external packages:" 13 60 5 \
-    gcc "GCC (Linux, and older versions of Mac OSX)" on \
-    Clang "Clang (Mac OSX)" off \
-    intel "Intel Compiler (Linux)" off \
-    CC "CC (Solaris)" off \
-    PGI "Portland Compiler" off
+show_dialog --title "Packages" \
+  --radiolist "Which set of external packages do you want to install?" 12 90 4 \
+    full "All dependencies" on \
+    lightweight "All except simulation engines and event generators" off \
+    fairmq "FairMQ and dependencies only" off \
+    fairmqdev "FairMQ development dependencies only" off
 
 case $? in
-  $DIALOG_OK) compiler=$result ;;
+  $DIALOG_OK) packages=$result ;;
   *) dialog_default_handlers $? ;;
 esac
+
+### package options
+geant4mt=no
+python=no
+
+if [ $packages == "full" ]
+then
+  show_dialog --title "Package options" \
+    --checklist "" 8 72 2 \
+    geant4mt "Enable multi-threading in Geant4" off \
+    python "Install Python binding for ROOT and Geant4" off
+
+  case $? in
+    $DIALOG_OK)
+      res=($result)
+      for k in "${res[@]}"; do declare "${k}=yes"; done
+      ;;
+    *) dialog_default_handlers $? ;;
+  esac
+fi
 
 ### compile options
 debug=yes
@@ -109,38 +131,6 @@ case $? in
   *) dialog_default_handlers $? ;;
 esac
 
-### packages
-packages=full
-
-show_dialog --title "Packages" \
-  --radiolist "Which set of external packages do you want to install?" 12 90 4 \
-    full "All dependencies" on \
-    lightweight "All except simulation engines and event generators" off \
-    fairmq "FairMQ and dependencies only" off \
-    fairmqdev "FairMQ development dependencies only" off
-
-case $? in
-  $DIALOG_OK) packages=$result ;;
-  *) dialog_default_handlers $? ;;
-esac
-
-### package options
-geant4mt=no
-python=no
-
-show_dialog --title "Package options" \
-  --checklist "" 8 72 2 \
-  geant4mt "Enable multi-threading in Geant4" off \
-  python "Install Python binding for ROOT and Geant4" off
-
-case $? in
-  $DIALOG_OK)
-    res=($result)
-    for k in "${res[@]}"; do declare "${k}=yes"; done
-    ;;
-  *) dialog_default_handlers $? ;;
-esac
-
 ### directories
 version=$(git -C $basedir describe)
 if [ -n "$HOME" ]
@@ -152,41 +142,106 @@ else
   installdir="${basedir}/install"
 fi
 
-show_dialog --title "Directories" \
-  --form "Choose the following directories" 9 85 0 \
+show_dialog --title "Build options" \
+  --form "Choose the following directories and amount of CPUs to use for parallel building:" 11 85 0 \
     "FairSoft version"      1 2 "$version"    1 24 0  0 \
     "Build dir"             2 2 "$builddir"   2 24 80 300 \
-    "Install dir (SIMPATH)" 3 2 "$installdir" 3 24 80 300
+    "Install dir (SIMPATH)" 3 2 "$installdir" 3 24 80 300 \
+    "#CPUs"                 4 2 "$ncpus"      4 24 3 3
 
 case $? in
   $DIALOG_OK)
     res=($result)
     builddir=${res[0]}
     installdir=${res[1]}
+    ncpus=${res[2]}
     ;;
   *) dialog_default_handlers $? ;;
 esac
 
 ### summary
-show_dialog --title "Summary" --ok-label "Install" \
+show_dialog --title "Summary" --ok-label "Configure" \
   --form "" 15 100 0 \
     "FairSoft version"      1 2 "$version"    1 24 0 0 \
-    "Compiler"              2 2 "$compiler"   2 24 0 0 \
-    "Debug info"            3 2 "$debug"      3 24 0 0 \
-    "Optimize"              4 2 "$optimize"   4 24 0 0 \
-    "Package set"           5 2 "$packages"   5 24 0 0 \
-    "Multi-threaded Geant4" 6 2 "$geant4mt"   6 24 0 0 \
-    "Python bindings"       7 2 "$python"     7 24 0 0 \
-    "Build dir"             8 2 "$builddir"   8 24 0 0 \
-    "Install dir (SIMPATH)" 9 2 "$installdir" 9 24 0 0
+    "Debug info"            2 2 "$debug"      2 24 0 0 \
+    "Optimize"              3 2 "$optimize"   3 24 0 0 \
+    "Package set"           4 2 "$packages"   4 24 0 0 \
+    "Multi-threaded Geant4" 5 2 "$geant4mt"   5 24 0 0 \
+    "Python bindings"       6 2 "$python"     6 24 0 0 \
+    "Build dir"             7 2 "$builddir"   7 24 0 0 \
+    "Install dir (SIMPATH)" 8 2 "$installdir" 8 24 0 0 \
+    "#CPUs"                 9 2 "$ncpus"      9 24 0 0
 
 case $? in
   $DIALOG_OK) ;;
   *) dialog_default_handlers $? ;;
 esac
 
-### install
 mkdir -p "$builddir"
-pushd "$builddir"
-cmake -D METHOD=LEGACY -D CMAKE_INSTALL_PREFIX="$(realpath $installdir)" "$(realpath $basedir)"
-cmake --build .
+mkdir -p "$installdir"
+
+### bootstrap cmake if needed
+too_old=1
+required=3.16
+if command -v cmake > /dev/null
+then
+  current=$(cmake --version | head -1 | cut -d' ' -f3)
+  check="${required}\n${current}\n"
+  printf $check | sort -V -C
+  too_old=$?
+fi
+
+if [ $too_old -eq 1 ]
+then
+  cmakebaseurl="https://github.com/Kitware/CMake/releases/download/v"
+  cmakeversion="3.18.3"
+
+  show_dialog --title "Bootstrap CMake" \
+    --yes-label "Yes, bootstrap !" \
+    --no-label "Cancel, I will install myself" \
+    --yesno "Did not find required CMake ${required}. Do you want to continue to \
+bootstrap CMake ${cmakeversion} to ${installdir}?" 8 80
+
+  case $? in
+    $DIALOG_OK) ;;
+    *) dialog_default_handlers $? ;;
+  esac
+
+  set -e
+  pushd "$builddir"
+  cmaketargz="cmake-${cmakeversion}-$(uname -s)-$(uname -m).tar.gz"
+  curl -L -O "${cmakebaseurl}${cmakeversion}/$cmaketargz"
+  cmakechecksums="cmake-${cmakeversion}-SHA-256.txt"
+  curl -L -O "${cmakebaseurl}${cmakeversion}/$cmakechecksums"
+  grep "$(uname -s).*$(uname -m).*\.tar\.gz" $cmakechecksums > checksum.txt
+  sha256sum -c checksum.txt
+  tar xf "$cmaketargz" -C "$installdir" --strip-components=1
+  popd
+  set +e
+  cmake="${installdir}/bin/cmake"
+else
+  cmake=cmake
+fi
+
+### configure
+(
+set -x
+$cmake -S "$basedir" -B "$builddir" \
+  -DBUILD_METHOD=legacy \
+  -DCMAKE_INSTALL_PREFIX="$installdir" \
+  -DPACKAGES=$packages \
+  -DNCPUS=$ncpus
+)
+
+echo ""
+echo ""
+echo ">>> Continue installing external packages by running"
+echo ""
+buildcmd="$cmake --build \"$builddir\" -j$ncpus"
+echo $buildcmd
+echo ""
+echo "  or"
+echo ""
+echo "cd \"$builddir\""
+echo "make -j$ncpus"
+echo ""
