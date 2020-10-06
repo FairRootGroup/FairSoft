@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Use:
+#   vagrant up debian10
+#   vagrant ssh debian10
+#     cd /opt/FairSoft
+#     ./configure
+
+
+Vagrant.configure("2") do |config|
+
+  config.vm.provision "shell", inline: <<-SHELL
+    mkdir -p /opt/FairSoft
+    chown vagrant /opt/FairSoft
+  SHELL
+  # Disable normal synced folder (NFS based)
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.synced_folder "..", "/opt/FairSoft", type: "rsync",
+    rsync__exclude: [".git/", "spack", "repos", "env", "test"]
+
+  config.vm.define "debian10" do |host|
+    # config.vm.box = "debian/buster64"
+    host.vm.box = "generic/debian10"
+    host.vm.provision "shell",
+      inline: "apt-get update && apt-get dist-upgrade -y"
+    host.vm.provision "shell", path: "setup-debian.sh"
+  end
+end
