@@ -7,6 +7,18 @@ if (env.CHANGE_ID != null) {
     our_quiet_period = 60;
 }
 
+def isLegacyChange() {
+  def changes = sh(label: 'Retrieve list of changed files', returnStdout: true,
+    script: "git diff --name-only refs/remotes/origin/${env.CHANGE_TARGET} HEAD").trim().split("\n")
+  print changes.join('\n')
+
+  for (change in changes) {
+    if (change.contains('legacy') || change.startsWith('configure.sh')) {
+      return true
+    }
+  }
+  return false
+}
 
 def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
   def nodes = [:]
@@ -24,8 +36,14 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
     nodes[title] = {
       node(node_alloc_label) {
         githubNotify(context: title, description: 'Building ...', status: 'PENDING')
+        def legacy = false
         try {
           checkout scm
+
+          legacy = isLegacyChange() // needs to run after scm checkout in node context
+          if (legacy) {
+            ctestcmd = ctestcmd + ' -DBUILD_METHOD=legacy'
+          }
 
           if (node_type == 'slurm') {
             sh(label: "Create Slurm Job Script", script: """
@@ -33,12 +51,16 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
             """)
           }
 
-          callback.call(spec, label, jobsh)
+          callback.call(spec, label, jobsh, ctestcmd)
 
           githubNotify(context: title, description: 'Success', status: 'SUCCESS')
         } catch (e) {
           githubNotify(context: title, description: 'Error', status: 'ERROR')
           throw e
+        } finally {
+          if (legacy) {
+            archiveArtifacts(artifacts: 'logs/*.log', fingerprint: true)
+          }
         }
       }
     }
@@ -57,6 +79,7 @@ pipeline {
         echo "BRANCH_NAME: ${BRANCH_NAME}"
         echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
         echo "env.CHANGE_ID: ${env.CHANGE_ID}"
+        echo "env.CHANGE_TARGET: ${env.CHANGE_TARGET}"
         echo "getBuildCauses: ${currentBuild.getBuildCauses()}"
         echo "our_quiet_period: ${our_quiet_period}"
       }
@@ -84,7 +107,7 @@ pipeline {
 
           def linux_jobs = jobMatrix('slurm',
             ctestcmd + " -DUSE_TEMPDIR:BOOL=ON", specs_list
-          ) { spec, label, jobsh ->
+          ) { spec, label, jobsh, ctest ->
             sh(label: "Submit Slurm Job", script: """
               exec test/slurm-submit.sh "${label}" "${jobsh}"
             """)
@@ -102,11 +125,11 @@ pipeline {
           }
 
           def macos_jobs = jobMatrix('macos', ctestcmd, specs_list)
-          { spec, label, jobsh ->
+          { spec, label, jobsh, ctest ->
             sh """
               hostname -f
               export LABEL=${label}
-              ${ctestcmd}
+              ${ctest}
             """
           }
           throttle(['long']) {

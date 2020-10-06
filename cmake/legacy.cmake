@@ -37,6 +37,18 @@ set(CMAKE_DEFAULT_ARGS CMAKE_CACHE_DEFAULT_ARGS
   "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
   "-DCMAKE_INSTALL_LIBDIR:PATH=lib"
 )
+set(LOG_TO_FILE
+  LOG_DIR "${CMAKE_BINARY_DIR}/Log"
+  LOG_DOWNLOAD ON
+  LOG_UPDATE ON
+  LOG_PATCH ON
+  LOG_CONFIGURE ON
+  LOG_BUILD ON
+  LOG_INSTALL ON
+  LOG_TEST ON
+  LOG_MERGED_STDOUTERR ON
+  LOG_OUTPUT_ON_FAILURE ON
+)
 
 set(boost_version 72)
 ExternalProject_Add(boost
@@ -45,14 +57,16 @@ ExternalProject_Add(boost
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
-  PATCH_COMMAND $<TARGET_FILE:Patch::patch> -N -p2 < "${CMAKE_SOURCE_DIR}/legacy/boost/1.72_boost_process.patch"
+    "--without-libraries=python"
+  PATCH_COMMAND ${patch} -p2 -i "${CMAKE_SOURCE_DIR}/legacy/boost/1.72_boost_process.patch"
   BUILD_COMMAND "./b2" "--layout=system"
-    "cxxflags=\"-std=c++${CMAKE_CXX_STANDARD}\""
+    "cxxstd=${CMAKE_CXX_STANDARD}"
     "link=shared"
     "threading=multi"
     "variant=release"
     "visibility=hidden"
-    INSTALL_COMMAND "./b2" "install" "-j" ${NCPUS}
+  INSTALL_COMMAND "./b2" "install" "-j" ${NCPUS}
+  ${LOG_TO_FILE}
 )
 
 set(fmt_version "6.1.2")
@@ -61,16 +75,18 @@ ExternalProject_Add(fmt
   URL_HASH SHA256=63650f3c39a96371f5810c4e41d6f9b0bb10305064e6faf201cbafe297ea30e8
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFMT_DOC=OFF"
+  ${LOG_TO_FILE}
 )
 
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG 3.5.2
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DBoost_NO_BOOST_CMAKE=ON"
-  PATCH_COMMAND ${patch} -p1 < "${CMAKE_SOURCE_DIR}/legacy/dds/fix_boost_lookup.patch"
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_boost_lookup.patch"
   BUILD_COMMAND ${CMAKE_COMMAND} --build . -j ${NCPUS}
         COMMAND ${CMAKE_COMMAND} --build . --target wn_bin -j ${NCPUS}
   DEPENDS boost
+  ${LOG_TO_FILE}
 )
 
 ExternalProject_Add(fairlogger
@@ -78,6 +94,7 @@ ExternalProject_Add(fairlogger
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DUSE_EXTERNAL_FMT=ON"
   DEPENDS boost fmt
+  ${LOG_TO_FILE}
 )
 
 ExternalProject_Add(zeromq
@@ -86,6 +103,7 @@ ExternalProject_Add(zeromq
     "-DWITH_PERF_TOOL=ON"
     "-DZMQ_BUILD_TESTS=ON"
     "-DENABLE_CPACK=OFF"
+  ${LOG_TO_FILE}
 )
 
 ExternalProject_Add(flatbuffers
@@ -93,17 +111,24 @@ ExternalProject_Add(flatbuffers
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFLATBUFFERS_BUILD_SHAREDLIB=ON"
     "-DFLATBUFFERS_BUILD_FLATLIB=OFF"
-  PATCH_COMMAND ${patch} -p1 < "${CMAKE_SOURCE_DIR}/legacy/flatbuffers/remove_werror.patch"
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/flatbuffers/remove_werror.patch"
+  ${LOG_TO_FILE}
 )
 
 if (NOT PACKAGES STREQUAL fairmqdev)
   ExternalProject_Add(fairmq
     GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v1.4.25
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DCMAKE_UNITY_BUILD=ON"
       "-DBUILD_DDS_PLUGIN=ON"
       "-DBUILD_SDK_COMMANDS=ON"
       "-DBUILD_SDK=ON"
     DEPENDS boost dds fairlogger flatbuffers zeromq
+  ${LOG_TO_FILE}
   )
 endif()
+
+include(CTest)
+
+add_test(NAME test1
+         COMMAND du -hs .
+         WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
