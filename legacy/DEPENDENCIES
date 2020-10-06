@@ -22,27 +22,9 @@ for the different package managers. In the following we will list the
 command lines which are needed to install all packages for the differnt
 Linux flavors
 
-Debian, Ubuntu and other Debian based systems (64bit).
+* Debian, Ubuntu and other Debian based systems (64bit):
+  see: [setup-debian.sh](setup-debian.sh)
 
-apt-get install  cmake cmake-data g++ gcc gfortran \
-  debianutils build-essential make patch sed \
-  libx11-dev libxft-dev libxext-dev libxpm-dev libxmu-dev \
-  libglu1-mesa-dev libgl1-mesa-dev \
-  libncurses5-dev curl libcurl4-openssl-dev bzip2 libbz2-dev gzip unzip tar \
-  subversion git xutils-dev flex bison lsb-release python-dev \
-  libc6-dev-i386 libxml2-dev wget libssl-dev libkrb5-dev \
-  automake autoconf libtool
-
-Debian, Ubuntu and other Debian based systems (32bit).
-
-apt-get install  cmake cmake-data g++ gcc gfortran \
-  debianutils build-essential make patch sed \
-  libx11-dev libxft-dev libxext-dev libxpm-dev libxmu-dev \
-  libglu1-mesa-dev libgl1-mesa-dev \
-  libncurses5-dev curl libcurl4-openssl-dev bzip2 libbz2-dev gzip unzip tar \
-  subversion git xutils-dev flex bison lsb-release python-dev \
-  libxml2-dev wget libssl-dev libkrb5-dev \
-  automake autoconf libtool
 
 Suse, OpenSuse and other Suse based systems
 
