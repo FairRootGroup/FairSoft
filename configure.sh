@@ -230,7 +230,8 @@ $cmake -S "$basedir" -B "$builddir" \
   -DBUILD_METHOD=legacy \
   -DCMAKE_INSTALL_PREFIX="$installdir" \
   -DPACKAGES=$packages \
-  -DNCPUS=$ncpus
+  -DNCPUS=$ncpus \
+  $@
 )
 
 echo ""
