@@ -41,7 +41,7 @@ export ROOT_LOCATION="https://root.cern/download"
 export ROOTVERSION=6.20.08
 
 export VMC_LOCATION="https://github.com/vmc-project/vmc/archive"
-export VMC_VERSION=1-0-p1
+export VMCVERSION=1-0-p1
 
 export GEANT3_LOCATION="https://github.com/FairRootGroup/geant3.git"
 export GEANT3BRANCH=v3-7_fairsoft
