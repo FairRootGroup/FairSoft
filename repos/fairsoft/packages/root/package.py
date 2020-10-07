@@ -330,7 +330,7 @@ class Root(CMakePackage):
                 ['builtin_fftw3', False],
                 ['builtin_freetype', False],
                 ['builtin_ftgl', False],
-                ['builtin_gl2ps:BOOL', True],
+                ['builtin_gl2ps', True],
                 ['builtin_glew', False],
                 ['builtin_gsl', False],
                 ['builtin_lzma', False],
