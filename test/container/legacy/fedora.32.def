@@ -1,0 +1,13 @@
+# Rebuild:
+#   singularity build -f -F fedora.32.legacy.sif legacy/fedora.32.def
+
+Bootstrap: docker
+From: fedora:32
+
+%files
+    ../../legacy/setup-fedora.sh /setup-fedora.sh
+
+%post
+    dnf -y update
+    bash /setup-fedora.sh
+    dnf -y clean all

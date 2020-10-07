@@ -15,7 +15,7 @@ endif()
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
-if(NOT NCPUS)
+if(NOT DEFINED NCPUS)
   include(ProcessorCount)
   ProcessorCount(NCPUS)
   if(NCPUS EQUAL 0)
@@ -65,7 +65,7 @@ ExternalProject_Add(boost
     "threading=multi"
     "variant=release"
     "visibility=hidden"
-  INSTALL_COMMAND "./b2" "install" "-j" ${NCPUS}
+  INSTALL_COMMAND "./b2" "install" "-j" "${NCPUS}"
   ${LOG_TO_FILE}
 )
 
@@ -83,8 +83,8 @@ ExternalProject_Add(dds
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DBoost_NO_BOOST_CMAKE=ON"
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_boost_lookup.patch"
-  BUILD_COMMAND ${CMAKE_COMMAND} --build . -j ${NCPUS}
-        COMMAND ${CMAKE_COMMAND} --build . --target wn_bin -j ${NCPUS}
+  BUILD_COMMAND ${CMAKE_COMMAND} --build . -j "${NCPUS}"
+        COMMAND ${CMAKE_COMMAND} --build . --target wn_bin -j "${NCPUS}"
   DEPENDS boost
   ${LOG_TO_FILE}
 )
