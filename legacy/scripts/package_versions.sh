@@ -1,11 +1,11 @@
 #!/bin/bash
 
 export CMAKE_LOCATION="http://www.cmake.org/files/v3.13/"
-export CMAKEVERSION_REQUIRED=cmake-3.12.4
-export CMAKEVERSION=cmake-3.13.4
+export CMAKEVERSION_REQUIRED=cmake-3.16.0
+export CMAKEVERSION=cmake-3.17.3
 
 export GTEST_LOCATION="https://github.com/google/googletest/archive"
-export GTESTVERSION=release-1.8.1
+export GTESTVERSION=release-1.10.0
 
 export GSL_LOCATION="http://ftpmirror.gnu.org/gsl/"
 export GSLVERSION=gsl-2.5
@@ -16,8 +16,8 @@ export VC_TAG=1.4.1
 export ICU_LOCATION="http://download.icu-project.org/files/icu4c/63.1/"
 export ICUVERSION=icu4c-63_1
 
-export BOOST_LOCATION="http://sourceforge.net/projects/boost/files/boost/1.68.0/"
-export BOOSTVERSION=boost_1_68_0
+export BOOST_LOCATION="http://downloads.sourceforge.net/project/boost/boost/1.72.0/"
+export BOOSTVERSION=boost_1_72_0
 
 export PYTHIA6_LOCATION="https://github.com/alisw/pythia6/archive"
 export PYTHIA6VERSION=428-alice1
@@ -29,7 +29,7 @@ export PYTHIA8_LOCATION="http://home.thep.lu.se/~torbjorn/pythia8/"
 export PYTHIA8VERSION=pythia8303
 
 export XERCESC_LOCATION="https://archive.apache.org/dist/xerces/c/3/sources/"
-export XERCESCVERSION=3.1.2
+export XERCESCVERSION=3.2.2
 
 export MESA_LOCATION="ftp://ftp.freedesktop.org/pub/mesa/older-versions/7.x/7.10.3/"
 export MESAVERSION=MesaLib-7.10.3
@@ -61,11 +61,11 @@ export SODIUMBRANCH=1.0.17
 
 # export ZEROMQ_LOCATION="https://github.com/zeromq/libzmq"
 # If we bump higher than v4.2.5, we can use the upstream source again
-export ZEROMQ_LOCATION="https://github.com/FairRootGroup/libzmq"
-export ZEROMQ_VERSION=v4.3.1
+export ZEROMQ_LOCATION="https://github.com/zeromq/libzmq/releases/download"
+export ZEROMQ_VERSION=4.3.2
 
-export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v3.6.1"
-export PROTOBUF_VERSION=3.6.1
+export PROTOBUF_LOCATION="https://github.com/google/protobuf/releases/download/v3.11.2"
+export PROTOBUF_VERSION=3.11.2
 
 export FLATBUFFERS_LOCATION="https://github.com/google/flatbuffers.git"
 export FLATBUFFERS_BRANCH=v1.11.0
@@ -77,7 +77,7 @@ export NANOMSG_LOCATION="https://github.com/nanomsg/nanomsg"
 export NANOMSG_VERSION=1.1.5
 
 export YAMLCPP_LOCATION="https://github.com/jbeder/yaml-cpp"
-export YAMLCPP_VERSION=0.6.2
+export YAMLCPP_VERSION=0.6.3
 
 ############## Gent4 Data files
 
@@ -124,16 +124,16 @@ export FAIRROOT_LOCATION="https://github.com/FairRootGroup/FairRoot.git"
 export FAIRROOTVERSION=dev
 
 export DDS_LOCATION="https://github.com/FairRootGroup/DDS.git"
-export DDSVERSION=2.4
+export DDSVERSION=3.4
 
 export ALIROOT_LOCATION="http://git.cern.ch/pub/AliRoot"
 export ALIROOTVERSION=master
 
 export FAIRLOGGER_LOCATION="https://github.com/FairRootGroup/FairLogger"
-export FAIRLOGGER_VERSION=v1.4.0
+export FAIRLOGGER_VERSION=v1.8.0
 
 export FAIRMQ_LOCATION="https://github.com/FairRootGroup/FairMQ"
-export FAIRMQ_VERSION=v1.4.8
+export FAIRMQ_VERSION=v1.4.24
 
 export OFI_LOCATION="https://github.com/ofiwg/libfabric"
 export OFI_TESTS_LOCATION="https://github.com/ofiwg/fabtests"

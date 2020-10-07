@@ -14,7 +14,7 @@ then
   cd FairMQ
   git checkout $FAIRMQ_VERSION
 
-  mypatch ../fairmq_fix_cpp17moveinsertable_assertion_xcode12.patch
+#  mypatch ../fairmq_fix_cpp17moveinsertable_assertion_xcode12.patch
 
   if [ ! -d  build ];
   then
@@ -25,7 +25,8 @@ then
         -DCMAKE_PREFIX_PATH=$SIMPATH_INSTALL \
         -DBUILD_TESTING=OFF \
         -DBUILD_NANOMSG_TRANSPORT=ON \
-        -DBUILD_DDS_PLUGIN=ON\
+        -DBUILD_DDS_PLUGIN=ON \
+        -DBUILD_SDK_COMMANDS=ON \
         ..
   $MAKE_command -j$number_of_processes install
 fi

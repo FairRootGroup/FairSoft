@@ -13,12 +13,18 @@ if (not_there DDS $checkfile);
 then
   cd DDS
   git checkout $DDSVERSION
+
+  mypatch ../fix_wn_bin_3.2_3.4.patch
+
   if [ ! -d  build ];
   then
     mkdir build
   fi
   cd build
-  BOOST_ROOT=$SIMPATH_INSTALL cmake -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL -C ../BuildSetup.cmake ../
+  cmake -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
+      -DCMAKE_CXX_STANDARD=11 \
+      -DBoost_NO_BOOST_CMAKE=ON \
+      ../
   $MAKE_command -j$number_of_processes
   $MAKE_command -j$number_of_processes wn_bin
   $MAKE_command -j$number_of_processes install
