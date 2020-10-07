@@ -1,0 +1,15 @@
+# Rebuild:
+#   singularity build -f -F ubuntu.20.04.legacy.sif legacy/ubuntu.20.04.def
+
+Bootstrap: docker
+From: ubuntu:20.04
+
+%files
+    ../../legacy/setup-ubuntu.sh /setup-ubuntu.sh
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update
+    apt-get -y upgrade
+    bash /setup-ubuntu.sh
+    apt-get -y clean

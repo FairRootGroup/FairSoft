@@ -43,9 +43,13 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
           legacy = isLegacyChange() // needs to run after scm checkout in node context
           if (legacy) {
             ctestcmd = ctestcmd + ' -DBUILD_METHOD=legacy'
+            container = container.replace('sif', 'legacy.sif')
           }
 
           if (node_type == 'slurm') {
+            if (legacy) {
+              ctestcmd = ctestcmd + ' -DNCPUS=\\\$SLURM_CPUS_PER_TASK'
+            }
             sh(label: "Create Slurm Job Script", script: """
               exec test/slurm-create-jobscript.sh "${label}" "${container}" "${ctestcmd}" "${jobsh}"
             """)
