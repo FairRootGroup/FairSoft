@@ -59,7 +59,7 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
           throw e
         } finally {
           if (legacy) {
-            archiveArtifacts(artifacts: 'logs/*.log', fingerprint: true)
+            archiveArtifacts(artifacts: 'logs/**/*.log', allowEmptyArchive: true, fingerprint: true)
           }
         }
       }
