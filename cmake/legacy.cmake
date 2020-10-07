@@ -22,6 +22,9 @@ if(NOT DEFINED NCPUS)
     set(NCPUS 1)
   endif()
 endif()
+if(NOT PACKAGES)
+  set(PACKAGES full)
+endif()
 
 include(ExternalProject)
 
@@ -37,6 +40,11 @@ set(CMAKE_DEFAULT_ARGS CMAKE_CACHE_DEFAULT_ARGS
   "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
   "-DCMAKE_INSTALL_LIBDIR:PATH=lib"
 )
+if(APPLE)
+  set(CMAKE_DEFAULT_ARGS ${CMAKE_DEFAULT_ARGS}
+    "-DCMAKE_MACOSX_RPATH:BOOL=ON"
+  )
+endif()
 set(LOG_TO_FILE
   LOG_DIR "${CMAKE_BINARY_DIR}/Log"
   LOG_DOWNLOAD ON
@@ -124,6 +132,33 @@ if (NOT PACKAGES STREQUAL fairmqdev)
       "-DBUILD_SDK=ON"
     DEPENDS boost dds fairlogger flatbuffers zeromq
   ${LOG_TO_FILE}
+  )
+endif()
+
+if(PACKAGES STREQUAL full)
+  set(pythia6_version "428-alice1")
+  ExternalProject_Add(pythia6
+    URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
+    URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
+    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
+    ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+  )
+
+  set(hepmc_version 2.06.09)
+  ExternalProject_Add(hepmc
+    URL http://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
+    URL_HASH SHA256=e0f8fddd38472c5615210894444686ac5d72df3be682f7d151b562b236d9b422
+    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+      "-Dlength:STRING=CM"
+      "-Dmomentum:STRING=GEV"
+    ${LOG_TO_FILE}
+  )
+
+  set(vc_version 1.4.1)
+  ExternalProject_Add(vc
+    URL https://github.com/VcDevel/Vc/archive/${vc_version}.tar.gz
+    URL_HASH SHA256=7e8b57ed5ff9eb0835636203898c21302733973ff8eaede5134dd7cb87f915f6
+    ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   )
 endif()
 
