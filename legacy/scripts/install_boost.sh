@@ -86,6 +86,9 @@ then
 
     number_of_processes=$tmp_nop
 
+    cd $install_prefix
+    mypatch $SIMPATH/basics/1.72_boost_process.patch
+
   fi
 fi
 

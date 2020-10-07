@@ -2,9 +2,17 @@
 
 cd $SIMPATH/basics
 
-if [ ! -d  $SIMPATH/basics/zeromq ];
+if [ ! -d $SIMPATH/basics/zeromq ];
 then
-  git clone $ZEROMQ_LOCATION zeromq
+    echo "*** Downloading ZeroMQ sources ***"
+    download_file $ZEROMQ_LOCATION/v$ZEROMQ_VERSION/zeromq-$ZEROMQ_VERSION.tar.gz
+
+    untar zeromq-$ZEROMQ_VERSION zeromq-$ZEROMQ_VERSION.tar.gz
+
+    if [ -d zeromq-$ZEROMQ_VERSION ];
+    then
+        ln -s zeromq-$ZEROMQ_VERSION zeromq
+    fi
 fi
 
 install_prefix=$SIMPATH_INSTALL
@@ -13,7 +21,6 @@ checkfile=$install_prefix/lib/libzmq.a
 if (not_there zeromq $checkfile);
 then
   cd zeromq
-  git checkout $ZEROMQ_VERSION
   if [ ! -d  build ];
   then
     mkdir build
