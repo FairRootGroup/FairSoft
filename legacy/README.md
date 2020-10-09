@@ -103,36 +103,37 @@ directory of FairSoft.
 
 |Package|Version|
 |---|---|
-| cmake  |3.13.4 |
-| gtest  |1.8.1|
-| gsl    |1.16|
+| cmake  |3.17.3|
+| gtest  |1.10.0|
+| gsl    |2.5|
 | icu4c  |63.1|
-| boost  |1.68.0|
-| Pythia6 |416|
+| boost  |1.72.0|
+| Pythia6 |428|
 | HepMC  |2.06.09|
-| Pythia8| 240|
+| Pythia8| 303|
 | Mesa | 7.10.3|
-| Geant4 |10.5.1|
-| ROOT | 6.16.00|
-| Geant321+_vmc| v2-7|
-| VGM| v4-5|
-| G4VMC| v4-0|
+| Geant4 |10.6.2|
+| ROOT | 6.20.08|
+| VMC | 1.0.p1|
+| Geant321+_vmc| v3-7|
+| VGM| v4-7|
+| G4VMC| v5-2|
 | MillePede |V04-03-10|
-| ZeroMQ |4.3.1|
-| Protocoll Buffers| 3.6.1|
+| ZeroMQ |4.3.2|
+| Protocoll Buffers| 3.11.2|
 | nanomsg |1.1.5|
 | FlatBuffers |1.11.0|
 | MessagePack |3.1.1|
-| DDS |2.4|
-| FairMQ |1.4.3|
-| FairLogger |1.4.0|
+| DDS |3.4|
+| FairMQ |1.4.24|
+| FairLogger |1.8.0|
 | Libfabric |1.6.2|
 | Asiofi |0.4.1|
-| Yaml |0.6.2|
+| Yaml |0.6.3|
 
 
 In case the python bindings are build the following additional packages will be installed
-* XercesC 3.1.2
+* XercesC 3.2.2
 * G4Py Version which comes with Geant4
 
 
