@@ -43,12 +43,12 @@ This Release was tested on following systems:
 ## Guided Installation
 
 To start the installation procedure one has to run the configure.sh script which is
-found in the current directory of FairSoft from within this directory. If the script is
+found in the `legacy/` directory of FairSoft. If the script is
 called without parameters one is guided through some menus to choose the appropriate
 setup.
 
 ```
-$ ./configure.sh
+FairSoft/legacy$ ./configure.sh
 ```
 
 * In the first menu one has to define the compiler which should be used for the
@@ -109,7 +109,7 @@ As an alternative for experienced users it is also possible to pass an input fil
 the script which defines all the needed information. The configure.sh script will
 check if all variables are defined in the input file and if the values are allowed.
 In case an error is found the script will stop with an error message. Three example
-files (automatic.conf, grid.conf, and recoonly.conf) can be found in the main
+files (automatic.conf, grid.conf, and recoonly.conf) can be found in the `legacy/`
 directory of FairSoft.
 
 ## Included Packages
@@ -162,13 +162,13 @@ geant4, vgm and geant4_vmc will be removed since these packages depend on root.
 The script is either called with one parameter which is the package name
 
 ```
-$ ./make_clean.sh root
+FairSoft/legacy$ ./make_clean.sh root
 ```
 
 to remove only the temporary files or with the second parameter _all_
 
 ```
-$ ./make_clean.sh root all
+FairSoft/legacy$ ./make_clean.sh root all
 ```
 
 which will also remove the files installed into the installation directory.
