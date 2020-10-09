@@ -2,14 +2,13 @@
 
 ## Preface
 
-This will be the last release featuring the bash/cmake
-based setup system. Upcoming releases are planned to use
-spack instead (for more information see
-[here](../docs/README.md)).
-
-The remainder of this README is basically the main README
-from the last releases. All file references should be read
-as relative to the `/legacy/` folder.
+Our classic bash/cmake based setup system
+has been named "Legacy". It has been moved to the
+sub-directory `legacy/` to distinguish it clearly
+from the future Spack-based setup system
+(for more information see [here](../docs/README.md)).
+The latter will eventually replace the "Legacy" setup system
+in a future release.
 
 ## Introduction
 

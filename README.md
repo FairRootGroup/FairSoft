@@ -8,7 +8,7 @@ Choose between the classic (called "Legacy") installation method or the new Spac
 
 |  **[Legacy](legacy/README.md)** | **[Spack](docs/README.md) (EXPERIMENTAL)** |
 | -- | -- |
-| This is the homegrown bash/cmake based setup system. | This is an ongoing standardization and modernization effort based on Spack (which itself is still under heavy development). Most things are already working. For early adopters. |
+| This is the classic bash/cmake based setup system. | This is an ongoing standardization and modernization effort based on Spack (which itself is still under heavy development). Most things are already working. For early adopters. |
 | ► [continue](legacy/README.md) | ► [continue](docs/README.md) |
 
 ## Contributing
