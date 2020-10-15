@@ -40,8 +40,9 @@ class Pythia8(AutotoolsPackage):
         cfl = ' '.join(spec.compiler_flags['cxxflags'])
 
         args = ['--with-hepmc2=%s' % spec['hepmc'].prefix,
-                '--cxx-common=%s' % cfl,
-                '--enable-shared']
+                '--cxx-common=%s' % cfl]
+        if self.spec.satisfies('@:8299'):
+            args.append('--enable-shared')
         return args
 
     def setup_environment(self, spack_env, run_env):
