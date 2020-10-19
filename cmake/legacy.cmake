@@ -160,6 +160,135 @@ if(PACKAGES STREQUAL full)
     URL_HASH SHA256=7e8b57ed5ff9eb0835636203898c21302733973ff8eaede5134dd7cb87f915f6
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   )
+
+  set(clhep_version 2.4.1.3)
+  ExternalProject_Add(clhep
+    URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
+    URL_HASH SHA256=27c257934929f4cb1643aa60aeaad6519025d8f0a1c199bc3137ad7368245913
+    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+      "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
+    ${LOG_TO_FILE}
+  )
+  set(clhep_source ${CMAKE_BINARY_DIR}/Source/clhep)
+  ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${clhep_source}/CLHEP" "${clhep_source}"
+    BYPRODUCTS "${clhep_source}/CMakeLists.txt"
+  )
+
+  set(pythia8_version 8303)
+  string(TOUPPER "${CMAKE_BUILD_TYPE}" selected)
+  ExternalProject_Add(pythia8
+    URL http://home.thep.lu.se/~torbjorn/pythia8/pythia${pythia8_version}.tgz
+    URL_HASH SHA256=cd7c2b102670dae74aa37053657b4f068396988ef7da58fd3c318c84dc37913e
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
+      "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
+      "--prefix=${CMAKE_INSTALL_PREFIX}"
+      "--cxx=${CMAKE_CXX_COMPILER}"
+      "--cxx-common='${CMAKE_CXX_FLAGS_${selected}} -fPIC -std=c++${CMAKE_CXX_STANDARD}'"
+    DEPENDS hepmc
+    ${LOG_TO_FILE}
+  )
+
+  set(geant4_version 10.6.2)
+  ExternalProject_Add(geant4
+    URL https://gitlab.cern.ch/geant4/geant4/-/archive/v${geant4_version}/geant4-v${geant4_version}.tar.gz
+    URL_HASH SHA256=e381e04c02aeade1ed8cdd9fdbe7dcf5d6f0f9b3837a417976b839318a005dbd
+    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+      "-DGEANT4_BUILD_CXXSTD=c++${CMAKE_CXX_STANDARD}"
+      "-DGEANT4_USE_SYSTEM_CLHEP=ON"
+      "-DGEANT4_USE_SYSTEM_EXPAT=ON"
+      "-DGEANT4_USE_SYSTEM_ZLIB=ON"
+      "-DGEANT4_USE_G3TOG4=ON"
+      "-DGEANT4_USE_GDML=ON"
+      "-DGEANT4_BUILD_MULTITHREADED=OFF"
+      "-DGEANT4_BUILD_TLS_MODEL=global-dynamic"
+      "-DGEANT4_USE_OPENGL_X11=ON"
+      "-DGEANT4_USE_RAYTRACER_X11=ON"
+      "-DGEANT4_USE_PYTHON=ON"
+      "-DGEANT4_INSTALL_DATA=ON"
+      "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
+      "-DGEANT4_BUILD_VERBOSE_CODE=ON"
+    ${LOG_TO_FILE}
+    DEPENDS clhep
+  )
+
+  ExternalProject_Add(vmc
+    GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v1-0-p3
+    ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+  )
+
+  set(root_version 6.20.08)
+  ExternalProject_Add(root
+    URL https://root.cern/download/root_v${root_version}.source.tar.gz
+    URL_HASH SHA256=d02f224b4908c814a99648782b927c353d44db79dea2cadea86138c1afc23ae9
+    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+      "-Daqua=ON"
+      "-Dasimage=ON"
+      "-Dcintex=OFF"
+      "-Ddavix=OFF"
+      "-Dfortran=ON"
+      "-Dgdml=ON"
+      "-Dglobus=OFF"
+      "-Dhttp=ON"
+      "-Dminuit2=ON"
+      "-Dmlp=ON"
+      "-Dpyroot=ON"
+      "-Dreflex=OFF"
+      "-Droofit=ON"
+      "-Drpath=ON"
+      "-Dsoversion=ON"
+      "-Dsqlite=ON"
+      "-Dtmva=ON"
+      "-Dvc=ON"
+      "-Dvdt=OFF"
+      "-Dvmc=ON"
+      "-Dxml=ON"
+      "-Dxrootd=ON"
+      "-Dbuiltin-freetype=ON"
+      "-Dbuiltin-ftgl=ON"
+      "-Dbuiltin-glew=ON"
+      "-Dbuiltin_gsl=ON"
+      "-Dbuiltin_xrootd=ON"
+    ${LOG_TO_FILE}
+    DEPENDS pythia6 pythia8 vc vmc
+  )
+
+  ExternalProject_Add(geant3
+    GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v3-7_fairsoft
+    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+      "-DBUILD_GCALOR=ON"
+    ${LOG_TO_FILE}
+    DEPENDS root vmc
+  )
+
+  ExternalProject_Add(vgm
+    GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v4-8
+    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+      "-DWITH_TEST=OFF"
+    ${LOG_TO_FILE}
+    DEPENDS clhep geant4 root
+  )
+
+  ExternalProject_Add(geant4_vmc
+    GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v5-2
+    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+      "-DGeant4VMC_USE_VGM=ON"
+      "-DGeant4VMC_USE_GEANT4_UI=OFF"
+      "-DGeant4VMC_USE_GEANT4_VIS=OFF"
+      "-DGeant4VMC_USE_GEANT4_G3TOG4=ON"
+      "-DWITH_TEST=OFF"
+    ${LOG_TO_FILE}
+    DEPENDS clhep geant4 root vgm vmc
+  )
+
+  ExternalProject_Add(fairsoft-config
+    GIT_REPOSITORY https://github.com/FairRootGroup/fairsoft-config GIT_TAG master
+    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DFAIRSOFT_VERSION=oct20"
+    ${LOG_TO_FILE}
+    DEPENDS root
+  )
 endif()
 
 include(CTest)
