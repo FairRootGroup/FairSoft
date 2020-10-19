@@ -293,6 +293,7 @@ endif()
 
 include(CTest)
 
-add_test(NAME test1
-         COMMAND du -hs .
+configure_file(test/legacy/fairroot.sh ${CMAKE_BINARY_DIR}/test_fairroot.sh @ONLY)
+add_test(NAME FairRoot
+         COMMAND test_fairroot.sh
          WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
