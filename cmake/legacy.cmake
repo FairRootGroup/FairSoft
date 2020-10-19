@@ -65,7 +65,6 @@ ExternalProject_Add(boost
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
-    "--without-libraries=python"
   PATCH_COMMAND ${patch} -p2 -i "${CMAKE_SOURCE_DIR}/legacy/boost/1.72_boost_process.patch"
   BUILD_COMMAND "./b2" "--layout=system"
     "cxxstd=${CMAKE_CXX_STANDARD}"
