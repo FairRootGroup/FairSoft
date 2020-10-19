@@ -213,11 +213,6 @@ if(PACKAGES STREQUAL full)
     DEPENDS clhep
   )
 
-  ExternalProject_Add(vmc
-    GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v1-0-p3
-    ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
-  )
-
   set(root_version 6.20.08)
   ExternalProject_Add(root
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
@@ -242,7 +237,7 @@ if(PACKAGES STREQUAL full)
       "-Dtmva=ON"
       "-Dvc=ON"
       "-Dvdt=OFF"
-      "-Dvmc=ON"
+      "-Dvmc=OFF"
       "-Dxml=ON"
       "-Dxrootd=ON"
       "-Dbuiltin-freetype=ON"
@@ -251,7 +246,13 @@ if(PACKAGES STREQUAL full)
       "-Dbuiltin_gsl=ON"
       "-Dbuiltin_xrootd=ON"
     ${LOG_TO_FILE}
-    DEPENDS pythia6 pythia8 vc vmc
+    DEPENDS pythia6 pythia8 vc
+  )
+
+  ExternalProject_Add(vmc
+    GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v1-0-p3
+    ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+    DEPENDS root
   )
 
   ExternalProject_Add(geant3
