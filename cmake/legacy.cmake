@@ -209,7 +209,7 @@ if(PACKAGES STREQUAL full)
       "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
       "-DGEANT4_BUILD_VERBOSE_CODE=ON"
     ${LOG_TO_FILE}
-    DEPENDS clhep
+    DEPENDS boost clhep
   )
 
   set(root_version 6.20.08)
