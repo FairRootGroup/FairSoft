@@ -9,20 +9,11 @@ find_package(Git REQUIRED)
 find_package(Patch REQUIRED)
 set(patch $<TARGET_FILE:Patch::patch> -N)
 
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE RelWithDebInfo)
-endif()
-set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "build type")
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
-endif()
-if(NOT DEFINED NCPUS)
-  include(ProcessorCount)
-  ProcessorCount(NCPUS)
-  if(NCPUS EQUAL 0)
-    set(NCPUS 1)
-  endif()
-endif()
+set(PROJECT_MIN_CXX_STANDARD 14)
+
+include(FairSoftLib)
+set_fairsoft_defaults()
+
 if(NOT PACKAGE_SET)
   set(PACKAGE_SET full)
 endif()
@@ -339,8 +330,6 @@ add_test(NAME FairRoot
          WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 ### Summary
-include(FairSoftLib)
-
 message(STATUS "  ")
 message(STATUS "  ${Cyan}CXX STANDARD${CR}       ${BGreen}C++${CMAKE_CXX_STANDARD}${CR} (change with ${BMagenta}-DCMAKE_CXX_STANDARD=17${CR})")
 message(STATUS "  ")
