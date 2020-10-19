@@ -49,7 +49,8 @@ function check_cmd() {
     echo "            macOS: brew install $cmd"
     echo "    Debian/Ubuntu: apt-get install $cmd"
     echo "           Fedora: dnf install $cmd"
-    echo "  CentOS/OpenSuse: yum install $cmd"
+    echo "           CentOS: yum install $cmd"
+    echo "         OpenSuse: zypper install $cmd"
     echo "           Source: $src"
     echo ""
     echo "Exiting now."
@@ -82,7 +83,6 @@ packages=full
 show_dialog --title "Packages" \
   --radiolist "Which set of external packages do you want to install?" 12 90 4 \
     full "All dependencies" on \
-    lightweight "All except simulation engines and event generators" off \
     fairmq "FairMQ and dependencies only" off \
     fairmqdev "FairMQ development dependencies only" off
 
@@ -93,14 +93,12 @@ esac
 
 ### package options
 geant4mt=no
-python=no
 
 if [ $packages == "full" ]
 then
   show_dialog --title "Package options" \
-    --checklist "" 8 72 2 \
-    geant4mt "Enable multi-threading in Geant4" off \
-    python "Install Python binding for ROOT and Geant4" off
+    --checklist "" 8 72 1 \
+    geant4mt "Enable multi-threading in Geant4" off
 
   case $? in
     $DIALOG_OK)
@@ -132,7 +130,7 @@ case $? in
 esac
 
 ### directories
-version=$(git -C $basedir describe)
+version=$(git -C $basedir describe --tags)
 if [ -n "$HOME" ]
 then
   builddir="${HOME}/fairsoft/${version}_build"
@@ -167,10 +165,9 @@ show_dialog --title "Summary" --ok-label "Configure" \
     "Optimize"              3 2 "$optimize"   3 24 0 0 \
     "Package set"           4 2 "$packages"   4 24 0 0 \
     "Multi-threaded Geant4" 5 2 "$geant4mt"   5 24 0 0 \
-    "Python bindings"       6 2 "$python"     6 24 0 0 \
-    "Build dir"             7 2 "$builddir"   7 24 0 0 \
-    "Install dir (SIMPATH)" 8 2 "$installdir" 8 24 0 0 \
-    "#CPUs"                 9 2 "$ncpus"      9 24 0 0
+    "Build dir"             6 2 "$builddir"   6 24 0 0 \
+    "Install dir (SIMPATH)" 7 2 "$installdir" 7 24 0 0 \
+    "#CPUs"                 8 2 "$ncpus"      8 24 0 0
 
 case $? in
   $DIALOG_OK) ;;
@@ -229,8 +226,9 @@ set -x
 $cmake -S "$basedir" -B "$builddir" \
   -DBUILD_METHOD=legacy \
   -DCMAKE_INSTALL_PREFIX="$installdir" \
-  -DPACKAGES=$packages \
+  -DPACKAGE_SET=$packages \
   -DNCPUS=$ncpus \
+  -DGEANT4MT=$geant4mt \
   $@
 )
 
