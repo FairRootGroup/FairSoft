@@ -12,7 +12,7 @@ index ac59845..9e21c78 100644
  
  set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
  
-@@ -411,69 +412,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
+@@ -413,69 +414,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
  set( WN_PKG_NAME_ARCH "${WN_PKG_NAME}.tar.gz" )
  set( WN_PKG_REMOTE_DIR "/u/ddswww/web-docs/releases/add/${DDS_VERSION}" )
  
@@ -102,7 +102,7 @@ index ac59845..9e21c78 100644
  	COMMAND ${CMAKE_COMMAND} -E tar czf ${WN_PKG_NAME_ARCH} "${WN_PKG_DIR}"
  	COMMAND chmod go+xr ${WN_PKG_NAME_ARCH}
  	COMMENT "Generate WN binary package"
-@@ -496,19 +459,6 @@ add_dependencies( wn_bin_upload
+@@ -498,19 +461,6 @@ add_dependencies( wn_bin_upload
  
  INSTALL(FILES ${CMAKE_BINARY_DIR}/${WN_PKG_NAME_ARCH} DESTINATION bin/wn_bins OPTIONAL)
  
@@ -198,10 +198,10 @@ index 27c7a05..0000000
 \ No newline at end of file
 diff --git a/cmake/modules/DDS_CollectPrerequisitesGen.cmake.in b/cmake/modules/DDS_CollectPrerequisitesGen.cmake.in
 deleted file mode 100644
-index 57e9e3b..0000000
+index 6759585..0000000
 --- a/cmake/modules/DDS_CollectPrerequisitesGen.cmake.in
 +++ /dev/null
-@@ -1,46 +0,0 @@
+@@ -1,51 +0,0 @@
 -# Copyright 2017 GSI, Inc. All rights reserved.
 -#
 -#
@@ -237,7 +237,12 @@ index 57e9e3b..0000000
 -		# Skip DDS libs
 -		if(NOT ${resolved_file} STREQUAL "@PREREQ_DESTINATION@/${PREREQNAME}")
 -			if(${PREREQNAME} MATCHES "^libboost_*")
--				#	file(COPY ${resolved_file} DESTINATION @PREREQ_DESTINATION@)
+-				# skip existing files. Fixes GH-323
+-				if(EXISTS "@PREREQ_DESTINATION@/${PREREQNAME}")
+-					message("DDS Commander prerequisite: creating a symlink: destination exists. SKIPPING: @PREREQ_DESTINATION@/${PREREQNAME}")
+-					continue()
+-				endif()
+-				
 -				message("DDS Commander prerequisite: creating a symlink: @PREREQ_DESTINATION@/${PREREQNAME} -> ${resolved_file}")
 -				execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${resolved_file} "@PREREQ_DESTINATION@/${PREREQNAME}")
 -			else()
