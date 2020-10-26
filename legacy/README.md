@@ -10,147 +10,126 @@ from the future Spack-based setup system
 The latter will eventually replace the "Legacy" setup system
 in a future release.
 
-## Introduction
+## System dependencies
 
-This repository contains the installation routines of all the external software needed
-to compile and use FairRoot.
-To simplify the installation procedure of all these packages we provide a set of
-scripts which will automatically download, unpack, configure, build‚ and install
-all required software.
+Before we start, find the list of required system packages together with instructions
+on how to install them in the [dependencies section](dependencies.md).
 
-## Prerequisites
+## Installation
 
-The script needs a complete build environment to compile all the source code. A list
-of all needed system packages can be found in the [DEPENDENCIES](dependencies.md) file. All these system
-packages are installed using the package manager of the used Linux flavor. A list of
-complete command lines to install all packages in one go are also added in the
-DEPENDENCIES file, so one only has to cut-n-paste the appropriate command line to a
-terminal window and start the installation.
+Installing FairSoft is based on the standard CMake workflow with the option to exchange
+the command-line based CMake configure step with a menu-guided convenience script.
+
+### 1. Clone the git repo
+
+```
+git clone -b <release> https://github.com/FairRootGroup/FairSoft
+```
+
+For `<release>` choose
+* `nov20`, or `nov20p1`, ... - a particular release
+* `nov20_patches` - always points to the latest patch release for the `nov20` release
+* `master` - track the latest stable release (e.g. if `nov20` is the latest release `master` is the same as `nov20_patches`)
+* `dev` - the bleeding edge development version
+
+Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
+
+### 2. CMake configure step
+
+```
+cmake -S <path-to-source> -B <path-to-build> -DBUILD_METHOD=legacy -DCMAKE_INSTALL_PREFIX=<path-to-install>
+```
+
+* `<path-to-source>` shall point to the cloned git repo from the previous step
+* `<path-to-build>` is a temporary directory of your choice where all of the package download, extraction, and building happens
+* `<path-to-install>` is the directory you want FairSoft to installed all the packages in
+
+As an alternative to the above command, which is suitable for scripting and comes natural
+to the experienced CMake user, you may call the menu-guided convenience script that
+will generate and execute the above CMake configure step, just call:
+
+```
+cd FairSoft && ./configure.sh
+```
+
+Find more detailed information on available customization options in the [options section](options.md).
+
+### 3. CMake build/install step
+
+After a successful CMake configure step, you start the build/install step as follows:
+
+```
+cmake --build <path-to-build> [-j<ncpus>]
+```
+
+* `<path-to-build>` is the same directory as chosen in the previous configure step
+* `-j<ncpus>` parallelize the build
+
+Note: Due to technical limitations there is no separate `install` target.
+
+### 4. Usage
+
+```
+export SIMPATH=<path-to-install>
+```
+
+Simply export an environment variable `SIMPATH` which points to the chosen install directory from step 2
+and continue with the [FairRoot installation](https://github.com/FairRootGroup/FairRoot).
+
+## Advanced topics
+
+Find several advanced topics, such as
+* where to find the build log,
+* the directory layout of the build directory, or
+* how to just build a subset of the packages, and more
+
+in the [advanced section](advanced.md).
 
 ## Tested systems
-This Release was tested on following systems:
 
-| System   | Version              |  Compiler    |
-|----------|----------------------|--------------|
-| macOS    | Mojave (10.14.5)     | Clang 10.0.1 |
-| macOS    | High Sierra (10.13)  | Clang 10.0.0 |
-| Cent OS  | 7                    | gcc 4.8.5    |
-| openSUSE Leap   | 15.1          | gcc 7.4.0    |
-| Ubuntu  | 18.04                 | gcc 7.4.0    |
-| Debian  | buster                | gcc 8.3.0    |
-| Fedora  | 32                    | gcc 9.1.1    |
+The following systems are tested regularly. If you feel your system is missing,
+please contact us.
 
-## Guided Installation
+| **System** | **Version** | **Compiler** |
+| --- | --- | --- |
+| CentOS | 7 | *TBD* |
+| CentOS | 8 | *TBD* |
+| Debian | 8 (GSI) | GCC 8.1.0 (`/cvmfs/it.gsi.de`) |
+| Debian | 10 | GCC 8.3.0 |
+| Debian | 11 | *TBD* |
+| Fedora | 31 | GCC 9.2.1 |
+| Fedora | 32 | GCC 10.2.1 |
+| macOS | 10.14 | AppleClang 10.0.1 |
+| macOS | 10.15 | AppleClang 12.0.0 |
+| OpenSUSE | 15.2 | GCC 7.5.0 |
+| Ubuntu | 18.04 | GCC 7.3.0 |
+| Ubuntu | 20.04 | GCC 9.3.0 |
 
-To start the installation procedure one has to run the configure.sh script which is
-found in the `legacy/` directory of FairSoft. If the script is
-called without parameters one is guided through some menus to choose the appropriate
-setup.
-
-```
-FairSoft/legacy$ ./configure.sh
-```
-
-* In the first menu one has to define the compiler which should be used for the
-  installation. The normal choices would be _gcc_ for Linux and _Clang_ for Mac OSX.
-  The compiler must be installed on the system. If one choose a compiler which is not
-  installed, the installation procedure will stop when checking for the prerequisites
-  defined above.
-
-* In the second menu one has to decide if the packages should be installed in
-  debug, normal or optimization mode. If one choose the optimization mode one
-  should also define the correct optimization flags in the file
-  scripts/check_system.sh, even if there are some default settings.
-  If unsure don't use the optimization option.
-
-* In the third menu you can choose to install FairMQ only components,
-  if you choose _Yes_ then you just need to specify the installation directory. This installation will skip all the simulation stuff and ROOT 6 installation.
-
-* In the fourth menu one has to define if one needs to install all packages to
-  run a simulation. If unsure choose _Yes_.
-
-* If the previous choice was _Yes_ one has to define in the next menu how to handle the
-  Geant4 data files. These files have after installation a size of approximately 650 MB.
-  If you don't intent to use Geant4 you should choose _Don't install_, if unsure choose
-  one of the other options described below.
-
-  If the data files should be installed it is normally save to choose the
-  option Internet which will download the files and does the installation
-  automatically when installing Geant4.
-  Only if your system cannot download the files during installation, choose the
-  Directory option.  In this case one has to put the files into the transport directory
-  so that they can be installed. One can download the files from the following webpage.
-
-  http://geant4.cern.ch/support/download.shtml
-
-* In the next menu one has to decide if the python bindings for Geant4 and Root should
-  be installed. The python bindings are only needed for the Ship experiment,
-  so if unsure choose _No_.
-
-* In the last menu one has to define the installation directory. All the programs will be
-  installed into this directory. One shouldn't use as installation directory a directory
-  which is used by the system (e.g. /usr or /usr/local). Since it is possible to install
-  several version of "FairSoft" in parallel it is advisable to use a name tag in the
-  directory name (e.g. <install_dir>/fairsoft_mar15)
-
-After passing all menus the installation process will check if all needed system
-packages are installed. If one or more packages are missing the installation process
-will stop with a detailed error message. In this case please install the missing
-system packages and start the installation again.
-
-The installation procedure may take a long time depending on your computer. If the
-installation procedure stops with an error it is safe to start the script again.
-It will check which packages have been already compiled and installed successfully
-and will skip these packages.
-
-## Installation with configuration file
-
-As an alternative for experienced users it is also possible to pass an input file to
-the script which defines all the needed information. The configure.sh script will
-check if all variables are defined in the input file and if the values are allowed.
-In case an error is found the script will stop with an error message. Three example
-files (automatic.conf, grid.conf, and recoonly.conf) can be found in the `legacy/`
-directory of FairSoft.
 
 ## Included Packages
 
-|Package|Version|
-|---|---|
-| cmake  |3.17.3|
-| gtest  |1.10.0|
-| gsl    |2.5|
-| icu4c  |63.1|
-| boost  |1.72.0|
-| Pythia6 |428|
-| HepMC  |2.06.09|
-| Pythia8| 303|
-| Mesa | 7.10.3|
-| Geant4 |10.6.2|
-| ROOT | 6.20.08|
-| VMC | 1.0.p1|
-| Geant321+_vmc| v3-7|
-| VGM| v4-7|
-| G4VMC| v5-2|
-| MillePede |V04-03-10|
-| ZeroMQ |4.3.2|
-| Protocoll Buffers| 3.11.2|
-| nanomsg |1.1.5|
-| FlatBuffers |1.11.0|
-| MessagePack |3.1.1|
-| DDS |3.4|
-| FairMQ |1.4.24|
-| FairLogger |1.8.0|
-| Libfabric |1.6.2|
-| Asiofi |0.4.1|
-| Yaml |0.6.3|
+| **Package** | **Version** |
+| --- | --- |
+| boost | 1.72.0 |
+| clhep | 2.4.1.3 |
+| dds | 3.5.2 |
+| fairlogger | 1.8.0 |
+| fairmq | 1.4.25 |
+| flatbuffers | 1.12.0 |
+| fmt | 6.1.2 |
+| geant3 | 3-7_fairsoft |
+| geant4 | 10.6.2 |
+| geant4_vmc | 5-2 |
+| hepmc | 2.06.09 |
+| pythia6 | 428-alice1 |
+| pythia8 | 8303 |
+| root | 6.20.08 |
+| vc | 1.4.1 |
+| vgm | 4-8 |
+| vmc | 1-0-p3 |
+| zeromq | 4.3.1 |
 
-
-In case the python bindings are build the following additional packages will be installed
-* XercesC 3.2.2
-* G4Py Version which comes with Geant4
-
-
-## Removal of packages
+## Removal of packages (outdated, move to advanced)
 
 The installation script is mainly meant for one time installation of all packages.
 For developers we provide also another script which can remove the temporary files
