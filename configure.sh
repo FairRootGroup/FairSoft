@@ -173,7 +173,7 @@ mkdir -p "$installdir"
 
 ### bootstrap cmake if needed
 too_old=1
-required=3.16
+required=3.16.1
 if command -v cmake > /dev/null
 then
   current=$(cmake --version | head -1 | cut -d' ' -f3)
@@ -184,32 +184,35 @@ fi
 
 if [ $too_old -eq 1 ]
 then
-  cmakebaseurl="https://github.com/Kitware/CMake/releases/download/v"
-  cmakeversion="3.18.3"
-
-  show_dialog --title "Bootstrap CMake" \
-    --yes-label "Yes, bootstrap !" \
-    --no-label "Cancel, I will install myself" \
-    --yesno "Did not find required CMake ${required}. Do you want to continue to \
-bootstrap CMake ${cmakeversion} to ${installdir}?" 8 80
-
-  case $? in
-    $DIALOG_OK) ;;
-    *) dialog_default_handlers $? ;;
-  esac
-
-  set -e
-  pushd "$builddir"
-  cmaketargz="cmake-${cmakeversion}-$(uname -s)-$(uname -m).tar.gz"
-  curl -L -O "${cmakebaseurl}${cmakeversion}/$cmaketargz"
-  cmakechecksums="cmake-${cmakeversion}-SHA-256.txt"
-  curl -L -O "${cmakebaseurl}${cmakeversion}/$cmakechecksums"
-  grep "$(uname -s).*$(uname -m).*\.tar\.gz" $cmakechecksums > checksum.txt
-  sha256sum -c checksum.txt
-  tar xf "$cmaketargz" -C "$installdir" --strip-components=1
-  popd
-  set +e
   cmake="${installdir}/bin/cmake"
+  if [ ! -f "$cmake" ]
+  then
+    cmakebaseurl="https://github.com/Kitware/CMake/releases/download/v"
+    cmakeversion="3.18.3"
+
+    show_dialog --title "Bootstrap CMake" \
+      --yes-label "Yes, bootstrap !" \
+      --no-label "Cancel, I will install myself" \
+      --yesno "Did not find required CMake ${required}. Do you want to continue to \
+  bootstrap CMake ${cmakeversion} to ${installdir}?" 8 80
+
+    case $? in
+      $DIALOG_OK) ;;
+      *) dialog_default_handlers $? ;;
+    esac
+
+    set -e
+    pushd "$builddir"
+    cmaketargz="cmake-${cmakeversion}-$(uname -s)-$(uname -m).tar.gz"
+    curl -L -O "${cmakebaseurl}${cmakeversion}/$cmaketargz"
+    cmakechecksums="cmake-${cmakeversion}-SHA-256.txt"
+    curl -L -O "${cmakebaseurl}${cmakeversion}/$cmakechecksums"
+    grep "$(uname -s).*$(uname -m).*\.tar\.gz" $cmakechecksums > checksum.txt
+    sha256sum -c checksum.txt
+    tar xf "$cmaketargz" -C "$installdir" --strip-components=1
+    popd
+    set +e
+  fi
 else
   cmake=cmake
 fi
