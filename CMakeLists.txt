@@ -10,7 +10,16 @@ if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif()
 
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-cmake_policy(VERSION 3.0...3.16)
+cmake_policy(VERSION 3.0...3.18)
+
+if(APPLE)
+  if(NOT DEFINED CMAKE_C_COMPILER)
+    set(CMAKE_C_COMPILER clang)
+  endif()
+  if(NOT DEFINED CMAKE_CXX_COMPILER)
+    set(CMAKE_CXX_COMPILER clang++)
+  endif()
+endif()
 
 project(FairSoft LANGUAGES C CXX Fortran)
 
