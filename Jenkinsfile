@@ -55,6 +55,8 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
           if (legacy) {
             ctestcmd = ctestcmd + ' -DBUILD_METHOD=legacy'
             container = container.replace('sif', 'legacy.sif')
+          } else {
+            ctestcmd = ctestcmd + ' -DBUILD_METHOD=spack'
           }
 
           if (node_type == 'slurm') {
