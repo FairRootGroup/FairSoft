@@ -1,3 +1,5 @@
+#! /bin/bash
+
 apt-get install -y \
   dialog \
   cmake cmake-data g++ gcc gfortran \

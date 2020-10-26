@@ -1,3 +1,5 @@
+#! /bin/bash
+
 dnf -y groupinstall "C Development Tools and Libraries"
 dnf -y install autoconf automake binutils bison bzip2-devel cmake \
 ca-certificates coreutils curl-devel dialog diffutils expat-devel findutils flex \

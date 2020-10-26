@@ -1,3 +1,5 @@
+#! /bin/bash
+
 apt-get -y --no-install-recommends install autoconf automake binutils \
 bison build-essential bzip2 ca-certificates cmake cmake-data coreutils \
 curl debianutils dialog file findutils flex g++ gcc gfortran git gzip \
