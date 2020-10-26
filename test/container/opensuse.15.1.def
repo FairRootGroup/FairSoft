@@ -1,8 +1,0 @@
-Bootstrap: docker
-From: opensuse:15.1
-
-%post
-    dnf -y update
-    dnf -y groupinstall --with-optional "C Development Tools and Libraries"
-    dnf -y install gcc-gfortran wget which git xz patch
-    dnf -y clean all
