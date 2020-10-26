@@ -24,7 +24,7 @@ endif()
 project(FairSoft LANGUAGES C CXX Fortran)
 
 if(NOT DEFINED BUILD_METHOD)
-  set(BUILD_METHOD spack)
+  set(BUILD_METHOD legacy)
 endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")

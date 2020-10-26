@@ -37,19 +37,19 @@ Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
 ### 2. CMake configure step
 
 ```
-cmake -S <path-to-source> -B <path-to-build> -DBUILD_METHOD=legacy -DCMAKE_INSTALL_PREFIX=<path-to-install>
+cmake -S <path-to-source> -B <path-to-build> -DCMAKE_INSTALL_PREFIX=<path-to-install>
 ```
 
 * `<path-to-source>` shall point to the cloned git repo from the previous step
 * `<path-to-build>` is a temporary directory of your choice where all of the package download, extraction, and building happens
-* `<path-to-install>` is the directory you want FairSoft to installed all the packages in
+* `<path-to-install>` is the directory you want all the packages to be installed to
 
 As an alternative to the above command, which is suitable for scripting and comes natural
 to the experienced CMake user, you may call the menu-guided convenience script that
 will generate and execute the above CMake configure step, just call:
 
 ```
-cd FairSoft && ./configure.sh
+FairSoft/configure.sh
 ```
 
 Find more detailed information on available customization options in the [options section](options.md).
