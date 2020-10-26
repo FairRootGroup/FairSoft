@@ -24,6 +24,8 @@ endif()
 include(ExternalProject)
 
 set_property(DIRECTORY PROPERTY EP_BASE ${CMAKE_BINARY_DIR})
+set_property(DIRECTORY PROPERTY EP_STEP_TARGETS configure build install test)
+set_property(DIRECTORY PROPERTY EP_INDEPENDENT_STEP_TARGETS mkdir download update patch)
 set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
 set(CMAKE_DEFAULT_ARGS CMAKE_CACHE_DEFAULT_ARGS
   "-DBUILD_SHARED:BOOL=ON"
