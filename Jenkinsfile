@@ -8,13 +8,24 @@ if (env.CHANGE_ID != null) {
 }
 
 def isLegacyChange() {
-  def changes = sh(label: 'Retrieve list of changed files', returnStdout: true,
-    script: "git diff --name-only refs/remotes/origin/${env.CHANGE_TARGET} HEAD").trim().split("\n")
-  print changes.join('\n')
+  def target = false
+  if (env.CHANGE_TARGET != null) {
+    target = "refs/remotes/origin/${env.CHANGE_TARGET}"
+  } else if (env.BRANCH_NAME != 'dev' && env.BRANCH_NAME != 'master') {
+    target = sh(label: 'Retrieve merge base', returnStdout: true,
+      script: "git merge-base refs/remotes/origin/dev HEAD").trim()
+    print target
+  }
+  def changes = []
+  if (target) {
+    changes = sh(label: 'Retrieve list of changed files', returnStdout: true,
+      script: "git diff --name-only ${target} HEAD").trim().split("\n")
+    print changes.join('\n')
 
-  for (change in changes) {
-    if (change.contains('legacy') || change.startsWith('configure.sh')) {
-      return true
+    for (change in changes) {
+      if (change.contains('legacy') || change.startsWith('configure.sh')) {
+        return true
+      }
     }
   }
   return false
