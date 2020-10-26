@@ -87,7 +87,7 @@ ExternalProject_Add(fmt
 )
 
 list(APPEND packages dds)
-set(dds_version "3.5.2")
+set(dds_version "3.5.3")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -100,7 +100,7 @@ ExternalProject_Add(dds
 )
 
 list(APPEND packages fairlogger)
-set(fairlogger_version "1.8.0")
+set(fairlogger_version "1.9.0")
 ExternalProject_Add(fairlogger
   GIT_REPOSITORY https://github.com/FairRootGroup/FairLogger GIT_TAG v${fairlogger_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -133,7 +133,7 @@ ExternalProject_Add(flatbuffers
 
 if (NOT PACKAGE_SET STREQUAL fairmqdev)
   list(APPEND packages fairmq)
-  set(fairmq_version "1.4.25")
+  set(fairmq_version "1.4.26")
   ExternalProject_Add(fairmq
     GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
