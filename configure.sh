@@ -80,7 +80,7 @@ init_dialog
 ### packages
 packages=full
 
-show_dialog --title "Packages" \
+show_dialog --title "PACKAGE_SET" \
   --radiolist "Which set of external packages do you want to install?" 12 90 4 \
     full "All dependencies" on \
     fairmq "FairMQ and dependencies only" off \
@@ -92,40 +92,35 @@ case $? in
 esac
 
 ### package options
-geant4mt=no
+GEANT4MT=OFF
 
 if [ $packages == "full" ]
 then
   show_dialog --title "Package options" \
     --checklist "" 8 72 1 \
-    geant4mt "Enable multi-threading in Geant4" off
+    GEANT4MT "Enable multi-threading in Geant4" off
 
   case $? in
     $DIALOG_OK)
       res=($result)
-      for k in "${res[@]}"; do declare "${k}=yes"; done
+      for k in "${res[@]}"; do declare "${k}=ON"; done
       ;;
     *) dialog_default_handlers $? ;;
   esac
 fi
 
 ### compile options
-debug=yes
-optimize=yes
+build_type=RelWithDebInfo
 
-show_dialog --title "Compile options" \
-  --checklist "" 8 52 2 \
-  debug "Enable debug information" on \
-  optimize "Enable optimization" on
+show_dialog --title "CMAKE_BUILD_TYPE" \
+  --radiolist "" 10 62 3 \
+    RelWithDebInfo "Optimized and debug information" on \
+    Debug "Debug information" off \
+    Release "Optimized" off
 
 echo $result
 case $? in
-  $DIALOG_OK)
-    res=($result)
-    debug=no
-    optimize=no
-    for k in "${res[@]}"; do declare "${k}=yes"; done
-    ;;
+  $DIALOG_OK) build_type=$result ;;
   *) dialog_default_handlers $? ;;
 esac
 
@@ -143,9 +138,9 @@ fi
 show_dialog --title "Build options" \
   --form "Choose the following directories and amount of CPUs to use for parallel building:" 11 85 0 \
     "FairSoft version"      1 2 "$version"    1 24 0  0 \
-    "Build dir"             2 2 "$builddir"   2 24 80 300 \
-    "Install dir (SIMPATH)" 3 2 "$installdir" 3 24 80 300 \
-    "#CPUs"                 4 2 "$ncpus"      4 24 3 3
+    "CMAKE_BINARY_DIR"      2 2 "$builddir"   2 24 80 300 \
+    "CMAKE_INSTALL_PREFIX"  3 2 "$installdir" 3 24 80 300 \
+    "NCPUS"                 4 2 "$ncpus"      4 24 3 3
 
 case $? in
   $DIALOG_OK)
@@ -161,13 +156,12 @@ esac
 show_dialog --title "Summary" --ok-label "Configure" \
   --form "" 15 100 0 \
     "FairSoft version"      1 2 "$version"    1 24 0 0 \
-    "Debug info"            2 2 "$debug"      2 24 0 0 \
-    "Optimize"              3 2 "$optimize"   3 24 0 0 \
-    "Package set"           4 2 "$packages"   4 24 0 0 \
-    "Multi-threaded Geant4" 5 2 "$geant4mt"   5 24 0 0 \
-    "Build dir"             6 2 "$builddir"   6 24 0 0 \
-    "Install dir (SIMPATH)" 7 2 "$installdir" 7 24 0 0 \
-    "#CPUs"                 8 2 "$ncpus"      8 24 0 0
+    "PACKAGE_SET"           2 2 "$packages"   2 24 0 0 \
+    "GEANT4MT"              3 2 "$GEANT4MT"   3 24 0 0 \
+    "CMAKE_BUILD_TYPE"      4 2 "$build_type" 4 24 0 0 \
+    "CMAKE_BINARY_DIR"      5 2 "$builddir"   5 24 0 0 \
+    "CMAKE_INSTALL_PREFIX"  6 2 "$installdir" 6 24 0 0 \
+    "NCPUS"                 7 2 "$ncpus"      7 24 0 0
 
 case $? in
   $DIALOG_OK) ;;
@@ -221,26 +215,27 @@ else
 fi
 
 ### configure
+confcmd="$cmake -S $basedir -B $builddir \
+-DBUILD_METHOD=legacy \
+-DCMAKE_INSTALL_PREFIX=$installdir \
+-DCMAKE_BUILD_TYPE=$build_type \
+-DPACKAGE_SET=$packages \
+-DNCPUS=$ncpus \
+-DGEANT4MT=$GEANT4MT \
+$@"
+
 (
 set -x
-$cmake -S "$basedir" -B "$builddir" \
-  -DBUILD_METHOD=legacy \
-  -DCMAKE_INSTALL_PREFIX="$installdir" \
-  -DPACKAGE_SET=$packages \
-  -DNCPUS=$ncpus \
-  -DGEANT4MT=$geant4mt \
-  $@
+$confcmd
 )
 
 echo ""
+echo ">>> Configured FairSoft with command"
 echo ""
-echo ">>> Continue installing external packages by running"
+echo "    $confcmd"
 echo ""
-buildcmd="$cmake --build \"$builddir\" -j$ncpus"
+echo ">>> Continue building/installing by running"
+echo ""
+buildcmd="$cmake --build $builddir -j$ncpus"
 echo $buildcmd
-echo ""
-echo "  or"
-echo ""
-echo "cd \"$builddir\""
-echo "make -j$ncpus"
 echo ""
