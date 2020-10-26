@@ -1,5 +1,0 @@
-FortranCompiler:@_FC@
-HasCxx11:@HAS_CXX11@
-HasLibCxx:@HAS_LIBCXX@
-HasCurl:@HAS_CURL@
-isMacOsx108:@IsMacOsx108@

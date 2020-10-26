@@ -1,1 +1,0 @@
-using sun : : /usr/bin/CC : <cxxflags>"-m64" <linkflags>"-m64" ;
