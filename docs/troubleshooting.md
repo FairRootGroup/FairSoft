@@ -1,11 +1,28 @@
 # Troubleshooting
 
+Table of Contents
+* [Generally](#generally)
+* [g++: internal compiler error: Killed (program cc1plus)](#g-internal-compiler-error-killed-program-cc1plus)
+* [Building DDS fails with external (non-spack) non-system compiler](#building-dds-fails-with-external-non-spack-non-system-compiler)
+* [Warning: Failed to initialize repository](#warning-failed-to-initialize-repository)
+
+
 ## Generally
 
 spack sometimes doesn't clean up things properly, or things get out of sync. Try to call the setup script again. It cleans up some things:
 ```
 $ source thisfairsoft.sh --setup
 ```
+
+## g++: internal compiler error: Killed (program cc1plus)
+
+If you get errors with "compiler error: Killed", then this most likely means issues of the compiler / system. Those could be hardware problems. But it could also be related to not having enough RAM for a parallel build.
+
+```bash
+$ spack install -j4
+```
+
+`4` is the number of parallel build jobs. We recommend 2 GB of RAM per such job.
 
 
 ## Building DDS fails with external (non-spack) non-system compiler
