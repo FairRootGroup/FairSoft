@@ -53,7 +53,7 @@ then
   CCACHE_MAXSIZE="$(ccache -k max_size)"
 fi
 
-export HOME="$FS_TEST_WORKDIR"
+export HOME="$FS_TEST_WORKDIR/home"
 
 if [ -z "$FS_TEST_INSTALLTREE" ]
 then
@@ -71,9 +71,9 @@ config:
   install_tree: '$FS_TEST_INSTALLTREE'
   module_roots:
     tcl: '$FS_TEST_INSTALLTREE/modules'
-  source_cache: '$HOME/source-cache'
+  source_cache: '$FS_TEST_WORKDIR/source-cache'
   build_stage:
-  - '$HOME/stage'
+  - '$FS_TEST_WORKDIR/stage'
 EOF
 
 	if [ "$SPACK_CCACHE" = "true" ]
@@ -93,7 +93,7 @@ EOF
 
 	cat "$HOME/.spack/config.yaml"
 	mkdir -v -p "$FS_TEST_INSTALLTREE"
-	mkdir -v -p "$HOME/stage"
+	mkdir -v -p "$FS_TEST_WORKDIR/stage"
 
 	. thisfairsoft.sh --setup
 
