@@ -24,4 +24,8 @@ class Rsync(AutotoolsPackage):
     depends_on('lz4', when='@3.2:')
 
     def configure_args(self):
-        return ['--with-included-zlib=no']
+        args = ['--with-included-zlib=no']
+        # Workaround for compiler bug in apple clang 11
+        if self.spec.satisfies('%apple-clang@11'):
+            args.append('--disable-simd')
+        return args
