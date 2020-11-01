@@ -58,6 +58,14 @@ set(LOG_TO_FILE
   LOG_OUTPUT_ON_FAILURE ON
 )
 
+if(SOURCE_CACHE)
+  add_custom_target(extract-source-cache ALL
+    ${CMAKE_COMMAND} -E tar xzf ${SOURCE_CACHE}
+    VERBATIM COMMAND_EXPAND_LISTS
+    COMMENT "Extracting source cache ${SOURCE_CACHE} at ${CMAKE_BINARY_DIR}"
+  )
+endif()
+
 unset(packages)
 
 list(APPEND packages boost)
@@ -326,6 +334,53 @@ if(PACKAGE_SET STREQUAL full)
     ${LOG_TO_FILE}
   )
 endif()
+
+if(SOURCE_CACHE)
+  foreach(pkg IN LISTS packages)
+    add_dependencies(${pkg}-mkdir extract-source-cache)
+  endforeach()
+endif()
+
+if(TARGET geant4-download)
+  add_custom_target(geant4-download-data
+    ${CMAKE_COMMAND} -S "${CMAKE_BINARY_DIR}/Source/geant4" -B . -DGEANT4_INSTALL_DATA=ON
+    COMMAND ${CMAKE_COMMAND} --build . --target G4NDL
+    COMMAND ${CMAKE_COMMAND} --build . --target G4EMLOW
+    COMMAND ${CMAKE_COMMAND} --build . --target G4ENSDFSTATE
+    COMMAND ${CMAKE_COMMAND} --build . --target G4INCL
+    COMMAND ${CMAKE_COMMAND} --build . --target G4NDL
+    COMMAND ${CMAKE_COMMAND} --build . --target G4PARTICLEXS
+    COMMAND ${CMAKE_COMMAND} --build . --target G4PII
+    COMMAND ${CMAKE_COMMAND} --build . --target G4SAIDDATA
+    COMMAND ${CMAKE_COMMAND} --build . --target PhotonEvaporation
+    COMMAND ${CMAKE_COMMAND} --build . --target RadioactiveDecay
+    COMMAND ${CMAKE_COMMAND} --build . --target RealSurface
+    COMMAND find . -mindepth 1 ! -regex "^./Externals.*" -delete
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/Build/geant4"
+    DEPENDS geant4-download VERBATIM
+  )
+  set(g4data geant4-download-data)
+else()
+  unset(g4data)
+endif()
+unset(deps)
+unset(tardirs)
+foreach(pkg IN LISTS packages)
+  list(APPEND deps "${pkg}-download")
+  list(APPEND tardirs "Download/${pkg}" "Source/${pkg}")
+endforeach()
+list(APPEND tardirs "Build/geant4")
+execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE SHORT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+set(tarfile ${CMAKE_BINARY_DIR}/FairSoft_source_cache_${PACKAGE_SET}_${SHORT_HASH}.tar.gz)
+add_custom_target(source-cache
+  ${CMAKE_COMMAND} -E tar czf ${tarfile} ${tardirs}
+  DEPENDS ${g4data} ${deps} VERBATIM COMMAND_EXPAND_LISTS
+  COMMENT "Creating source cache at ${tarfile}"
+)
 
 include(CTest)
 
