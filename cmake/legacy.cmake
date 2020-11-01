@@ -61,6 +61,7 @@ if(SOURCE_CACHE)
   add_custom_target(extract-source-cache ALL
     ${CMAKE_COMMAND} -E tar xzf ${SOURCE_CACHE}
     VERBATIM COMMAND_EXPAND_LISTS
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Extracting source cache ${SOURCE_CACHE} at ${CMAKE_BINARY_DIR}"
   )
   set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
