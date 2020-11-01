@@ -104,10 +104,13 @@ ExternalProject_Add(dds
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DBoost_NO_BOOST_CMAKE=ON"
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_boost_lookup.patch"
-  BUILD_COMMAND ${CMAKE_COMMAND} --build . -j "${NCPUS}"
-        COMMAND ${CMAKE_COMMAND} --build . --target wn_bin -j "${NCPUS}"
   DEPENDS boost
   ${LOG_TO_FILE}
+)
+ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/Build/dds
+  COMMAND ${CMAKE_COMMAND} --build . --target wn_bin -j "${NCPUS}"
+  LOG ON
 )
 
 list(APPEND packages fairlogger)
@@ -198,6 +201,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
     COMMAND ${CMAKE_COMMAND} -E copy_directory "${clhep_source}/CLHEP" "${clhep_source}"
     BYPRODUCTS "${clhep_source}/CMakeLists.txt"
+    LOG ON
   )
 
   list(APPEND packages pythia8)
