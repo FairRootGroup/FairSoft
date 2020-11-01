@@ -27,8 +27,6 @@ endif()
 include(ExternalProject)
 
 set_property(DIRECTORY PROPERTY EP_BASE ${CMAKE_BINARY_DIR})
-set_property(DIRECTORY PROPERTY EP_STEP_TARGETS configure build install test)
-set_property(DIRECTORY PROPERTY EP_INDEPENDENT_STEP_TARGETS mkdir download update patch)
 set(CMAKE_DEFAULT_ARGS CMAKE_CACHE_DEFAULT_ARGS
   "-DBUILD_SHARED:BOOL=ON"
   "-DCMAKE_PREFIX_PATH:STRING=${CMAKE_INSTALL_PREFIX}"
@@ -65,6 +63,15 @@ if(SOURCE_CACHE)
     COMMENT "Extracting source cache ${SOURCE_CACHE} at ${CMAKE_BINARY_DIR}"
   )
   set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
+  set_property(DIRECTORY PROPERTY EP_STEP_TARGETS download update patch configure build install test)
+  set_property(DIRECTORY PROPERTY EP_INDEPENDENT_STEP_TARGETS mkdir)
+  set(DEPENDS_ON_SOURCE_CACHE extract-source-cache)
+  set(extract_source_cache_target extract-source-cache)
+else()
+  set_property(DIRECTORY PROPERTY EP_STEP_TARGETS configure build install test)
+  set_property(DIRECTORY PROPERTY EP_INDEPENDENT_STEP_TARGETS mkdir download update patch)
+  unset(DEPENDS_ON_SOURCE_CACHE)
+  unset(extract_source_cache_target)
 endif()
 
 unset(packages)
@@ -86,6 +93,7 @@ ExternalProject_Add(boost
     "visibility=hidden"
   INSTALL_COMMAND "./b2" "install" "-j" "${NCPUS}"
   ${LOG_TO_FILE}
+  ${DEPENDS_ON_SOURCE_CACHE}
 )
 
 list(APPEND packages fmt)
@@ -96,6 +104,7 @@ ExternalProject_Add(fmt
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFMT_DOC=OFF"
   ${LOG_TO_FILE}
+  ${DEPENDS_ON_SOURCE_CACHE}
 )
 
 list(APPEND packages dds)
@@ -105,7 +114,7 @@ ExternalProject_Add(dds
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DBoost_NO_BOOST_CMAKE=ON"
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_boost_lookup.patch"
-  DEPENDS boost
+  DEPENDS boost ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
 ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
@@ -120,7 +129,7 @@ ExternalProject_Add(fairlogger
   GIT_REPOSITORY https://github.com/FairRootGroup/FairLogger GIT_TAG v${fairlogger_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DUSE_EXTERNAL_FMT=ON"
-  DEPENDS boost fmt
+  DEPENDS boost fmt ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
 
@@ -133,6 +142,7 @@ ExternalProject_Add(zeromq
     "-DZMQ_BUILD_TESTS=ON"
     "-DENABLE_CPACK=OFF"
   ${LOG_TO_FILE}
+  ${DEPENDS_ON_SOURCE_CACHE}
 )
 
 list(APPEND packages flatbuffers)
@@ -144,6 +154,7 @@ ExternalProject_Add(flatbuffers
     "-DFLATBUFFERS_BUILD_FLATLIB=OFF"
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/flatbuffers/remove_werror.patch"
   ${LOG_TO_FILE}
+  ${DEPENDS_ON_SOURCE_CACHE}
 )
 
 if (NOT PACKAGE_SET STREQUAL fairmqdev)
@@ -155,7 +166,7 @@ if (NOT PACKAGE_SET STREQUAL fairmqdev)
       "-DBUILD_DDS_PLUGIN=ON"
       "-DBUILD_SDK_COMMANDS=ON"
       "-DBUILD_SDK=ON"
-    DEPENDS boost dds fairlogger flatbuffers zeromq
+    DEPENDS boost dds fairlogger flatbuffers zeromq ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 endif()
@@ -168,6 +179,7 @@ if(PACKAGE_SET STREQUAL full)
     URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
     PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+    ${DEPENDS_ON_SOURCE_CACHE}
   )
 
   list(APPEND packages hepmc)
@@ -179,6 +191,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dlength:STRING=CM"
       "-Dmomentum:STRING=GEV"
     ${LOG_TO_FILE}
+    ${DEPENDS_ON_SOURCE_CACHE}
   )
 
   list(APPEND packages vc)
@@ -187,6 +200,7 @@ if(PACKAGE_SET STREQUAL full)
     URL https://github.com/VcDevel/Vc/archive/${vc_version}.tar.gz
     URL_HASH SHA256=7e8b57ed5ff9eb0835636203898c21302733973ff8eaede5134dd7cb87f915f6
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+    ${DEPENDS_ON_SOURCE_CACHE}
   )
 
   list(APPEND packages clhep)
@@ -197,6 +211,7 @@ if(PACKAGE_SET STREQUAL full)
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
     ${LOG_TO_FILE}
+    ${DEPENDS_ON_SOURCE_CACHE}
   )
   set(clhep_source ${CMAKE_BINARY_DIR}/Source/clhep)
   ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
@@ -217,7 +232,7 @@ if(PACKAGE_SET STREQUAL full)
       "--prefix=${CMAKE_INSTALL_PREFIX}"
       "--cxx=${CMAKE_CXX_COMPILER}"
       "--cxx-common='${CMAKE_CXX_FLAGS_${selected}} -fPIC -std=c++${CMAKE_CXX_STANDARD}'"
-    DEPENDS hepmc
+    DEPENDS hepmc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
@@ -248,7 +263,7 @@ if(PACKAGE_SET STREQUAL full)
       "-DGEANT4_INSTALL_DATA=ON"
       "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
       "-DGEANT4_BUILD_VERBOSE_CODE=ON"
-    DEPENDS boost clhep
+    DEPENDS boost clhep ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
@@ -285,7 +300,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dbuiltin_glew=ON"
       "-Dbuiltin_gsl=ON"
       "-Dbuiltin_xrootd=ON"
-    DEPENDS pythia6 pythia8 vc
+    DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
@@ -294,7 +309,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(vmc
     GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
-    DEPENDS root
+    DEPENDS root ${extract_source_cache_target}
   )
 
   list(APPEND packages geant3)
@@ -303,7 +318,7 @@ if(PACKAGE_SET STREQUAL full)
     GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DBUILD_GCALOR=ON"
-    DEPENDS root vmc
+    DEPENDS root vmc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
@@ -313,7 +328,7 @@ if(PACKAGE_SET STREQUAL full)
     GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DWITH_TEST=OFF"
-    DEPENDS clhep geant4 root
+    DEPENDS clhep geant4 root ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
@@ -327,7 +342,7 @@ if(PACKAGE_SET STREQUAL full)
       "-DGeant4VMC_USE_GEANT4_VIS=OFF"
       "-DGeant4VMC_USE_GEANT4_G3TOG4=ON"
       "-DWITH_TEST=OFF"
-    DEPENDS clhep geant4 root vgm vmc
+    DEPENDS clhep geant4 root vgm vmc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
@@ -335,15 +350,9 @@ if(PACKAGE_SET STREQUAL full)
     GIT_REPOSITORY https://github.com/FairRootGroup/fairsoft-config GIT_TAG master
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFAIRSOFT_VERSION=oct20"
-    DEPENDS root
+    DEPENDS root ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
-endif()
-
-if(SOURCE_CACHE)
-  foreach(pkg IN LISTS packages)
-    add_dependencies(${pkg}-mkdir extract-source-cache)
-  endforeach()
 endif()
 
 if(TARGET geant4-download)
