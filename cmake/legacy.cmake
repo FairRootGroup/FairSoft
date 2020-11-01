@@ -10,6 +10,7 @@ cmake_policy(VERSION 3.16.1...3.18)
 
 find_package(Git REQUIRED)
 find_package(Patch REQUIRED)
+find_package(UnixCommands)
 set(patch $<TARGET_FILE:Patch::patch> -N)
 
 set(PROJECT_MIN_CXX_STANDARD 14)
@@ -56,16 +57,19 @@ set(LOG_TO_FILE
 )
 
 if(SOURCE_CACHE)
-  add_custom_target(extract-source-cache ALL
-    ${CMAKE_COMMAND} -E tar xzf ${SOURCE_CACHE}
+  add_custom_target(extract-source-cache
+    DEPENDS "${CMAKE_BINARY_DIR}/extracted"
+  )
+  add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/extracted"
+    COMMAND ${TAR} xzf ${SOURCE_CACHE}
+    COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_BINARY_DIR}/extracted"
     VERBATIM COMMAND_EXPAND_LISTS
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Extracting source cache ${SOURCE_CACHE} at ${CMAKE_BINARY_DIR}"
   )
   set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
-  set_property(DIRECTORY PROPERTY EP_STEP_TARGETS download update patch configure build install test)
-  set_property(DIRECTORY PROPERTY EP_INDEPENDENT_STEP_TARGETS mkdir)
-  set(DEPENDS_ON_SOURCE_CACHE extract-source-cache)
+  set_property(DIRECTORY PROPERTY EP_STEP_TARGETS mkdir download update patch configure build install test)
+  set(DEPENDS_ON_SOURCE_CACHE DEPENDS extract-source-cache)
   set(extract_source_cache_target extract-source-cache)
 else()
   set_property(DIRECTORY PROPERTY EP_STEP_TARGETS configure build install test)
@@ -369,7 +373,6 @@ if(TARGET geant4-download)
     COMMAND ${CMAKE_COMMAND} --build . --target PhotonEvaporation
     COMMAND ${CMAKE_COMMAND} --build . --target RadioactiveDecay
     COMMAND ${CMAKE_COMMAND} --build . --target RealSurface
-    COMMAND find . -mindepth 1 ! -regex "^./Externals.*" -delete
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/Build/geant4"
     DEPENDS geant4-download VERBATIM
   )
@@ -383,15 +386,19 @@ foreach(pkg IN LISTS packages)
   list(APPEND deps "${pkg}-download")
   list(APPEND tardirs "Download/${pkg}" "Source/${pkg}")
 endforeach()
-list(APPEND tardirs "Build/geant4")
+list(APPEND tardirs "Stamp/*/*-git*.txt")
+if(TARGET geant4-download-data)
+  list(APPEND tardirs "Build/geant4/Externals")
+endif()
 execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   OUTPUT_VARIABLE SHORT_HASH
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 set(tarfile ${CMAKE_BINARY_DIR}/FairSoft_source_cache_${PACKAGE_SET}_${SHORT_HASH}.tar.gz)
+list(JOIN tardirs " " tarargs)
 add_custom_target(source-cache
-  ${CMAKE_COMMAND} -E tar czf ${tarfile} ${tardirs}
+  ${BASH} -c "tar czf ${tarfile} ${tarargs}"
   DEPENDS ${g4data} ${deps} VERBATIM COMMAND_EXPAND_LISTS
   COMMENT "Creating source cache at ${tarfile}"
 )
