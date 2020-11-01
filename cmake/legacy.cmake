@@ -264,9 +264,9 @@ if(PACKAGE_SET STREQUAL full)
       "-Dvmc=OFF"
       "-Dxml=ON"
       "-Dxrootd=ON"
-      "-Dbuiltin-freetype=ON"
-      "-Dbuiltin-ftgl=ON"
-      "-Dbuiltin-glew=ON"
+      "-Dbuiltin_freetype=ON"
+      "-Dbuiltin_ftgl=ON"
+      "-Dbuiltin_glew=ON"
       "-Dbuiltin_gsl=ON"
       "-Dbuiltin_xrootd=ON"
     DEPENDS pythia6 pythia8 vc
