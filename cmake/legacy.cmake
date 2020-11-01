@@ -5,6 +5,9 @@
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
+cmake_minimum_required(VERSION 3.16.1 FATAL_ERROR)
+cmake_policy(VERSION 3.16.1...3.18)
+
 find_package(Git REQUIRED)
 find_package(Patch REQUIRED)
 set(patch $<TARGET_FILE:Patch::patch> -N)
