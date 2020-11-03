@@ -43,6 +43,10 @@ if(APPLE)
     "-DCMAKE_MACOSX_RPATH:BOOL=ON"
   )
 endif()
+unset(python)
+if(PYTHON_EXECUTABLE)
+  set(python "-DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}")
+endif()
 set(LOG_TO_FILE
   LOG_DIR "${CMAKE_BINARY_DIR}/Log"
   LOG_DOWNLOAD ON
@@ -267,6 +271,7 @@ if(PACKAGE_SET STREQUAL full)
       "-DGEANT4_INSTALL_DATA=ON"
       "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
       "-DGEANT4_BUILD_VERBOSE_CODE=ON"
+      ${python}
     DEPENDS boost clhep ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
@@ -284,6 +289,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dfortran=ON"
       "-Dgdml=ON"
       "-Dglobus=OFF"
+      "-Dgnuinstall=ON"
       "-Dhttp=ON"
       "-Dminuit2=ON"
       "-Dmlp=ON"
@@ -299,6 +305,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dvmc=OFF"
       "-Dxml=ON"
       "-Dxrootd=ON"
+      ${python}
     DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
