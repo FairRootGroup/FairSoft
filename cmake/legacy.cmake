@@ -362,6 +362,7 @@ endif()
 if(TARGET geant4-download)
   add_custom_target(geant4-download-data
     ${CMAKE_COMMAND} -S "${CMAKE_BINARY_DIR}/Source/geant4" -B . -DGEANT4_INSTALL_DATA=ON
+    COMMAND ${CMAKE_COMMAND} --build . --target G4ABLA
     COMMAND ${CMAKE_COMMAND} --build . --target G4NDL
     COMMAND ${CMAKE_COMMAND} --build . --target G4EMLOW
     COMMAND ${CMAKE_COMMAND} --build . --target G4ENSDFSTATE
@@ -373,6 +374,7 @@ if(TARGET geant4-download)
     COMMAND ${CMAKE_COMMAND} --build . --target PhotonEvaporation
     COMMAND ${CMAKE_COMMAND} --build . --target RadioactiveDecay
     COMMAND ${CMAKE_COMMAND} --build . --target RealSurface
+    COMMAND ${BASH} -c "rm -rf Externals/**/src/*-{build,stamp}"
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/Build/geant4"
     DEPENDS geant4-download VERBATIM
   )
