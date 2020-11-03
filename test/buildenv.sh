@@ -46,6 +46,14 @@ fi
 spack env create $envname "$1" || exit 1
 spack env activate $envname
 ret=$?
+
+if [ "$ret" = 0 ] && [ -n "$2" ]
+then
+	# If we're doing a workflow style thing
+	# then redirect the concretization to /dev/null
+	spack concretize >/dev/null
+fi
+
 if [ "$ret" = 0 ]
 then
 	spack install
