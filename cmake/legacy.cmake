@@ -299,11 +299,6 @@ if(PACKAGE_SET STREQUAL full)
       "-Dvmc=OFF"
       "-Dxml=ON"
       "-Dxrootd=ON"
-      "-Dbuiltin_freetype=ON"
-      "-Dbuiltin_ftgl=ON"
-      "-Dbuiltin_glew=ON"
-      "-Dbuiltin_gsl=ON"
-      "-Dbuiltin_xrootd=ON"
     DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
