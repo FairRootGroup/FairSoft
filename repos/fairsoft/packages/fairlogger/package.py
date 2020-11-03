@@ -17,6 +17,7 @@ class Fairlogger(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='dev', get_full_repo=True)
+    version('1.9.0', tag='v1.9.0', commit='bcfe438862edc4047131a282c5e72a77d0b0d78c', no_cache=True)
     version('1.8.0', tag='v1.8.0', commit='56780689fca5560cf3e59d5c156b0adb6d1622f9', no_cache=True)
     version('1.7.0', tag='v1.7.0', commit='8446c6db0cb3ec5b035198da5f066fe431aa5a5b', no_cache=True)
     version('1.6.2', tag='v1.6.2', commit='cdf887f5da7c9871b621a88e9098a78d17da2eb0', no_cache=True)
