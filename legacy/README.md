@@ -1,5 +1,13 @@
 # FairSoft (Legacy)
 
+Table of Contents
+* [Preface](#preface)
+* [Installation from source](#installation-from-source)
+* [Installation with package manager](#installation-with-package-manager)
+* [Advanced topics and troubleshooting](#advanced-topics-and-troubleshooting)
+* [Tested systems](#tested-systems)
+* [Included packages](#included-packages)
+
 ## Preface
 
 Our classic bash/cmake based setup system
@@ -10,17 +18,16 @@ from the future Spack-based setup system
 The latter will eventually replace the "Legacy" setup system
 in a future release.
 
-## System dependencies
+## Installation from source
 
-Before we start, find the list of required system packages together with instructions
+Installing FairSoft is based on the standard CMake workflow.
+
+### 1. Install system dependencies
+
+Find the list of required system packages together with instructions
 on how to install them in the [dependencies section](dependencies.md).
 
-## Installation
-
-Installing FairSoft is based on the standard CMake workflow with the option to exchange
-the command-line based CMake configure step with a menu-guided convenience script.
-
-### 1. Clone the git repo
+### 2. Clone the git repo
 
 ```
 git clone -b <release> https://github.com/FairRootGroup/FairSoft
@@ -34,7 +41,7 @@ For `<release>` choose
 
 Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
 
-### 2. CMake configure step
+### 3. CMake configure step
 
 ```
 cmake -S <path-to-source> -B <path-to-build> -DCMAKE_INSTALL_PREFIX=<path-to-install>
@@ -44,17 +51,17 @@ cmake -S <path-to-source> -B <path-to-build> -DCMAKE_INSTALL_PREFIX=<path-to-ins
 * `<path-to-build>` is a temporary directory of your choice where all of the package download, extraction, and building happens
 * `<path-to-install>` is the directory you want all the packages to be installed to
 
-As an alternative to the above command, which is suitable for scripting and comes natural
-to the experienced CMake user, you may call the menu-guided convenience script that
-will generate and execute the above CMake configure step, just call:
+The above command will choose all the default options. Alternatively, find the file
+[`FairSoftConfig.cmake`](FairSoftConfig.cmake), modify it to your needs and configure
+FairSoft with the following command:
 
 ```
-FairSoft/configure.sh
+cmake -S <path-to-source> -B <path-to-build> -C <path-to-source>/FairSoftConfig.cmake
 ```
 
-Find more detailed information on available customization options in the [options section](options.md).
+Find more detailed information on available customization options in the `FairSoftConfig.cmake` file itself.
 
-### 3. CMake build/install step
+### 4. CMake build/install step
 
 After a successful CMake configure step, you start the build/install step as follows:
 
@@ -67,7 +74,7 @@ cmake --build <path-to-build> [-j<ncpus>]
 
 Note: Due to technical limitations there is no separate `install` target.
 
-### 4. Usage
+### 5. Usage
 
 ```
 export SIMPATH=<path-to-install>
@@ -76,14 +83,38 @@ export SIMPATH=<path-to-install>
 Simply export an environment variable `SIMPATH` which points to the chosen install directory from step 2
 and continue with the [FairRoot installation](https://github.com/FairRootGroup/FairRoot).
 
+## Installation with package manager
+
+At this point in time, we only provide a FairSoft package for macOS based on [Homebrew](https://brew.sh/):
+
+As preparation run
+
+```
+brew update
+brew doctor
+```
+
+Address all issues found by `brew doctor` until you get the message `Your system is ready to brew.`.
+If you choose to not update your system and your Xcode installations to the latest releases, package
+installation may still succeed but may have to fall back to compile from source.
+
+```
+brew tap fairrootgroup/fairsoft
+brew install fairsoft@20.11
+```
+
+Note: Due to technical limitations the version numbers of the brew formula are converted to numerical
+dot notation, e.g. `20.11` for `nov20`.
+
+You may then use this package by setting the `SIMPATH` environment variable:
+
+```
+export SIMPATH=$(brew --prefix fairsoft@20.11)
+```
+
 ## Advanced topics
 
-Find several advanced topics, such as
-* where to find the build log,
-* the directory layout of the build directory, or
-* how to just build a subset of the packages, and more
-
-in the [advanced section](advanced.md).
+Find several advanced and troubleshooting topics in the [advanced section](advanced.md).
 
 ## Tested systems
 
@@ -105,16 +136,15 @@ please contact us.
 | Ubuntu | 18.04 | GCC 7.3.0 |
 | Ubuntu | 20.04 | GCC 9.3.0 |
 
-
-## Included Packages
+## Included packages
 
 | **Package** | **Version** |
 | --- | --- |
 | boost | 1.72.0 |
 | clhep | 2.4.1.3 |
-| dds | 3.5.2 |
-| fairlogger | 1.8.0 |
-| fairmq | 1.4.25 |
+| dds | 3.5.3 |
+| fairlogger | 1.9.0 |
+| fairmq | 1.4.26 |
 | flatbuffers | 1.12.0 |
 | fmt | 6.1.2 |
 | geant3 | 3-7_fairsoft |
@@ -128,26 +158,3 @@ please contact us.
 | vgm | 4-8 |
 | vmc | 1-0-p3 |
 | zeromq | 4.3.1 |
-
-## Removal of packages (outdated, move to advanced)
-
-The installation script is mainly meant for one time installation of all packages.
-For developers we provide also another script which can remove the temporary files
-produced during compilation and the installed files for each of the packages.
-The script takes care also to delete all other packages which depend on the
-package which is removed. As an example given if you remove root then also
-geant4, vgm and geant4_vmc will be removed since these packages depend on root.
-
-The script is either called with one parameter which is the package name
-
-```
-FairSoft/legacy$ ./make_clean.sh root
-```
-
-to remove only the temporary files or with the second parameter _all_
-
-```
-FairSoft/legacy$ ./make_clean.sh root all
-```
-
-which will also remove the files installed into the installation directory.
