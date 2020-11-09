@@ -2,7 +2,7 @@
 
 dnf -y groupinstall "C Development Tools and Libraries"
 dnf -y install autoconf automake binutils bison bzip2-devel cmake \
-ca-certificates coreutils curl-devel dialog diffutils expat-devel findutils flex \
+ca-certificates coreutils curl-devel diffutils expat-devel findutils flex \
 gcc-c++ gcc-gfortran gdbm-devel gettext-devel git gperf gsl-devel \
 gzip help2man hostname hwloc-devel m4 make libbsd-devel libtool libicu-devel \
 libunistring-devel libuuid-devel libX11-devel libXau-devel \
