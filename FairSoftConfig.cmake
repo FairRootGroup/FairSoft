@@ -7,7 +7,6 @@
 
 # In the following uncomment/change the appropriate option to your needs. You may copy
 # this file and save under different names to
-# Note: Defaults are effective even if the option is not set explicitely in this file.
 
 #
 # Install prefix
@@ -17,6 +16,9 @@
 #
 set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install prefix" FORCE)
 # set(CMAKE_INSTALL_PREFIX "/some/other/path" CACHE PATH "Install prefix" FORCE)
+
+# Note: In the following, defaults are effective even if the option
+#       is not set explicitely in this file.
 
 #
 # Build type
@@ -58,6 +60,7 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install prefi
 if(APPLE)
   execute_process(COMMAND brew --prefix python
                   OUTPUT_VARIABLE python_prefix)
+  string(STRIP "${python_prefix}" python_prefix)
   set(PYTHON_EXECUTABLE "${python_prefix}/bin/python3" CACHE FILEPATH "Python executable" FORCE)
 endif()
 # set(PYTHON_EXECUTABLE "/some/other/path/to/python" CACHE FILEPATH "Python executable" FORCE)
