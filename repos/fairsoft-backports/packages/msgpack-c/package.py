@@ -11,10 +11,10 @@ class MsgpackC(CMakePackage):
     homepage = "http://www.msgpack.org"
     url      = "https://github.com/msgpack/msgpack-c/archive/cpp-3.0.1.tar.gz"
 
-    version('3.1.1', '977c85b4f76c7b8d28e348552713d8ef')
-    version('3.0.1', 'a79f05f0dc5637c161805d6c0e9bfbe7')
-    version('2.1.5', '6536e2072a1006e2004e2963081692a2')
-    version('1.4.1', 'e2fd3a7419b9bc49e5017fdbefab87e0')
+    version('3.1.1', sha256='bda49f996a73d2c6080ff0523e7b535917cd28c8a79c3a5da54fc29332d61d1e')
+    version('3.0.1', sha256='1b834ab0b5b41da1dbfb96dd4a673f6de7e79dbd7f212f45a553ff9cc54abf3b')
+    version('2.1.5', sha256='9c87f80fc651b900772deaef0ab154b63160c74d292529b5be6d06d6485d4640')
+    version('1.4.1', sha256='74324d696f9abb75d8a7cd5e77add5062592b7eac386c8102de78a6cc5309886')
 
     depends_on('cmake@2.8.12:', type='build')
     depends_on('googletest', type='test')
