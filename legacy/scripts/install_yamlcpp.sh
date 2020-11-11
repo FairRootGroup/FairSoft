@@ -22,7 +22,7 @@ then
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
           -DCMAKE_INSTALL_PREFIX=$SIMPATH_INSTALL \
           -DYAML_CPP_BUILD_TESTS=OFF \
-          -DBUILD_SHARED_LIBS=ON         \
+          -DYAML_BUILD_SHARED_LIBS=ON    \
           ..
 
     make -j$number_of_processes
