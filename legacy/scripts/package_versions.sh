@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CMAKE_LOCATION="http://www.cmake.org/files/v3.13/"
+export CMAKE_LOCATION="http://www.cmake.org/files/v3.17/"
 export CMAKEVERSION_REQUIRED=cmake-3.16.0
 export CMAKEVERSION=cmake-3.17.3
 
