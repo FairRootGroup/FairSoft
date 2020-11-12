@@ -15,7 +15,7 @@ fi
 
 install_prefix=$SIMPATH_INSTALL
 
-checkfile=$install_prefix/lib/libPythia6.so
+checkfile=$install_prefix/lib/libpythia6.so
 
 if [ ! -d $install_prefix/lib ];
 then
@@ -43,14 +43,14 @@ then
 
   if [ "$platform" = "macosx" ];
   then
-      cp libPythia6.dylib $install_prefix/lib
+      cp libpythia6.dylib $install_prefix/lib
       cd  $install_prefix/lib
-      for file in $(ls libPythia6.dylib); do
+      for file in $(ls libpythia6.dylib); do
          install_name_tool -id $install_prefix/lib/$file $file
       done
       create_links dylib so
-      if [ ! -e libpythia6.dylib ]; then
-        ln -s libPythia6.dylib libpythia6.dylib
+      if [ ! -e libPythia6.dylib ]; then
+        ln -s libpythia6.dylib libPythia6.dylib
       fi
   fi
 
