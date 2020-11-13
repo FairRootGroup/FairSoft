@@ -112,6 +112,10 @@ You may then use this package by setting the `SIMPATH` environment variable:
 export SIMPATH=$(brew --prefix fairsoft@20.11)
 ```
 
+The brew package reflects FairSoft in its default configuration - for details, find the formula in
+[https://github.com/FairRootGroup/homebrew-fairsoft](https://github.com/FairRootGroup/homebrew-fairsoft).
+It is currently not planned to provide other precompiled configurations.
+
 ## Advanced topics
 
 Find several advanced and troubleshooting topics in the [advanced section](advanced.md).
