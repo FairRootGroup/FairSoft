@@ -13,8 +13,8 @@ you may need to run the script with `sudo`.
 **Please read the scripts carefully and make sure you agree with the changes to your system!!**
 
 These scripts are maintained on a best-effort basis. If you find something missing or not working,
-we invite you to describe your use case by [openening an issue](https://github.com/FairRootGroup/FairSoft/issues/new)
-and to come up with a solution together.
+please describe your case by [opening an issue](https://github.com/FairRootGroup/FairSoft/issues/new)
+and let us discuss a solution together.
 
 ## Bootstrapping CMake
 
