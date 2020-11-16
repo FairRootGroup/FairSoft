@@ -177,6 +177,15 @@ if (NOT PACKAGE_SET STREQUAL fairmqdev)
     DEPENDS boost dds fairlogger flatbuffers zeromq ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
+
+  list(APPEND packages odc)
+  set(odc_version "0.10")
+  ExternalProject_Add(odc
+    GIT_REPOSITORY https://github.com/FairRootGroup/ODC GIT_TAG ${odc_version}
+    ${CMAKE_DEFAULT_ARGS}
+    DEPENDS boost dds fairlogger fairmq ${extract_source_cache_target}
+    ${LOG_TO_FILE}
+  )
 endif()
 
 if(PACKAGE_SET STREQUAL full)
