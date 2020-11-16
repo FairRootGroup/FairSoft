@@ -30,3 +30,9 @@ endif()
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 include(${BUILD_METHOD})
+
+find_program(BASH bash HINTS "/bin")
+find_program(SINGULARITY singularity)
+if(BASH AND SINGULARITY)
+  add_subdirectory(test/container)
+endif()
