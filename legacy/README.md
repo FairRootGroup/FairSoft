@@ -142,6 +142,7 @@ please contact us.
 | geant4 | 10.6.2 |
 | geant4_vmc | 5-2 |
 | hepmc | 2.06.09 |
+| odc | 0.10 |
 | pythia6 | 428-alice1 |
 | pythia8 | 8303 |
 | root | 6.20.08 |
