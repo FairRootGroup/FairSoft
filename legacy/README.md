@@ -52,7 +52,7 @@ cmake -S <path-to-source> -B <path-to-build> -DCMAKE_INSTALL_PREFIX=<path-to-ins
 * `<path-to-install>` is the directory you want all the packages to be installed to
 
 The above command will choose all the default options. Alternatively, find the file
-[`FairSoftConfig.cmake`](FairSoftConfig.cmake), modify it to your needs and configure
+[`FairSoftConfig.cmake`](../FairSoftConfig.cmake), modify it to your needs and configure
 FairSoft with the following command:
 
 ```
@@ -85,7 +85,7 @@ and continue with the [FairRoot installation](https://github.com/FairRootGroup/F
 
 ## Installation with package manager
 
-At this point in time, we only provide a FairSoft package for macOS based on [Homebrew](https://brew.sh/):
+At this point in time, we provide a FairSoft package for macOS only based on [Homebrew](https://brew.sh/):
 
 As preparation run
 
@@ -125,20 +125,15 @@ Find several advanced and troubleshooting topics in the [advanced section](advan
 The following systems are tested regularly. If you feel your system is missing,
 please contact us.
 
-| **System** | **Version** | **Compiler** |
-| --- | --- | --- |
-| CentOS | 7 | *TBD* |
-| CentOS | 8 | *TBD* |
-| Debian | 8 (GSI) | GCC 8.1.0 (`/cvmfs/it.gsi.de`) |
-| Debian | 10 | GCC 8.3.0 |
-| Debian | 11 | *TBD* |
-| Fedora | 31 | GCC 9.2.1 |
-| Fedora | 32 | GCC 10.2.1 |
-| macOS | 10.14 | AppleClang 10.0.1 |
-| macOS | 10.15 | AppleClang 12.0.0 |
-| OpenSUSE | 15.2 | GCC 7.5.0 |
-| Ubuntu | 18.04 | GCC 7.3.0 |
-| Ubuntu | 20.04 | GCC 9.3.0 |
+| **System** | **Version** | **Compiler** | **CMake** |
+| --- | --- | --- | --- |
+| CentOS | 7 | GCC 7.3.1 (devtoolset-7) | 3.17.3 (epel: cmake3) |
+| Debian | 10 | GCC 8.3.0 | 3.18.3 (`bootstrap-cmake.sh`) |
+| Fedora | 33 | GCC 10.2.1 | 3.18.3 |
+| macOS | 10.14 | AppleClang 11.0 | 3.18.4 (brew) |
+| macOS | 10.15 | AppleClang 12.0 | 3.18.4 (brew) |
+| OpenSUSE | 15.2 | GCC 7.5.0 | 3.17.0 |
+| Ubuntu | 20.04 | GCC 9.3.0 | 3.16.3 |
 
 ## Included packages
 

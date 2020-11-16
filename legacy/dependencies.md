@@ -3,9 +3,18 @@
 Pick the appropriate setup script for your system and run it. On Linux systems
 you may need to run the script with `sudo`.
 
+* [`legacy/setup-centos-7.sh`](setup-centos-7.sh)
+* [`legacy/setup-debian.sh`](setup-debian.sh)
 * [`legacy/setup-fedora.sh`](setup-fedora.sh)
 * [`legacy/setup-macos.sh`](setup-macos.sh)
+* [`legacy/setup-opensuse.sh`](setup-opensuse.sh)
 * [`legacy/setup-ubuntu.sh`](setup-ubuntu.sh)
+
+**Please read the scripts carefully and make sure you agree with the changes to your system!!**
+
+These scripts are maintained on a best-effort basis. If you find something missing or not working,
+we invite you to describe your use case by [openening an issue](https://github.com/FairRootGroup/FairSoft/issues/new)
+and to come up with a solution together.
 
 ## Bootstrapping CMake
 
