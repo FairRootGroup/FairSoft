@@ -11,7 +11,7 @@ spack:
   - pythia8@8303
   - geant4@10.6.2~qt~vecgeom~opengl~x11~motif+threads
   - $root
-  - vmc@1-0-p1
+  - vmc@1-0-p3
   - geant3@3.7
   - vgm@4-7
   - geant4-vmc@5-2
