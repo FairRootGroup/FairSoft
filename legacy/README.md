@@ -44,22 +44,14 @@ Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
 ### 3. CMake configure step
 
 ```
-cmake -S <path-to-source> -B <path-to-build> -DCMAKE_INSTALL_PREFIX=<path-to-install>
+cmake -S <path-to-source> -B <path-to-build> -C <path-to-source>/FairSoftConfig.cmake
 ```
 
 * `<path-to-source>` shall point to the cloned git repo from the previous step
 * `<path-to-build>` is a temporary directory of your choice where all of the package download, extraction, and building happens
 * `<path-to-install>` is the directory you want all the packages to be installed to
 
-The above command will choose all the default options. Alternatively, find the file
-[`FairSoftConfig.cmake`](../FairSoftConfig.cmake), modify it to your needs and configure
-FairSoft with the following command:
-
-```
-cmake -S <path-to-source> -B <path-to-build> -C <path-to-source>/FairSoftConfig.cmake
-```
-
-Find more detailed information on available customization options in the `FairSoftConfig.cmake` file itself.
+Find more detailed information on available customization options in the [`FairSoftConfig.cmake`](../FairSoftConfig.cmake) file itself.
 
 ### 4. CMake build/install step
 
