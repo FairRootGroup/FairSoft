@@ -34,7 +34,7 @@ fi
 
 (
 	set -x
-	singularity run -B"$bindmounts" "$image" ${ctestcmd}
+	singularity exec -B"$bindmounts" "$image" bash -l -c "${ctestcmd}"
 )
 retval=$?
 
