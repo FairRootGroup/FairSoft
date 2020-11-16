@@ -13,7 +13,7 @@ spack:
   - $root
   - vmc@1-0-p3
   - geant3@3.7
-  - vgm@4-7
+  - vgm@4-8
   - geant4-vmc@5-2
   - fairroot@18.4.1+sim+examples
   - odc
