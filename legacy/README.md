@@ -49,9 +49,8 @@ cmake -S <path-to-source> -B <path-to-build> -C <path-to-source>/FairSoftConfig.
 
 * `<path-to-source>` shall point to the cloned git repo from the previous step
 * `<path-to-build>` is a temporary directory of your choice where all of the package download, extraction, and building happens
-* `<path-to-install>` is the directory you want all the packages to be installed to
 
-Find more detailed information on available customization options in the [`FairSoftConfig.cmake`](../FairSoftConfig.cmake) file itself.
+Set the installation prefix and more customization options in the [`FairSoftConfig.cmake`](../FairSoftConfig.cmake) file itself.
 
 ### 4. CMake build/install step
 
@@ -63,8 +62,6 @@ cmake --build <path-to-build> [-j<ncpus>]
 
 * `<path-to-build>` is the same directory as chosen in the previous configure step
 * `-j<ncpus>` parallelize the build
-
-Note: Due to technical limitations there is no separate `install` target.
 
 ### 5. Usage
 
