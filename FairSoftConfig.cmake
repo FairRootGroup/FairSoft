@@ -1,12 +1,12 @@
 #
 # General usage
 #
-# cmake -S <source-dir> -B <build-dir> -C <source-dir>/BuildConfig.cmake
+# cmake -S <source-dir> -B <build-dir> -C <source-dir>/FairSoftConfig.cmake
 # cmake --build <build-dir> [-j<ncpus>]
 #
 
-# In the following uncomment/change the appropriate option to your needs. You may copy
-# this file and save under different names to
+# In the following uncomment/change the appropriate option to your needs. Manage multiple
+# configurations by simply copying this file under different filenames.
 
 #
 # Install prefix
@@ -17,8 +17,7 @@
 set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install prefix" FORCE)
 # set(CMAKE_INSTALL_PREFIX "/some/other/path" CACHE PATH "Install prefix" FORCE)
 
-# Note: In the following, defaults are effective even if the option
-#       is not set explicitely in this file.
+# Note: Defaults are effective even if the option is not set explicitely in this file.
 
 #
 # Build type
@@ -58,8 +57,7 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install prefi
 #  native macOS Python we have to hint its location:
 #
 if(APPLE)
-  execute_process(COMMAND brew --prefix python
-                  OUTPUT_VARIABLE python_prefix)
+  execute_process(COMMAND brew --prefix python OUTPUT_VARIABLE python_prefix)
   string(STRIP "${python_prefix}" python_prefix)
   set(PYTHON_EXECUTABLE "${python_prefix}/bin/python3" CACHE FILEPATH "Python executable" FORCE)
 endif()
