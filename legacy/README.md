@@ -129,24 +129,24 @@ please contact us.
 
 ## Included packages
 
-| **Package** | **Version** |
-| --- | --- |
-| boost | 1.72.0 |
-| clhep | 2.4.1.3 |
-| dds | 3.5.3 |
-| fairlogger | 1.9.0 |
-| fairmq | 1.4.26 |
-| flatbuffers | 1.12.0 |
-| fmt | 6.1.2 |
-| geant3 | 3-7_fairsoft |
-| geant4 | 10.6.2 |
-| geant4_vmc | 5-2 |
-| hepmc | 2.06.09 |
-| odc | 0.10 |
-| pythia6 | 428-alice1 |
-| pythia8 | 8303 |
-| root | 6.20.08 |
-| vc | 1.4.1 |
-| vgm | 4-8 |
-| vmc | 1-0-p3 |
-| zeromq | 4.3.2 |
+| **Package** | **Version** | **URL** |
+| --- | --- | --- |
+| boost | 1.72.0 | https://www.boost.org/ |
+| clhep | 2.4.1.3 | http://proj-clhep.web.cern.ch |
+| dds | 3.5.3 | http://dds.gsi.de |
+| fairlogger | 1.9.0 | https://github.com/FairRootGroup/FairLogger |
+| fairmq | 1.4.26 | https://github.com/FairRootGroup/FairMQ |
+| flatbuffers | 1.12.0 | https://github.com/google/flatbuffers |
+| fmt | 6.1.2 | https://github.com/fmtlib/fmt |
+| geant3 | 3-7_fairsoft | https://github.com/FairRootGroup/geant3 |
+| geant4 | 10.6.2 | https://geant4.web.cern.ch |
+| geant4_vmc | 5-2 | https://github.com/vmc-project/geant4_vmc |
+| hepmc | 2.06.09 | http://hepmc.web.cern.ch |
+| odc | 0.10 | https://github.com/FairRootGroup/ODC |
+| pythia6 | 428-alice1 | https://github.com/alisw/pythia6 |
+| pythia8 | 8303 | http://home.thep.lu.se/~torbjorn/pythia8 |
+| root | 6.20.08 | https://root.cern |
+| vc | 1.4.1 | https://github.com/VcDevel/Vc |
+| vgm | 4-8 | https://github.com/vmc-project/vgm |
+| vmc | 1-0-p3 | https://github.com/vmc-project/vmc |
+| zeromq | 4.3.2 | https://github.com/zeromq/libzmq |
