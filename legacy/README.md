@@ -149,4 +149,4 @@ please contact us.
 | vc | 1.4.1 |
 | vgm | 4-8 |
 | vmc | 1-0-p3 |
-| zeromq | 4.3.1 |
+| zeromq | 4.3.2 |
