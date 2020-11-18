@@ -105,12 +105,6 @@ class Root(CMakePackage):
             description='Enable HTTP server support')
     variant('jemalloc', default=False,
             description='Enable using the jemalloc allocator')
-    variant('kerberos', default=False,
-            description='Enable Kerberos support')
-    variant('ldap', default=False,
-            description='Enable LDAP support')
-    variant('libcxx', default=False,
-            description='Build using libc++')
     variant('math', default=True,
             description='Build the new libMathMore extended math library')
     variant('memstat', default=False,
@@ -123,8 +117,6 @@ class Root(CMakePackage):
             description="Enable support for TMultilayerPerceptron "
             "classes' federation")
     variant('mysql', default=False)
-    variant('odbc', default=False,
-            description='Enable ODBC support')
     variant('opengl', default=True,
             description='Enable OpenGL support')
     # variant('oracle', default=False) - not supported by spack
@@ -251,11 +243,7 @@ class Root(CMakePackage):
     depends_on('gsl',       when='+gsl')
 #    depends_on('http',      when='+http')
     depends_on('jemalloc',  when='+jemalloc')
-    depends_on('kerberos',  when='+kerberos')
-    depends_on('ldap',      when='+ldap')
-    depends_on('libcxx',    when='+libcxx')
     depends_on('mysql-client',   when='+mysql')
-    depends_on('odbc',      when='+odbc')
     # depends_on('oracle',   when='+oracle')
     depends_on('openssl',   when='+ssl')
     depends_on('openssl',   when='+davix')  # Also with davix
@@ -263,8 +251,8 @@ class Root(CMakePackage):
     depends_on('pythia6',  when='+pythia6')
     depends_on('pythia8',   when='+pythia8')
     depends_on('r',         when='+r', type=('build', 'run'))
-    depends_on('r-cpp',     when='+r', type=('build', 'run'))
-    depends_on('r-inside',  when='+r', type=('build', 'run'))
+    depends_on('r-rcpp',    when='+r', type=('build', 'run'))
+    depends_on('r-rinside', when='+r', type=('build', 'run'))
     depends_on('readline',  when='+r')
     depends_on('shadow',    when='+shadow')
     depends_on('sqlite',    when='+sqlite')
@@ -285,7 +273,6 @@ class Root(CMakePackage):
     # depends_on('chirp')
     # depends_on('dcap')
     # depends_on('gfal')
-    # depends_on('ldap')
     # depends_on('rfio')
 
     # ###################### Conflicts ######################
@@ -307,6 +294,7 @@ class Root(CMakePackage):
 
     def cmake_args(self):
         spec = self.spec
+        define = self.define
         define_from_variant = self.define_from_variant
         options = []
 
@@ -321,6 +309,11 @@ class Root(CMakePackage):
             '-Dasimage:BOOL=ON',  # if afterimage is taken from builtin
             '-Dastiff:BOOL=ON',   # asimage and astiff must be ON too
         ])
+
+        # Options controlling gross build / config behavior.
+        options += [
+            define('libcxx', False),
+        ]
 
         # Options related to ROOT's ability to download and build its own
         # dependencies. Per Spack convention, this should generally be avoided.
@@ -398,12 +391,8 @@ class Root(CMakePackage):
                 'ON' if '+tbb' in spec else 'OFF'),
             '-Djemalloc:BOOL=%s' % (
                 'ON' if '+jemalloc' in spec else 'OFF'),
-            '-Dkrb5:BOOL=%s' % (
-                'ON' if '+kerberos' in spec else 'OFF'),
-            '-Dldap:BOOL=%s' % (
-                'ON' if '+ldap' in spec else 'OFF'),
-            '-Dlibcxx:BOOL=%s' % (
-                'ON' if '+libcxx' in spec else 'OFF'),
+            define('krb5', False),
+            define('ldap', False),
             '-Dmathmore:BOOL=%s' % (
                 'ON' if '+math' in spec else 'OFF'),
             '-Dmemstat:BOOL=%s' % (
@@ -418,8 +407,7 @@ class Root(CMakePackage):
                 'ON' if '+mlp' in spec else 'OFF'),
             '-Dmysql:BOOL=%s' % (
                 'ON' if '+mysql' in spec else 'OFF'),
-            '-Dodbc:BOOL=%s' % (
-                'ON' if '+odbc' in spec else 'OFF'),
+            define('odbc', False),
             '-Dopengl:BOOL=%s' % (
                 'ON' if '+opengl' in spec else 'OFF'),
             '-Doracle:BOOL=%s' % (
