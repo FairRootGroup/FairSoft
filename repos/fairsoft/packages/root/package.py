@@ -148,6 +148,8 @@ class Root(CMakePackage):
             description='Enable ROOT 7 support')
     variant('shadow', default=False,
             description='Enable shadow password support')
+    variant('spectrum', default=False,
+            description='Enable support for TSpectrum')
     variant('sqlite', default=False,
             description='Enable SQLite support')
     variant('ssl', default=False,
@@ -305,6 +307,7 @@ class Root(CMakePackage):
 
     def cmake_args(self):
         spec = self.spec
+        define_from_variant = self.define_from_variant
         options = []
 
         # #################### Base Settings #######################
@@ -453,6 +456,7 @@ class Root(CMakePackage):
                 'ON' if '+rpath' in spec else 'OFF'),
             '-Dshadowpw:BOOL=%s' % (
                 'ON' if '+shadow' in spec else 'OFF'),
+            define_from_variant('spectrum'),
             '-Dsqlite:BOOL=%s' % (
                 'ON' if '+sqlite' in spec else 'OFF'),
             '-Dssl:BOOL=%s' % (
