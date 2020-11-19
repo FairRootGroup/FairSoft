@@ -7,7 +7,9 @@
 ################################################################################
 cmake_minimum_required(VERSION 3.16.1 FATAL_ERROR)
 cmake_policy(VERSION 3.16.1...3.19)
-cmake_policy(SET CMP0114 OLD)
+if(POLICY CMP0114)
+  cmake_policy(SET CMP0114 OLD)
+endif()
 
 find_package(Git REQUIRED)
 find_package(Patch REQUIRED)
