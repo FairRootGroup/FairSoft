@@ -307,6 +307,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Droofit=ON"
       "-Drpath=ON"
       "-Dsoversion=ON"
+      "-Dspectrum=ON"
       "-Dsqlite=ON"
       "-Dtmva=ON"
       "-Dvc=ON"
