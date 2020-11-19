@@ -133,8 +133,8 @@ pipeline {
               ];
           } else {
               specs_list = [
-                [os: 'macOS10.14'],
                 [os: 'macOS10.15'],
+                [os: 'macOS11.0'],
               ];
           }
 
