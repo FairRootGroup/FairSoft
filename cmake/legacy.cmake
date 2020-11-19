@@ -6,7 +6,8 @@
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 cmake_minimum_required(VERSION 3.16.1 FATAL_ERROR)
-cmake_policy(VERSION 3.16.1...3.18)
+cmake_policy(VERSION 3.16.1...3.19)
+cmake_policy(SET CMP0114 OLD)
 
 find_package(Git REQUIRED)
 find_package(Patch REQUIRED)
