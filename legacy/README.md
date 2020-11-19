@@ -119,8 +119,8 @@ please contact us.
 | CentOS | 7 | GCC 7.3.1 (devtoolset-7) | 3.17.3 (epel: cmake3) |
 | Debian | 10 | GCC 8.3.0 | 3.18.3 (`bootstrap-cmake.sh`) |
 | Fedora | 33 | GCC 10.2.1 | 3.18.3 |
-| macOS | 10.14 | AppleClang 11.0 | 3.18.4 (brew) |
 | macOS | 10.15 | AppleClang 12.0 | 3.18.4 (brew) |
+| macOS | 11.0 | AppleClang 12.0 | 3.19.0 (brew) |
 | OpenSUSE | 15.2 | GCC 7.5.0 | 3.17.0 |
 | Ubuntu | 20.04 | GCC 9.3.0 | 3.16.3 |
 
