@@ -19,6 +19,9 @@ class Odc(CMakePackage):
     version('develop', branch='master', get_full_repo=True)
     version('0.10', tag='0.10', commit='776855e3946c290b88e40060b032095e60f1fef3', no_cache=True)
 
+    # See: https://github.com/FairRootGroup/ODC/commit/1618b38c12c9114268c9bce550e9e01e7015a040
+    patch('fix_protoc_args.patch', when='@:0.12')
+
     depends_on('boost@1.67: +log+thread+program_options+filesystem+system+regex')
     conflicts('^boost@1.70:', when='^cmake@:3.14')
     depends_on('protobuf +shared')
