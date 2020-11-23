@@ -181,7 +181,7 @@ else()
   # not any more match. So remove the cache before start / configure.
   file(REMOVE "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt")
   # Remove workdir (keep in sync with CMakeLists.txt)
-  file(REMOVE_RECURSE "${FS_TEST_WORKDIR}")
+  file(REMOVE_RECURSE "${CTEST_BINARY_DIRECTORY}/test_workdir")
 
   ctest_start(Continuous TRACK ${cdash_group})
   ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR};-DFS_TEST_INSTALLTREE=${FS_TEST_INSTALLTREE};-DBUILD_METHOD=spack")
