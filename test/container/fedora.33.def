@@ -1,0 +1,8 @@
+Bootstrap: docker
+From: fedora:33
+
+%post
+    dnf -y update
+    dnf -y groupinstall "C Development Tools and Libraries"
+    dnf -y install gcc-gfortran wget curl which git xz patch procps unzip cmake hostname redhat-lsb-core python
+    dnf -y clean all

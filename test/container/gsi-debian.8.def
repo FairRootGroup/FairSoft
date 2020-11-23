@@ -1,14 +1,17 @@
-# Rebuild:
-#   singularity build -f -F ubuntu.18.04.sif ubuntu.18.04.def
-
 Bootstrap: docker
-From: ubuntu:18.04
+From: debian:8
 
 %post
     apt-get update
     apt-get -y upgrade
     apt-get -y --no-install-recommends install sed curl ca-certificates wget xz-utils bzip2 gzip unzip tar file
     apt-get -y --no-install-recommends install python3 g++ gcc gfortran make patch git
-    # Things for our testing system:
-    apt-get -y --no-install-recommends install cmake hostname lsb-release
-    apt-get -y clean
+    apt-get -y install cmake hostname lsb-release
+
+    mkdir -p /cvmfs /etc/spack
+
+%files
+    gsi-debian-8-gcc.yaml /etc/spack/compilers.yaml
+
+%environment
+    PATH="/cvmfs/it.gsi.de/cmake/3.15.3/bin:$PATH"
