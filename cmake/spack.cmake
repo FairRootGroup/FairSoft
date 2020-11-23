@@ -98,6 +98,9 @@ fs_test(NAME test.fairmq              ENV test/env/fairmq)
 fs_test(NAME test.odc                 SPEC odc)
 fs_test(NAME jun19.sim                ENV env/jun19/sim)
 fs_test(NAME jun19.sim_mt             ENV env/jun19/sim_mt)
+fs_test(NAME nov20.sim                ENV env/nov20/sim)
+fs_test(NAME nov20.sim_mt             ENV env/nov20/sim_mt)
+fs_test(NAME nov20.sim_mt_headless    ENV env/nov20/sim_mt_headless)
 fs_test(NAME dev.sim                  ENV env/dev/sim)
 fs_test(NAME dev.sim_mt               ENV env/dev/sim_mt)
 fs_test(NAME dev.sim_mt_headless      ENV env/dev/sim_mt_headless)
@@ -109,9 +112,13 @@ fs_test(NAME workflow.classic_developer_jun19
         ENV env/jun19/sim
         DEPENDS jun19.sim
         POST test/workflow/classic_developer.sh)
+fs_test(NAME workflow.classic_developer_nov20
+        ENV env/nov20/sim
+        DEPENDS nov20.sim
+        POST test/workflow/classic_developer.sh)
 fs_test(NAME workflow.classic_developer_dev
         ENV env/dev/sim
-        DEPENDS "dev.sim;workflow.classic_developer_jun19"
+        DEPENDS dev.sim
         POST test/workflow/classic_developer.sh)
 
 # Test cleanup
