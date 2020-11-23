@@ -334,7 +334,9 @@ if(PACKAGE_SET STREQUAL full)
 
   list(APPEND packages geant3)
   set(geant3_version "3-7_fairsoft")
-  if(CMAKE_Fortran_COMPILER_VERSION VERSION_EQUAL 7)
+  if(    CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER_EQUAL 7
+     AND CMAKE_Fortran_COMPILER_VERSION VERSION_LESS 8)
+    # see https://github.com/alisw/alidist/issues/1345
     set(geant3_patch_fix_gfortran_7 PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant3/fix_gfortran_7.patch")
   endif()
   ExternalProject_Add(geant3
