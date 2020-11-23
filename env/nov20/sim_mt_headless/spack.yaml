@@ -1,0 +1,20 @@
+spack:
+  definitions:
+  - when: platform == 'linux'
+    root: [root@6.20.08+fortran+gdml+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+mlp+xrootd+sqlite+spectrum]
+  - when: platform == 'darwin'
+    root: [root@6.20.08+fortran+gdml+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+mlp+xrootd+sqlite+spectrum+aqua]
+  specs:
+  - pythia6@428-alice1
+  - hepmc@2.06.09 length=CM momentum=GEV
+  - pythia8@8303
+  - geant4@10.6.2~qt~vecgeom~opengl~x11~motif+threads
+  - $root
+  - vmc@1-0-p3
+  - geant3@3.7
+  - vgm@4-8
+  - geant4-vmc@5-2
+  - fairroot@18.4.1+sim+examples
+  - odc
+  concretization: together
+  view: false
