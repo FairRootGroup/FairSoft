@@ -2,15 +2,12 @@
 
 ### Preface
 
-This release of FairSoft will be the last featuring the classic
-(or "Legacy") FairSoft installation method.
-It is planned to be replaced by a spack based system.
-This is currently in an EXPERIMENTAL state, and meant for
-early adopters.
+The Spack-based FairSoft distribution is currently in an EXPERIMENTAL state. We recommend to always work on the latest
+`dev` branch. In the mid-term future we plan to retire the CMake-based "Legacy" FairSoft and fully switch to the Spack-based one.
 
 ### Introduction
 
-The newly released FairSoft modernizes and reorganizes the framework installation.
+This new FairSoft distribution modernizes and reorganizes the framework installation.
 All needed packages, including the FairRoot package itself,
 are now installed using [Spack](https://spack.readthedocs.io/en/latest/).
 
