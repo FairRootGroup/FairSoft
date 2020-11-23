@@ -1,6 +1,3 @@
-# Rebuild:
-#   singularity build -f -F ubuntu.20.04.sif ubuntu.20.04.def
-
 Bootstrap: docker
 From: ubuntu:20.04
 
@@ -10,6 +7,5 @@ From: ubuntu:20.04
     apt-get -y upgrade
     apt-get -y --no-install-recommends install sed curl ca-certificates wget xz-utils bzip2 gzip unzip tar file
     apt-get -y --no-install-recommends install python3 g++ gcc gfortran make patch git
-    # Things for our testing system:
     apt-get -y --no-install-recommends install cmake hostname lsb-release
     apt-get -y clean

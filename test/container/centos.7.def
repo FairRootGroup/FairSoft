@@ -3,5 +3,24 @@ From: centos:7
 
 %post
     yum -y update
-    yum -y install cmake gcc gcc-c++ gcc-gfortran make patch sed libX11-devel libXft-devel libXpm-devel libXext-devel libXmu-devel mesa-libGLU-devel mesa-libGL-devel ncurses-devel curl curl-devel bzip2 bzip2-devel gzip unzip tar expat-devel subversion git flex bison imake redhat-lsb-core python-devel libxml2-devel wget openssl-devel krb5-devel automake autoconf libtool which
+    yum -y install centos-release-scl
+    yum-config-manager --enable rhel-server-rhscl-7-rpms
+    yum -y install devtoolset-7
+    yum -y install epel-release
+    yum -y install gcc-gfortran wget curl which git xz patch procps unzip python3 cmake3 hostname redhat-lsb-core
     yum -y clean all
+
+    # This enables devtoolset-7 globally!
+    profile="/etc/profile.d/enable-devtoolset-7.sh"
+    cat <<EOF > ${profile}
+    #!/bin/bash
+    source scl_source enable devtoolset-7
+    EOF
+    chmod a+x "${profile}"
+
+    # This enables cmake3 globally!
+    alternatives --install /usr/local/bin/cmake cmake /usr/bin/cmake3 20 \
+    --slave /usr/local/bin/ctest ctest /usr/bin/ctest3 \
+    --slave /usr/local/bin/cpack cpack /usr/bin/cpack3 \
+    --slave /usr/local/bin/ccmake ccmake /usr/bin/ccmake3 \
+    --family cmake
