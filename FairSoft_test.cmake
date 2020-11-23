@@ -184,7 +184,7 @@ else()
   file(REMOVE_RECURSE "${FS_TEST_WORKDIR}")
 
   ctest_start(Continuous TRACK ${cdash_group})
-  ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR};-DFS_TEST_INSTALLTREE=${FS_TEST_INSTALLTREE}")
+  ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR};-DFS_TEST_INSTALLTREE=${FS_TEST_INSTALLTREE};-DBUILD_METHOD=spack")
 endif()
 ctest_test(RETURN_VALUE _ctest_test_ret_val PARALLEL_LEVEL 3)
 ctest_submit()
