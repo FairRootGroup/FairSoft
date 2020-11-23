@@ -28,6 +28,7 @@ class Geant3(CMakePackage):
     patch('gfortran10_support.patch', when='@:3.6')
     patch('fix_geane_propagator_v2-7_fairsoft.patch', when="@2.7")
     patch('fix_geane_propagator_v3-0_fairsoft.patch', when="@3.0")
+    patch('fix_gfortran_7.patch', when='%gcc@7') # see https://github.com/alisw/alidist/issues/1345
 
     def cmake_args(self):
         options = []
