@@ -4,53 +4,39 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 
-from spack import *
-
-
 class Hepmc(CMakePackage):
     """The HepMC package is an object oriented, C++ event record for
        High Energy Physics Monte Carlo generators and simulation."""
 
-    homepage = "http://hepmc.web.cern.ch/hepmc/"
-    url      = "http://hepmc.web.cern.ch/hepmc/releases/hepmc2.06.09.tgz"
+    homepage = "https://hepmc.web.cern.ch/hepmc/"
+    url      = "https://hepmc.web.cern.ch/hepmc/releases/hepmc2.06.11.tgz"
 
-    version('3.0.0',   '2212a5e8d693fbf726c28b43ebc6377a')
+    tags = ['hep']
+
+    version('2.06.11', sha256='86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10')
+    version('2.06.10', sha256='5adedd9e3f7447e1e5fc01b72f745ab87da2c1611df89208bb3d7c6ea94c11a4')
     version('2.06.09', '52518437a64f6b4284e9acc2ecad6212')
     version('2.06.08', 'a2e889114cafc4f60742029d69abd907')
     version('2.06.07', '11d7035dccb0650b331f51520c6172e7')
     version('2.06.06', '102e5503537a3ecd6ea6f466aa5bc4ae')
     version('2.06.05', '2a4a2a945adf26474b8bdccf4f881d9c')
 
-    depends_on('cmake@2.6:', type='build')
+    variant('length', default='CM', values=('CM', 'MM'), multi=False,
+            description='Unit of length')
+    variant('momentum', default='GEV', values=('GEV', 'MEV'), multi=False,
+            description='Unit of momentum')
 
-    variant(
-        'length', default='CM', description='Unit of length',
-        values=('CM', 'MM'), multi=False
-    )
-    variant(
-        'momentum', default='GEV', description='Unit of momentum',
-        values=('GEV', 'MEV'), multi=False
-    )
-
+    depends_on('cmake@2.8.9:', type='build')
 
     def cmake_args(self):
-        options = []
-
-        if self.spec.variants['length'].value == 'CM':
-             options.append('-Dlength:STRING=CM')
-        if self.spec.variants['length'].value == 'MM':
-             options.append('-Dlength:STRING=MM')
-        if self.spec.variants['momentum'].value == 'GEV':
-             options.append('-Dmomentum:STRING=GEV')
-        if self.spec.variants['momentum'].value == 'MEV':
-             options.append('-Dmomentum:STRING=MEV')
-
-        return options
-
+        return [
+            self.define_from_variant('momentum'),
+            self.define_from_variant('length')
+        ]
 
     def url_for_version(self, version):
         if version <= Version("2.06.08"):
             url = "http://lcgapp.cern.ch/project/simu/HepMC/download/HepMC-{0}.tar.gz"
         else:
-            url = "http://hepmc.web.cern.ch/hepmc/releases/hepmc{0}.tgz"
+            url = "https://hepmc.web.cern.ch/hepmc/releases/hepmc{0}.tgz"
         return url.format(version)

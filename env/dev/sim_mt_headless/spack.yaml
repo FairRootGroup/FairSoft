@@ -6,7 +6,7 @@ spack:
     root: [root@6.20.08+fortran+gdml+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+mlp+xrootd+sqlite+spectrum+aqua]
   specs:
   - pythia6@428-alice1
-  - hepmc@2.06.09 length=CM momentum=GEV
+  - hepmc@2.06.11 length=CM momentum=GEV
   - pythia8@8303
   - geant4@10.6.2~qt~vecgeom~opengl~x11~motif+threads
   - $root
