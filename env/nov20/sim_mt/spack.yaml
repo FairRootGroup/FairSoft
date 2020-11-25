@@ -1,10 +1,9 @@
 spack:
   definitions:
   - when: platform == 'linux'
-    root: [root@6.20.08+fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum
-        ^mesa~llvm]
+    root: [root@6.20.08+fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum+x+opengl]
   - when: platform == 'darwin'
-    root: [root@6.20.08+fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum+aqua]
+    root: [root@6.20.08+fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum+x+opengl+aqua]
   specs:
   - fairsoft-config@nov20
   - pythia6@428-alice1
@@ -20,3 +19,8 @@ spack:
   - odc
   concretization: together
   view: false
+  packages:
+    mesa:
+      variants: ~llvm
+    mesa18:
+      variants: ~llvm

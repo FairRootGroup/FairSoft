@@ -1,10 +1,9 @@
 spack:
   definitions:
   - when: platform == 'linux'
-    root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite
-        ^mesa~llvm]
+    root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl]
   - when: platform == 'darwin'
-    root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+aqua]
+    root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl+aqua]
   - concretizer_hints:
     - python@2.7.18
     - py-numpy@1.16.6
@@ -29,3 +28,8 @@ spack:
   - r3broot
   concretization: together
   view: false
+  packages:
+    mesa:
+      variants: ~llvm
+    mesa18:
+      variants: ~llvm
