@@ -30,6 +30,14 @@ then
 		echo "*** Found cache - copying : ${installtreecache}"
 		cp -a --reflink=auto "$installtreecache/." "$installtree/."
 	fi
+	if [ -n "$CHANGE_TARGET" ]
+	then
+		installtree_from_base="$FS_INSTALLTREE_BASE/cache/${LABEL}/job-${CHANGE_TARGET}"
+		if [ -d "$installtree_from_base" ]
+		then
+			echo "*** JFI, found base cache : ${installtree_from_base}"
+		fi
+	fi
 fi
 
 (
