@@ -194,15 +194,6 @@ endif()
 ctest_test(RETURN_VALUE _ctest_test_ret_val PARALLEL_LEVEL 3)
 ctest_submit()
 
-if (NOT BUILD_METHOD STREQUAL legacy)
-  if (NOT _ctest_test_ret_val)
-      # When we're here, then the complete build was successful.
-      # So the install-tree represents a clean build for the
-      # current SHA1:
-      file(WRITE "${FS_TEST_INSTALLTREE}/sha1-stamps" "${FS_GIT_SHA}\n")
-  endif()
-endif()
-
 if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")
     string(TIMESTAMP timestamp "[%H:%M:%S]")
     message(STATUS "${timestamp} Removing directory: ${FS_TEST_WORKDIR_TEMP}")

@@ -69,14 +69,6 @@ spack env list | sed -n -e 's/^ *//' -e 's/ *$//' -e '/^fs_test_/p' \
 
 echo "*** Checking changes and deleting out-dated packages"
 
-if [ -n "$CHANGE_ID" -a -n "$CHANGE_TARGET" ]
-then
-	echo "***    Comparing origin/$CHANGE_TARGET to HEAD"
-	showhist "origin/$CHANGE_TARGET" HEAD
-	git diff --name-only -z "origin/$CHANGE_TARGET" HEAD -- \
-		| handle_gitdifflist
-fi
-
 if [ -r "$FS_TEST_INSTALLTREE/sha1-stamps" ]
 then
 	cat "$FS_TEST_INSTALLTREE/sha1-stamps" | sort | uniq \
@@ -99,6 +91,10 @@ then
 			| handle_gitdifflist
 	done
 fi
+
+# When we're here, we've cleaned up everything that's needed.
+# No need to keep any old SHA1 in the history list.
+git rev-parse --verify HEAD >"$FS_TEST_INSTALLTREE/sha1-stamps"
 
 echo "***"
 echo "***       Done with settings things up"
