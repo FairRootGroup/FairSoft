@@ -192,7 +192,7 @@ else()
   ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR};-DFS_TEST_INSTALLTREE=${FS_TEST_INSTALLTREE};-DBUILD_METHOD=spack")
 endif()
 ctest_test(RETURN_VALUE _ctest_test_ret_val PARALLEL_LEVEL 3)
-ctest_submit()
+ctest_submit(BUILD_ID cdash_build_id)
 
 if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")
     string(TIMESTAMP timestamp "[%H:%M:%S]")
@@ -200,6 +200,14 @@ if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")
     file(REMOVE_RECURSE "${FS_TEST_WORKDIR_TEMP}")
 endif()
 
+message(STATUS " ")
+message(STATUS " CDash Build Summary ..: "
+        "${CTEST_DROP_METHOD}://${CTEST_DROP_SITE}/buildSummary.php?buildid=${cdash_build_id}")
+message(STATUS " CDash Test List ......: "
+        "${CTEST_DROP_METHOD}://${CTEST_DROP_SITE}/viewTest.php?buildid=${cdash_build_id}")
+message(STATUS " ")
+
 if (_ctest_test_ret_val)
-  Message(FATAL_ERROR "Some tests failed.")
+  Message(FATAL_ERROR " \n"
+          "   /!\\  Some tests failed.")
 endif()
