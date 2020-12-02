@@ -114,11 +114,11 @@ fs_test(NAME workflow.classic_developer_jun19
         POST test/workflow/classic_developer.sh)
 fs_test(NAME workflow.classic_developer_nov20
         ENV env/nov20/sim
-        DEPENDS nov20.sim
+        DEPENDS "nov20.sim;workflow.classic_developer_jun19"
         POST test/workflow/classic_developer.sh)
 fs_test(NAME workflow.classic_developer_dev
         ENV env/dev/sim
-        DEPENDS dev.sim
+        DEPENDS "dev.sim;workflow.classic_developer_nov20"
         POST test/workflow/classic_developer.sh)
 
 # Test cleanup
