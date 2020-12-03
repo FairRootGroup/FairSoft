@@ -19,6 +19,10 @@ class Geant3(CMakePackage):
     variant('build_type', default='Nightly',
             description='CMake build type',
             values=('Nightly'))
+    variant('cxxstd', default='default',
+            values=('11', '14', '17'),
+            multi=False,
+            description='Force the specified C++ standard when building.')
 
     depends_on('root')
     depends_on('vmc', when='@3:')
@@ -32,6 +36,12 @@ class Geant3(CMakePackage):
 
     def cmake_args(self):
         options = []
+        cxxstd = self.spec.variants['cxxstd'].value
+        if cxxstd == 'default' and self.spec.satisfies('@:2.7'):
+            # geant3 2.7 needs an explicit CXX setting on macOS 11
+            cxxstd = '11'
+        if cxxstd != 'default':
+            options.append(self.define('CMAKE_CXX_STANDARD', cxxstd))
         options.append('-DCMAKE_INSTALL_LIBDIR:PATH=lib')
         options.append('-DROOT_DIR={0}'.format(
                 self.spec['root'].prefix))
