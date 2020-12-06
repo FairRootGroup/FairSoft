@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ac59845..9e21c78 100644
+index 2e7a642..cc6d865 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -10,7 +10,8 @@ set(DDS_PROTOCOL_VERSION "2")
@@ -10,9 +10,9 @@ index ac59845..9e21c78 100644
 +cmake_minimum_required( VERSION 3.16.0 FATAL_ERROR )
 +cmake_policy(VERSION 3.16)
  
- set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
- 
-@@ -413,69 +414,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
+ # Set appropriate defaults for install subdirectories.
+ # Especially for correct packaging.
+@@ -401,68 +402,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
  set( WN_PKG_NAME_ARCH "${WN_PKG_NAME}.tar.gz" )
  set( WN_PKG_REMOTE_DIR "/u/ddswww/web-docs/releases/add/${DDS_VERSION}" )
  
@@ -45,16 +45,8 @@ index ac59845..9e21c78 100644
 -
 -set(DDS_AGENT_BIN_PATH $<TARGET_FILE:dds-agent>)
 -set(DDS_PREREQ_SOURCE_BIN_PATH $<TARGET_FILE:dds-commander>)
-+# Generate a list of what CMake considers to be system prefixes
-+list(APPEND WN_PKG_EXCLUDED_SYSTEM_PREFIXES
-+  ${CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES}
-+  ${CMAKE_INSTALL_LIBDIR} )
-+list(REMOVE_DUPLICATES WN_PKG_EXCLUDED_SYSTEM_PREFIXES)
-+separate_arguments(CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES
-+  UNIX_COMMAND "${WN_PKG_EXCLUDED_SYSTEM_PREFIXES}" )
- 
--set(PREREQ_DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 -
+-set(PREREQ_DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}")
 -
 -# WORKAROUND: don't generate helper script when building an xcode project
 -# The reason: "Evaluation file to be written multiple times for different configurations or languages with different content"
@@ -84,7 +76,14 @@ index ac59845..9e21c78 100644
 -			  	INPUT ${CMAKE_CURRENT_BINARY_DIR}/cmake/modules/DDS_CollectPrerequisitesGen_Tests.cmake.configured CONDITION 1)
 -	endif( BUILD_TESTS )
 -endif()
--
++# Generate a list of what CMake considers to be system prefixes
++list(APPEND WN_PKG_EXCLUDED_SYSTEM_PREFIXES
++  ${CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES}
++  ${CMAKE_INSTALL_LIBDIR} )
++list(REMOVE_DUPLICATES WN_PKG_EXCLUDED_SYSTEM_PREFIXES)
++separate_arguments(CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES
++  UNIX_COMMAND "${WN_PKG_EXCLUDED_SYSTEM_PREFIXES}" )
+ 
 -#
 -# TODO: replace DDS_CollectPrerequisites.cmake by DDS_CollectPrerequisitesGen.cmake and make the script more generic
 -#
@@ -102,7 +101,7 @@ index ac59845..9e21c78 100644
  	COMMAND ${CMAKE_COMMAND} -E tar czf ${WN_PKG_NAME_ARCH} "${WN_PKG_DIR}"
  	COMMAND chmod go+xr ${WN_PKG_NAME_ARCH}
  	COMMENT "Generate WN binary package"
-@@ -498,19 +461,6 @@ add_dependencies( wn_bin_upload
+@@ -485,19 +449,6 @@ add_dependencies( wn_bin_upload
  
  INSTALL(FILES ${CMAKE_BINARY_DIR}/${WN_PKG_NAME_ARCH} DESTINATION bin/wn_bins OPTIONAL)
  
@@ -112,7 +111,7 @@ index ac59845..9e21c78 100644
 -if (NOT CMAKE_GENERATOR STREQUAL "Xcode")
 -	# WORKAROUND: create destination "lib" directory.
 -	# INSTALL SCRIPT is called before any other lib is installed, therefore we need to create a dest. dir.
--	INSTALL(DIRECTORY DESTINATION lib)
+-	INSTALL(DIRECTORY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 -	INSTALL(SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/cmake/modules/DDS_CollectPrerequisitesGen.cmake)
 -	if( BUILD_TESTS )
 -		INSTALL(SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/cmake/modules/DDS_CollectPrerequisitesGen_Tests.cmake)
@@ -124,7 +123,7 @@ index ac59845..9e21c78 100644
  #
 diff --git a/cmake/DDSCollectWNPkgFiles.cmake b/cmake/DDSCollectWNPkgFiles.cmake
 new file mode 100644
-index 0000000..1b31397
+index 0000000..2b0e38e
 --- /dev/null
 +++ b/cmake/DDSCollectWNPkgFiles.cmake
 @@ -0,0 +1,24 @@
