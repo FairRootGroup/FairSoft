@@ -18,6 +18,7 @@ class R3broot(CMakePackage):
              git='https://github.com/R3BRootGroup/macros',
              branch='dev')
 
+    depends_on('root +minuit')
     depends_on('fairroot')
 
     depends_on('fairlogger')
