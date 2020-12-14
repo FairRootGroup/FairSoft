@@ -15,6 +15,8 @@ class Root(CMakePackage):
     homepage = "https://root.cern.ch"
     url      = "https://root.cern/download/root_v6.16.00.source.tar.gz"
 
+    tags = ['hep']
+
     maintainers = ['chissg', 'HadrienG2', 'drbenmorgan', 'vvolkl']
 
     # ###################### Versions ##########################
@@ -26,6 +28,9 @@ class Root(CMakePackage):
     # Development version (when more recent than production).
 
     # Production version
+    version('6.22.06', sha256='c4688784a7e946cd10b311040b6cf0b2f75125a7520e04d1af0b746505911b57')
+    version('6.22.02', sha256='89784afa9c9047e9da25afa72a724f32fa8aa646df267b7731e4527cc8a0c340')
+    version('6.22.00', sha256='efd961211c0f9cd76cf4a486e4f89badbcf1d08e7535bba556862b3c1a80beed')
     version('6.20.08', sha256='d02f224b4908c814a99648782b927c353d44db79dea2cadea86138c1afc23ae9')
     version('6.20.06', sha256='9a734758a91598d8a58a3d64d7d606aeb17bdf6fd8214e33f5c4d9947d391951')
     version('6.20.04', sha256='1f8c76ccdb550e64e6ddb092b4a7e9d0a10655ef80044828cba12d5e7c874472')
@@ -49,7 +54,6 @@ class Root(CMakePackage):
     version('6.06.06', sha256='0a7d702a130a260c72cb6ea754359eaee49a8c4531b31f23de0bfcafe3ce466b')
     version('6.06.04', sha256='ab86dcc80cbd8e704099af0789e23f49469932ac4936d2291602301a7aa8795b')
     version('6.06.02', sha256='18a4ce42ee19e1a810d5351f74ec9550e6e422b13b5c58e0c3db740cdbc569d1')
-    version('5.34.38', sha256='2c3bda69601d94836bdd88283a6585b4774eafc813deb6aa348df0af2922c4d2')
 
     # ###################### Patches ##########################
 
@@ -119,7 +123,6 @@ class Root(CMakePackage):
     variant('mysql', default=False)
     variant('opengl', default=True,
             description='Enable OpenGL support')
-    # variant('oracle', default=False) - not supported by spack
     variant('postgres', default=False,
             description='Enable postgres support')
     variant('pythia6', default=False,
@@ -154,8 +157,6 @@ class Root(CMakePackage):
             description='Enable test suit of ROOT with CTest')
     variant('threads', default=True,
             description='Enable using thread library')
-    variant('tiff', default=True,
-            description='Include Tiff support in image processing')
     variant('tmva', default=False,
             description='Build TMVA multi variate analysis library')
     variant('unuran', default=True,
@@ -168,8 +169,6 @@ class Root(CMakePackage):
             description='Enable the Virtual Monte Carlo interface')
     variant('x', default=True,
             description='Enable set of graphical options')
-    # variant('xinetd', default=False,  - not supported by spack
-    #    description='Enable a daemon process manager')
     variant('xml', default=True,
             description='Enable XML parser interface')
     variant('xrootd', default=False,
@@ -244,7 +243,6 @@ class Root(CMakePackage):
 #    depends_on('http',      when='+http')
     depends_on('jemalloc',  when='+jemalloc')
     depends_on('mysql-client',   when='+mysql')
-    # depends_on('oracle',   when='+oracle')
     depends_on('openssl',   when='+ssl')
     depends_on('openssl',   when='+davix')  # Also with davix
     depends_on('postgresql', when='+postgres')
@@ -317,31 +315,28 @@ class Root(CMakePackage):
 
         # Options related to ROOT's ability to download and build its own
         # dependencies. Per Spack convention, this should generally be avoided.
-        builtin_opts\
-            = [
-                ['builtin_llvm', True],
-                ['builtin_afterimage', True],
-                ['builtin_cfitsio', False],
-                ['builtin_davix', False],
-                ['builtin_fftw3', False],
-                ['builtin_freetype', False],
-                ['builtin_ftgl', False],
-                ['builtin_gl2ps', True],
-                ['builtin_glew', False],
-                ['builtin_gsl', False],
-                ['builtin_lzma', False],
-                ['builtin_openssl', False],
-                ['builtin_pcre', False],
-                ['builtin_tbb', False],
-                ['builtin_unuran', False],
-                ['builtin_vc', False],
-                ['builtin_vdt', False],
-                ['builtin_veccore', False],
-                ['builtin_xrootd', False],
-                ['builtin_zlib', False]
-            ]
-        for opt_key, opt_val in builtin_opts:
-            options.append(self.define(opt_key, opt_val))
+        options += [
+            define('builtin_llvm', True),
+            define('builtin_afterimage', True),
+            define('builtin_cfitsio', False),
+            define('builtin_davix', False),
+            define('builtin_fftw3', False),
+            define('builtin_freetype', False),
+            define('builtin_ftgl', False),
+            define('builtin_gl2ps', True),
+            define('builtin_glew', False),
+            define('builtin_gsl', False),
+            define('builtin_lzma', False),
+            define('builtin_openssl', False),
+            define('builtin_pcre', False),
+            define('builtin_tbb', False),
+            define('builtin_unuran', False),
+            define('builtin_vc', False),
+            define('builtin_vdt', False),
+            define('builtin_veccore', False),
+            define('builtin_xrootd', False),
+            define('builtin_zlib', False)
+        ]
 
         # LZ4 and xxhash do not work as external deps for older versions
         options.extend([
@@ -410,8 +405,6 @@ class Root(CMakePackage):
             define('odbc', False),
             '-Dopengl:BOOL=%s' % (
                 'ON' if '+opengl' in spec else 'OFF'),
-            '-Doracle:BOOL=%s' % (
-                'ON' if '+oracle' in spec else 'OFF'),  # not supported
             '-Dpch:BOOL=%s' % (
                 'ON' if '+pch' in spec else 'OFF'),  # needs cling
             '-Dpgsql:BOOL=%s' % (
@@ -543,6 +536,8 @@ class Root(CMakePackage):
         return options
 
     def setup_environment(self, spack_env, run_env):
+        spec = self.spec
+
         run_env.set('ROOTSYS', self.prefix)
         run_env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
         run_env.prepend_path('PYTHONPATH', self.prefix.lib)
@@ -575,11 +570,13 @@ class Root(CMakePackage):
         add_include_path('jpeg')
 
         # With that done, let's go fixing those deps
-        if '+x' in self.spec:
+        if '+x' in spec:
+            if spec.satisfies('@:6.08.99') or spec.satisfies('@6.22:'):
+                add_include_path('xextproto')
             add_include_path('fontconfig')
             add_include_path('libx11')
             add_include_path('xproto')
-        if '+opengl' in self.spec:
+        if '+opengl' in spec:
             add_include_path('glew')
             add_include_path('mesa-glu')
 
