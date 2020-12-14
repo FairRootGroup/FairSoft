@@ -10,8 +10,11 @@ class Geant4Vmc(CMakePackage):
     """Geant4 VMC implements the Virtual Monte Carlo (VMC) for Geant4"""
 
     homepage = "https://github.com/vmc-project/geant4_vmc"
-    url = "https://github.com/vmc-project/geant4_vmc/archive/v3-6.tar.gz"
+    url      = "https://github.com/vmc-project/geant4_vmc/archive/v3-6.tar.gz"
 
+    tags = ['hep']
+
+    version('5-3',    sha256='22f58530963988380509a7741ad6b3dde21806f3862fb55c11cc27f25d3d3c2d')
     version('5-2',    sha256='5bd0e4a4f938048b35724f06075952ecfbc8a97ffc979630cfe2788323845b13')
     version('5-1-p1', sha256='2e3e4705134ea464e993156f71d478cb7d3817f5b6026bf8d9a37d32ec97590b')
     version('5-1',    sha256='ede71f360397dc4d045ec0968acf23b564fa81059c94eb40942b552eea8b5e00')
@@ -28,6 +31,7 @@ class Geant4Vmc(CMakePackage):
     depends_on('geant4')
     depends_on('geant4@10.5:', when='@5-0:')
     depends_on('geant4@10.6:', when='@5-2:')
+    depends_on('geant4@10.7:', when='@5-3:')
     depends_on('vgm')
     depends_on('vmc', when='@5-0:')
 
