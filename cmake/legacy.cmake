@@ -225,10 +225,10 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages clhep)
-  set(clhep_version "2.4.1.3")
+  set(clhep_version "2.4.4.0")
   ExternalProject_Add(clhep
     URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
-    URL_HASH SHA256=27c257934929f4cb1643aa60aeaad6519025d8f0a1c199bc3137ad7368245913
+    URL_HASH SHA256=5df78c11733a091da9ae5a24ce31161d44034dd45f20455587db85f1ca1ba539
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
     ${LOG_TO_FILE}
@@ -258,7 +258,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages geant4)
-  set(geant4_version "10.6.2")
+  set(geant4_version "10.7.0")
   if(GEANT4MT)
     set(mt
       "-DGEANT4_BUILD_MULTITHREADED=ON"
@@ -269,9 +269,9 @@ if(PACKAGE_SET STREQUAL full)
   endif()
   ExternalProject_Add(geant4
     URL https://gitlab.cern.ch/geant4/geant4/-/archive/v${geant4_version}/geant4-v${geant4_version}.tar.gz
-    URL_HASH SHA256=e381e04c02aeade1ed8cdd9fdbe7dcf5d6f0f9b3837a417976b839318a005dbd
+    URL_HASH SHA256=c991a139210c7f194720c900b149405090058c00beb5a0d2fac5c40c42a262d4
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DGEANT4_BUILD_CXXSTD=c++${CMAKE_CXX_STANDARD}"
+      "-DGEANT4_BUILD_CXXSTD=${CMAKE_CXX_STANDARD}"
       ${mt}
       "-DGEANT4_USE_SYSTEM_CLHEP=ON"
       "-DGEANT4_USE_SYSTEM_EXPAT=ON"
@@ -359,7 +359,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages geant4_vmc)
-  set(geant4_vmc_version "5-2")
+  set(geant4_vmc_version "5-3")
   ExternalProject_Add(geant4_vmc
     GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v${geant4_vmc_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
