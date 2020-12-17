@@ -49,6 +49,7 @@ class Dds(CMakePackage):
     conflicts('^boost@1.70:', when='^cmake@:3.14')
 
     depends_on('cmake@3.16:', type='build')
+    depends_on('cmake@3.18:', type='build', when='os=bigsur')
     depends_on('git', type='build')
 
     variant('cxxstd', default='default',
