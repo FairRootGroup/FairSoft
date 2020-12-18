@@ -11,6 +11,10 @@ then
 	fi
 fi
 
+if [ -n "$CHANGE_URL" ]
+then
+	echo "*** Pull / Merge Request .: $CHANGE_URL"
+fi
 if [ -n "$BUILD_URL" ]
 then
 	echo "*** BUILD Url ............: $BUILD_URL"
