@@ -23,9 +23,9 @@ class Geant4Vmc(CMakePackage):
     version('5-0-p3', sha256='91df73e992bf9ae7e1b6b3c3deb12cd6661c7dd5153fa233eb28b8d8e1164ccb')
     version('5-0-p2', sha256='34578c5468173615de3fc077e85be3bf68f4aff4b4f37523ab67304dbc153d5f')
     version('5-0-p1', sha256='b66cbf86a96b6efe1643753a7606b1c4ebb9d45cca9f6b8e933762920f32831f')
-    version('3-6', '01507945dfcc21827628d0eb6b233931')
-    version('4-0-p1', 'd7e88a3ef11ea62bec314b5f251c91b1')
-    version('5-0', sha256='9a3820ea4b68b5a0697c340bbbc0972b9c8e4205ceecdd87258a9bdfd249cd8b')
+    version('5-0',    sha256='9a3820ea4b68b5a0697c340bbbc0972b9c8e4205ceecdd87258a9bdfd249cd8b')
+    version('4-0-p1', sha256='6f1659e05a0420b471fbe6c8a6016705bc2240ada992f044071fab0eb3ef4d09')
+    version('3-6',    sha256='fd54b152ba8a08216d4c4f454d019a7661198f4345cd434d1c820c347de18ec1')
 
     depends_on('root')
     depends_on('geant4')
