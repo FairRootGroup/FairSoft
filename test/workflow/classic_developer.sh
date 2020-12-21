@@ -18,10 +18,11 @@ then
   no_boost_cmake=1
 fi
 
-if [[ "$ENVNAME" =~ nov20 ]]
-then
-  ctest_exclude_pattern="$ctest_exclude_pattern|pixelSplitDDS"
-fi
+case "$ENVNAME" in
+  *)
+    ctest_exclude_pattern="$ctest_exclude_pattern|pixelSplitDDS"
+    ;;
+esac
 
 
 unset FAIRSOFT_ROOT
