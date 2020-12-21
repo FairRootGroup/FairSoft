@@ -16,7 +16,7 @@ class Pythia6(CMakePackage):
     homepage = "https://pythia6.hepforge.org/"
     url      = "https://github.com/alisw/pythia6/archive/428-alice1.tar.gz"
 
-    version('428-alice1', '8751dda1c4b5f137817876ea0d4b8a5b')
+    version('428-alice1', sha256='b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244')
 
     patch('add_missing_extern_keyword.patch')
 
