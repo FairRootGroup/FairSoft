@@ -304,6 +304,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dglobus=OFF"
       "-Dgnuinstall=ON"
       "-Dhttp=ON"
+      "-Dmathmore=ON"
       "-Dminuit2=ON"
       "-Dmlp=ON"
       "-Dpyroot=ON"
