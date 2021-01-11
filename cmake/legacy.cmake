@@ -295,6 +295,8 @@ if(PACKAGE_SET STREQUAL full)
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
     URL_HASH SHA256=d02f224b4908c814a99648782b927c353d44db79dea2cadea86138c1afc23ae9
     PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_find_glew_cmake.patch"
+    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/xrootd_5_compat.patch"
+    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/add_xproofd_build_option.patch"
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
