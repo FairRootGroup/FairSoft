@@ -14,7 +14,7 @@ endif()
 find_package(Git REQUIRED)
 find_package(Patch REQUIRED)
 find_package(UnixCommands)
-set(patch $<TARGET_FILE:Patch::patch> -N)
+set(patch $<TARGET_FILE:Patch::patch> --merge)
 
 set(PROJECT_MIN_CXX_STANDARD 14)
 
