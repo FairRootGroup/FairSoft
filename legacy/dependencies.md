@@ -3,12 +3,18 @@
 Pick the appropriate setup script for your system and run it. On Linux systems
 you may need to run the script with `sudo`.
 
-* [`legacy/setup-centos-7.sh`](setup-centos-7.sh)
-* [`legacy/setup-debian.sh`](setup-debian.sh)
-* [`legacy/setup-fedora.sh`](setup-fedora.sh)
-* [`legacy/setup-macos.sh`](setup-macos.sh)
-* [`legacy/setup-opensuse.sh`](setup-opensuse.sh)
-* [`legacy/setup-ubuntu.sh`](setup-ubuntu.sh)
+* CentOS 7:
+  [`legacy/setup-centos-7.sh`](setup-centos-7.sh)
+* Debian 10: Please highly consider enabling [packports](https://backports.debian.org/):
+  [`legacy/setup-debian.sh`](setup-debian.sh)
+* Fedora:
+  [`legacy/setup-fedora.sh`](setup-fedora.sh)
+* macOS:
+  [`legacy/setup-macos.sh`](setup-macos.sh)
+* OpenSuse:
+  [`legacy/setup-opensuse.sh`](setup-opensuse.sh)
+* Ubuntu:
+  [`legacy/setup-ubuntu.sh`](setup-ubuntu.sh)
 
 **Please read the scripts carefully and make sure you agree with the changes to your system!!**
 
