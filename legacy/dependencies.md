@@ -5,7 +5,7 @@ you may need to run the script with `sudo`.
 
 * CentOS 7:
   [`legacy/setup-centos-7.sh`](setup-centos-7.sh)
-* Debian 10: Please highly consider enabling [packports](https://backports.debian.org/):
+* Debian 10: Please highly consider enabling [backports](https://backports.debian.org/):
   [`legacy/setup-debian.sh`](setup-debian.sh)
 * Fedora:
   [`legacy/setup-fedora.sh`](setup-fedora.sh)
