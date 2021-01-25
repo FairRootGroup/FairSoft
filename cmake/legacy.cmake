@@ -274,9 +274,14 @@ if(PACKAGE_SET STREQUAL full)
     set(mt
       "-DGEANT4_BUILD_MULTITHREADED=OFF")
   endif()
+  if(APPLE)
+    set(patch_support_brewed_gl_macos
+      PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant4/support_brewed_gl.patch")
+  endif()
   ExternalProject_Add(geant4
     URL https://gitlab.cern.ch/geant4/geant4/-/archive/v${geant4_version}/geant4-v${geant4_version}.tar.gz
     URL_HASH SHA256=e381e04c02aeade1ed8cdd9fdbe7dcf5d6f0f9b3837a417976b839318a005dbd
+    ${patch_support_brewed_gl_macos}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DGEANT4_BUILD_CXXSTD=c++${CMAKE_CXX_STANDARD}"
       ${mt}
