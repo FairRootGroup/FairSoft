@@ -62,3 +62,16 @@ if(APPLE)
   set(PYTHON_EXECUTABLE "${python_prefix}/bin/python3" CACHE FILEPATH "Python executable" FORCE)
 endif()
 # set(PYTHON_EXECUTABLE "/some/other/path/to/python" CACHE FILEPATH "Python executable" FORCE)
+
+#
+# ICU
+#
+#  On macOS we assume you have used <source-dir>/legacy/setup-macos.sh which
+#  installs ICU via Homebrew. That the Homebrew-based ICU is chosen over the
+#  native macOS ICU we have to hint its location:
+#
+if(APPLE)
+  execute_process(COMMAND brew --prefix icu4c OUTPUT_VARIABLE icu_prefix)
+  string(STRIP "${icu_prefix}" icu_prefix)
+  set(ICU_ROOT "${icu_prefix}" CACHE FILEPATH "ICU prefix" FORCE)
+endif()
