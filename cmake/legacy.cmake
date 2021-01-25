@@ -354,10 +354,14 @@ if(PACKAGE_SET STREQUAL full)
      AND CMAKE_Fortran_COMPILER_VERSION VERSION_LESS 8)
     # see https://github.com/alisw/alidist/issues/1345
     set(geant3_patch_fix_gfortran_7 PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant3/fix_gfortran_7.patch")
+    set(geant3_patch_fix_string_handling COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant3/fix_string_handling_in_ertrak.patch")
+  else()
+    set(geant3_patch_fix_string_handling PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant3/fix_string_handling_in_ertrak.patch")
   endif()
   ExternalProject_Add(geant3
     GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
     ${geant3_patch_fix_gfortran_7}
+    ${geant3_patch_fix_string_handling}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DBUILD_GCALOR=ON"
     DEPENDS root vmc ${extract_source_cache_target}
