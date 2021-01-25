@@ -47,8 +47,14 @@ if(APPLE)
   )
 endif()
 unset(python)
+if(ICU_ROOT)
+  set(icu "-DICU_ROOT=${ICU_ROOT}")
+  set(boost_icu_config "--with-icu=${ICU_ROOT}")
+endif()
 if(PYTHON_EXECUTABLE)
   set(python "-DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}")
+  get_filename_component(PYTHON_EXECUTABLE_FILE "${PYTHON_EXECUTABLE}" NAME)
+  set(boost_python_config "--with-python=${PYTHON_EXECUTABLE_FILE}")
 endif()
 set(LOG_TO_FILE
   LOG_DIR "${CMAKE_BINARY_DIR}/Log"
@@ -95,6 +101,7 @@ ExternalProject_Add(boost
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
+    ${boost_python_config} ${boost_icu_config}
   PATCH_COMMAND ${patch} -p2 -i "${CMAKE_SOURCE_DIR}/legacy/boost/1.72_boost_process.patch"
   BUILD_COMMAND "./b2" "--layout=system"
     "cxxstd=${CMAKE_CXX_STANDARD}"
