@@ -1,8 +1,8 @@
 #! /bin/bash
 
 brew update
-brew install cmake cfitsio coreutils icu4c fftw freetype \
-ftgl gcc gl2ps gpatch graphviz grpc gsl libjpeg libpng libtiff \
+brew install cmake cfitsio coreutils davix icu4c fftw freetype \
+ftgl gcc giflib gl2ps gpatch graphviz grpc gsl libjpeg libpng libtiff \
 lz4 numpy openlibm openssl pcre pkg-config python sqlite \
 tbb xerces-c xrootd xxhash xz yaml-cpp zstd
 brew cask install xquartz
