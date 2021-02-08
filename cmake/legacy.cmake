@@ -290,8 +290,8 @@ if(PACKAGE_SET STREQUAL full)
       "-DGEANT4_USE_SYSTEM_ZLIB=ON"
       "-DGEANT4_USE_G3TOG4=ON"
       "-DGEANT4_USE_GDML=ON"
-      "-DGEANT4_USE_OPENGL_X11=ON"
-      "-DGEANT4_USE_RAYTRACER_X11=ON"
+      "-DGEANT4_USE_OPENGL_X11=OFF"
+      "-DGEANT4_USE_RAYTRACER_X11=OFF"
       "-DGEANT4_USE_PYTHON=ON"
       "-DGEANT4_INSTALL_DATA=ON"
       "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
@@ -303,6 +303,11 @@ if(PACKAGE_SET STREQUAL full)
 
   list(APPEND packages root)
   set(root_version "6.20.08")
+  if(APPLE)
+    set(root_x11 OFF)
+  else()
+    set(root_x11 ON)
+  endif()
   ExternalProject_Add(root
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
     URL_HASH SHA256=d02f224b4908c814a99648782b927c353d44db79dea2cadea86138c1afc23ae9
@@ -335,6 +340,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dvmc=OFF"
       "-Dxml=ON"
       "-Dxrootd=ON"
+      "-Dx11=${root_x11}"
       ${python}
     DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
     ${LOG_TO_FILE}
