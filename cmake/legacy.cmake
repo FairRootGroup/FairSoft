@@ -283,8 +283,8 @@ if(PACKAGE_SET STREQUAL full)
       "-DGEANT4_USE_SYSTEM_ZLIB=ON"
       "-DGEANT4_USE_G3TOG4=ON"
       "-DGEANT4_USE_GDML=ON"
-      "-DGEANT4_USE_OPENGL_X11=ON"
-      "-DGEANT4_USE_RAYTRACER_X11=ON"
+      "-DGEANT4_USE_OPENGL_X11=OFF"
+      "-DGEANT4_USE_RAYTRACER_X11=OFF"
       "-DGEANT4_USE_PYTHON=ON"
       "-DGEANT4_INSTALL_DATA=ON"
       "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
@@ -298,6 +298,11 @@ if(PACKAGE_SET STREQUAL full)
   set(root_version "6.22.06")
   if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
     set(root_builtin_glew "-Dbuiltin_glew=ON")
+  endif()
+  if(APPLE)
+    set(root_x11 OFF)
+  else()
+    set(root_x11 ON)
   endif()
   ExternalProject_Add(root
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
@@ -328,6 +333,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dvmc=OFF"
       "-Dxml=ON"
       "-Dxrootd=ON"
+      "-Dx11=${root_x11}"
       ${python}
       ${root_builtin_glew}
     DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
