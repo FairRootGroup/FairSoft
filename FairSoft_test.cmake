@@ -154,7 +154,7 @@ if (BUILD_METHOD STREQUAL legacy)
   ctest_start(Continuous TRACK ${cdash_group})
   list(APPEND options
     "-DBUILD_METHOD=legacy"
-    "-DCMAKE_INSTALL_PREFIX=install"
+    "-DCMAKE_INSTALL_PREFIX=inst"
     "-DNCPUS=${NCPUS}")
   if(APPLE)
     execute_process(COMMAND brew --prefix python OUTPUT_VARIABLE python_prefix)
