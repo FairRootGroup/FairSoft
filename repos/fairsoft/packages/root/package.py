@@ -260,7 +260,8 @@ class Root(CMakePackage):
     depends_on('veccore',   when='+veccore')
     depends_on('vdt',       when='+vdt')
     depends_on('libxml2~python',   when='+xml')
-    depends_on('xrootd@:4.99.99',    when='+xrootd')
+    depends_on('xrootd',          when='+xrootd')
+    depends_on('xrootd@:4.99.99', when='@:6.22.03 +xrootd')
     # depends_on('hdfs') - supported (TODO)
 
     # Not supported
