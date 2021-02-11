@@ -1,9 +1,9 @@
 packages:
   opengl:
     paths:
-      opengl@3.3: /opt/X11
-    buildable: False
+      opengl@3.3: /usr
+    buildable: false
   openglu:
     paths:
-      openglu@1.3: /opt/X11
-    buildable: False
+      openglu@1.3: /usr
+    buildable: false
