@@ -1,6 +1,6 @@
---- spack-src/califa/R3BCalifaGeometry.cxx~	2020-04-01 14:17:31.000000000 +0200
-+++ spack-src/califa/R3BCalifaGeometry.cxx	2020-04-01 16:30:16.546107352 +0200
-@@ -272,15 +272,6 @@
+--- a/califa/pars/R3BCalifaGeometry.cxx
++++ b/califa/pars/R3BCalifaGeometry.cxx
+@@ -274,15 +274,6 @@
      return distance;
  }
  

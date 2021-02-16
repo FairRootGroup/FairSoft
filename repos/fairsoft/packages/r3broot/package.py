@@ -9,6 +9,8 @@ from spack import *
 
 
 class R3broot(CMakePackage):
+    """Simulations and Data Analysis for R3B at FAIR"""
+
     git = 'https://github.com/R3BRootGroup/R3BRoot'
     homepage = 'https://github.com/R3BRootGroup/R3BRoot'
 
