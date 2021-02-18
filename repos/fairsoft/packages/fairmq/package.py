@@ -17,6 +17,10 @@ class Fairmq(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='dev', submodules=True, get_full_repo=True)
+    # version('1.4.30', tag='v1.4.30', commit='2b3e38d9a48a0d941a7a794be0a53c8dbfefbaec', submodules=True, no_cache=True)
+    # version('1.4.29', tag='v1.4.29', commit='c6b13cd3a18ac0e4d724e4df54f8027885b9ee0d', submodules=True, no_cache=True)
+    version('1.4.28', tag='v1.4.28', commit='f46d446d520fab441e70decf7ab028630c9b0b96', submodules=True, no_cache=True)
+    version('1.4.27', tag='v1.4.27', commit='db0937f339cd6d1f3dbc5143182fa8173de084a1', submodules=True, no_cache=True)
     version('1.4.26', tag='v1.4.26', commit='49d8a1b4dda2c2d446b73a1e39303b581f06f048', submodules=True, no_cache=True)
     version('1.4.25', tag='v1.4.25', commit='1b30f3ac142165b5d17d8ac3ec616414946e23bf', submodules=True, no_cache=True)
     version('1.4.24', tag='v1.4.24', commit='35c7959c530c010da718892fd3948467f104d267', submodules=True, no_cache=True)
@@ -53,10 +57,11 @@ class Fairmq(CMakePackage):
             multi=False,
             description='CMake build type')
     variant('cxxstd', default='default',
-            values=('11', '14', '17'),
+            values=('default', '11', '14', '17'),
             multi=False,
             description='Force the specified C++ standard when building.')
     conflicts('cxxstd=11', when='@1.4.11:')
+    conflicts('cxxstd=14', when='@1.4.29:')
 
     patch('fix_find_dds.patch', when='@1.4.0:1.4.4')
     patch('use_bundled_gtest_149.patch', when='@1.4.9:1.4.16')
@@ -80,7 +85,8 @@ class Fairmq(CMakePackage):
     depends_on('msgpack-c@3.1:', when='@:1.4.16')
     depends_on('dds@2.4', when='@:1.4.9')
     depends_on('dds@2.5-odc', when='@1.4.10')
-    depends_on('dds@3.0:', when='@1.4.11:')
+    depends_on('dds@3.0:', when='@1.4.11:1.4.26')
+    depends_on('dds@3.5.3:', when='@1.4.27:')
     depends_on('flatbuffers', when='@1.4.9:')
     depends_on('pmix@2.1.4:', when='@1.4:')
 
