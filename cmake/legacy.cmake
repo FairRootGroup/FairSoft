@@ -16,7 +16,7 @@ find_package(Patch REQUIRED)
 find_package(UnixCommands)
 set(patch $<TARGET_FILE:Patch::patch> --merge)
 
-set(PROJECT_MIN_CXX_STANDARD 14)
+set(PROJECT_MIN_CXX_STANDARD 17)
 
 include(FairSoftLib)
 set_fairsoft_defaults()
