@@ -302,12 +302,10 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages root)
-  set(root_version "6.20.08")
+  set(root_version "6.22.06")
   ExternalProject_Add(root
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
-    URL_HASH SHA256=d02f224b4908c814a99648782b927c353d44db79dea2cadea86138c1afc23ae9
-    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_find_glew_cmake.patch"
-    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/xrootd_5_compat.patch"
+    URL_HASH SHA256=c4688784a7e946cd10b311040b6cf0b2f75125a7520e04d1af0b746505911b57
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
