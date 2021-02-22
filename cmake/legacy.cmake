@@ -189,10 +189,9 @@ if (NOT PACKAGE_SET STREQUAL fairmqdev)
   )
 
   list(APPEND packages odc)
-  set(odc_version "0.10")
+  set(odc_version "0.14")
   ExternalProject_Add(odc
     GIT_REPOSITORY https://github.com/FairRootGroup/ODC GIT_TAG ${odc_version}
-    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/odc/fix_protoc_args.patch"
     ${CMAKE_DEFAULT_ARGS}
     DEPENDS boost dds fairlogger fairmq ${extract_source_cache_target}
     ${LOG_TO_FILE}
