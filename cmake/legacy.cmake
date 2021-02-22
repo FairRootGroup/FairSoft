@@ -189,7 +189,7 @@ if (NOT PACKAGE_SET STREQUAL fairmqdev)
   )
 
   list(APPEND packages odc)
-  set(odc_version "0.14")
+  set(odc_version "0.16")
   ExternalProject_Add(odc
     GIT_REPOSITORY https://github.com/FairRootGroup/ODC GIT_TAG ${odc_version}
     ${CMAKE_DEFAULT_ARGS}
