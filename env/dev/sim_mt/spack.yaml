@@ -1,9 +1,9 @@
 spack:
   definitions:
   - when: platform == 'linux'
-    root: [root@6.20.08+fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum+x+opengl]
+    root: [root@6.22.06+fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum+x+opengl]
   - when: platform == 'darwin'
-    root: [root@6.20.08+fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum+x+opengl+aqua]
+    root: [root@6.22.06+fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum+x+opengl+aqua]
   specs:
   - pythia6@428-alice1
   - hepmc@2.06.11 length=CM momentum=GEV
