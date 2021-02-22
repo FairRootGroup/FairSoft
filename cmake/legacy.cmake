@@ -297,6 +297,9 @@ if(PACKAGE_SET STREQUAL full)
 
   list(APPEND packages root)
   set(root_version "6.22.06")
+  if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
+    set(root_builtin_glew "-Dbuiltin_glew=ON")
+  endif()
   ExternalProject_Add(root
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
     URL_HASH SHA256=c4688784a7e946cd10b311040b6cf0b2f75125a7520e04d1af0b746505911b57
@@ -327,6 +330,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dxml=ON"
       "-Dxrootd=ON"
       ${python}
+      ${root_builtin_glew}
     DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
