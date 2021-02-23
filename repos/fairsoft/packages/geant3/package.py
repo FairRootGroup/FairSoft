@@ -13,6 +13,7 @@ class Geant3(CMakePackage):
     url      = 'https://github.com/FairRootGroup/geant3/archive/v3-7_fairsoft.tar.gz'
     git      = "https://github.com/FairRootGroup/geant3.git"
 
+    version('3.8', sha256='7f5adf072e2c8238bc7774a570fe6aa741923124ac38ad92b473cbb0e061d96e')
     version('3.7', sha256='739548b5c38133d6b3e0f4e5b3b2a762ffd49eb829f635878d0b017c2e309aa9')
     version('3.0', sha256='45bbd3a13a16d50f39c9bb7774c7820f8ea5f977fdae77f860b0b641296ca691')
     version('2.7', sha256='2a0e0c65dcf62984b87b8a1700ee7da4fc6dfb9829ca3e43fc7373600aeab2c4')
