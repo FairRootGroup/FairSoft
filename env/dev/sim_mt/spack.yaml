@@ -11,7 +11,7 @@ spack:
   - geant4@10.7.0~qt~vecgeom~opengl~x11~motif+threads
   - $root
   - vmc@1-0-p3
-  - geant3@3.7
+  - geant3@3.8
   - vgm@4-8
   - geant4-vmc@5-3
   - fairroot@18.4.1+sim+examples
