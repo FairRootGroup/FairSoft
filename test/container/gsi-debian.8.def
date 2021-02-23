@@ -6,12 +6,12 @@ From: debian:8
     apt-get -y upgrade
     apt-get -y --no-install-recommends install sed curl ca-certificates wget xz-utils bzip2 gzip unzip tar file
     apt-get -y --no-install-recommends install python3 g++ gcc gfortran make patch git
-    apt-get -y install cmake hostname lsb-release
+    apt-get -y install hostname lsb-release
 
     mkdir -p /cvmfs /etc/spack
 
+    echo 'PATH="/cvmfs/it.gsi.de/cmake/3.15.3/bin:$PATH"' \
+        >/etc/profile.d/cvmfs-cmake.sh
+
 %files
     gsi-debian-8-gcc.yaml /etc/spack/compilers.yaml
-
-%environment
-    PATH="/cvmfs/it.gsi.de/cmake/3.15.3/bin:$PATH"
