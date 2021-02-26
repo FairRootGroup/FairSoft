@@ -507,9 +507,12 @@ class Root(CMakePackage):
                     '-DCMAKE_CXX_FLAGS=-D__builtin_unreachable=__builtin_trap',
                 ])
 
-        options.append(
-            '-Dcxx{0}=ON'.format(self.spec.variants['cxxstd'].value)
-        )
+        # Method for selecting C++ standard depends on ROOT version
+        if self.spec.satisfies('@6.18.00:'):
+            options.append(define_from_variant('CMAKE_CXX_STANDARD', 'cxxstd'))
+        else:
+            options.append(define('cxx' + self.spec.variants['cxxstd'].value,
+                                  True))
 
         if 'mysql-client' in self.spec:
             options.append('-DCMAKE_PROGRAM_PATH={0}'.format(
