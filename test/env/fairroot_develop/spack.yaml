@@ -12,6 +12,8 @@ spack:
   concretization: together
   view: false
   packages:
+    all:
+      variants: cxxstd=17
     mesa:
       variants: ~llvm
     mesa18:
