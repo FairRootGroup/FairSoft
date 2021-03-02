@@ -8,7 +8,7 @@ spack:
   - pythia6@428-alice1
   - hepmc@2.06.11 length=CM momentum=GEV
   - pythia8@8303
-  - geant4@10.7.0~qt~vecgeom~opengl~x11~motif~threads
+  - geant4@10.7.1~qt~vecgeom~opengl~x11~motif~threads
   - $root
   - vmc@1-0-p3
   - geant3@3.8
