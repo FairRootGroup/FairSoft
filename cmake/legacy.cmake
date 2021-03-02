@@ -94,15 +94,14 @@ endif()
 unset(packages)
 
 list(APPEND packages boost)
-set(boost_version "72")
+set(boost_version "75")
 ExternalProject_Add(boost
   URL "https://dl.bintray.com/boostorg/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
-  URL_HASH SHA256=59c9b274bc451cf91a9ba1dd2c7fdcaf5d60b1b3aa83f2c9fa143417cc660722
+  URL_HASH SHA256=953db31e016db7bb207f11432bef7df100516eeb746843fa0486a222e3fd49cb
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     ${boost_python_config} ${boost_icu_config}
-  PATCH_COMMAND ${patch} -p2 -i "${CMAKE_SOURCE_DIR}/legacy/boost/1.72_boost_process.patch"
   BUILD_COMMAND "./b2" "--layout=system"
     "cxxstd=${CMAKE_CXX_STANDARD}"
     "link=shared"
