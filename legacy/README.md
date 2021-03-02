@@ -128,7 +128,7 @@ please contact us.
 
 | **Package** | **Version** | **URL** |
 | --- | --- | --- |
-| boost | 1.72.0 | https://www.boost.org/ |
+| boost | 1.75.0 | https://www.boost.org/ |
 | clhep | 2.4.4.0 | http://proj-clhep.web.cern.ch |
 | dds | 3.5.9 | http://dds.gsi.de |
 | fairlogger | 1.9.0 | https://github.com/FairRootGroup/FairLogger |
