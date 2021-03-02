@@ -51,10 +51,12 @@ class Fairroot(CMakePackage):
     patch('find_pythia8_cmake.patch', when='@:18.4.0 +sim')
     patch('support_geant4_with_external_clhep_18.2.patch', when='@18.2 +sim')
     patch('support_geant4_with_external_clhep.patch', when='@18.4 +sim ^Geant4@:10.5')
+    # https://github.com/FairRootGroup/FairRoot/pull/1038
+    patch('drop_cxx_flag_check.patch', when='@18.4.0:18.4.2')
 
     def setup_build_environment(self, env):
         super(Fairroot, self).setup_build_environment(env)
-        if self.spec.satisfies('@:18,develop'):
+        if self.spec.satisfies('@:18.3'):
             env.append_flags('CXXFLAGS',
                 '-std=c++%s' % self.spec.variants['cxxstd'].value)
         env.unset('SIMPATH')
@@ -62,6 +64,10 @@ class Fairroot(CMakePackage):
 
     def cmake_args(self):
         options = []
+        if self.spec.satisfies('@18.4:'):
+            cxxstd = self.spec.variants['cxxstd'].value
+            if cxxstd != 'default':
+               options.append('-DCMAKE_CXX_STANDARD={0}'.format(cxxstd))
         if self.spec.satisfies('@:18,develop'):
             options.append('-DROOTSYS={0}'.format(self.spec['root'].prefix))
             options.append('-DPYTHIA8_DIR={0}'.format(

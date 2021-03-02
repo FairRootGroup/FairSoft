@@ -1,0 +1,74 @@
+commit adeea3d90f4b706ac34a62ffd0ba5f33b97de798
+Author: Christian Tacke <58549698+ChristianTackeGSI@users.noreply.github.com>
+Date:   Thu Feb 25 21:38:03 2021 +0100
+
+    Drop check for "-std=*" in CXX_FLAGS
+    
+    The old way of passing the wanted C++ language level into
+    FairRoot was to set (CMAKE_)CXX_FLAGS with a "-std=c++11"
+    flag.
+    
+    In a more modern cmake world, one uses CMAKE_CXX_STANDARD
+    and target_compile_features() to let cmake choose the right
+    language level.
+    The problem starts here: cmake doesn't parse
+    CMAKE_CXX_FLAGS and so flags from both sources end up in
+    the final compile command.
+    If one wants to configure a project using the modern
+    methods, one does not want to use the old method.
+    
+    This commit removes a fatal check, that enforces the user
+    to use the old method to set the language level.  That way
+    the user can choose the old or the modern way of doing it.
+    
+    To be precise: This does not stop any current use. It only
+    removes some (old) "safety guards". And thus allows more
+    modern uses.
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d392cb4c6..6e0ef0d5b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -106,23 +106,6 @@ include(CheckCompiler)
+ #Check the compiler and set the compile and link flags
+ Check_Compiler()
+ 
+-# Check also if FairSoft has been compiled with C++11 or C++14 support
+-# If FairSoft is used the compiler flags provided by fairsoft-config
+-# are added to the variable CMAKE_CXX_FLAGS.
+-# If alibuild is used the compiler flags are passed on the command line
+-# and are also added to CMAKE_CXX_FLAGS.
+-# So check if CMAKE_CXX_FLAGS has the compiler flags -std=c++11 or -std=c++14
+-String(FIND "${CMAKE_CXX_FLAGS}" "-std=c++11" POS_C++11)
+-If(${POS_C++11} EQUAL -1)
+-  String(FIND "${CMAKE_CXX_FLAGS}" "-std=c++14" POS_C++11)
+-  If(${POS_C++11} EQUAL -1)
+-    String(FIND "${CMAKE_CXX_FLAGS}" "-std=c++17" POS_C++11)
+-    If(${POS_C++11} EQUAL -1)
+-      Message(FATAL_ERROR "FairSoft wasn't compiled with c++11, c++14 or c++17 support. Please recompile FairSoft with a compiler which supports at least c++11.")
+-    EndIf()
+-  EndIf()
+-EndIf()
+-
+ set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
+ 
+ Option(USE_PATH_INFO "Information from PATH and LD_LIBRARY_PATH are used." OFF)
+@@ -294,18 +277,6 @@ Generate_Version_Info()
+ # Set some useful variables
+ SetBasicVariables()
+ 
+-# Check C++11 availability
+-if(NOT CMAKE_CXX_FLAGS)
+-  message(STATUS "No C++11 support found.")
+-else()
+-  string(FIND " ${CMAKE_CXX_FLAGS} " "-std=c++11" POS_C++11)
+-  if(POS_C++11)
+-    message(STATUS "C++11 support found.")
+-  else()
+-    message(STATUS "No C++11 support found.")
+-  endif()
+-endif()
+-
+ # Recurse into the given subdirectories.  This does not actually
+ # cause another cmake executable to run.  The same process will walk through
+ # the project's entire directory structure.
