@@ -300,8 +300,10 @@ if(PACKAGE_SET STREQUAL full)
     set(root_builtin_glew "-Dbuiltin_glew=ON")
   endif()
   if(APPLE)
+    set(root_cocoa "-Dcocoa=ON")
     set(root_x11 OFF)
   else()
+    unset(root_cocoa)
     set(root_x11 ON)
   endif()
   ExternalProject_Add(root
@@ -336,6 +338,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dx11=${root_x11}"
       ${python}
       ${root_builtin_glew}
+      ${root_cocoa}
     DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
