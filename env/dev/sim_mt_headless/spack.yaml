@@ -21,5 +21,3 @@ spack:
   packages:
     all:
       variants: cxxstd=17
-    xrootd:
-      variants: cxxstd=11

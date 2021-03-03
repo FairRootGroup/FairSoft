@@ -14,8 +14,6 @@ spack:
   packages:
     all:
       variants: cxxstd=17
-    xrootd:
-      variants: cxxstd=11
     mesa:
       variants: ~llvm
     mesa18:
