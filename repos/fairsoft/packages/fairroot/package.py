@@ -28,7 +28,7 @@ class Fairroot(CMakePackage):
             description='Install examples')
 
     depends_on('cmake@3.13.4:', type='build')
-    depends_on('boost@1.68.0: cxxstd=11 +container')
+    depends_on('boost@1.68.0: +container')
     depends_on('fairlogger@1.4.0:')
     depends_on('fairmq@1.4.11:')
     depends_on('fairsoft-config', when='@:18,develop')
