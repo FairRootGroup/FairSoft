@@ -2,9 +2,12 @@ Bootstrap: docker
 From: debian:10
 
 %post
+    echo "deb http://deb.debian.org/debian/ buster-backports main" >/etc/apt/sources.list.d/debian-10-backports.list
     apt-get update
     apt-get -y upgrade
     apt-get -y --no-install-recommends install sed curl ca-certificates wget xz-utils bzip2 gzip unzip tar file
     apt-get -y --no-install-recommends install python3 g++ gcc gfortran make patch git
-    apt-get -y --no-install-recommends install cmake hostname lsb-release
+    apt-get -y --no-install-recommends install hostname lsb-release
+    apt-get -y --no-install-recommends -t buster-backports install cmake || \
+        apt-get -y --no-install-recommends install cmake
     apt-get -y clean

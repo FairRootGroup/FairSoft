@@ -5,6 +5,7 @@
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 # Update spack submodule
 find_package(Git)
 if(GIT_FOUND)
