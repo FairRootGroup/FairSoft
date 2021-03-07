@@ -19,3 +19,5 @@ You may ignore the currently present `vae*` repository/ies which is for GSI/FAIR
 `test/` contains mainly integration test related files used by the FairSoft Continuous Integration checks. The normal user can ignore them.
 
 CMake/CTest-related files are mainly for internal use and running the FairSoft Continuous Integration checks. The normal user can ignore them.
+
+`pacthes/` contains package-level patches used in package repos that forbid embedded packages by policy.
