@@ -80,6 +80,12 @@ class Root(CMakePackage):
         # https://sft.its.cern.ch/jira/browse/ROOT-8226.
         patch('root6-60606-mathmore.patch', when='@6.06.06')
 
+    # https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013
+    patch('https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013.patch',
+          sha256='791cde1cb2e5c792298a261284ac64502e2ec2bc451c839bf18939be9ff499ea',
+          when='@6.20:6.22.05')
+    patch('root6_16_macos11_config.patch', when='@6.16:6.18.04')
+
     # ###################### Variants ##########################
 
     variant('aqua', default=False,

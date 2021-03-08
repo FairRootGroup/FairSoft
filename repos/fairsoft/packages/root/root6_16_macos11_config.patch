@@ -1,0 +1,148 @@
+diff --git a/config/root-config.in b/config/root-config.in
+index d86b7d35afb..712db7a4ded 100755
+--- a/config/root-config.in
++++ b/config/root-config.in
+@@ -276,12 +276,13 @@
+    ;;
+ macosx)
+    # MacOS X with gcc (GNU cc v3.1) and possible fink (fink.sf.net)
++   macosx_major=`sw_vers | sed -n 's/ProductVersion://p' | cut -d . -f 1 | sed -e 's/^[[:space:]]*//'`
+    macosx_minor=`sw_vers | sed -n 's/ProductVersion://p' | cut -d . -f 2`
+    # cannot find the one linked to libGraf if relocated after built
+-   if [ $macosx_minor -le 4 ]; then
++   if [ $macosx_major -eq 10 -a $macosx_minor -le 4 ]; then
+       rootlibs="$rootlibs -lfreetype"
+    fi
+-   if [ $macosx_minor -le 3 ]; then
++   if [ $macosx_major -eq 10 -a $macosx_minor -le 3 ]; then
+       finkdir=`which fink 2>&1 | sed -ne "s/\/bin\/fink//p"`
+       auxcflags=`[ -d ${finkdir}/include ] && echo -I${finkdir}/include`
+       auxcflags="-Wno-long-double $auxcflags"
+@@ -297,19 +298,21 @@
+    ;;
+ macosxicc)
+    # MacOS X with Intel icc compiler
++   macosx_major=`sw_vers | sed -n 's/ProductVersion://p' | cut -d . -f 1 | sed -e 's/^[[:space:]]*//'`
+    macosx_minor=`sw_vers | sed -n 's/ProductVersion://p' | cut -d . -f 2`
+    # cannot find the one linked to libGraf if relocated after built
+-   if [ $macosx_minor -le 4 ]; then
++   if [ $macosx_major -eq 10 -a $macosx_minor -le 4 ]; then
+       rootlibs="$rootlibs -lfreetype"
+    fi
+    auxcflags="${cxxversionflag}"
+    auxlibs="-lm -ldl"
+    ;;
+-macosx64)
++macosx64|macosxarm64)
+    # MacOS X with gcc (GNU cc v4.x) in 64 bit mode
++   macosx_major=`sw_vers | sed -n 's/ProductVersion://p' | cut -d . -f 1 | sed -e 's/^[[:space:]]*//'`
+    macosx_minor=`sw_vers | sed -n 's/ProductVersion://p' | cut -d . -f 2`
+    # cannot find the one linked to libGraf if relocated after built
+-   if [ $macosx_minor -le 4 ]; then
++   if [ $macosx_major -eq 10 -a $macosx_minor -le 4 ]; then
+       rootlibs="$rootlibs -lfreetype"
+    fi
+    auxcflags="${cxxversionflag} -m64"
+@@ -375,7 +378,7 @@
+ macosx*)
+    for f in $features ; do
+       if test "x$f" = "xthread" ; then
+-         if [ $macosx_minor -ge 5 ]; then
++         if [ \( $macosx_major -eq 10 -a $macosx_minor -ge 5 \) -o $macosx_major -gt 10  ]; then
+             auxcflags="-pthread $auxcflags"
+             auxlibs="-lpthread $auxlibs"
+          else
+@@ -384,7 +387,7 @@
+          fi
+       fi
+       if test "x$f" = "xrpath" ; then
+-         if [ $macosx_minor -ge 5 ]; then
++         if [ \( $macosx_major -eq 10 -a $macosx_minor -ge 5 \) -o $macosx_major -gt 10  ]; then
+             auxlibs="-Wl,-rpath,$libdir $auxlibs"
+          fi
+       fi
+diff --git a/etc/Makefile.arch b/etc/Makefile.arch
+index f3e58c92296..6a850aa8b8e 100644
+--- a/etc/Makefile.arch
++++ b/etc/Makefile.arch
+@@ -46,13 +46,13 @@ ROOTCFLAGS   := $(shell $(RC) --cflags)
+ ROOTLDFLAGS  := $(shell $(RC) --ldflags)
+ ROOTLIBS     := $(shell $(RC) --libs)
+ ROOTGLIBS    := $(shell $(RC) --glibs)
+-HASTHREAD    := $(shell $(RC) --has-thread)
+ ROOTCLING    := rootcling
+ 
+ ifeq ($(PLATFORM),macosx)
++MACOSX_MAJOR := $(shell sw_vers | sed -n 's/ProductVersion://p' | cut -d . -f 1 | sed -e 's/^[[:space:]]*//')
+ MACOSX_MINOR := $(shell sw_vers | sed -n 's/ProductVersion://p' | cut -d . -f 2)
+ ifeq ($(MACOSX_DEPLOYMENT_TARGET),)
+-MACOSXTARGET := 10.$(MACOSX_MINOR)
++MACOSXTARGET := $(MACOSX_MAJOR).$(MACOSX_MINOR)
+ else
+ MACOSXTARGET := $(MACOSX_DEPLOYMENT_TARGET)
+ endif
+@@ -112,7 +112,7 @@ LD            = g++
+ LDFLAGS       = $(OPT)
+ SOFLAGS       = -shared
+ DllSuf        = a
+-EXPLLINKLIBS  = $(ROOTLIBS) $(ROOTGLIBS)
++EXPLLINKLIBS  = $(ROOTGLIBS)
+ endif
+ 
+ ifeq ($(ARCH),solaris)
+@@ -291,7 +291,7 @@ CXX           = g++
+ CXXFLAGS      = $(OPT2) -pipe -Wall -W -Woverloaded-virtual
+ LD            = g++
+ LDFLAGS       = $(OPT2) -mmacosx-version-min=$(MACOSXTARGET)
+-EXPLLINKLIBS  = $(ROOTLIBS) $(ROOTGLIBS)
++EXPLLINKLIBS  = $(ROOTGLIBS)
+ DllSuf        = so
+ SOFLAGS       = -dynamiclib -single_module -install_name $(CURDIR)/
+ endif
+@@ -302,7 +302,7 @@ CXX           = icc
+ CXXFLAGS      = $(OPT) -fPIC -wd1476
+ LD            = icpc
+ LDFLAGS       = $(OPT2) -mmacosx-version-min=$(MACOSXTARGET)
+-EXPLLINKLIBS  = $(ROOTLIBS) $(ROOTGLIBS)
++EXPLLINKLIBS  = $(ROOTGLIBS)
+ DllSuf        = so
+ SOFLAGS       = -dynamiclib -single_module -install_name $(CURDIR)/
+ endif
+@@ -314,7 +314,18 @@ CXX           = g++
+ CXXFLAGS      = $(OPT2) -pipe -Wall -W -Woverloaded-virtual
+ LD            = g++
+ LDFLAGS       = $(OPT2) -mmacosx-version-min=$(MACOSXTARGET)
+-EXPLLINKLIBS  = $(ROOTLIBS) $(ROOTGLIBS)
++EXPLLINKLIBS  = $(ROOTGLIBS)
++DllSuf        = so
++SOFLAGS       = -dynamiclib -single_module -install_name $(CURDIR)/
++endif
++
++ifeq ($(ARCH),macosxarm64)
++# Apple Silicon running macOS 11.x.
++CXX           = g++
++CXXFLAGS      = $(OPT2) -pipe -Wall -W -Woverloaded-virtual
++LD            = g++
++LDFLAGS       = $(OPT2) -mmacosx-version-min=$(MACOSXTARGET)
++EXPLLINKLIBS  = $(ROOTGLIBS)
+ DllSuf        = so
+ SOFLAGS       = -dynamiclib -single_module -install_name $(CURDIR)/
+ endif
+@@ -342,7 +353,7 @@ LD            = link
+ LDFLAGS       = $(LDOPT) -nologo
+ SOFLAGS       = -DLL
+ 
+-EXPLLINKLIBS  = $(ROOTLIBS) $(ROOTGLIBS)
++EXPLLINKLIBS  = $(ROOTGLIBS)
+ ifneq (,$(findstring $(VC_MAJOR),14 15))
+ MT_EXE        = mt -nologo -manifest $@.manifest -outputresource:$@\;1; rm -f $@.manifest
+ MT_DLL        = mt -nologo -manifest $@.manifest -outputresource:$@\;2; rm -f $@.manifest
+@@ -364,7 +375,7 @@ LDFLAGS       = $(OPT) -Wl,--enable-auto-import \
+ 		-L/usr/X11R6/lib
+ SOFLAGS       = -shared -Wl,--enable-auto-image-base \
+                 -Wl,--export-all-symbols
+-EXPLLINKLIBS  = $(ROOTLIBS) $(ROOTGLIBS)
++EXPLLINKLIBS  = $(ROOTGLIBS)
+ endif
+ 
+ ifeq ($(CXX),)
