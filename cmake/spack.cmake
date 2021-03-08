@@ -121,6 +121,11 @@ fs_test(NAME workflow.classic_developer_dev
         DEPENDS "dev.sim;workflow.classic_developer_nov20"
         POST test/workflow/classic_developer.sh)
 
+add_test(NAME test.pkg_sanity_checks
+         COMMAND test/spack-pkg-sanity.sh
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+fs_test_props(test.pkg_sanity_checks)
+
 # Test cleanup
 # ------------
 

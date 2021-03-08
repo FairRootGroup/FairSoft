@@ -29,13 +29,15 @@ then
 	then
 		echo "*** Found cache - copying : ${installtreecache}"
 		cp -a --reflink=auto "$installtreecache/." "$installtree/."
-	fi
-	if [ -n "$CHANGE_TARGET" ]
-	then
-		installtree_from_base="$FS_INSTALLTREE_BASE/cache/${LABEL}/job-${CHANGE_TARGET}"
-		if [ -d "$installtree_from_base" ]
+	else
+		if [ -n "$CHANGE_TARGET" ]
 		then
-			echo "*** JFI, found base cache : ${installtree_from_base}"
+			it_from_merge_target="$FS_INSTALLTREE_BASE/cache/${LABEL}/job-${CHANGE_TARGET}"
+			if [ -d "$it_from_merge_target" ]
+			then
+				echo "*** Copying branch cache .: ${it_from_merge_target}"
+				cp -a --reflink=auto "${it_from_merge_target}/." "$installtree/."
+			fi
 		fi
 	fi
 fi
