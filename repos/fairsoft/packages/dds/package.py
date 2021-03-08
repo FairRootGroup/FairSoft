@@ -54,7 +54,7 @@ class Dds(CMakePackage):
     depends_on('git', type='build')
 
     variant('cxxstd', default='default',
-            values=('11', '14', '17'),
+            values=('11', '14', '17', 'default'),
             multi=False,
             description='Force the specified C++ standard when building.')
     conflicts('cxxstd=11', when='@3.5.4:')

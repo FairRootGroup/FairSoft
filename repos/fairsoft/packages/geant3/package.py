@@ -20,9 +20,9 @@ class Geant3(CMakePackage):
 
     variant('build_type', default='Nightly',
             description='CMake build type',
-            values=('Nightly'))
+            values=('Nightly',))
     variant('cxxstd', default='default',
-            values=('11', '14', '17'),
+            values=('default', '11', '14', '17'),
             multi=False,
             description='Force the specified C++ standard when building.')
 
