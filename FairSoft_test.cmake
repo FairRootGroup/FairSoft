@@ -9,6 +9,8 @@
 message(STATUS " Starting CTest script : FairSoft_test.cmake")
 message(STATUS " CMake Version ........: ${CMAKE_VERSION}")
 
+set(CMAKE_MODULE_PATH "cmake")
+include(FairSoftLib)
 
 # Set some default values, etc.
 set(CTEST_TEST_TIMEOUT 14400)
@@ -20,25 +22,16 @@ set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 if(NOT CTEST_BUILD_CONFIGURATION)
   set(CTEST_BUILD_CONFIGURATION RelWithDebInfo)
 endif()
-if(NOT NCPUS)
-  if(ENV{SLURM_CPUS_PER_TASK})
-    set(NCPUS $ENV{SLURM_CPUS_PER_TASK})
-  else()
-    include(ProcessorCount)
-    ProcessorCount(NCPUS)
-    if(NCPUS EQUAL 0)
-      set(NCPUS 1)
-    endif()
-  endif()
-endif()
 if(NOT BUILD_METHOD)
   set(BUILD_METHOD legacy)
 endif()
-message(STATUS " NCPUS ................: ${NCPUS}")
-
 cmake_host_system_information(RESULT fqdn QUERY FQDN)
 message(STATUS " Running on host ......: ${fqdn}")
 
+get_NCPUS()
+message(STATUS " NCPUS ................: ${NCPUS}")
+
+show_jenkins_info()
 
 # Detect current git SHA
 execute_process(COMMAND git rev-parse --verify HEAD
@@ -110,25 +103,19 @@ if (NOT BUILD_METHOD STREQUAL legacy)
   file(APPEND "${FS_TEST_INSTALLTREE}/sha1-stamps" "${FS_GIT_SHA}\n")
 endif()
 
+set(test_parallel_level 3)
+if(DEFINED ENV{FS_TEST_PARALLEL_LEVEL})
+    set(test_parallel_level "$ENV{FS_TEST_PARALLEL_LEVEL}")
+endif()
+message(STATUS " test_parallel_level ..: ${test_parallel_level}")
+
 if ("$ENV{CTEST_SITE}" STREQUAL "")
   set(CTEST_SITE "${fqdn}")
 else()
   set(CTEST_SITE $ENV{CTEST_SITE})
 endif()
 
-find_program(LSB_RELEASE_EXEC lsb_release)
-if(NOT LSB_RELEASE_EXEC)
-  message(WARNING "lsb_release not found")
-  cmake_host_system_information(RESULT os_name QUERY OS_NAME)
-  cmake_host_system_information(RESULT os_release QUERY OS_RELEASE)
-else()
-  execute_process(COMMAND ${LSB_RELEASE_EXEC} -si
-    OUTPUT_VARIABLE os_name
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-  execute_process(COMMAND ${LSB_RELEASE_EXEC} -sr
-    OUTPUT_VARIABLE os_release
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-endif()
+get_os_name_release()
 if("$ENV{LABEL}" STREQUAL "")
   set(ENV{LABEL} "${os_name} ${os_release}")
 endif()
@@ -140,9 +127,6 @@ if (BUILD_METHOD STREQUAL legacy)
   set(CTEST_BUILD_NAME "${CTEST_BUILD_NAME} (legacy)")
 endif()
 
-message(STATUS " BRANCH_NAME ..........: $ENV{BRANCH_NAME}")
-message(STATUS " CHANGE_ID ............: $ENV{CHANGE_ID}")
-message(STATUS " CHANGE_TARGET ........: $ENV{CHANGE_TARGET}")
 set(cdash_group "Experimental")
 if (NOT "$ENV{BRANCH_NAME}" STREQUAL "")
     set(cdash_group "Continuous")
@@ -150,6 +134,9 @@ if (NOT "$ENV{BRANCH_NAME}" STREQUAL "")
         set(cdash_group "Nightly")
     endif()
 endif()
+
+message(STATUS " CTEST_SITE ...........: ${CTEST_SITE}")
+message(STATUS " CTEST_BUILD_NAME .....: ${CTEST_BUILD_NAME}")
 message(STATUS " cdash_group ..........: ${cdash_group}")
 
 if (BUILD_METHOD STREQUAL legacy)
@@ -197,9 +184,12 @@ else()
   file(REMOVE_RECURSE "${CTEST_BINARY_DIRECTORY}/test_workdir")
 
   ctest_start(Continuous TRACK ${cdash_group})
+  show_big_header("Configuring")
   ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR};-DFS_TEST_INSTALLTREE=${FS_TEST_INSTALLTREE};-DBUILD_METHOD=spack")
 endif()
-ctest_test(RETURN_VALUE _ctest_test_ret_val PARALLEL_LEVEL 3)
+show_big_header("Starting Tests")
+ctest_test(RETURN_VALUE _ctest_test_ret_val
+           PARALLEL_LEVEL ${test_parallel_level})
 ctest_submit(BUILD_ID cdash_build_id)
 
 if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")
