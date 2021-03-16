@@ -311,8 +311,6 @@ class Root(CMakePackage):
             '-Dfail-on-missing=ON',
             '-Dshared=ON',
             '-Dsoversion=ON',
-            '-Dasimage:BOOL=ON',  # if afterimage is taken from builtin
-            '-Dastiff:BOOL=ON',   # asimage and astiff must be ON too
         ])
 
         # Options controlling gross build / config behavior.
@@ -324,7 +322,6 @@ class Root(CMakePackage):
         # dependencies. Per Spack convention, this should generally be avoided.
         options += [
             define('builtin_llvm', True),
-            define('builtin_afterimage', True),
             define('builtin_cfitsio', False),
             define('builtin_davix', False),
             define('builtin_fftw3', False),
@@ -352,6 +349,13 @@ class Root(CMakePackage):
             '-Dbuiltin_xxhash:BOOL=%s' % (
                 'ON' if self.spec.satisfies('@6.12.02:6.12.99') else 'OFF'),
         ])
+
+        use_asimage = (('+x' in spec) or ('+aqua' in spec))
+        options += [
+            define('asimage', use_asimage),
+            define('astiff', use_asimage),
+            define('builtin_afterimage', use_asimage),
+        ]
 
         # #################### ROOT options #######################
 
