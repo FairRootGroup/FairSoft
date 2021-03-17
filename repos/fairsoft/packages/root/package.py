@@ -28,6 +28,7 @@ class Root(CMakePackage):
     # Development version (when more recent than production).
 
     # Production version
+    version('6.22.08', sha256='6f061ff6ef8f5ec218a12c4c9ea92665eea116b16e1cd4df4f96f00c078a2f6f')
     version('6.22.06', sha256='c4688784a7e946cd10b311040b6cf0b2f75125a7520e04d1af0b746505911b57')
     version('6.22.02', sha256='89784afa9c9047e9da25afa72a724f32fa8aa646df267b7731e4527cc8a0c340')
     version('6.22.00', sha256='efd961211c0f9cd76cf4a486e4f89badbcf1d08e7535bba556862b3c1a80beed')
@@ -288,9 +289,9 @@ class Root(CMakePackage):
 
     # Incompatible variants
     conflicts('+opengl', when='~x', msg='OpenGL requires X')
-    conflicts('+tmva', when='~gsl', msg="TVMA requires GSL")
+    conflicts('+tmva', when='~gsl', msg='TVMA requires GSL')
     conflicts('+tmva', when='~mlp', msg='TVMA requires MLP')
-    conflicts('cxxstd=11', when='+root7', msg="root7 requires at least C++14")
+    conflicts('cxxstd=11', when='+root7', msg='root7 requires at least C++14')
 
     # Feature removed in 6.18:
     [(conflicts('+{0}'.format(pkg), when='@6.18.00:',
@@ -305,23 +306,20 @@ class Root(CMakePackage):
 
         # #################### Base Settings #######################
 
-        options.extend([
-            '-Dexplicitlink=ON',
-            '-Dexceptions=ON',
-            '-Dfail-on-missing=ON',
-            '-Dshared=ON',
-            '-Dsoversion=ON',
-        ])
-
         # Options controlling gross build / config behavior.
         options += [
+            define('exceptions', True),
+            define('explicitlink', True),
+            define('fail-on-missing', True),
             define('libcxx', False),
+            define('shared', True),
+            define('soversion', True),
+            define_from_variant('thread', 'threads')
         ]
 
         # Options related to ROOT's ability to download and build its own
         # dependencies. Per Spack convention, this should generally be avoided.
         options += [
-            define('builtin_llvm', True),
             define('builtin_cfitsio', False),
             define('builtin_davix', False),
             define('builtin_fftw3', False),
@@ -330,6 +328,7 @@ class Root(CMakePackage):
             define('builtin_gl2ps', True),
             define('builtin_glew', False),
             define('builtin_gsl', False),
+            define('builtin_llvm', True),
             define('builtin_lzma', False),
             define('builtin_openssl', False),
             define('builtin_pcre', False),
@@ -459,8 +458,6 @@ class Root(CMakePackage):
                 'ON' if '+tbb' in spec else 'OFF'),
             '-Dtesting:BOOL=%s' % (
                 'ON' if '+test' in spec else 'OFF'),
-            '-Dthread:BOOL=%s' % (
-                'ON' if '+threads' in spec else 'OFF'),
             '-Dtmva:BOOL=%s' % (
                 'ON' if '+tmva' in spec else 'OFF'),
             '-Dunuran:BOOL=%s' % (
