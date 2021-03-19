@@ -16,6 +16,7 @@ class Fairroot(CMakePackage):
     git = "https://github.com/FairRootGroup/FairRoot.git"
 
     version('develop', branch='dev')
+    version('18.6.0', sha256='ece7b92c108277e78f8dd4920e5d2a7cec7323ae64b23ffa32874d711dd27a9b')
     version('18.4.1', sha256='d8455c4bb705a2d5989ad947ffc50bb2f0d00affb649bb5e30d9463b5be0b490')
     version('18.4.0', sha256='97ad86d039db195acf12e9978eb660daab0c91e95e517921bac5a0f157a3e309')
     version('18.2.1', sha256='a9c22965d2d99e385f64c0df1867b477b9c129bcd087ba3b683d0ada6f3d66d0')
@@ -45,6 +46,10 @@ class Fairroot(CMakePackage):
     depends_on('vgm', when="+sim")
     depends_on('vmc', when='@18.4: ^root@6.18:')
     depends_on('yaml-cpp', when='@18.2:')
+    for std in ('11', '14', '17'):
+        for dep in ('root', 'fairmq'):
+            depends_on('{0} cxxstd={1}'.format(dep, std),
+                       when='cxxstd={0} ^{1}'.format(std, dep))
 
     patch('cmake_utf8.patch', when='@18.2.1')
     patch('fairlogger_incdir.patch', level=0, when='@18.2.1')
