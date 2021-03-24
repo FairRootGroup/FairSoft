@@ -1,6 +1,6 @@
 spack:
   definitions:
-  - root: [root@6.22.08+fortran+gdml+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+mlp+xrootd+sqlite+spectrum]
+  - root: [root@6.22.08+fortran+pythia6+pythia8+vc~vdt~x~opengl+python+tmva+mlp+xrootd+sqlite+spectrum]
   specs:
   - pythia6@428-alice1
   - hepmc@2.06.11 length=CM momentum=GEV
