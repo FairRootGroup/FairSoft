@@ -1,9 +1,9 @@
 spack:
   definitions:
   - when: platform == 'linux'
-    root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl]
+    root: [root@6.16.00+fortran+memstat+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl]
   - when: platform == 'darwin'
-    root: [root@6.16.00+fortran+gdml+memstat+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl+aqua]
+    root: [root@6.16.00+fortran+memstat+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl+aqua]
   - concretizer_hints:
     - python@2.7.18
     - py-numpy@1.16.6

@@ -1,9 +1,9 @@
 spack:
   definitions:
   - when: platform == 'linux'
-    root: [root +fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl]
+    root: [root +fortran+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl]
   - when: platform == 'darwin'
-    root: [root +fortran+gdml+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl+aqua]
+    root: [root +fortran+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl+aqua]
   specs:
   - hepmc length=CM momentum=GEV
   - geant4 ~qt~vecgeom~opengl~x11~motif+threads

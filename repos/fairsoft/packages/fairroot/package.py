@@ -42,7 +42,7 @@ class Fairroot(CMakePackage):
     depends_on('protobuf')
     depends_on('pythia6', when='+sim')
     depends_on('pythia8', when='+sim')
-    depends_on('root+http+xml')
+    depends_on('root+http+xml+gdml')
     depends_on('vgm', when="+sim")
     depends_on('vmc', when='@18.4: ^root@6.18:')
     depends_on('yaml-cpp', when='@18.2:')
