@@ -17,6 +17,8 @@ class Odc(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='master', get_full_repo=True)
+    version('0.18', tag='0.18', commit='02be2c613f7e794cac9fbbdb0af22e9dc5b59f4d', no_cache=True)
+    version('0.16', tag='0.16', commit='b3adfb2343e182be4507097a58f21f998a551e52', no_cache=True)
     version('0.10', tag='0.10', commit='776855e3946c290b88e40060b032095e60f1fef3', no_cache=True)
 
     # See: https://github.com/FairRootGroup/ODC/commit/1618b38c12c9114268c9bce550e9e01e7015a040
