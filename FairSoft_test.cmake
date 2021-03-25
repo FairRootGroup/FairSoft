@@ -157,10 +157,13 @@ if (BUILD_METHOD STREQUAL legacy)
     list(APPEND options "-DICU_ROOT=${icu_prefix}")
   endif()
   list(JOIN options ";" optionsstr)
+  show_big_header("Configuring")
   ctest_configure(OPTIONS "${optionsstr}")
-  ctest_submit()
+  fairsoft_ctest_submit()
+
+  show_big_header("Building")
   ctest_build(FLAGS "-j${NCPUS}")
-  ctest_submit()
+  fairsoft_ctest_submit()
 
   set(from "${CTEST_BINARY_DIRECTORY}/Log")
   message(STATUS " Copy logs ....... from: ${from}")
@@ -190,7 +193,7 @@ endif()
 show_big_header("Starting Tests")
 ctest_test(RETURN_VALUE _ctest_test_ret_val
            PARALLEL_LEVEL ${test_parallel_level})
-ctest_submit(BUILD_ID cdash_build_id)
+fairsoft_ctest_submit(FINAL)
 
 if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")
     string(TIMESTAMP timestamp "[%H:%M:%S]")
@@ -198,12 +201,7 @@ if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")
     file(REMOVE_RECURSE "${FS_TEST_WORKDIR_TEMP}")
 endif()
 
-message(STATUS " ")
-message(STATUS " CDash Build Summary ..: "
-        "${CTEST_DROP_METHOD}://${CTEST_DROP_SITE}/buildSummary.php?buildid=${cdash_build_id}")
-message(STATUS " CDash Test List ......: "
-        "${CTEST_DROP_METHOD}://${CTEST_DROP_SITE}/viewTest.php?buildid=${cdash_build_id}")
-message(STATUS " ")
+cdash_summary()
 
 if (_ctest_test_ret_val)
   Message(FATAL_ERROR " \n"
