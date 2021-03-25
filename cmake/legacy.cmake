@@ -125,7 +125,7 @@ ExternalProject_Add(fmt
 )
 
 list(APPEND packages dds)
-set(dds_version "3.5.9")
+set(dds_version "3.5.10")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -141,7 +141,7 @@ ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
 )
 
 list(APPEND packages fairlogger)
-set(fairlogger_version "1.9.0")
+set(fairlogger_version "1.9.2")
 ExternalProject_Add(fairlogger
   GIT_REPOSITORY https://github.com/FairRootGroup/FairLogger GIT_TAG v${fairlogger_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -176,7 +176,7 @@ ExternalProject_Add(flatbuffers
 
 if (NOT PACKAGE_SET STREQUAL fairmqdev)
   list(APPEND packages fairmq)
-  set(fairmq_version "1.4.32")
+  set(fairmq_version "1.4.33")
   ExternalProject_Add(fairmq
     GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -188,7 +188,7 @@ if (NOT PACKAGE_SET STREQUAL fairmqdev)
   )
 
   list(APPEND packages odc)
-  set(odc_version "0.16")
+  set(odc_version "0.18")
   ExternalProject_Add(odc
     GIT_REPOSITORY https://github.com/FairRootGroup/ODC GIT_TAG ${odc_version}
     ${CMAKE_DEFAULT_ARGS}
@@ -295,7 +295,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages root)
-  set(root_version "6.22.06")
+  set(root_version "6.22.08")
   if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
     set(root_builtin_glew "-Dbuiltin_glew=ON")
   endif()
@@ -308,7 +308,7 @@ if(PACKAGE_SET STREQUAL full)
   endif()
   ExternalProject_Add(root
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
-    URL_HASH SHA256=c4688784a7e946cd10b311040b6cf0b2f75125a7520e04d1af0b746505911b57
+    URL_HASH SHA256=6f061ff6ef8f5ec218a12c4c9ea92665eea116b16e1cd4df4f96f00c078a2f6f
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
