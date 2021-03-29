@@ -16,6 +16,7 @@ class FairsoftConfig(CMakePackage):
     maintainers = ['dennisklein', 'ChristianTackeGSI']
 
     version('develop')
+    version('mar21')
     version('nov20')
     version('jun19')
 
@@ -26,7 +27,7 @@ class FairsoftConfig(CMakePackage):
             description='C++ standard reported')
 
     depends_on('cmake@3:', type='build')
-    depends_on('root', type='build')
+    depends_on('root', type=('build', 'run'))
 
     def cmake_args(self):
         args = []

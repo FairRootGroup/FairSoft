@@ -1,24 +1,15 @@
 spack:
   definitions:
-  - when: platform == 'linux'
-    root: [root@6.20.08+fortran+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum+x+opengl]
-  - when: platform == 'darwin'
-    root: [root@6.20.08+fortran+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+spectrum+x+opengl+aqua]
   - concretizer_hints:
     - dds@3.5.3
     - fairmq@1.4.28
   specs:
   - $concretizer_hints
-  - fairsoft-config@nov20
   - pythia6@428-alice1
   - hepmc@2.06.09 length=CM momentum=GEV
   - pythia8@8303
-  - geant4@10.6.2~qt~vecgeom~opengl~x11~motif~threads
-  - $root
-  - vmc@1-0-p3
-  - geant3@3.7
-  - vgm@4-8
-  - geant4-vmc@5-2
+  - geant4@10.6.2~threads
+  - fairsoft-bundle@20.11 +graphics
   - fairroot@18.4.1+sim+examples
   - odc
   concretization: together

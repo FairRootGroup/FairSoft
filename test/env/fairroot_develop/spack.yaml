@@ -1,13 +1,7 @@
 spack:
-  definitions:
-  - when: platform == 'linux'
-    root: [root +fortran+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl]
-  - when: platform == 'darwin'
-    root: [root +fortran+pythia6+pythia8+vc~vdt+python+tmva+mlp+xrootd+sqlite+x+opengl+aqua]
   specs:
   - hepmc length=CM momentum=GEV
-  - geant4 ~qt~vecgeom~opengl~x11~motif+threads
-  - $root
+  - fairsoft-bundle@develop +graphics+mt
   - fairroot@develop+sim+examples
   concretization: together
   view: false
