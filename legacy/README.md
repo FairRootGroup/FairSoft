@@ -34,9 +34,9 @@ git clone -b <release> https://github.com/FairRootGroup/FairSoft
 ```
 
 For `<release>` choose
-* `nov20`, or `nov20p1`, ... - a particular release
-* `nov20_patches` - always points to the latest patch release for the `nov20` release
-* `master` - track the latest stable release (e.g. if `nov20` is the latest release `master` is the same as `nov20_patches`)
+* `mar21`, or `mar21p1`, ... - a particular release
+* `mar21_patches` - always points to the latest patch release for the `mar21` release
+* `master` - track the latest stable release (e.g. if `mar21` is the latest release `master` is the same as `nov20_patches`)
 * `dev` - the bleeding edge development version
 
 Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
@@ -93,12 +93,12 @@ brew install fairsoft@20.11
 ```
 
 Note: Due to technical limitations the version numbers of the brew formula are converted to numerical
-dot notation, e.g. `20.11` for `nov20`.
+dot notation, e.g. `21.3` for `mar21`.
 
 You may then use this package by setting the `SIMPATH` environment variable:
 
 ```
-export SIMPATH=$(brew --prefix fairsoft@20.11)
+export SIMPATH=$(brew --prefix fairsoft@21.3)
 ```
 
 The brew package reflects FairSoft in its default configuration - for details, find the formula in
@@ -119,8 +119,8 @@ please contact us.
 | CentOS | 7 | GCC 7.3.1 (devtoolset-7) | 3.17.3 (epel: cmake3) |
 | Debian | 10 | GCC 8.3.0 | 3.18.3 (`bootstrap-cmake.sh`) |
 | Fedora | 33 | GCC 10.2.1 | 3.18.3 |
-| macOS | 10.15 | AppleClang 12.0 | 3.18.4 (brew) |
-| macOS | 11.0 | AppleClang 12.0 | 3.19.0 (brew) |
+| macOS | 10.15 | AppleClang 12.0 | 3.20.0 (brew) |
+| macOS | 11.0 | AppleClang 12.0 | 3.20.0 (brew) |
 | OpenSUSE | 15.2 | GCC 7.5.0 | 3.17.0 |
 | Ubuntu | 20.04 | GCC 9.3.0 | 3.16.3 |
 
