@@ -191,7 +191,9 @@ if (NOT PACKAGE_SET STREQUAL fairmqdev)
   set(odc_version "0.18")
   ExternalProject_Add(odc
     GIT_REPOSITORY https://github.com/FairRootGroup/ODC GIT_TAG ${odc_version}
-    ${CMAKE_DEFAULT_ARGS}
+    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+      "-DBUILD_GRPC_CLIENT=OFF"
+      "-DBUILD_GRPC_SERVER=OFF"
     DEPENDS boost dds fairlogger fairmq ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
