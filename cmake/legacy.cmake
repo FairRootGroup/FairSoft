@@ -311,6 +311,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(root
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
     URL_HASH SHA256=6f061ff6ef8f5ec218a12c4c9ea92665eea116b16e1cd4df4f96f00c078a2f6f
+    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/dirty_stdatomic_h_fix.patch"
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
