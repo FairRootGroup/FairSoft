@@ -40,6 +40,8 @@ class FairsoftBundle(BundlePackage):
     depends_on('root +aqua', when='+graphics platform=darwin')
 
     # mar21:
+    depends_on('pythia8@8303',          when='@21.3')
+    # geant4 pinning breaks concretization
     depends_on('root@6.22.08',          when='@21.3')
     depends_on('vmc@1-0-p3',            when='@21.3')
     depends_on('geant3@3.8',            when='@21.3')
@@ -48,6 +50,8 @@ class FairsoftBundle(BundlePackage):
     depends_on('fairsoft-config@mar21', when='@21.3', type='run')
 
     # nov20:
+    depends_on('pythia8@8303',          when='@20.11')
+    # geant4 pinning breaks concretization
     depends_on('root@6.20.08',          when='@20.11')
     depends_on('vmc@1-0-p3',            when='@20.11')
     depends_on('geant3@3.7',            when='@20.11')
@@ -56,6 +60,8 @@ class FairsoftBundle(BundlePackage):
     depends_on('fairsoft-config@nov20', when='@20.11', type='run')
 
     # jun19:
+    depends_on('pythia8@8240',          when='@19.6')
+    # geant4 pinning breaks concretization
     depends_on('root@6.16.00 +memstat', when='@19.6')
     depends_on('geant3@2.7',            when='@19.6')
     depends_on('vgm@4-5',               when='@19.6')
