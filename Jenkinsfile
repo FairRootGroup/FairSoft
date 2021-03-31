@@ -69,9 +69,15 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
             """)
           }
 
-          callback.call(spec, label, jobsh, ctestcmd)
+          if (label == "GSI-Debian-8" && legacy) {
+            def msg = 'Skipped (not implemented)'
+            print msg
+            githubNotify(context: title, description: msg, status: 'SUCCESS')
+          } else {
+            callback.call(spec, label, jobsh, ctestcmd)
+            githubNotify(context: title, description: 'Success', status: 'SUCCESS')
+          }
 
-          githubNotify(context: title, description: 'Success', status: 'SUCCESS')
         } catch (e) {
           githubNotify(context: title, description: 'Error', status: 'ERROR')
           throw e
