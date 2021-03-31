@@ -442,10 +442,13 @@ add_custom_target(source-cache
 
 include(CTest)
 
-configure_file(test/legacy/fairroot.sh ${CMAKE_BINARY_DIR}/test_fairroot.sh @ONLY)
-add_test(NAME FairRoot
-         COMMAND test_fairroot.sh
-         WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+foreach(ver IN ITEMS 18.4 18.6)
+  set(TEST_VERSION v${ver}_patches)
+  configure_file(test/legacy/fairroot.sh.in ${CMAKE_BINARY_DIR}/test_fairroot_${ver}.sh @ONLY)
+  add_test(NAME FairRoot_${ver}
+           COMMAND test_fairroot_${ver}.sh
+           WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+endforeach()
 
 ### Summary
 message(STATUS "  ")
