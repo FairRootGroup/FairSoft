@@ -13,7 +13,6 @@ spack:
   - fairmq@1.4.11
   - pythia6@428-alice1
   - hepmc@2.06.09 length=CM momentum=GEV
-  - pythia8@8240
   - geant4@10.5.1+threads
   - fairsoft-bundle@19.6 +graphics+mt
   - fairroot@18.4.0+sim+examples

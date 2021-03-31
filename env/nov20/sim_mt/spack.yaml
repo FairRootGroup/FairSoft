@@ -7,7 +7,6 @@ spack:
   - $concretizer_hints
   - pythia6@428-alice1
   - hepmc@2.06.09 length=CM momentum=GEV
-  - pythia8@8303
   - geant4@10.6.2+threads
   - fairsoft-bundle@20.11 +graphics+mt
   - fairroot@18.4.1+sim+examples
