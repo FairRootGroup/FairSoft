@@ -72,39 +72,6 @@ export SIMPATH=<path-to-install>
 Simply export an environment variable `SIMPATH` which points to the chosen install directory from step 2
 and continue with the [FairRoot installation](https://github.com/FairRootGroup/FairRoot).
 
-## Installation with package manager
-
-At this point in time, we provide a FairSoft package for macOS only based on [Homebrew](https://brew.sh/):
-
-As preparation run
-
-```
-brew update
-brew doctor
-```
-
-Address all issues found by `brew doctor` until you get the message `Your system is ready to brew.`.
-If you choose to not update your system and your Xcode installations to the latest releases, package
-installation may still succeed but may have to fall back to compile from source.
-
-```
-brew tap fairrootgroup/fairsoft
-brew install fairsoft@20.11
-```
-
-Note: Due to technical limitations the version numbers of the brew formula are converted to numerical
-dot notation, e.g. `21.4` for `apr21`.
-
-You may then use this package by setting the `SIMPATH` environment variable:
-
-```
-export SIMPATH=$(brew --prefix fairsoft@21.4)
-```
-
-The brew package reflects FairSoft in its default configuration - for details, find the formula in
-[https://github.com/FairRootGroup/homebrew-fairsoft](https://github.com/FairRootGroup/homebrew-fairsoft).
-It is currently not planned to provide other precompiled configurations.
-
 ## Advanced topics
 
 Find several advanced and troubleshooting topics in the [advanced section](advanced.md).
