@@ -18,16 +18,17 @@ bindmounts="/etc/environment,/cvmfs,$PWD"
 
 if [ -d "$FS_INSTALLTREE_BASE" ]
 then
+	echo "*** Install-Tree (base) ..: $FS_INSTALLTREE_BASE"
 	mkdir -p "$FS_INSTALLTREE_BASE/running"
 	installtree="$(mktemp -d "$FS_INSTALLTREE_BASE/running/${LABEL}.${JOB_BASE_NAME}.XXX")"
-	echo "*** New install tree .....: ${installtree}"
+	echo "***  During run ..........: ${installtree}"
 	bindmounts="${bindmounts},${installtree}:/opt/spack/install-tree"
 	ctestcmd="${ctestcmd} -DFS_TEST_INSTALLTREE:PATH=/opt/spack/install-tree"
 
 	installtreecache="$FS_INSTALLTREE_BASE/cache/${LABEL}/job-${JOB_BASE_NAME}"
 	if [ -d "$installtreecache" ]
 	then
-		echo "*** Found cache - copying : ${installtreecache}"
+		echo "***  Found cache - copying: ${installtreecache}"
 		cp -a --reflink=auto "$installtreecache/." "$installtree/."
 	else
 		if [ -n "$CHANGE_TARGET" ]
@@ -40,6 +41,7 @@ then
 			fi
 		fi
 	fi
+	echo "***  After finished run ..: $installtreecache"
 fi
 
 (
@@ -58,7 +60,8 @@ then
 		mv -v "$installtreecache" \
 		   "$FS_INSTALLTREE_BASE/old/${LABEL}/job-${JOB_BASE_NAME}"
 	fi
-	mv -v "$installtree" "$installtreecache"
+	echo "*** Caching install tree .: $installtreecache"
+	mv "$installtree" "$installtreecache"
 fi
 
 exit $retval
