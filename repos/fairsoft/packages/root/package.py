@@ -83,7 +83,7 @@ class Root(CMakePackage):
 
     # https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013
     patch('https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013.patch',
-          sha256='791cde1cb2e5c792298a261284ac64502e2ec2bc451c839bf18939be9ff499ea',
+          sha256='829d22a3a6dd9af7d8a9dd2e03c5f25753947b2db1bb249233fad7f1ad59569d',
           when='@6.20:6.22.05')
     patch('root6_16_macos11_config.patch', when='@6.16:6.18.04')
 
