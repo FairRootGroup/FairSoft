@@ -18,7 +18,7 @@ class FairsoftBundle(BundlePackage):
     # not sorted correctly by spack)
     version('master')
     # Releases:
-    version('21.3')
+    version('21.4')
     version('20.11')
     version('19.6')
 
@@ -39,15 +39,15 @@ class FairsoftBundle(BundlePackage):
     depends_on('root +x+opengl', when='+graphics')
     depends_on('root +aqua', when='+graphics platform=darwin')
 
-    # mar21:
-    depends_on('pythia8@8303',          when='@21.3')
+    # apr21:
+    depends_on('pythia8@8303',          when='@21.4')
     # geant4 pinning breaks concretization
-    depends_on('root@6.22.08',          when='@21.3')
-    depends_on('vmc@1-0-p3',            when='@21.3')
-    depends_on('geant3@3.8',            when='@21.3')
-    depends_on('vgm@4-8',               when='@21.3')
-    depends_on('geant4-vmc@5-3',        when='@21.3')
-    depends_on('fairsoft-config@mar21', when='@21.3', type='run')
+    depends_on('root@6.22.08',          when='@21.4')
+    depends_on('vmc@1-0-p3',            when='@21.4')
+    depends_on('geant3@3.8',            when='@21.4')
+    depends_on('vgm@4-8',               when='@21.4')
+    depends_on('geant4-vmc@5-3',        when='@21.4')
+    depends_on('fairsoft-config@apr21', when='@21.4', type='run')
 
     # nov20:
     depends_on('pythia8@8303',          when='@20.11')

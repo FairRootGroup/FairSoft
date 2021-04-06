@@ -16,7 +16,7 @@ class FairsoftConfig(CMakePackage):
     maintainers = ['dennisklein', 'ChristianTackeGSI']
 
     version('develop')
-    version('mar21')
+    version('apr21')
     version('nov20')
     version('jun19')
 

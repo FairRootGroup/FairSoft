@@ -34,9 +34,9 @@ git clone -b <release> https://github.com/FairRootGroup/FairSoft
 ```
 
 For `<release>` choose
-* `mar21`, or `mar21p1`, ... - a particular release
-* `mar21_patches` - always points to the latest patch release for the `mar21` release
-* `master` - track the latest stable release (e.g. if `mar21` is the latest release `master` is the same as `nov20_patches`)
+* `apr21`, or `apr21p1`, ... - a particular release
+* `apr21_patches` - always points to the latest patch release for the `apr21` release
+* `master` - track the latest stable release (e.g. if `apr21` is the latest release `master` is the same as `nov20_patches`)
 * `dev` - the bleeding edge development version
 
 Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
@@ -93,12 +93,12 @@ brew install fairsoft@20.11
 ```
 
 Note: Due to technical limitations the version numbers of the brew formula are converted to numerical
-dot notation, e.g. `21.3` for `mar21`.
+dot notation, e.g. `21.4` for `apr21`.
 
 You may then use this package by setting the `SIMPATH` environment variable:
 
 ```
-export SIMPATH=$(brew --prefix fairsoft@21.3)
+export SIMPATH=$(brew --prefix fairsoft@21.4)
 ```
 
 The brew package reflects FairSoft in its default configuration - for details, find the formula in

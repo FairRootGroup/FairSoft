@@ -3,7 +3,7 @@ spack:
   - pythia6@428-alice1
   - hepmc@2.06.11 length=CM momentum=GEV
   - geant4@10.7.1+threads
-  - fairsoft-bundle@21.3 ~graphics+mt
+  - fairsoft-bundle@21.4 ~graphics+mt
   - fairroot@18.6.2+sim+examples
   - odc
   concretization: together
