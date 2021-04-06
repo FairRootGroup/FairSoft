@@ -39,6 +39,16 @@ class FairsoftBundle(BundlePackage):
     depends_on('root +x+opengl', when='+graphics')
     depends_on('root +aqua', when='+graphics platform=darwin')
 
+    # next (master):
+    depends_on('pythia8@8303',          when='@master')
+    # geant4 pinning breaks concretization
+    depends_on('root@6.22.08',          when='@master')
+    depends_on('vmc@1-0-p3',            when='@master')
+    depends_on('geant3@3.8',            when='@master')
+    depends_on('vgm@4-8',               when='@master')
+    depends_on('geant4-vmc@5-3',        when='@master')
+    depends_on('fairsoft-config@develop', when='@master', type='run')
+
     # apr21:
     depends_on('pythia8@8303',          when='@21.4')
     # geant4 pinning breaks concretization

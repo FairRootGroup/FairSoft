@@ -102,6 +102,9 @@ fs_test(NAME jun19.sim_mt             ENV env/jun19/sim_mt)
 fs_test(NAME nov20.sim                ENV env/nov20/sim)
 fs_test(NAME nov20.sim_mt             ENV env/nov20/sim_mt)
 fs_test(NAME nov20.sim_mt_headless    ENV env/nov20/sim_mt_headless)
+fs_test(NAME apr21.sim                ENV env/apr21/sim)
+fs_test(NAME apr21.sim_mt             ENV env/apr21/sim_mt)
+fs_test(NAME apr21.sim_mt_headless    ENV env/apr21/sim_mt_headless)
 fs_test(NAME dev.sim                  ENV env/dev/sim)
 fs_test(NAME dev.sim_mt               ENV env/dev/sim_mt)
 fs_test(NAME dev.sim_mt_headless      ENV env/dev/sim_mt_headless)
@@ -117,9 +120,13 @@ fs_test(NAME workflow.classic_developer_nov20
         ENV env/nov20/sim
         DEPENDS "nov20.sim;workflow.classic_developer_jun19"
         POST test/workflow/classic_developer.sh)
+fs_test(NAME workflow.classic_developer_apr21
+        ENV env/apr21/sim
+        DEPENDS "apr21.sim;workflow.classic_developer_nov20"
+        POST test/workflow/classic_developer.sh)
 fs_test(NAME workflow.classic_developer_dev
         ENV env/dev/sim
-        DEPENDS "dev.sim;workflow.classic_developer_nov20"
+        DEPENDS "dev.sim;workflow.classic_developer_apr21"
         POST test/workflow/classic_developer.sh)
 
 # Test cleanup
