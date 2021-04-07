@@ -37,7 +37,11 @@ class FairsoftBundle(BundlePackage):
     depends_on('root +spectrum', when='@20.11:')
     depends_on('root ~x~opengl~aqua', when='~graphics')
     depends_on('root +x+opengl', when='+graphics')
-    depends_on('root +aqua', when='+graphics platform=darwin')
+
+    # Using 'platform=' in a when clause gets concretized too late.
+    # and our root recipe disables +aqua on non-macOS now.
+    # depends_on('root +aqua', when='+graphics platform=darwin')
+    depends_on('root +aqua', when='+graphics')
 
     # next (master):
     depends_on('pythia8@8303',          when='@master')

@@ -349,7 +349,10 @@ class Root(CMakePackage):
                 'ON' if self.spec.satisfies('@6.12.02:6.12.99') else 'OFF'),
         ])
 
-        use_asimage = (('+x' in spec) or ('+aqua' in spec))
+        # Only use aqua / cocoa on macOS:
+        use_aqua = self.spec.satisfies('+aqua platform=darwin')
+
+        use_asimage = (('+x' in spec) or use_aqua)
         options += [
             define('asimage', use_asimage),
             define('astiff', use_asimage),
@@ -365,8 +368,7 @@ class Root(CMakePackage):
             '-Dxft:BOOL=%s' % (
                 'ON' if '+x' in spec else 'OFF'),
             '-Dbonjour:BOOL=OFF',
-            '-Dcocoa:BOOL=%s' % (
-                'ON' if '+aqua' in spec else 'OFF'),
+            define('cocoa', use_aqua),
             # -Dcxxmodules=OFF # use clang C++ modules
             '-Ddavix:BOOL=%s' % (
                 'ON' if '+davix' in spec else 'OFF'),
