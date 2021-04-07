@@ -7,7 +7,7 @@ From: centos:7
     yum-config-manager --enable rhel-server-rhscl-7-rpms
     yum -y install devtoolset-7
     yum -y install epel-release
-    yum -y install gcc-gfortran wget curl which git xz patch procps unzip python3 cmake3 hostname redhat-lsb-core
+    yum -y install bzip2 gcc-gfortran wget curl which git xz patch procps unzip python3 cmake3 hostname redhat-lsb-core
     yum -y clean all
 
     # This enables devtoolset-7 globally!
