@@ -9,7 +9,7 @@ Choose between the classic (called "Legacy") installation method or the new Spac
 | **Legacy** | **Spack (EXPERIMENTAL)** |
 | -- | -- |
 | This is the classic bash/cmake based setup system. | This is an ongoing standardization and modernization effort based on Spack (which itself is still under heavy development). Most things are already working. For early adopters. |
-| Releases are reflected in the git history via tags and branches, e.g.: `apr21`, `jun19p2`, `nov20_patches` | Always use the latest `dev` branch. Releases are described within the metadata contained in the repo. |
+| Releases are reflected in the git history via tags and branches, e.g.: `apr21`, `jun19p2`, `nov20_patches` | Always use the latest `dev` branch. Multiple releases are described within the metadata contained in the repo (read on in the Installation instructions on how to select a release). |
 | ► [continue](legacy/README.md) | ► [continue](docs/README.md) |
 
 ## Installation of pre-compiled Binaries

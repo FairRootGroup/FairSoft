@@ -36,7 +36,7 @@ git clone -b <release> https://github.com/FairRootGroup/FairSoft
 For `<release>` choose
 * `apr21`, or `apr21p1`, ... - a particular release
 * `apr21_patches` - always points to the latest patch release for the `apr21` release
-* `master` - track the latest stable release (e.g. if `apr21` is the latest release `master` is the same as `nov20_patches`)
+* `master` - track the latest stable release (e.g. if `apr21` is the latest release `master` is the same as `apr21_patches`)
 * `dev` - the bleeding edge development version
 
 Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
