@@ -4,9 +4,8 @@
 
 ### I.2. Clone the repo
 ```
-git clone https://github.com/FairRootGroup/FairSoft
+git clone -b dev https://github.com/FairRootGroup/FairSoft
 cd FairSoft
-git submodule update --init
 ```
 
 ### I.3. Run the setup

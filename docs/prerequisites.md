@@ -22,5 +22,4 @@ Find the distro-specific setup in the `%post` section in the following [singular
 brew update
 brew doctor  # Address any issues reported here until your system is ready to brew
 brew install gcc python
-brew cask install xquartz
 ```
