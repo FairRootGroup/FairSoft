@@ -3,8 +3,7 @@
 Table of Contents
 * [Preface](#preface)
 * [Installation from source](#installation-from-source)
-* [Installation with package manager](#installation-with-package-manager)
-* [Advanced topics and troubleshooting](#advanced-topics-and-troubleshooting)
+* [Advanced topics and troubleshooting](#advanced-topics)
 * [Tested systems](#tested-systems)
 * [Included packages](#included-packages)
 
