@@ -10,6 +10,6 @@ libunistring-devel libuuid-devel libX11-devel libXau-devel \
 libXdmcp-devel libXext-devel libXfont-devel libXft-devel libxml2-devel \
 libXmu-devel libXpm-devel libXrender-devel lz4-devel make mesa-libGL-devel \
 mesa-libGLU-devel ncurses-devel openssl-devel patch procps \
-python python-devel readline-devel redhat-lsb-core sed subversion tar \
+python python-devel readline-devel redhat-lsb-core rsync sed subversion tar \
 tbb-devel unzip wget which xerces-c-devel xz-devel yaml-cpp-devel
 dnf -y clean all
