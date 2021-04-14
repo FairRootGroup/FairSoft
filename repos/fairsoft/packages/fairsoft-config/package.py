@@ -27,7 +27,7 @@ class FairsoftConfig(CMakePackage):
             description='C++ standard reported')
 
     depends_on('cmake@3:', type='build')
-    depends_on('root', type=('build', 'run'))
+    depends_on('root', type=('build', 'link', 'run'))
 
     def cmake_args(self):
         args = []
