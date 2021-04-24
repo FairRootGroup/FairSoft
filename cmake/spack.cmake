@@ -90,7 +90,8 @@ set_property(TEST test.start APPEND PROPERTY
 # Main tests
 # ----------
 
-fs_test(NAME test.cmake               SPEC cmake)
+fs_test(NAME test.faircmakemodules    SPEC faircmakemodules)
+fs_test(NAME test.faircmakemodules_m  SPEC faircmakemodules@master)
 fs_test(NAME test.grpc                SPEC grpc)
 fs_test(NAME test.flatbuffers         SPEC flatbuffers)
 fs_test(NAME test.fairlogger          ENV test/env/fairlogger)
