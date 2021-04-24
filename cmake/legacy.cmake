@@ -93,6 +93,15 @@ endif()
 
 unset(packages)
 
+list(APPEND packages faircmakemodules)
+set(faircmakemodules_version "0.1.0")
+ExternalProject_Add(faircmakemodules
+  GIT_REPOSITORY https://github.com/FairRootGroup/FairCMakeModules GIT_TAG v${faircmakemodules_version}
+  ${CMAKE_DEFAULT_ARGS}
+  DEPENDS ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
+
 list(APPEND packages boost)
 set(boost_version "75")
 ExternalProject_Add(boost
@@ -463,7 +472,7 @@ message(STATUS "  ${Cyan}PACKAGE SET${CR}        ${BGreen}${PACKAGE_SET}${CR} (c
 if(packages)
   list(SORT packages)
   message(STATUS "  ")
-  message(STATUS "  ${Cyan}PACKAGE       VERSION         OPTION${CR}")
+  message(STATUS "  ${Cyan}PACKAGE              VERSION         OPTION${CR}")
   foreach(dep IN LISTS packages)
     if(dep STREQUAL boost)
       set(version_str "1.${${dep}_version}.0")
@@ -482,7 +491,7 @@ if(packages)
     else()
       pad("${BYellow}${version_str}${CR}" 15 " " version_padded COLOR 1)
     endif()
-    pad(${dep} 13 " " dep_padded)
+    pad(${dep} 20 " " dep_padded)
     message(STATUS "  ${BWhite}${dep_padded}${CR}${version_padded}${comment}")
     unset(version_str)
     unset(version_padded)
