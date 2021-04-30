@@ -83,8 +83,8 @@ class Root(CMakePackage):
         patch('root6-60606-mathmore.patch', when='@6.06.06')
 
     # https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013
-    patch('https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013.patch',
-          sha256='829d22a3a6dd9af7d8a9dd2e03c5f25753947b2db1bb249233fad7f1ad59569d',
+    patch('https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013.patch?full_index=1',
+          sha256='531693b38b90810a33c6fa92723247432ebfc762758cf903fb3379af8b0c16b5',
           when='@6.20:6.22.05')
     patch('root6_16_macos11_config.patch', when='@6.16:6.18.04')
 
