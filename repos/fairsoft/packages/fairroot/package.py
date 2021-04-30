@@ -72,6 +72,7 @@ class Fairroot(CMakePackage):
 
     def cmake_args(self):
         options = []
+        options.append('--log-level=VERBOSE')
         if self.spec.satisfies('@18.4:'):
             cxxstd = self.spec.variants['cxxstd'].value
             if cxxstd != 'default':
