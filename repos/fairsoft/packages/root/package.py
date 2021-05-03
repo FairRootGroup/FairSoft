@@ -88,6 +88,12 @@ class Root(CMakePackage):
           when='@6.20:6.22.05')
     patch('root6_16_macos11_config.patch', when='@6.16:6.18.04')
 
+    # Backport: Use ROOT_LIBRARY_PATH in DynamicPath
+    # See: https://github.com/root-project/root/pull/7031
+    patch('https://github.com/root-project/root/commit/3376e30ddd2dac30b97fe1a5caa38ce1ff5cd7c0.patch?full_index=1',
+          sha256='b6982005127521c2ef6d2934f5610edf6fc8106c1f2d9f16507e97562c19c2a9',
+          when='@6.16:6.23')
+
     # ###################### Variants ##########################
 
     variant('aqua', default=False,

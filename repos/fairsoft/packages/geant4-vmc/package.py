@@ -59,7 +59,7 @@ class Geant4Vmc(CMakePackage):
 
     def common_env_setup(self, env):
         # So that root finds the shared library / rootmap
-        env.prepend_path("LD_LIBRARY_PATH", self.prefix.lib)
+        env.prepend_path("ROOT_LIBRARY_PATH", self.prefix.lib)
 
     def setup_run_environment(self, env):
         self.common_env_setup(env)
