@@ -96,7 +96,7 @@ unset(packages)
 list(APPEND packages boost)
 set(boost_version "75")
 ExternalProject_Add(boost
-  URL "https://dl.bintray.com/boostorg/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
+  URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
   URL_HASH SHA256=953db31e016db7bb207f11432bef7df100516eeb746843fa0486a222e3fd49cb
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND "./bootstrap.sh"
