@@ -1,9 +1,9 @@
 --- spack-src/CMakeLists.txt
 +++ spack-src/CMakeLists.txt
 @@ -90,6 +90,9 @@
- 
- find_package2(PUBLIC ROOT  VERSION 6.10.00  REQUIRED)
- find_package2(PUBLIC FairLogger  VERSION 1.2.0 REQUIRED)
+     find_package2(PUBLIC ${dep} REQUIRED VERSION ${FairLogger_${dep}_VERSION})
+   endif()
+ endforeach()
 +get_target_property(fairlogger_include FairLogger::FairLogger INTERFACE_INCLUDE_DIRECTORIES)
 +set(r3broot_deps_includes ${r3broot_deps_includes} ${fairlogger_include})
 +

@@ -16,6 +16,11 @@ class R3broot(CMakePackage):
 
     version('develop', branch='dev')
 
+    variant('cxxstd', default='11',
+            values=('default', '11', '14', '17'),
+            multi=False,
+            description='Force the specified C++ standard when building.')
+
     resource(name='macros', when='@develop',
              git='https://github.com/R3BRootGroup/macros',
              branch='dev')
@@ -23,6 +28,7 @@ class R3broot(CMakePackage):
     depends_on('root +minuit')
     depends_on('fairroot')
 
+    depends_on('faircmakemodules', type='build')
     depends_on('fairlogger')
     depends_on('geant3')
     depends_on('geant4~threads')
@@ -33,8 +39,11 @@ class R3broot(CMakePackage):
     patch('fairlogger_include.patch')
 
     def cmake_args(self):
-        args = ['-DCMAKE_CXX_STANDARD=11']
-        return args
+        options = []
+        cxxstd = self.spec.variants['cxxstd'].value
+        if cxxstd != 'default':
+            options.append('-DCMAKE_CXX_STANDARD={0}'.format(cxxstd))
+        return options
 
     def build(self, spec, prefix):
         super(R3broot, self).build(spec, prefix)
