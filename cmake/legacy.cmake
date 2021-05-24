@@ -222,7 +222,7 @@ if(PACKAGE_SET STREQUAL full)
   list(APPEND packages hepmc)
   set(hepmc_version "2.06.09")
   ExternalProject_Add(hepmc
-    URL http://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
+    URL https://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
     URL_HASH SHA256=e0f8fddd38472c5615210894444686ac5d72df3be682f7d151b562b236d9b422
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Dlength:STRING=CM"
