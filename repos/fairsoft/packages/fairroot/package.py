@@ -31,7 +31,7 @@ class Fairroot(CMakePackage):
 
     depends_on('cmake@3.13.4:', type='build')
     depends_on('boost@1.68.0: +container')
-    depends_on('faircmakemodules', when='@19:')
+    depends_on('faircmakemodules@0.2:', when='@19:')
     depends_on('fairlogger@1.4.0:')
     depends_on('fairmq@1.4.11:')
     depends_on('fairsoft-config', when='@:18,develop')
