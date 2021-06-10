@@ -113,4 +113,4 @@ please contact us.
 | vc               | 1.4.1        | https://github.com/VcDevel/Vc |
 | vgm              | 4-8          | https://github.com/vmc-project/vgm |
 | vmc              | 1-0-p3       | https://github.com/vmc-project/vmc |
-| zeromq           | 4.3.2        | https://github.com/zeromq/libzmq |
+| zeromq           | 4.3.4        | https://github.com/zeromq/libzmq |

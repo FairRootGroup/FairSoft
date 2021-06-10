@@ -160,7 +160,7 @@ ExternalProject_Add(fairlogger
 )
 
 list(APPEND packages zeromq)
-set(zeromq_version "4.3.2")
+set(zeromq_version "4.3.4")
 ExternalProject_Add(zeromq
   GIT_REPOSITORY https://github.com/zeromq/libzmq GIT_TAG v${zeromq_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
