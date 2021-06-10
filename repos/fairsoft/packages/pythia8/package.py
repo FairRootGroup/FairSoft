@@ -15,6 +15,7 @@ class Pythia8(AutotoolsPackage):
 
     maintainers = ['ChristianTackeGSI']
 
+    version('8305', sha256='98880c3489ba2df0753412d425f3b02e6dfdefb694053b074c48b2af49908779')
     version('8304', sha256='65c6165d61cabefb1594998ff2afebd12616def9bb5d18524212bc5886ca8f68')
     version('8303', sha256='9093351829f92d81c60c719bfb007b1e89efb4307f4c8957407406bf3281a6f7')
     version('8302', sha256='7aae73eabdd38ebbcf7998f63c271ae9b397522497a7ee67a9505b9baae1cb1c')
