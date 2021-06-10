@@ -102,6 +102,15 @@ ExternalProject_Add(faircmakemodules
   ${LOG_TO_FILE}
 )
 
+list(APPEND packages asio)
+set(asio_version "1.19.1")
+ExternalProject_Add(asio
+  GIT_REPOSITORY https://github.com/FairRootGroup/asio GIT_TAG v${asio_version}
+  ${CMAKE_DEFAULT_ARGS}
+  DEPENDS ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
+
 list(APPEND packages boost)
 set(boost_version "75")
 ExternalProject_Add(boost
