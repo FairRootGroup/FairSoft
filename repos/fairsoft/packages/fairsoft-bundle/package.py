@@ -49,7 +49,7 @@ class FairsoftBundle(BundlePackage):
     depends_on('root@6.24.00',          when='@master')
     depends_on('vmc@1-0-p3',            when='@master')
     depends_on('geant3@3.8',            when='@master')
-    depends_on('vgm@4-8',               when='@master')
+    depends_on('vgm@4-9',               when='@master')
     depends_on('geant4-vmc@5-3',        when='@master')
     depends_on('fairsoft-config@develop', when='@master', type='run')
 
