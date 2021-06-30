@@ -46,7 +46,7 @@ class FairsoftBundle(BundlePackage):
     # next (master):
     depends_on('pythia8@8303',          when='@master')
     # geant4 pinning breaks concretization
-    depends_on('root@6.24.00',          when='@master')
+    depends_on('root@6.24.02',          when='@master')
     depends_on('vmc@1-0-p3',            when='@master')
     depends_on('geant3@3.8',            when='@master')
     depends_on('vgm@4-9',               when='@master')
