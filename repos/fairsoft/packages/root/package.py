@@ -16,6 +16,8 @@ class Root(CMakePackage):
     url      = "https://root.cern/download/root_v6.16.00.source.tar.gz"
     git      = "https://github.com/root-project/root.git"
 
+    executables = ['^root$', '^root-config$']
+
     tags = ['hep']
 
     maintainers = ['chissg', 'HadrienG2', 'drbenmorgan', 'vvolkl']
@@ -307,6 +309,25 @@ class Root(CMakePackage):
                 msg='Obsolete option +{0} selected.'.format(pkg))) for pkg in
      ('memstat', 'qt4', 'table')]
 
+    @classmethod
+    def filter_detected_exes(cls, prefix, exes_in_prefix):
+        result = []
+        for exe in exes_in_prefix:
+            # no need to check the root executable itself
+            # we can get all information from root-config
+            if exe.endswith('root'):
+                continue
+            result.append(exe)
+        return result
+
+    @classmethod
+    def determine_version(cls, exe):
+        output = Executable(exe)('--version', output=str, error=str)
+        # turn the output of root-config --version
+        # (something like 6.22/06)
+        # into the format used in this recipe (6.22.06)
+        return output.strip().replace('/', '.')
+
     def cmake_args(self):
         spec = self.spec
         define = self.define
@@ -323,7 +344,10 @@ class Root(CMakePackage):
             define('libcxx', False),
             define('shared', True),
             define('soversion', True),
-            define_from_variant('thread', 'threads')
+            define_from_variant('thread', 'threads'),
+            # The following option makes sure that Cling will call the compiler
+            # it was compiled with at run time; see #17488, #18078 and #23886
+            define('CLING_CXX_PATH', self.compiler.cxx),
         ]
 
         # Options related to ROOT's ability to download and build its own
