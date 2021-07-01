@@ -115,7 +115,8 @@ pipeline {
           def specs_list = [
             [os: 'CentOS-7',         container: 'centos.7.sif'],
             [os: 'Debian-10',        container: 'debian.10.sif'],
-            [os: 'Fedora-33',        container: 'fedora.33.sif',    for_pr: true],
+            [os: 'Fedora-33',        container: 'fedora.33.sif'],
+            [os: 'Fedora-34',        container: 'fedora.34.sif',    for_pr: true],
             [os: 'GSI-Debian-8',     container: 'gsi-debian.8.sif'],
             [os: 'openSUSE-15.2',    container: 'opensuse.15.2.sif'],
             [os: 'Ubuntu-20.04-LTS', container: 'ubuntu.20.04.sif', for_pr: true],
