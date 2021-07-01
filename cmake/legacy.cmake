@@ -315,7 +315,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages root)
-  set(root_version "6.24.00")
+  set(root_version "6.24.02")
   if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
     set(root_builtin_glew "-Dbuiltin_glew=ON")
   endif()
@@ -328,8 +328,7 @@ if(PACKAGE_SET STREQUAL full)
   endif()
   ExternalProject_Add(root
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
-    URL_HASH SHA256=9da30548a289211c3122d47dacb07e85d35e61067fac2be6c5a5ff7bda979989
-    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/dirty_stdatomic_h_fix.patch"
+    URL_HASH SHA256=0507e1095e279ccc7240f651d25966024325179fa85a1259b694b56723ad7c1c
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
