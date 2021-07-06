@@ -69,6 +69,7 @@ class Fairmq(CMakePackage):
     patch('missing_stdexcept_header.patch', when='@:1.4.19')
     patch('fix_cpp17moveinsertable_assertion_xcode12.patch', when='@1.4.8:1.4.23')
     patch('update_command_format_in_pmix_plugin.patch', when='@1.4.23')
+    patch('no_external_asio_1.4.11.patch', when='@1.4.8:1.4.26')
 
     depends_on('googletest@1.7:', when='@:1.4.8')
     depends_on('boost@1.64: +container+program_options+thread+system+filesystem+regex+date_time', when='@1.3')
@@ -90,6 +91,7 @@ class Fairmq(CMakePackage):
     depends_on('dds@3.5.3:', when='@1.4.27:')
     depends_on('flatbuffers', when='@1.4.9:')
     depends_on('pmix@2.1.4:', when='@1.4:')
+    depends_on('asio@1.18:', when='@1.4.27:')
 
     depends_on('cmake@3.9.4:', type='build', when='@1.3')
     depends_on('cmake@3.10:', type='build', when='@1.4.0:1.4.7')

@@ -1,0 +1,12 @@
+--- spack-src/CMakeLists.txt~	2021-07-06 16:43:03.000000000 +0200
++++ spack-src/CMakeLists.txt	2021-07-06 16:44:36.503278657 +0200
+@@ -146,9 +146,4 @@
+ if(BUILD_SDK)
+-  find_package2(BUNDLED asio
+-    VERSION 1.13.0
+-  )
+-  if(NOT asio_FOUND)
+     build_bundled(asio extern/asio)
+     find_package2(PRIVATE asio REQUIRED)
+-  endif()
+ endif()
