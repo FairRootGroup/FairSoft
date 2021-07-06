@@ -38,7 +38,8 @@ if [ "$(uname)" = Darwin ]
 then
   extra_excludes="-e libpng -e libjpeg-turbo -e libiconv -e sqlite"
 fi
-spack view --dependencies true $extra_excludes -e fairroot symlink -i $SIMPATH fairroot cmake
+spack view --dependencies true $extra_excludes -e fairroot \
+	symlink -i $SIMPATH fairroot faircmakemodules
 
 git clone --branch "$fairroot_branch" https://github.com/FairRootGroup/FairRoot
 pushd FairRoot
