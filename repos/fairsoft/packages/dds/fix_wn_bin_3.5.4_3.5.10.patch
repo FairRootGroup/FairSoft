@@ -127,7 +127,7 @@ index 0000000..2b0e38e
 --- /dev/null
 +++ b/cmake/DDSCollectWNPkgFiles.cmake
 @@ -0,0 +1,24 @@
-+# Copyright 2017-2020 GSI, Inc. All rights reserved.
++# Copyright 2017-2021 GSI, Inc. All rights reserved.
 +#
 +#
 +
