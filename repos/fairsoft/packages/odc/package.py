@@ -17,6 +17,7 @@ class Odc(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='master', get_full_repo=True)
+    version('0.28', tag='0.28', commit='bde3ffd670af62b4ffd3b361904e37f580be22fe', no_cache=True)
     version('0.18', tag='0.18', commit='02be2c613f7e794cac9fbbdb0af22e9dc5b59f4d', no_cache=True)
     version('0.16', tag='0.16', commit='b3adfb2343e182be4507097a58f21f998a551e52', no_cache=True)
     version('0.10', tag='0.10', commit='776855e3946c290b88e40060b032095e60f1fef3', no_cache=True)
@@ -28,7 +29,9 @@ class Odc(CMakePackage):
     conflicts('^boost@1.70:', when='^cmake@:3.14')
     depends_on('protobuf +shared')
     depends_on('grpc +codegen+shared')
-    depends_on('dds@3.5.3:')
+    depends_on('dds@3.5.3:', when='@:0.24')
+    depends_on('dds@3.5.13:', when='@0.26')
+    depends_on('dds@3.5.14:', when='@0.28:')
     depends_on('fairmq@1.4.26:')
     depends_on('fairlogger')
 
