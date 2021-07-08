@@ -10,7 +10,6 @@ spack:
   - geant4@10.6.2+threads
   - fairsoft-bundle@20.11 ~graphics+mt
   - fairroot@18.4.1+sim+examples
-  - odc
   concretization: together
   view: false
   packages:
