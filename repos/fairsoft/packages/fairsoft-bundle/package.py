@@ -25,6 +25,9 @@ class FairsoftBundle(BundlePackage):
     variant('graphics', default=False)
     variant('mt', default=False)
 
+    # Some normal packages
+    depends_on('faircmakemodules')
+
     # Pin some variants:
     depends_on('geant4 ~threads', when='~mt')
     depends_on('geant4 +threads', when='+mt')
