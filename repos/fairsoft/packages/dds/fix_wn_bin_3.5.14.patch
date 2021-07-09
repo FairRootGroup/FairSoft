@@ -1,4 +1,4 @@
-commit 5a03bce739be8e5f1c8cca38d55c0dd203e230bc
+commit bf91582c16ecce132ab9377727717062af8056a5
 Author: Christian Tacke <58549698+ChristianTackeGSI@users.noreply.github.com>
 Date:   Mon Mar 8 14:55:25 2021 +0100
 
@@ -11,7 +11,7 @@ Date:   Mon Mar 8 14:55:25 2021 +0100
     of the credit for developing this.
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c072db1..f560b85 100644
+index c072db1..1340c72 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -10,7 +10,8 @@ set(DDS_PROTOCOL_VERSION "2")
@@ -41,14 +41,14 @@ index c072db1..f560b85 100644
 -else()
 -  file(TO_CMAKE_PATH "$ENV{LD_LIBRARY_PATH}" ENV_LD_LIBRARY_PATH)
 +# top-level executables to package in wn pkg
-+list(APPEND WN_PKG_EXECUTABLES
++list(APPEND WN_PKG_TARGETS
 +  $<TARGET_FILE:dds-agent>
 +  $<TARGET_FILE:dds-user-defaults> )
 +if(BUILD_TESTS)
-+  list(APPEND $<TARGET_FILE:dds_topology_lib-tests>)
++  list(APPEND WN_PKG_TARGETS $<TARGET_FILE:dds_topology_lib-tests>)
  endif()
-+separate_arguments(CLI_WN_PKG_EXECUTABLES
-+  UNIX_COMMAND "${WN_PKG_EXECUTABLES}" )
++separate_arguments(CLI_WN_PKG_TARGETS
++  UNIX_COMMAND "${WN_PKG_TARGETS}" )
  
 -set(PREREQ_DIRS "$<TARGET_FILE_DIR:dds-user-defaults>::$<TARGET_FILE_DIR:dds_protocol_lib>::$<TARGET_FILE_DIR:dds_intercom_lib>::$<TARGET_FILE_DIR:dds_topology_lib>::$<TARGET_FILE_DIR:dds_ncf>::${DDS_BOOST_LIB_DIR}")
 -foreach(p IN LISTS ENV_LD_LIBRARY_PATH)
@@ -106,7 +106,7 @@ index c072db1..f560b85 100644
 -	COMMAND ${CMAKE_COMMAND} -DPREREQ_DESTINATION=${WN_PKG_DIR} -DDDS_AGENT_BIN_PATH=${DDS_AGENT_BIN_PATH}
 -		-DPREREQ_DIRS=${PREREQ_DIRS} -DDDS_BOOST_LIB_DIR=${DDS_BOOST_LIB_DIR} -P "${CMAKE_SOURCE_DIR}/cmake/modules/DDS_CollectPrerequisites.cmake"
 +  COMMAND ${CMAKE_COMMAND}
-+    -DEXECUTABLES=${CLI_WN_PKG_EXECUTABLES}
++    -DEXECUTABLES=${CLI_WN_PKG_TARGETS}
 +    -DDESTINATION=${WN_PKG_DIR}
 +    -DEXCLUDED_SYSTEM_PREFIXES=${CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES}
 +    -P "${CMAKE_SOURCE_DIR}/cmake/DDSCollectWNPkgFiles.cmake"
