@@ -408,7 +408,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(fairsoft-config
     GIT_REPOSITORY https://github.com/FairRootGroup/fairsoft-config GIT_TAG master
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-    "-DFAIRSOFT_VERSION=apr21"
+    "-DFAIRSOFT_VERSION=jul21"
     DEPENDS root ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
