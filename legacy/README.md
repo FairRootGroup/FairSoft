@@ -33,9 +33,9 @@ git clone -b <release> https://github.com/FairRootGroup/FairSoft
 ```
 
 For `<release>` choose
-* `apr21`, or `apr21p1`, ... - a particular release
-* `apr21_patches` - always points to the latest patch release for the `apr21` release
-* `master` - track the latest stable release (e.g. if `apr21` is the latest release `master` is the same as `apr21_patches`)
+* `jul21`, or `jul21p1`, ... - a particular release
+* `jul21_patches` - always points to the latest patch release for the `jul21` release
+* `master` - track the latest stable release (e.g. if `jul21` is the latest release `master` is the same as `jul21_patches`)
 * `dev` - the bleeding edge development version
 
 Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
@@ -85,8 +85,9 @@ please contact us.
 | CentOS | 7 | GCC 7.3.1 (devtoolset-7) | 3.17.3 (epel: cmake3) |
 | Debian | 10 | GCC 8.3.0 | 3.18.3 (`bootstrap-cmake.sh`) |
 | Fedora | 33 | GCC 10.2.1 | 3.18.3 |
-| macOS | 10.15.7 | AppleClang 12.0 | 3.20.3 (brew) |
-| macOS | 11.4 | AppleClang 12.0 | 3.20.3 (brew) |
+| Fedora | 34 | GCC 11.1.1 | 3.20.5 |
+| macOS | 10.15.7 | AppleClang 12.0 | 3.20.5 (brew) |
+| macOS | 11.4 | AppleClang 12.0 | 3.20.5 (brew) |
 | OpenSUSE | 15.2 | GCC 7.5.0 | 3.17.0 |
 | Ubuntu | 20.04 | GCC 9.3.0 | 3.16.3 |
 
