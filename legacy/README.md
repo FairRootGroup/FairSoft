@@ -82,7 +82,7 @@ please contact us.
 
 | **System** | **Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- |
-| CentOS | 7 | GCC 7.3.1 (devtoolset-7) | 3.17.3 (epel: cmake3) |
+| CentOS | 7 | GCC 8.3.1 (devtoolset-8) | 3.17.5 (epel: cmake3) |
 | Debian | 10 | GCC 8.3.0 | 3.18.3 (`bootstrap-cmake.sh`) |
 | Debian | 11 | GCC 10.2.1 | 3.18.4 |
 | Fedora | 33 | GCC 10.2.1 | 3.18.3 |
