@@ -2,8 +2,7 @@
 
 yum -y update
 yum -y install centos-release-scl
-yum-config-manager --enable rhel-server-rhscl-7-rpms
-yum -y install devtoolset-7
+yum -y install devtoolset-8
 yum -y install epel-release
 yum -y groupinstall "C Development Tools and Libraries"
 yum -y install autoconf automake binutils bison bzip2-devel cmake3 \
@@ -18,11 +17,11 @@ python python-devel readline-devel redhat-lsb-core sed subversion tar \
 tbb-devel unzip wget which xerces-c-devel xz-devel yaml-cpp-devel
 yum -y clean all
 
-# This enables devtoolset-7 globally!
-profile="/etc/profile.d/enable-devtoolset-7.sh"
+# This enables devtoolset-8 globally!
+profile="/etc/profile.d/enable-devtoolset-8.sh"
 cat <<EOF > ${profile}
 #!/bin/bash
-source scl_source enable devtoolset-7
+source scl_source enable devtoolset-8
 EOF
 chmod a+x "${profile}"
 
