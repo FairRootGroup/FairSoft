@@ -33,6 +33,8 @@ class Pythia8(AutotoolsPackage):
     # See: https://github.com/alisw/pythia8/commit/f97ec11943af269e3b08634c03339ae4189b3bbe
     patch('ropewalk_sqrt.patch', when='@8240:8244,8301:8302')
 
+    patch('8303_limits.patch', when='@8303')
+
     depends_on('rsync', type='build')
     depends_on('hepmc@2:2.99')
 
