@@ -17,6 +17,7 @@ class Fairmq(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='dev', submodules=True, get_full_repo=True)
+    version('1.4.39', tag='v1.4.39', commit='479d6e071234fdb2541fb7d666eab99fbff58120', submodules=True, no_cache=True)
     version('1.4.33', tag='v1.4.33', commit='bffe74c5cfe11797adbc9acda18591ceb0275833', submodules=True, no_cache=True)
     version('1.4.30', tag='v1.4.30', commit='2b3e38d9a48a0d941a7a794be0a53c8dbfefbaec', submodules=True, no_cache=True)
     version('1.4.29', tag='v1.4.29', commit='c6b13cd3a18ac0e4d724e4df54f8027885b9ee0d', submodules=True, no_cache=True)
