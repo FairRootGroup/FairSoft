@@ -115,6 +115,9 @@ class Fairmq(CMakePackage):
            args.append('-DBUILD_SDK_COMMANDS=ON')
         if self.spec.satisfies('@1.4.11:'):
            args.append('-DBUILD_SDK=ON')
+        if self.spec.satisfies('@:1.4.38'):
+           # googletest too old for gcc11, just disable
+           args.append('-DBUILD_TESTING=OFF')
         # NOTE Support for building the ofi transport will be added at a later
         #      point in time.
         # args.append('-DBUILD_OFI_TRANSPORT=ON')
