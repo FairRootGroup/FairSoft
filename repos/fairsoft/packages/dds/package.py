@@ -49,6 +49,11 @@ class Dds(CMakePackage):
     # TODO Upstream the wn_bin fix
     patch('fix_uuid_init.patch', when='@2.5-odc:3.0')
 
+    # Part of / inspired by upstream
+    # commit d992115921022daa7433ab2ba6135fd69f064db7
+    patch('fix_missing_thread_include_2.4_3.5.11.patch', when='@2.4:3.5.11')
+    patch('fix_missing_thread_include_2.5_3.0.patch', when='@2.5:3.0')
+
     depends_on('boost +shared+log+thread+program_options+filesystem+system+regex+test', when='@2.4:')
     depends_on('boost@1.67:1.72', when='@2.4:3.5.3')
     depends_on('boost@1.67:', when='@3.5.4:')
