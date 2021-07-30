@@ -1,0 +1,18 @@
+commit ce0a052252eba34f4fd69c1277ccf490d53ffd70
+Author: Dennis Klein <d.klein@gsi.de>
+Date:   Tue May 11 18:15:18 2021 +0200
+
+    SDK: Add missing header <thread>
+
+diff --git a/fairmq/sdk/DDSSession.cxx b/fairmq/sdk/DDSSession.cxx
+index f8e8dc53..25946118 100644
+--- a/fairmq/sdk/DDSSession.cxx
++++ b/fairmq/sdk/DDSSession.cxx
+@@ -21,6 +21,7 @@
+ #include <fairmq/sdk/DDSTopology.h>
+ #include <mutex>
+ #include <sstream>
++#include <thread>
+ #include <unordered_map>
+ #include <utility>
+ #include <vector>

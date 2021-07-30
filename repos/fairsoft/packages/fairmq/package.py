@@ -71,6 +71,8 @@ class Fairmq(CMakePackage):
     patch('fix_cpp17moveinsertable_assertion_xcode12.patch', when='@1.4.8:1.4.23')
     patch('update_command_format_in_pmix_plugin.patch', when='@1.4.23')
     patch('no_external_asio_1.4.11.patch', when='@1.4.8:1.4.26')
+    patch('fix_missing_include_thread_1.4.10_1.4.38.patch',
+          when='@1.4.10:1.4.38')
 
     depends_on('googletest@1.7:', when='@:1.4.8')
     depends_on('boost@1.64: +container+program_options+thread+system+filesystem+regex+date_time', when='@1.3')
