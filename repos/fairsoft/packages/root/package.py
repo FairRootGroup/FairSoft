@@ -581,26 +581,22 @@ class Root(CMakePackage):
             options.append('-DFONTCONFIG_INCLUDE_DIR={0}'.format(
                 self.spec['fontconfig'].prefix.include))
 
-        # see https://github.com/spack/spack/pull/11579
         if '+python' in self.spec:
-            options.append('-DPYTHON_EXECUTABLE=%s' %
-                           spec['python'].command.path)
+            # See https://github.com/spack/spack/pull/11579
+            options.append(define('PYTHON_EXECUTABLE',
+                                  spec['python'].command.path))
 
         return options
 
-    def setup_environment(self, spack_env, run_env):
+    def setup_build_environment(self, env):
         spec = self.spec
 
-        run_env.set('ROOTSYS', self.prefix)
-        run_env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
-        run_env.prepend_path('PYTHONPATH', self.prefix.lib)
-        if 'lz4' in self.spec:
-            spack_env.append_path('CMAKE_PREFIX_PATH',
-                                  self.spec['lz4'].prefix)
+        if 'lz4' in spec:
+            env.append_path('CMAKE_PREFIX_PATH', spec['lz4'].prefix)
 
         # This hack is made necessary by a header name collision between
         # asimage's "import.h" and Python's "import.h" headers...
-        spack_env.set('SPACK_INCLUDE_DIRS', '', force=True)
+        env.set('SPACK_INCLUDE_DIRS', '', force=True)
 
         # ...but it breaks header search for any ROOT dependency which does not
         # use CMake. To resolve this, we must bring back those dependencies's
@@ -611,11 +607,11 @@ class Root(CMakePackage):
         # system/compiler combinations don't like having -I/usr/include around.
         def add_include_path(dep_name):
             try:
-                include_path = self.spec[dep_name].prefix.include
+                include_path = spec[dep_name].prefix.include
             except KeyError:
                 return
             if not is_system_path(include_path):
-                spack_env.append_path('SPACK_INCLUDE_DIRS', include_path)
+                env.append_path('SPACK_INCLUDE_DIRS', include_path)
 
         # The internal afterimage needs those sometimes:
         add_include_path('zlib')
@@ -633,14 +629,24 @@ class Root(CMakePackage):
             add_include_path('glew')
             add_include_path('mesa-glu')
 
-    def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
-        spack_env.set('ROOTSYS', self.prefix)
-        spack_env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
-        spack_env.prepend_path('PYTHONPATH', self.prefix.lib)
-        spack_env.prepend_path('PATH', self.prefix.bin)
-        spack_env.append_path('CMAKE_MODULE_PATH', '{0}/cmake'
-                              .format(self.prefix))
-        run_env.set('ROOTSYS', self.prefix)
-        run_env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
-        run_env.prepend_path('PYTHONPATH', self.prefix.lib)
-        run_env.prepend_path('PATH', self.prefix.bin)
+    def setup_run_environment(self, env):
+        env.set('ROOTSYS', self.prefix)
+        env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
+        env.prepend_path('PYTHONPATH', self.prefix.lib)
+
+    def setup_dependent_build_environment(self, env, dependent_spec):
+        env.set('ROOTSYS', self.prefix)
+        env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
+        env.prepend_path('PYTHONPATH', self.prefix.lib)
+        env.prepend_path('PATH', self.prefix.bin)
+        env.append_path('CMAKE_MODULE_PATH', self.prefix.cmake)
+        if "+rpath" not in self.spec:
+            env.prepend_path('LD_LIBRARY_PATH', self.prefix.lib)
+
+    def setup_dependent_run_environment(self, env, dependent_spec):
+        env.set('ROOTSYS', self.prefix)
+        env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
+        env.prepend_path('PYTHONPATH', self.prefix.lib)
+        env.prepend_path('PATH', self.prefix.bin)
+        if "+rpath" not in self.spec:
+            env.prepend_path('LD_LIBRARY_PATH', self.prefix.lib)

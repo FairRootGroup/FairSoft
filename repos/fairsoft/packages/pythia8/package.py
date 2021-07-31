@@ -48,9 +48,9 @@ class Pythia8(AutotoolsPackage):
             args.append('--enable-shared')
         return args
 
-    def setup_environment(self, spack_env, run_env):
-        run_env.set('PYTHIA8DATA', '%s/share/Pythia8/xmldoc' % prefix )
-        run_env.set('PYTHIA8', '%s' % prefix )
+    def setup_dependent_run_environment(self, env, dependent_spec):
+        env.set('PYTHIA8', self.prefix)
+        env.set('PYTHIA8DATA', self.prefix.share.Pythia8.xmldoc)
 
     def url_for_version(self, version):
         url = "https://pythia.org/download/pythia{0}/pythia{1}.tgz"
