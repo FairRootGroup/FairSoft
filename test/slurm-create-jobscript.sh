@@ -1,15 +1,18 @@
 #! /bin/bash
 
-if [ $# != 4 ]
+if [ $# -lt 4 ]
 then
-	echo "*** Please call like: $0 LABEL CONTAINER CTESTCMD JOBSH"
+	echo "*** Please call like: $0 LABEL CONTAINER JOBSH CTEST [CTESTARG ...]"
 	exit 1
 fi
 
-label="$1"
-container="$2"
-ctestcmd="$3"
-jobsh="$4"
+label="$1"; shift
+container="$1"; shift
+jobsh="$1"; shift
+# Convert commandline array into single string, with proper quoting
+ctestcmd="$(printf ' %q' "$@")"
+# Strip leading space
+ctestcmd="${ctestcmd:1}"
 
 echo "*** Creating job script ..: ${jobsh}"
 

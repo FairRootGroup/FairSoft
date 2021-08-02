@@ -32,9 +32,11 @@ def isLegacyChange() {
   return false
 }
 
-def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
+def jobMatrix(String node_type, String inp_ctestcmd, List specs, Closure callback) {
   def nodes = [:]
   for (spec in specs) {
+    // allocate some fresh objects per loop iteration
+    def ctestcmd = inp_ctestcmd
     def node_alloc_label = node_type
     def label = spec.os
     def jobsh = "job_${label}.sh"
@@ -45,12 +47,17 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
     } else {
       container = spec.container
     }
+    def extra = spec.getOrDefault("extra", null)
     nodes[title] = {
       node(node_alloc_label) {
         githubNotify(context: title, description: 'Building ...', status: 'PENDING')
         def legacy = false
         try {
           checkout scm
+
+          if (extra != null) {
+            ctestcmd = ctestcmd + ' ' + extra
+          }
 
           legacy = isLegacyChange() // needs to run after scm checkout in node context
           if (legacy) {
@@ -65,7 +72,7 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
               ctestcmd = ctestcmd + ' -DNCPUS=\\\$SLURM_CPUS_PER_TASK'
             }
             sh(label: "Create Slurm Job Script", script: """
-              exec test/slurm-create-jobscript.sh "${label}" "${container}" "${ctestcmd}" "${jobsh}"
+              exec test/slurm-create-jobscript.sh "${label}" "${container}" "${jobsh}" ${ctestcmd}
             """)
           }
 
@@ -116,7 +123,8 @@ pipeline {
             [os: 'CentOS-7',         container: 'centos.7.sif'],
             [os: 'Debian-10',        container: 'debian.10.sif'],
             [os: 'Fedora-33',        container: 'fedora.33.sif'],
-            [os: 'Fedora-34',        container: 'fedora.34.sif',    for_pr: true],
+            [os: 'Fedora-34',        container: 'fedora.34.sif',    for_pr: true,
+             extra: '--label-exclude "env:.*(jun19|nov20).*"'],
             [os: 'GSI-Debian-8',     container: 'gsi-debian.8.sif'],
             [os: 'openSUSE-15.2',    container: 'opensuse.15.2.sif'],
             [os: 'Ubuntu-20.04-LTS', container: 'ubuntu.20.04.sif', for_pr: true],
@@ -151,7 +159,7 @@ pipeline {
           { spec, label, jobsh, ctest ->
             sh """
               hostname -f
-              export LABEL=${label}
+              export LABEL="${label}"
               ${ctest}
             """
           }
