@@ -54,7 +54,8 @@ function(fs_test_props testname)
                TIMEOUT 14400)
 endfunction()
 function(fs_test)
-  cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST" "DEPENDS" ${ARGN})
+  cmake_parse_arguments(PARSE_ARGV 0 ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST"
+                        "DEPENDS;LABELS")
   if(ARGS_ENV)
     set(type env)
     set(what ${ARGS_ENV}/spack.yaml)
@@ -66,6 +67,12 @@ function(fs_test)
            COMMAND test/build${type}.sh ${what} ${ARGS_POST}
            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
   fs_test_props(${ARGS_NAME})
+  set_property(TEST ${ARGS_NAME} APPEND PROPERTY
+               LABELS "${type}:${what}")
+  if(ARGS_LABELS)
+    set_property(TEST ${ARGS_NAME} APPEND PROPERTY
+                 LABELS "${ARGS_LABELS}")
+  endif()
   if(ARGS_MIGHT_FAIL)
     fs_test_might_fail(${ARGS_NAME})
   endif()
@@ -111,7 +118,8 @@ fs_test(NAME dev.sim_mt               ENV env/dev/sim_mt)
 fs_test(NAME dev.sim_mt_headless      ENV env/dev/sim_mt_headless)
 fs_test(NAME test.jun19_fairroot_18_4 ENV test/env/jun19_fairroot_18_4)
 fs_test(NAME test.fairroot_develop    ENV test/env/fairroot_develop)
-fs_test(NAME test.r3broot             ENV test/env/r3broot)
+fs_test(NAME test.r3broot             ENV test/env/r3broot
+        LABELS "env:like/jun19")
 
 fs_test(NAME workflow.classic_developer_jun19
         ENV env/jun19/sim
