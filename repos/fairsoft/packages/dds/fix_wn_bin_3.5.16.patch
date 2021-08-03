@@ -1,6 +1,6 @@
-commit bf91582c16ecce132ab9377727717062af8056a5
+commit 2355a73d5cfda4f9bab6bc27d1a166f4e26ce564
 Author: Christian Tacke <58549698+ChristianTackeGSI@users.noreply.github.com>
-Date:   Mon Mar 8 14:55:25 2021 +0100
+Date:   Tue Jul 20 12:38:41 2021 +0200
 
     wn_bin pkg: Rewrite using modern cmake
     
@@ -11,7 +11,7 @@ Date:   Mon Mar 8 14:55:25 2021 +0100
     of the credit for developing this.
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c072db1..1340c72 100644
+index 07bad6b..bbf36f7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -10,7 +10,8 @@ set(DDS_PROTOCOL_VERSION "2")
@@ -24,7 +24,7 @@ index c072db1..1340c72 100644
  
  string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
  
-@@ -415,68 +416,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
+@@ -420,68 +421,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
  set( WN_PKG_NAME_ARCH "${WN_PKG_NAME}.tar.gz" )
  set( WN_PKG_REMOTE_DIR "/u/ddswww/web-docs/releases/add/${DDS_VERSION}" )
  
@@ -50,7 +50,7 @@ index c072db1..1340c72 100644
 +separate_arguments(CLI_WN_PKG_TARGETS
 +  UNIX_COMMAND "${WN_PKG_TARGETS}" )
  
--set(PREREQ_DIRS "$<TARGET_FILE_DIR:dds-user-defaults>::$<TARGET_FILE_DIR:dds_protocol_lib>::$<TARGET_FILE_DIR:dds_intercom_lib>::$<TARGET_FILE_DIR:dds_topology_lib>::$<TARGET_FILE_DIR:dds_ncf>::${DDS_BOOST_LIB_DIR}")
+-set(PREREQ_DIRS "$<TARGET_FILE_DIR:dds-user-defaults>::$<TARGET_FILE_DIR:dds_protocol_lib>::$<TARGET_FILE_DIR:dds_intercom_lib>::$<TARGET_FILE_DIR:dds_topology_lib>::$<TARGET_FILE_DIR:dds_misc_lib>::${DDS_BOOST_LIB_DIR}")
 -foreach(p IN LISTS ENV_LD_LIBRARY_PATH)
 -  set(PREREQ_DIRS "${PREREQ_DIRS}::${p}")
 -endforeach()
@@ -113,7 +113,7 @@ index c072db1..1340c72 100644
  	COMMAND ${CMAKE_COMMAND} -E tar czf ${WN_PKG_NAME_ARCH} "${WN_PKG_DIR}"
  	COMMAND chmod go+xr ${WN_PKG_NAME_ARCH}
  	COMMENT "Generate WN binary package"
-@@ -499,19 +463,6 @@ add_dependencies( wn_bin_upload
+@@ -504,19 +468,6 @@ add_dependencies( wn_bin_upload
  
  INSTALL(FILES ${CMAKE_BINARY_DIR}/${WN_PKG_NAME_ARCH} DESTINATION "${PROJECT_INSTALL_BINDIR}/wn_bins" OPTIONAL)
  
