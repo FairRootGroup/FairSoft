@@ -18,7 +18,7 @@ fairroot_branch=dev
 case "$ENVNAME" in
   *jun19*)
     fairroot_branch=v18.6_patches
-    no_boost_cmake=1
+    extra_cmake_flags="-DBoost_NO_BOOST_CMAKE=ON -DUSE_DIFFERENT_COMPILER=ON"
     ;;
 esac
 
@@ -45,9 +45,8 @@ git clone --branch "$fairroot_branch" https://github.com/FairRootGroup/FairRoot
 pushd FairRoot
 export FAIRROOTPATH="$(realpath ./install)"
 $cmake -S. -Bbuild \
-  -DUSE_DIFFERENT_COMPILER=ON \
   -DCMAKE_RULE_MESSAGES=OFF -DCMAKE_INSTALL_MESSAGE=NEVER \
-  ${no_boost_cmake:+-DBoost_NO_BOOST_CMAKE=ON} \
+  ${extra_cmake_flags} \
   -DCMAKE_INSTALL_PREFIX=$FAIRROOTPATH
 $cmake --build build --target install -j $SPACK_BUILD_JOBS
 pushd build
