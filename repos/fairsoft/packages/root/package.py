@@ -85,6 +85,17 @@ class Root(CMakePackage):
         # https://sft.its.cern.ch/jira/browse/ROOT-8226.
         patch('root6-60606-mathmore.patch', when='@6.06.06')
 
+    # Backport xrootd 5 support to 6.20.08
+    # *Might* work on all 6.20 releases.
+    # https://github.com/root-project/root/commit/20be1b74489bd20fb27f69f64fd3bfc1210a9c68
+    # https://github.com/root-project/root/commit/963f043cc93aec49c2f1b5e5628b688bf331bb51
+    patch('https://github.com/root-project/root/commit/20be1b74489bd20fb27f69f64fd3bfc1210a9c68.patch?full_index=1',
+          sha256='e100fbd68178ec68b78e9d09761c00808fb2aef32005b8e296630e9917e4b680',
+          when='@6.20.08')
+    patch('https://github.com/root-project/root/commit/963f043cc93aec49c2f1b5e5628b688bf331bb51.patch?full_index=1',
+          sha256='123bf070fd30e3668de7e966438409a794d5f3ef92455bcf42da39b2a602039e',
+          when='@6.20.08')
+
     # https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013
     patch('https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013.patch?full_index=1',
           sha256='531693b38b90810a33c6fa92723247432ebfc762758cf903fb3379af8b0c16b5',
@@ -285,7 +296,8 @@ class Root(CMakePackage):
     depends_on('vdt',       when='+vdt')
     depends_on('libxml2~python',   when='+xml')
     depends_on('xrootd',          when='+xrootd')
-    depends_on('xrootd@:4.99.99', when='@:6.22.03 +xrootd')
+    depends_on('xrootd@:4.99.99', when='@:6.20.07 +xrootd')
+    depends_on('xrootd@:4.99.99', when='@6.22.00:6.22.03 +xrootd')
     # depends_on('hdfs') - supported (TODO)
 
     # Not supported
