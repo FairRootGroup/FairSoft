@@ -124,7 +124,7 @@ pipeline {
             [os: 'Debian-10',        container: 'debian.10.sif'],
             [os: 'Fedora-33',        container: 'fedora.33.sif'],
             [os: 'Fedora-34',        container: 'fedora.34.sif',    for_pr: true,
-             extra: '--label-exclude "env:.*(jun19|nov20).*"'],
+             extra: '--label-exclude "env:.*(jun19).*"'],
             [os: 'GSI-Debian-8',     container: 'gsi-debian.8.sif'],
             [os: 'openSUSE-15.2',    container: 'opensuse.15.2.sif'],
             [os: 'Ubuntu-20.04-LTS', container: 'ubuntu.20.04.sif', for_pr: true],
