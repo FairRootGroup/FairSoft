@@ -91,7 +91,7 @@ EOF
 	if [ -n "$SPACK_BUILD_JOBS" ]
 	then
 		# Reduce build jobs on large number of cpus because we run tests in parallel
-		cpus=$(( $SPACK_BUILD_JOBS > 5 ? $SPACK_BUILD_JOBS * 2 / 3 : $SPACK_BUILD_JOBS ))
+		cpus="$(( $SPACK_BUILD_JOBS / ${FS_TEST_PARALLEL_LEVEL:=1} ))"
 		echo "  build_jobs: $cpus" >>"$HOME/.spack/config.yaml"
 	fi
 
