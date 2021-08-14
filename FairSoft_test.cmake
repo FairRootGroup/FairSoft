@@ -29,7 +29,8 @@ cmake_host_system_information(RESULT fqdn QUERY FQDN)
 message(STATUS " Running on host ......: ${fqdn}")
 
 get_NCPUS()
-message(STATUS " NCPUS ................: ${NCPUS}")
+message(STATUS " NCPUS ................: ${NCPUS} (from ${NCPUS_SOURCE})")
+set(ENV{SPACK_BUILD_JOBS} "${NCPUS}")
 
 show_jenkins_info()
 
@@ -108,6 +109,7 @@ if(DEFINED ENV{FS_TEST_PARALLEL_LEVEL})
     set(test_parallel_level "$ENV{FS_TEST_PARALLEL_LEVEL}")
 endif()
 message(STATUS " test_parallel_level ..: ${test_parallel_level}")
+set(ENV{FS_TEST_PARALLEL_LEVEL} "${test_parallel_level}")
 
 if ("$ENV{CTEST_SITE}" STREQUAL "")
   set(CTEST_SITE "${fqdn}")

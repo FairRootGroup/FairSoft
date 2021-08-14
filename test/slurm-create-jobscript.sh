@@ -18,7 +18,6 @@ echo "*** Creating job script ..: ${jobsh}"
 	echo "export LABEL=${label}"
 	echo 'echo "*** Job started at .......: $(date -R)"'
 	echo 'echo "*** Job ID ...............: $SLURM_JOB_ID"'
-	echo 'export SPACK_BUILD_JOBS=$SLURM_CPUS_PER_TASK'
 	echo "source <(sed -e '/^#/d' -e '/^export/!s/^.*=/export &/' /etc/environment)"
 	printf './test/test-start-container.sh %q %q\n' "${container}" "${ctestcmd}"
 	echo 'retval=$?'

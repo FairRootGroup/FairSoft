@@ -20,6 +20,7 @@ set(PROJECT_MIN_CXX_STANDARD 17)
 
 include(FairSoftLib)
 set_fairsoft_defaults()
+message(STATUS "NCPUS: ${NCPUS} (from ${NCPUS_SOURCE})")
 
 if(NOT PACKAGE_SET)
   set(PACKAGE_SET full)

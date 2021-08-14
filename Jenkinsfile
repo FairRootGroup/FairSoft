@@ -61,9 +61,6 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
           }
 
           if (node_type == 'slurm') {
-            if (legacy) {
-              ctestcmd = ctestcmd + ' -DNCPUS=\\\$SLURM_CPUS_PER_TASK'
-            }
             sh(label: "Create Slurm Job Script", script: """
               exec test/slurm-create-jobscript.sh "${label}" "${container}" "${ctestcmd}" "${jobsh}"
             """)
