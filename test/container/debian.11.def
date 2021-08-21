@@ -1,0 +1,11 @@
+Bootstrap: docker
+From: debian:11
+
+%post
+    apt-get update
+    apt-get -y upgrade
+    apt-get -y --no-install-recommends install sed curl ca-certificates wget xz-utils bzip2 gzip unzip tar file
+    apt-get -y --no-install-recommends install python3 g++ gcc gfortran make patch git
+    apt-get -y --no-install-recommends install hostname lsb-release
+    apt-get -y --no-install-recommends install cmake
+    apt-get -y clean

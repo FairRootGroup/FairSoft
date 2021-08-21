@@ -34,6 +34,7 @@ fs_spack_container(OS centos VERSION 7)
 configure_file(gsi-debian-8-gcc.yaml gsi-debian-8-gcc.yaml COPYONLY) # TODO Make this nicer
 fs_spack_container(OS gsi-debian VERSION 8)
 fs_spack_container(OS debian VERSION 10)
+fs_spack_container(OS debian VERSION 11)
 fs_spack_container(OS fedora VERSION 33)
 fs_spack_container(OS fedora VERSION 34)
 fs_spack_container(OS opensuse VERSION 15.2)
