@@ -204,7 +204,7 @@ if (NOT PACKAGE_SET STREQUAL fairmqdev)
       "-DBUILD_DDS_PLUGIN=ON"
       "-DBUILD_SDK_COMMANDS=ON"
       "-DBUILD_SDK=ON"
-    DEPENDS boost dds fairlogger flatbuffers zeromq ${extract_source_cache_target}
+    DEPENDS asio boost dds fairlogger flatbuffers zeromq ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
