@@ -317,7 +317,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages root)
-  set(root_version "6.24.02")
+  set(root_version "6.24.06")
   if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
     set(root_builtin_glew "-Dbuiltin_glew=ON")
   endif()
@@ -330,7 +330,7 @@ if(PACKAGE_SET STREQUAL full)
   endif()
   ExternalProject_Add(root
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
-    URL_HASH SHA256=0507e1095e279ccc7240f651d25966024325179fa85a1259b694b56723ad7c1c
+    URL_HASH SHA256=907f69f4baca1e4f30eeb4979598ca7599b6aa803ca046e80e25b6bbaa0ef522
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
