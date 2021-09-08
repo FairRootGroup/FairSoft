@@ -98,7 +98,7 @@ endif()
 unset(packages)
 
 list(APPEND packages faircmakemodules)
-set(faircmakemodules_version "0.2.0")
+set(faircmakemodules_version "1.0.0")
 ExternalProject_Add(faircmakemodules
   GIT_REPOSITORY https://github.com/FairRootGroup/FairCMakeModules GIT_TAG v${faircmakemodules_version}
   ${CMAKE_DEFAULT_ARGS}
