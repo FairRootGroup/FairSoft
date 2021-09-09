@@ -36,8 +36,6 @@ class R3broot(CMakePackage):
     depends_on('pythia6')
     depends_on('pythia8')
 
-    patch('fairlogger_include.patch')
-
     def cmake_args(self):
         options = []
         cxxstd = self.spec.variants['cxxstd'].value
