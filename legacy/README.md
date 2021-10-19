@@ -91,6 +91,7 @@ please contact us.
 | Fedora | 35 | GCC 11.2.1 | 3.22.1 |
 | macOS | 10.15 | AppleClang 12.0, gfortran 11.2.0 | 3.22.1 (brew) |
 | macOS | 11 | AppleClang 12.0, gfortran 11.2.0 | 3.22.1 (brew) |
+| macOS arm64 | 11      | AppleClang 13.0                  | 3.21.3 (brew) |
 | OpenSUSE | 15.2 | GCC 7.5.0 | 3.17.0 |
 | Ubuntu | 20.04 | GCC 9.3.0 | 3.16.3 |
 
