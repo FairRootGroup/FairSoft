@@ -87,8 +87,9 @@ please contact us.
 | Debian     | 11      | GCC 10.2.1 | 3.18.4 |
 | Fedora     | 33      | GCC 10.2.1 | 3.18.3 |
 | Fedora     | 34      | GCC 11.1.1 | 3.20.5 |
-| macOS      | 10.15.7 | AppleClang 12.0 | 3.20.5 (brew) |
-| macOS      | 11.4    | AppleClang 12.0 | 3.20.5 (brew) |
+| macOS x64  | 10.15   | AppleClang 12.0 | 3.21.3 (brew) |
+| macOS x64  | 11      | AppleClang 12.0 | 3.21.3 (brew) |
+| macOS arm64| 11      | AppleClang 13.0 | 3.21.3 (brew) |
 | OpenSUSE   | 15.2    | GCC 7.5.0 | 3.17.0 |
 | Ubuntu     | 20.04   | GCC 9.3.0 | 3.16.3 |
 
