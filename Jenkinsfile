@@ -73,15 +73,8 @@ def jobMatrix(String node_type, String inp_ctestcmd, List specs, Closure callbac
             """)
           }
 
-          if (label == "GSI-Debian-8" && legacy) {
-            def msg = 'Skipped (not implemented)'
-            print msg
-            githubNotify(context: title, description: msg, status: 'SUCCESS')
-          } else {
-            callback.call(spec, label, jobsh, ctestcmd)
-            githubNotify(context: title, description: 'Success', status: 'SUCCESS')
-          }
-
+          callback.call(spec, label, jobsh, ctestcmd)
+          githubNotify(context: title, description: 'Success', status: 'SUCCESS')
         } catch (e) {
           githubNotify(context: title, description: 'Error', status: 'ERROR')
           throw e
@@ -124,7 +117,6 @@ pipeline {
             [os: 'Fedora-34',        container: 'fedora.34.sif',    for_pr: true,
              extra: '--label-exclude "env:.*(jun19).*"'],
             [os: 'Fedora-35',        container: 'fedora.35.sif',    for_pr: true],
-            [os: 'GSI-Debian-8',     container: 'gsi-debian.8.sif'],
             [os: 'openSUSE-15.2',    container: 'opensuse.15.2.sif'],
             [os: 'Ubuntu-20.04-LTS', container: 'ubuntu.20.04.sif', for_pr: true],
           ]
