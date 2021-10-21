@@ -6,6 +6,15 @@
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 
+include(GNUInstallDirs)
+
+if(NOT ${PROJECT_NAME}_CONTAINER_DIR)
+  set(${PROJECT_NAME}_CONTAINER_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME_LOWER}/container"
+      CACHE PATH "CI Containers (DATADIR/${PROJECT_NAME_LOWER}/container)")
+endif()
+mark_as_advanced(${PROJECT_NAME}_CONTAINER_DIR)
+set(PROJECT_CONTAINER_DIR "${${PROJECT_NAME}_CONTAINER_DIR}")
+
 add_subdirectory(legacy)
 
 
@@ -41,4 +50,15 @@ fs_spack_container(OS ubuntu VERSION 20.04)
 
 
 add_custom_target(all-spack-containers DEPENDS ${spack_containers})
+
+list(TRANSFORM spack_containers
+     PREPEND "${CMAKE_CURRENT_BINARY_DIR}/"
+     OUTPUT_VARIABLE spack_containers_for_install)
+
+install(FILES ${spack_containers_for_install}
+        DESTINATION "${PROJECT_CONTAINER_DIR}"
+        COMPONENT containers
+        EXCLUDE_FROM_ALL)
+
+
 add_custom_target(all-containers DEPENDS all-spack-containers all-legacy-containers)

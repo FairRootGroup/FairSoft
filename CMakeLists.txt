@@ -22,6 +22,7 @@ if(APPLE)
 endif()
 
 project(FairSoft LANGUAGES C CXX Fortran)
+string(TOLOWER "${PROJECT_NAME}" PROJECT_NAME_LOWER)
 
 if(NOT DEFINED BUILD_METHOD)
   set(BUILD_METHOD legacy)
