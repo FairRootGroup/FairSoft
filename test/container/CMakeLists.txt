@@ -6,6 +6,12 @@
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 
+include(GNUInstallDirs)
+
+if(NOT DEFINED FairSoft_CONTAINER_DIR)
+  set(FairSoft_CONTAINER_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}")
+endif()
+
 add_subdirectory(legacy)
 
 

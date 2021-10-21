@@ -58,3 +58,12 @@ fs_legacy_container(OS ubuntu VERSION 20.04)
 
 
 add_custom_target(all-legacy-containers DEPENDS ${legacy_containers})
+
+list(TRANSFORM legacy_containers
+     PREPEND "${CMAKE_CURRENT_BINARY_DIR}/"
+     OUTPUT_VARIABLE legacy_containers_for_install)
+
+install(FILES ${legacy_containers_for_install}
+        DESTINATION "${FairSoft_CONTAINER_DIR}/legacy"
+        COMPONENT container-legacy
+        EXCLUDE_FROM_ALL)
