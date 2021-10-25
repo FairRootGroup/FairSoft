@@ -1,0 +1,15 @@
+spack:
+  specs:
+  - hepmc length=CM momentum=GEV
+  - fairsoft-bundle@develop +graphics+mt
+  - fairroot@develop+sim
+  - pandaroot
+  concretization: together
+  view: false
+  packages:
+    all:
+      variants: cxxstd=17
+    mesa:
+      variants: ~llvm
+    mesa18:
+      variants: ~llvm
