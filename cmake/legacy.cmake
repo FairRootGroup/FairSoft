@@ -232,10 +232,10 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages vc)
-  set(vc_version "1.4.1")
+  set(vc_version "1.4.2")
   ExternalProject_Add(vc
     URL https://github.com/VcDevel/Vc/archive/${vc_version}.tar.gz
-    URL_HASH SHA256=7e8b57ed5ff9eb0835636203898c21302733973ff8eaede5134dd7cb87f915f6
+    URL_HASH SHA256=50d3f151e40b0718666935aa71d299d6370fafa67411f0a9e249fbce3e6e3952
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
     ${DEPENDS_ON_SOURCE_CACHE}
   )
@@ -365,7 +365,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages geant3)
-  set(geant3_version "3-8_fairsoft")
+  set(geant3_version "3-9_fairsoft")
   ExternalProject_Add(geant3
     GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
