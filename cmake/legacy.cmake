@@ -147,10 +147,11 @@ ExternalProject_Add(fmt
 )
 
 list(APPEND packages dds)
-set(dds_version "3.5.16")
+set(dds_version "3.6")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
-  ${CMAKE_DEFAULT_ARGS}
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DBoost_NO_BOOST_CMAKE=ON"
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_boost_lookup.patch"
   DEPENDS boost ${extract_source_cache_target}
   ${LOG_TO_FILE}
