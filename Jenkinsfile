@@ -119,6 +119,7 @@ pipeline {
           def specs_list = [
             [os: 'CentOS-7',         container: 'centos.7.sif'],
             [os: 'Debian-10',        container: 'debian.10.sif'],
+            [os: 'Debian-11',        container: 'debian.11.sif'],
             [os: 'Fedora-33',        container: 'fedora.33.sif'],
             [os: 'Fedora-34',        container: 'fedora.34.sif',    for_pr: true,
              extra: '--label-exclude "env:.*(jun19).*"'],
