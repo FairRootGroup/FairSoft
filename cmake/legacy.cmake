@@ -144,7 +144,7 @@ ExternalProject_Add(fmt
 )
 
 list(APPEND packages dds)
-set(dds_version "3.5.21")
+set(dds_version "3.6")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
