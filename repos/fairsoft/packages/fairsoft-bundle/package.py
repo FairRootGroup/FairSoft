@@ -37,6 +37,9 @@ class FairsoftBundle(BundlePackage):
     depends_on('root +fortran+pythia6+pythia8+vc~vdt')
     # Mostly for the experiments:
     depends_on('root +python+tmva+mlp+xrootd+sqlite')
+    # FFTW for Panda
+    depends_on('root +fftw')
+    depends_on('fftw~mpi')
     depends_on('root +spectrum', when='@20.11:')
     depends_on('root ~x~opengl~aqua', when='~graphics')
     depends_on('root +x+opengl', when='+graphics')
