@@ -7,6 +7,7 @@ apt-get -y install autoconf automake binutils \
 	bison build-essential bzip2 ca-certificates coreutils \
 	curl debianutils file findutils flex g++ gcc gfortran git gzip \
 	hostname libbz2-dev libcurl4-openssl-dev libgsl-dev libicu-dev \
+	libfftw3-dev \
 	libgl1-mesa-dev libglu1-mesa-dev libgrpc++-dev \
 	libncurses-dev libreadline-dev libsqlite3-dev libssl-dev libtool \
 	libx11-dev libxerces-c-dev libxext-dev libxft-dev \
