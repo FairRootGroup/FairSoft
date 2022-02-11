@@ -9,10 +9,10 @@ fi
 container="$1"
 ctestcmd="$2"
 
-if [ -z "$FS_INSTALLTREE_BASE" ]
-then
-	FS_INSTALLTREE_BASE=/srv/alfaci/FairSoft/install-tree
-fi
+# Some default paths:
+: ${FS_INSTALLTREE_BASE:="/srv/alfaci/FairSoft/install-tree"}
+: ${SINGULARITY_CONTAINER_ROOT:="/cvmfs/fairsoft_dev.gsi.de/ci/for-fairsoft/latest/container"}
+
 image="${SINGULARITY_CONTAINER_ROOT}/${container}"
 bindmounts="/etc/environment,/cvmfs,$PWD"
 
