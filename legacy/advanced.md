@@ -4,6 +4,7 @@ Table of Contents
 * [Inspecting the build logs](#inspecting-the-build-logs)
 * [Offline installation](#offline-installation)
 * [Rebuilding a package](#rebuilding-a-package)
+* [`$DESTDIR` Not Supported](#destdir-not-supported)
 
 ## Inspecting the build logs
 
@@ -45,3 +46,10 @@ to *incrementally* rebuild the given `<package>` and its dependencies.
 
 Note: Files installed to `<path-to-install>` from previous builds are **not** removed
 on rebuilds.
+
+## `$DESTDIR` Not Supported
+
+As FairSoft legacy is a multi package super build,
+`$DESTDIR` is not supported.  Later packages in the build
+process might either not find the staging area, or bake the
+DESTDIR value into resulting artifacts.
