@@ -422,7 +422,6 @@ class Root(CMakePackage):
                 'ON' if '+x' in spec else 'OFF'),
             '-Dbonjour:BOOL=OFF',
             define('cocoa', use_aqua),
-            # -Dcxxmodules=OFF # use clang C++ modules
             '-Ddavix:BOOL=%s' % (
                 'ON' if '+davix' in spec else 'OFF'),
             '-Dfftw3:BOOL=%s' % (
@@ -547,8 +546,6 @@ class Root(CMakePackage):
             '-Drfio:BOOL=OFF',      # not supported
             '-Droottest:BOOL=OFF',  # requires network
             '-Druby:BOOL=OFF',      # unmantained upstream
-            # Use clang C++ modules, experimental
-            '-Druntime_cxxmodules:BOOL=OFF',
             '-Dsapdb:BOOL=OFF',     # option not implemented
             '-Dsrp:BOOL=OFF',       # option not implemented
             '-Dtcmalloc:BOOL=OFF'
