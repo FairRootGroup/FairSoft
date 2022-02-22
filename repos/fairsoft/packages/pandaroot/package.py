@@ -1,6 +1,6 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 #   Spack Project Developers. See the top-level COPYRIGHT file for details.
-# Copyright 2019-2021 GSI Helmholtz Centre for Heavy Ion Research GmbH,
+# Copyright 2019-2022 GSI Helmholtz Centre for Heavy Ion Research GmbH,
 #   Darmstadt, Germany
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
