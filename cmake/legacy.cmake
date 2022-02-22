@@ -387,7 +387,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages vgm)
-  set(vgm_version "4-8")
+  set(vgm_version "5-0")
   ExternalProject_Add(vgm
     GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
