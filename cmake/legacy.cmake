@@ -397,7 +397,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages geant4_vmc)
-  set(geant4_vmc_version "5-3")
+  set(geant4_vmc_version "6-0")
   ExternalProject_Add(geant4_vmc
     GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v${geant4_vmc_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
