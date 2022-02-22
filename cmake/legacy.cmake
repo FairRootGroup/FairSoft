@@ -113,10 +113,10 @@ ExternalProject_Add(asio
 )
 
 list(APPEND packages boost)
-set(boost_version "75")
+set(boost_version "78")
 ExternalProject_Add(boost
   URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
-  URL_HASH SHA256=953db31e016db7bb207f11432bef7df100516eeb746843fa0486a222e3fd49cb
+  URL_HASH SHA256=8681f175d4bdb26c52222665793eef08490d7758529330f98d3b29dd0735bccc
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
