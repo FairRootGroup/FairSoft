@@ -371,7 +371,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages vmc)
-  set(vmc_version "1-0-p3")
+  set(vmc_version "2-0")
   ExternalProject_Add(vmc
     GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
