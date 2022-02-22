@@ -256,10 +256,10 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages clhep)
-  set(clhep_version "2.4.4.0")
+  set(clhep_version "2.4.5.1")
   ExternalProject_Add(clhep
     URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
-    URL_HASH SHA256=5df78c11733a091da9ae5a24ce31161d44034dd45f20455587db85f1ca1ba539
+    URL_HASH SHA256=2517c9b344ad9f55974786ae6e7a0ef8b22f4abcbf506df91194ea2299ce3813
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
     ${LOG_TO_FILE}
