@@ -116,6 +116,6 @@ please contact us.
 | pythia8          | 8303         | https://pythia.org/ |
 | root             | 6.24.06      | https://root.cern |
 | vc               | 1.4.2        | https://github.com/VcDevel/Vc |
-| vgm              | 4-8          | https://github.com/vmc-project/vgm |
+| vgm              | 5-0          | https://github.com/vmc-project/vgm |
 | vmc              | 1-0-p3       | https://github.com/vmc-project/vmc |
 | zeromq           | 4.3.4        | https://github.com/zeromq/libzmq |
