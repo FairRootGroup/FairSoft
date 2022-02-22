@@ -287,7 +287,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages geant4)
-  set(geant4_version "10.7.1")
+  set(geant4_version "11.0.0")
   if(GEANT4MT)
     set(mt
       "-DGEANT4_BUILD_MULTITHREADED=ON"
@@ -298,9 +298,9 @@ if(PACKAGE_SET STREQUAL full)
   endif()
   ExternalProject_Add(geant4
     URL https://gitlab.cern.ch/geant4/geant4/-/archive/v${geant4_version}/geant4-v${geant4_version}.tar.gz
-    URL_HASH SHA256=2aa7cb4b231081e0a35d84c707be8f35e4edc4e97aad2b233943515476955293
+    URL_HASH SHA256=04d11d4d9041507e7f86f48eb45c36430f2b6544a74c0ccaff632ac51d9644f1
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DGEANT4_BUILD_CXXSTD=${CMAKE_CXX_STANDARD}"
+      "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
       ${mt}
       "-DGEANT4_USE_SYSTEM_CLHEP=ON"
       "-DGEANT4_USE_SYSTEM_EXPAT=ON"
@@ -313,6 +313,7 @@ if(PACKAGE_SET STREQUAL full)
       "-DGEANT4_INSTALL_DATA=ON"
       "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
       "-DGEANT4_BUILD_VERBOSE_CODE=ON"
+      "-DGEANT4_BUILD_BUILTIN_BACKTRACE=OFF"
       ${python}
     DEPENDS boost clhep ${extract_source_cache_target}
     ${LOG_TO_FILE}
