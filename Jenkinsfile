@@ -98,9 +98,13 @@ pipeline {
     stage('Info Stage') {
       steps {
         echo "BRANCH_NAME: ${BRANCH_NAME}"
-        echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
-        echo "env.CHANGE_ID: ${env.CHANGE_ID}"
-        echo "env.CHANGE_TARGET: ${env.CHANGE_TARGET}"
+        echo """
+          env.BRANCH_NAME: ${env.BRANCH_NAME}
+          env.CHANGE_ID: ${env.CHANGE_ID}
+          env.CHANGE_TARGET: ${env.CHANGE_TARGET}
+          env.GIT_PREVIOUS_COMMIT: ${env.GIT_PREVIOUS_COMMIT}
+          env.GIT_PREVIOUS_SUCCESSFUL_COMMIT: ${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}
+          """
         echo "getBuildCauses: ${currentBuild.getBuildCauses()}"
         echo "our_quiet_period: ${our_quiet_period}"
       }
