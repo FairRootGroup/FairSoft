@@ -19,6 +19,7 @@ class Dds(CMakePackage):
     git = "https://github.com/FairRootGroup/DDS"
     maintainers = ['dennisklein', 'ChristianTackeGSI']
 
+    version('3.6', commit='c71f8df77766c052441f8f3a89e948755a07c2a2', no_cache=True)
     version('3.5.16', commit='2bb197d7080521c81f35b8e75dbadecc40f7cc8b', no_cache=True)
     version('3.5.14', commit='85aee1f7e34d3648cd6c5fb7439f0482583031a0', no_cache=True)
     version('3.5.10', commit='a3e15b32c8c090afc676da015e8b6e4bc29aeb4e', no_cache=True)
@@ -46,7 +47,9 @@ class Dds(CMakePackage):
     patch('fix_wn_bin_3.5.4_3.5.10.patch', when='@3.5.4:3.5.10')
     patch('fix_wn_bin_3.5.14.patch', when='@3.5.14')
     patch('fix_wn_bin_3.5.16.patch', when='@3.5.16')
-    # TODO Upstream the wn_bin fix
+    patch('fix_wn_bin_3.6.patch', when='@3.6')
+    # Upstream PR / patch tracking:
+    # https://github.com/FairRootGroup/DDS/pull/354
     patch('fix_uuid_init.patch', when='@2.5-odc:3.0')
 
     # Part of / inspired by upstream
