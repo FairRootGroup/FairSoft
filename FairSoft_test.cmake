@@ -164,8 +164,13 @@ if (BUILD_METHOD STREQUAL legacy)
   fairsoft_ctest_submit()
 
   show_big_header("Building")
-  ctest_build(FLAGS "-j${NCPUS}")
+  ctest_build(RETURN_VALUE _ctest_build_retval
+              NUMBER_ERRORS _ctest_build_errors
+              FLAGS "-j${NCPUS}")
   fairsoft_ctest_submit()
+  if (_ctest_build_errors)
+    set(_ctest_build_retval 255)
+  endif()
 
   set(from "${CTEST_BINARY_DIRECTORY}/Log")
   message(STATUS " Copy logs ....... from: ${from}")
@@ -191,10 +196,16 @@ else()
   ctest_start(Continuous TRACK ${cdash_group})
   show_big_header("Configuring")
   ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR};-DFS_TEST_INSTALLTREE=${FS_TEST_INSTALLTREE};-DBUILD_METHOD=spack")
+  set(_ctest_build_retval 0)
 endif()
-show_big_header("Starting Tests")
-ctest_test(RETURN_VALUE _ctest_test_ret_val
-           PARALLEL_LEVEL ${test_parallel_level})
+if (_ctest_build_retval)
+    show_big_header("Skipping Tests, Build Failed")
+    set(_ctest_test_ret_val 255)
+else()
+    show_big_header("Starting Tests")
+    ctest_test(RETURN_VALUE _ctest_test_ret_val
+               PARALLEL_LEVEL ${test_parallel_level})
+endif()
 fairsoft_ctest_submit(FINAL)
 
 if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")
