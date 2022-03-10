@@ -11,6 +11,8 @@ def isLegacyChange() {
   def target = false
   if (env.CHANGE_TARGET != null) {
     target = "refs/remotes/origin/${env.CHANGE_TARGET}"
+  } else if (env.BRANCH_NAME =~ /legacy/) {
+    return true
   } else if (env.BRANCH_NAME != 'dev' && env.BRANCH_NAME != 'master') {
     sh "git fetch --no-tags --force --progress -- ${scm.userRemoteConfigs[0].url} +refs/heads/dev:refs/remotes/origin/dev"
     target = sh(label: 'Retrieve merge base', returnStdout: true,
