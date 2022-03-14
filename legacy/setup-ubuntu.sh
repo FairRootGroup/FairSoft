@@ -11,7 +11,7 @@ apt-get -y install autoconf automake binutils \
 	libgl1-mesa-dev libglu1-mesa-dev libgrpc++-dev \
 	libncurses-dev libreadline-dev libsqlite3-dev libssl-dev libtool \
 	libx11-dev libxerces-c-dev libxext-dev libxft-dev \
-	libxml2-dev libxmu-dev libxpm-dev libyaml-cpp-dev lsb-release make patch python-dev \
+	libxml2-dev libxmu-dev libxpm-dev libyaml-cpp-dev lsb-release make patch \
 	python3-dev protobuf-compiler-grpc rsync sed subversion tar unzip wget xutils-dev xz-utils
 apt-get -y install cmake
 apt-get -y clean
