@@ -50,7 +50,7 @@ class FairsoftBundle(BundlePackage):
     depends_on('root +aqua', when='+graphics')
 
     # next (master):
-    depends_on('pythia8@8303',          when='@master')
+    depends_on('pythia8@8306',          when='@master')
     # geant4 pinning breaks concretization
     depends_on('root@6.24.02',          when='@master')
     depends_on('vmc@1-0-p3',            when='@master')
