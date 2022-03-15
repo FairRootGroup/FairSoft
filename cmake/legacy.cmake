@@ -122,6 +122,14 @@ ExternalProject_Add(asio
 
 list(APPEND packages boost)
 set(boost_version "78")
+set(boost_features
+  "cxxstd=${CMAKE_CXX_STANDARD}"
+  "link=shared"
+  "threading=multi"
+  "variant=release"
+  "visibility=hidden"
+  "pch=off"
+)
 ExternalProject_Add(boost
   URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
   URL_HASH SHA256=8681f175d4bdb26c52222665793eef08490d7758529330f98d3b29dd0735bccc
@@ -130,12 +138,10 @@ ExternalProject_Add(boost
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     ${boost_python_config} ${boost_icu_config}
   BUILD_COMMAND "./b2" "--layout=system"
-    "cxxstd=${CMAKE_CXX_STANDARD}"
-    "link=shared"
-    "threading=multi"
-    "variant=release"
-    "visibility=hidden"
-  INSTALL_COMMAND "./b2" "install" "-j" "${NCPUS}"
+    ${boost_features}
+  INSTALL_COMMAND "./b2"
+    ${boost_features}
+    "install" "-j" "${NCPUS}"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
