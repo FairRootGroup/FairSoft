@@ -118,6 +118,7 @@ ExternalProject_Add(boost
   URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
   URL_HASH SHA256=953db31e016db7bb207f11432bef7df100516eeb746843fa0486a222e3fd49cb
   BUILD_IN_SOURCE ON
+  BUILD_ALWAYS ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     ${boost_python_config} ${boost_icu_config}
@@ -137,6 +138,7 @@ set(fmt_version "6.1.2")
 ExternalProject_Add(fmt
   URL "https://github.com/fmtlib/fmt/releases/download/${fmt_version}/fmt-${fmt_version}.zip"
   URL_HASH SHA256=63650f3c39a96371f5810c4e41d6f9b0bb10305064e6faf201cbafe297ea30e8
+  BUILD_ALWAYS ON
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFMT_DOC=OFF"
   ${LOG_TO_FILE}
@@ -226,6 +228,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(pythia6
     URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
     URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
+    BUILD_ALWAYS ON
     PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
     ${DEPENDS_ON_SOURCE_CACHE}
@@ -236,6 +239,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(hepmc
     URL https://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
     URL_HASH SHA256=86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
+    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Dlength:STRING=CM"
       "-Dmomentum:STRING=GEV"
@@ -248,6 +252,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(vc
     URL https://github.com/VcDevel/Vc/archive/${vc_version}.tar.gz
     URL_HASH SHA256=50d3f151e40b0718666935aa71d299d6370fafa67411f0a9e249fbce3e6e3952
+    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
     ${DEPENDS_ON_SOURCE_CACHE}
   )
@@ -257,6 +262,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(clhep
     URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
     URL_HASH SHA256=5df78c11733a091da9ae5a24ce31161d44034dd45f20455587db85f1ca1ba539
+    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
     ${LOG_TO_FILE}
@@ -276,6 +282,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(pythia8
     URL https://pythia.org/download/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
     URL_HASH SHA256=9093351829f92d81c60c719bfb007b1e89efb4307f4c8957407406bf3281a6f7
+    BUILD_ALWAYS ON
     BUILD_IN_SOURCE ON
     CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
       "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
@@ -299,6 +306,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(geant4
     URL https://gitlab.cern.ch/geant4/geant4/-/archive/v${geant4_version}/geant4-v${geant4_version}.tar.gz
     URL_HASH SHA256=2aa7cb4b231081e0a35d84c707be8f35e4edc4e97aad2b233943515476955293
+    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DGEANT4_BUILD_CXXSTD=${CMAKE_CXX_STANDARD}"
       ${mt}
@@ -334,6 +342,7 @@ if(PACKAGE_SET STREQUAL full)
     URL https://root.cern/download/root_v${root_version}.source.tar.gz
     URL_HASH SHA256=6f061ff6ef8f5ec218a12c4c9ea92665eea116b16e1cd4df4f96f00c078a2f6f
     PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/dirty_stdatomic_h_fix.patch"
+    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
