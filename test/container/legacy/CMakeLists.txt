@@ -55,8 +55,10 @@ fs_legacy_container(OS debian VERSION 11)
 fs_legacy_container(OS fedora VERSION 33)
 fs_legacy_container(OS fedora VERSION 34)
 fs_legacy_container(OS fedora VERSION 35)
+fs_legacy_container(OS fedora VERSION 36)
 fs_legacy_container(OS opensuse VERSION 15.2 DOCKER_TAG "opensuse/leap:15.2")
 fs_legacy_container(OS ubuntu VERSION 20.04)
+fs_legacy_container(OS ubuntu VERSION 22.04)
 
 
 add_custom_target(all-legacy-containers DEPENDS ${legacy_containers})
