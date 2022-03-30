@@ -211,14 +211,11 @@ ExternalProject_Add(flatbuffers
 
 if (NOT PACKAGE_SET STREQUAL fairmqdev)
   list(APPEND packages fairmq)
-  set(fairmq_version "1.4.44")
+  set(fairmq_version "1.4.50")
   ExternalProject_Add(fairmq
     GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DBUILD_DDS_PLUGIN=OFF"
-      "-DBUILD_SDK_COMMANDS=OFF"
-      "-DBUILD_SDK=OFF"
-    DEPENDS asio boost fairlogger flatbuffers zeromq ${extract_source_cache_target}
+    ${CMAKE_DEFAULT_ARGS}
+    DEPENDS asio boost fairlogger zeromq ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
