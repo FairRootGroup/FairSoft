@@ -6,7 +6,7 @@ dnf -y upgrade
 dnf config-manager --set-enabled powertools
 dnf -y update
 dnf -y install autoconf automake binutils bison bzip2-devel cmake \
-ca-certificates coreutils-single curl-devel diffutils expat-devel findutils flex \
+ca-certificates coreutils-single curl-devel diffutils expat-devel fftw-devel findutils flex \
 gcc-c++ gcc-gfortran gdbm-devel gettext-devel git gperftools gsl-devel \
 gzip help2man hostname hwloc-devel m4 make libbsd-devel libtool libicu-devel \
 libunistring-devel libuuid-devel libX11-devel libXau-devel \

@@ -6,7 +6,7 @@ yum -y install devtoolset-11
 yum -y install epel-release
 yum -y groupinstall "C Development Tools and Libraries"
 yum -y install autoconf automake binutils bison bzip2-devel cmake3 \
-ca-certificates coreutils curl-devel diffutils expat-devel findutils flex \
+ca-certificates coreutils curl-devel diffutils expat-devel fftw-devel findutils flex \
 gcc-c++ gcc-gfortran gdbm-devel gettext-devel git gperf gsl-devel \
 gzip help2man hostname hwloc-devel m4 make libbsd-devel libtool libicu-devel \
 libunistring-devel libuuid-devel libX11-devel libXau-devel \
