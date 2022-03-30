@@ -112,7 +112,6 @@ please contact us.
 | geant4           | 11.0.0       | https://geant4.web.cern.ch |
 | geant4_vmc       | 6-0          | https://github.com/vmc-project/geant4_vmc |
 | hepmc            | 2.06.11      | http://hepmc.web.cern.ch |
-| odc              | 0.62         | https://github.com/FairRootGroup/ODC |
 | pythia6          | 428-alice1   | https://github.com/alisw/pythia6 |
 | pythia8          | 8306         | https://pythia.org/ |
 | root             | 6.24.06      | https://root.cern |
