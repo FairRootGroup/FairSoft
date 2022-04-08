@@ -359,6 +359,7 @@ if(PACKAGE_SET STREQUAL full)
       "-Dasimage=ON"
       "-Dcintex=OFF"
       "-Ddavix=OFF"
+      "-Dfftw3=ON"
       "-Dfortran=ON"
       "-Dgdml=ON"
       "-Dglobus=OFF"
