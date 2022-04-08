@@ -339,7 +339,8 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages root)
-  set(root_version "6.24.06")
+  set(root_version "6.26.02")
+  string(REPLACE "\." "-" root_version_gittag ${root_version})
   if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
     set(root_builtin_glew "-Dbuiltin_glew=ON")
   endif()
@@ -351,9 +352,8 @@ if(PACKAGE_SET STREQUAL full)
     set(root_x11 ON)
   endif()
   ExternalProject_Add(root
-    URL https://root.cern/download/root_v${root_version}.source.tar.gz
-    URL_HASH SHA256=907f69f4baca1e4f30eeb4979598ca7599b6aa803ca046e80e25b6bbaa0ef522
-    BUILD_ALWAYS ON
+    GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
+    GIT_SHALLOW 1
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
@@ -378,7 +378,6 @@ if(PACKAGE_SET STREQUAL full)
       "-Dtmva=ON"
       "-Dvc=ON"
       "-Dvdt=OFF"
-      "-Dvmc=OFF"
       "-Dxml=ON"
       "-Dxrootd=ON"
       "-Dx11=${root_x11}"
