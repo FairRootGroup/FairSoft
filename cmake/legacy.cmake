@@ -354,6 +354,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(root
     GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
     GIT_SHALLOW 1
+    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/support_python_3.11.patch"
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
