@@ -305,7 +305,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages geant4)
-  set(geant4_version "11.0.0")
+  set(geant4_version "11.0.1")
   if(GEANT4MT)
     set(mt
       "-DGEANT4_BUILD_MULTITHREADED=ON"
@@ -315,8 +315,8 @@ if(PACKAGE_SET STREQUAL full)
       "-DGEANT4_BUILD_MULTITHREADED=OFF")
   endif()
   ExternalProject_Add(geant4
-    URL https://gitlab.cern.ch/geant4/geant4/-/archive/v${geant4_version}/geant4-v${geant4_version}.tar.gz
-    URL_HASH SHA256=04d11d4d9041507e7f86f48eb45c36430f2b6544a74c0ccaff632ac51d9644f1
+    URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
+    URL_HASH SHA256=3e9b0e68b006c1ddd8c5f6ded084fcd8029a568ecd0e45026d7ef818df46a02b
     BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
