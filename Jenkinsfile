@@ -124,8 +124,10 @@ pipeline {
             [os: 'Fedora-34',        container: 'fedora.34.sif',    for_pr: true,
              extra: '--label-exclude "env:.*(jun19).*"'],
             [os: 'Fedora-35',        container: 'fedora.35.sif',    for_pr: true],
+            [os: 'Fedora-36',        container: 'fedora.36.sif'],
             [os: 'openSUSE-15.2',    container: 'opensuse.15.2.sif'],
             [os: 'Ubuntu-20.04-LTS', container: 'ubuntu.20.04.sif', for_pr: true],
+            [os: 'Ubuntu-22.04-LTS', container: 'ubuntu.22.04.sif'],
           ]
 
           if (env.CHANGE_ID != null) {
