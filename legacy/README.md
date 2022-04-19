@@ -90,12 +90,12 @@ please contact us.
 | Fedora      | 34    | GCC 11.2.1                       | 3.20.5 |
 | Fedora      | 35    | GCC 11.2.1                       | 3.22.2 |
 | Fedora      | 36    | GCC 12.0.1                       | 3.22.2 |
-| macOS       | 10.15 | AppleClang 12.0, gfortran 11.2.0 | 3.22.1 (brew) |
-| macOS       | 11    | AppleClang 12.0, gfortran 11.2.0 | 3.22.1 (brew) |
-| macOS arm64 | 11    | AppleClang 13.0                  | 3.21.3 (brew) |
 | OpenSUSE    | 15.2  | GCC 7.5.0                        | 3.17.0 |
 | Ubuntu      | 20.04 | GCC 9.4.0                        | 3.16.3 |
 | Ubuntu      | 22.04 | GCC 11.2.0                       | 3.22.1 |
+| macOS x86_64 | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
+| macOS x86_64 | 11    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
+| macOS arm64  | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
 
 ## Included packages
 

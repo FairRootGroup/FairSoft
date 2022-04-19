@@ -22,9 +22,9 @@ For all [VAEs](https://hpc.gsi.de/virgo/platform/software.html#application-envir
 
 ### macOS (beta)
 
-Supported OS versions: `10.15`, `11`<br/>
-Supported *Command Line Tools for Xcode*: `12+`<br/>
-FairSoft config: [default](FairSoftConfig.cmake), no other configs planned<br/>
+Tested: `macOS 11 (x86_64)`, `macOS 12 (x86_64)`, `macOS 12 (arm64)` with *Command Line Tools for Xcode* `13`
+
+FairSoft config: [default](FairSoftConfig.cmake), no other configs planned
 
 1. Install *Command Line Tools for Xcode* from https://developer.apple.com/downloads (requires Apple account)
 2. Install [Homebrew](https://brew.sh/)
