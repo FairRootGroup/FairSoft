@@ -49,6 +49,11 @@ if(APPLE)
   set(CMAKE_DEFAULT_ARGS ${CMAKE_DEFAULT_ARGS}
     "-DCMAKE_MACOSX_RPATH:BOOL=ON"
   )
+  if(CMAKE_OSX_SYSROOT)
+    set(CMAKE_DEFAULT_ARGS ${CMAKE_DEFAULT_ARGS}
+      "-DCMAKE_OSX_SYSROOT:PATH=${CMAKE_OSX_SYSROOT}"
+    )
+  endif()
 endif()
 if(ICU_ROOT)
   set(icu "-DICU_ROOT=${ICU_ROOT}")
@@ -541,6 +546,10 @@ if(SOURCE_CACHE)
   message(STATUS "  ${Cyan}SOURCE CACHE${CR}       ${BGreen}${SOURCE_CACHE}${CR}")
 else()
   message(STATUS "  ${Cyan}SOURCE CACHE${CR}       using upstream URLs (generate cache by building target 'source-cache' and pass via ${BMagenta}-DSOURCE_CACHE=...${CR})")
+endif()
+if(CMAKE_OSX_SYSROOT)
+  message(STATUS "  ")
+  message(STATUS "  ${Cyan}OSX_SYSROOT${CR}        ${BGreen}${CMAKE_OSX_SYSROOT}${CR} (change with ${BMagenta}-DCMAKE_OSX_SYSROOT=...${CR})")
 endif()
 message(STATUS "  ")
 message(STATUS "  ${Cyan}INSTALL PREFIX${CR}     ${BGreen}${CMAKE_INSTALL_PREFIX}${CR} (change with ${BMagenta}-DCMAKE_INSTALL_PREFIX=...${CR})")

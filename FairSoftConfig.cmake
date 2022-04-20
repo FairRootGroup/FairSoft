@@ -75,3 +75,19 @@ if(APPLE)
   string(STRIP "${icu_prefix}" icu_prefix)
   set(ICU_ROOT "${icu_prefix}" CACHE FILEPATH "ICU prefix" FORCE)
 endif()
+
+#
+# macOS SDK
+#
+#  On macOS building ROOT is picky about the chosen macOS SDK. The issue is not fully understood,
+#  but it appears to work if one chooses the latest major version among the installed macOS SDKs.
+#  If you experience that this default behaviour does not work out for you, please let us know!
+#
+#  `brew` contains some logic to detect installed SDKs on your machine and can choose the latest.
+#  Since we anyways depend on brew, let's use it.
+#
+if(APPLE)
+  execute_process(COMMAND brew ruby -e "puts MacOS.sdk_path(0)" OUTPUT_VARIABLE macos_sdk_path)
+  string(STRIP "${macos_sdk_path}" macos_sdk_path)
+  set(CMAKE_OSX_SYSROOT "${macos_sdk_path}" CACHE FILEPATH "macOS SDK" FORCE)
+endif()
