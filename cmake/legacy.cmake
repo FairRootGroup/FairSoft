@@ -50,21 +50,19 @@ if(APPLE)
     "-DCMAKE_MACOSX_RPATH:BOOL=ON"
   )
 endif()
-unset(python)
 if(ICU_ROOT)
   set(icu "-DICU_ROOT=${ICU_ROOT}")
   set(boost_icu_config "--with-icu=${ICU_ROOT}")
 endif()
-if(NOT PYTHON_EXECUTABLE)
-  find_package(Python 3.0)
-  if(Python_FOUND)
-    set(PYTHON_EXECUTABLE "${Python_EXECUTABLE}")
-  endif()
-endif()
-if(PYTHON_EXECUTABLE)
-  set(python "-DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}")
-  set(boost_python_config "--with-python=${PYTHON_EXECUTABLE}")
-endif()
+find_package(Python 3 REQUIRED COMPONENTS Interpreter Development)
+get_target_property(Python_EXECUTABLE Python::Interpreter LOCATION)
+get_filename_component(Python_EXECUTABLE_NAME "${Python_EXECUTABLE}" NAME)
+configure_file(${CMAKE_SOURCE_DIR}/legacy/boost/site-config.jam.in ${CMAKE_BINARY_DIR}/site-config.jam @ONLY)
+set(boost_python_config_bootstrap "--with-python=${Python_EXECUTABLE}")
+set(boost_python_config_b2 "--site-config=${CMAKE_BINARY_DIR}/site-config.jam")
+set(cmake_python_config_old "-DPYTHON_EXECUTABLE=${Python_EXECUTABLE}"
+  "-DPYTHON_INCLUDE_DIR=${Python_INCLUDE_DIRS}" "-DPYTHON_LIBRARY=${Python_LIBRARIES}")
+set(cmake_python_config "-DPython_EXECUTABLE=${Python_EXECUTABLE}")
 set(LOG_TO_FILE
   LOG_DIR "${CMAKE_BINARY_DIR}/Log"
   LOG_DOWNLOAD ON
@@ -137,12 +135,17 @@ ExternalProject_Add(boost
   BUILD_ALWAYS ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
-    ${boost_python_config} ${boost_icu_config}
+    ${boost_python_config_bootstrap}
+    ${boost_icu_config}
   BUILD_COMMAND "./b2" "--layout=system"
     ${boost_features}
+    ${boost_python_config_b2}
+    "-j ${NCPUS}"
   INSTALL_COMMAND "./b2"
     ${boost_features}
-    "install" "-j" "${NCPUS}"
+    ${boost_python_config_b2}
+    "-j ${NCPUS}"
+    "install"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
@@ -333,7 +336,7 @@ if(PACKAGE_SET STREQUAL full)
       "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
       "-DGEANT4_BUILD_VERBOSE_CODE=ON"
       "-DGEANT4_BUILD_BUILTIN_BACKTRACE=OFF"
-      ${python}
+      ${cmake_python_config_old}
     DEPENDS boost clhep ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
@@ -382,7 +385,8 @@ if(PACKAGE_SET STREQUAL full)
       "-Dxml=ON"
       "-Dxrootd=ON"
       "-Dx11=${root_x11}"
-      ${python}
+      ${cmake_python_config}
+      ${cmake_python_config_old}
       ${root_builtin_glew}
       ${root_cocoa}
     DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
