@@ -33,9 +33,9 @@ git clone -b <release> https://github.com/FairRootGroup/FairSoft
 ```
 
 For `<release>` choose
-* `mar22`, or `mar22p1`, ... - a particular release
-* `mar22_patches` - always points to the latest patch release for the `mar22` release
-* `master` - track the latest stable release (e.g. if `mar22` is the latest release `master` is the same as `mar22_patches`)
+* `apr22`, or `apr22p1`, ... - a particular release
+* `apr22_patches` - always points to the latest patch release for the `apr22` release
+* `master` - track the latest stable release (e.g. if `apr22` is the latest release `master` is the same as `apr22_patches`)
 * `dev` - the bleeding edge development version
 
 Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
@@ -80,22 +80,22 @@ Find several advanced and troubleshooting topics in the [advanced section](advan
 The following systems are tested regularly. If you feel your system is missing,
 please contact us.
 
-| **System** | **Version** | **Compiler** | **CMake** |
-| --- | --- | --- | --- |
-| CentOS       | 7     | GCC 11.2.1 (devtoolset-11) | 3.17.5 (epel: cmake3) |
-| Rockylinux   | 8     | GCC 8.5.0                  | 3.20.2 |
-| Debian       | 10    | GCC 8.3.0                  | 3.22.3 (`bootstrap-cmake.sh`) |
-| Debian       | 11    | GCC 10.2.1                 | 3.18.4 |
-| Fedora       | 33    | GCC 10.3.1                 | 3.19.7 |
-| Fedora       | 34    | GCC 11.2.1                 | 3.20.5 |
-| Fedora       | 35    | GCC 11.2.1                 | 3.22.2 |
-| Fedora       | 36    | GCC 12.0.1                 | 3.22.2 |
-| macOS x86_64 | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
-| macOS x86_64 | 11    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
-| macOS arm64  | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
-| OpenSUSE     | 15.2  | GCC 7.5.0                  | 3.17.0 |
-| Ubuntu       | 20.04 | GCC 9.4.0                  | 3.16.3 |
-| Ubuntu       | 22.04 | GCC 11.2.0                 | 3.22.1 |
+| **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
+| --- | --- | --- | --- | --- |
+| CentOS     | x86_64 | 7     | GCC 11.2.1 (devtoolset-11) | 3.17.5 (epel: cmake3) |
+| Rockylinux | x86_64 | 8     | GCC 8.5.0                  | 3.20.2 |
+| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.22.3 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.18.4 |
+| Fedora     | x86_64 | 33    | GCC 10.3.1                 | 3.19.7 |
+| Fedora     | x86_64 | 34    | GCC 11.2.1                 | 3.20.5 |
+| Fedora     | x86_64 | 35    | GCC 11.2.1                 | 3.22.2 |
+| Fedora     | x86_64 | 36    | GCC 12.0.1                 | 3.22.2 |
+| macOS      | x86_64 | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
+| macOS      | x86_64 | 11    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
+| macOS      | arm64  | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
+| OpenSUSE   | x86_64 | 15.2  | GCC 7.5.0                  | 3.17.0 |
+| Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.16.3 |
+| Ubuntu     | x86_64 | 22.04 | GCC 11.2.0                 | 3.22.1 |
 
 ## Included packages
 
