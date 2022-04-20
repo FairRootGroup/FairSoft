@@ -179,7 +179,7 @@ ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
 )
 
 list(APPEND packages fairlogger)
-set(fairlogger_version "1.10.4")
+set(fairlogger_version "1.11.0")
 ExternalProject_Add(fairlogger
   GIT_REPOSITORY https://github.com/FairRootGroup/FairLogger GIT_TAG v${fairlogger_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
