@@ -59,9 +59,9 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install prefi
 if(APPLE)
   execute_process(COMMAND brew --prefix python OUTPUT_VARIABLE python_prefix)
   string(STRIP "${python_prefix}" python_prefix)
-  set(PYTHON_EXECUTABLE "${python_prefix}/bin/python3" CACHE FILEPATH "Python executable" FORCE)
+  set(Python_EXECUTABLE "${python_prefix}/bin/python3" CACHE FILEPATH "Python executable" FORCE)
 endif()
-# set(PYTHON_EXECUTABLE "/some/other/path/to/python" CACHE FILEPATH "Python executable" FORCE)
+# set(Python_EXECUTABLE "/some/other/path/to/python" CACHE FILEPATH "Python executable" FORCE)
 
 #
 # ICU

@@ -1,0 +1,4 @@
+using python : @Python_VERSION_MAJOR@.@Python_VERSION_MINOR@
+             : @Python_EXECUTABLE_NAME@
+             : @Python_INCLUDE_DIRS@
+             : @Python_LIBRARY_DIRS@ ;
