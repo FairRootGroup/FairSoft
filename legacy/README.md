@@ -82,6 +82,7 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
+| Archlinux  | x86_64 | latest| GCC 11.2.0                 | 3.23.1 |
 | CentOS     | x86_64 | 7     | GCC 11.2.1 (devtoolset-11) | 3.17.5 (epel: cmake3) |
 | Rockylinux | x86_64 | 8     | GCC 8.5.0                  | 3.20.2 |
 | Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.22.3 (`bootstrap-cmake.sh`) |

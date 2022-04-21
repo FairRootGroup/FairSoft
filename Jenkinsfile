@@ -116,6 +116,7 @@ pipeline {
         script {
           def ctestcmd = "ctest -VV -S FairSoft_test.cmake"
           def specs_list = [
+            [os: 'Archlinux',        container: 'archlinux.latest.sif'],
             [os: 'CentOS-7',         container: 'centos.7.sif'],
             [os: 'Rockylinux-8',     container: 'rockylinux.8.sif', for_pr: true],
             [os: 'Debian-10',        container: 'debian.10.sif'],
