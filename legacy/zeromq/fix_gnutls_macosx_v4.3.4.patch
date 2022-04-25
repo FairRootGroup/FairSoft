@@ -1,0 +1,16 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index dd3d8eb9..d887d006 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1351,6 +1351,11 @@ else()
+     target_include_directories(
+       objects PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                      $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}> $<INSTALL_INTERFACE:include>)
++    if(GNUTLS_FOUND)
++      target_include_directories(objects PRIVATE ${GNUTLS_INCLUDE_DIR})
++    endif()
++
++
+   endif()
+ 
+   if(BUILD_SHARED)
