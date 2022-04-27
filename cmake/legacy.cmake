@@ -137,7 +137,6 @@ ExternalProject_Add(boost
   URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
   URL_HASH SHA256=8681f175d4bdb26c52222665793eef08490d7758529330f98d3b29dd0735bccc
   BUILD_IN_SOURCE ON
-  BUILD_ALWAYS ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     ${boost_python_config_bootstrap}
@@ -160,7 +159,6 @@ set(fmt_version "8.1.1")
 ExternalProject_Add(fmt
   URL "https://github.com/fmtlib/fmt/releases/download/${fmt_version}/fmt-${fmt_version}.zip"
   URL_HASH SHA256=23778bad8edba12d76e4075da06db591f3b0e3c6c04928ced4a7282ca3400e5d
-  BUILD_ALWAYS ON
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFMT_DOC=OFF"
   ${LOG_TO_FILE}
@@ -247,7 +245,6 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(pythia6
     URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
     URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
-    BUILD_ALWAYS ON
     PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
     ${DEPENDS_ON_SOURCE_CACHE}
@@ -258,7 +255,6 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(hepmc
     URL https://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
     URL_HASH SHA256=86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
-    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Dlength:STRING=CM"
       "-Dmomentum:STRING=GEV"
@@ -271,7 +267,6 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(vc
     URL https://github.com/VcDevel/Vc/archive/${vc_version}.tar.gz
     URL_HASH SHA256=50d3f151e40b0718666935aa71d299d6370fafa67411f0a9e249fbce3e6e3952
-    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
     ${DEPENDS_ON_SOURCE_CACHE}
   )
@@ -281,7 +276,6 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(clhep
     URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
     URL_HASH SHA256=2517c9b344ad9f55974786ae6e7a0ef8b22f4abcbf506df91194ea2299ce3813
-    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
     ${LOG_TO_FILE}
@@ -301,7 +295,6 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(pythia8
     URL https://pythia.org/download/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
     URL_HASH SHA256=03787c817492bbbf9ef3e9d103b6fb80280ee6d6ff2e87c287a9c433cbaf302c
-    BUILD_ALWAYS ON
     BUILD_IN_SOURCE ON
     CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
       "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
@@ -325,7 +318,6 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(geant4
     URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
     URL_HASH SHA256=3e9b0e68b006c1ddd8c5f6ded084fcd8029a568ecd0e45026d7ef818df46a02b
-    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
       ${mt}
