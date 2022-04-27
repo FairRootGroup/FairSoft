@@ -81,6 +81,7 @@ set(LOG_TO_FILE
   LOG_OUTPUT_ON_FAILURE ON
 )
 
+set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
 if(SOURCE_CACHE)
   add_custom_target(extract-source-cache
     DEPENDS "${CMAKE_BINARY_DIR}/extracted"
@@ -92,7 +93,6 @@ if(SOURCE_CACHE)
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Extracting source cache ${SOURCE_CACHE} at ${CMAKE_BINARY_DIR}"
   )
-  set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
   set_property(DIRECTORY PROPERTY EP_STEP_TARGETS mkdir download update patch configure build install test)
   set(DEPENDS_ON_SOURCE_CACHE DEPENDS extract-source-cache)
   set(extract_source_cache_target extract-source-cache)
