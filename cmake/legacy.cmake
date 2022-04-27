@@ -199,6 +199,7 @@ ExternalProject_Add(zeromq
     "-DWITH_PERF_TOOL=ON"
     "-DZMQ_BUILD_TESTS=ON"
     "-DENABLE_CPACK=OFF"
+    "-DENABLE_DRAFTS=OFF"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
