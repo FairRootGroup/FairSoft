@@ -90,6 +90,7 @@ please contact us.
 | Fedora     | x86_64 | 33    | GCC 10.3.1                 | 3.19.7 |
 | Fedora     | x86_64 | 34    | GCC 11.2.1                 | 3.20.5 |
 | Fedora     | x86_64 | 35    | GCC 11.2.1                 | 3.22.2 |
+| Fedora     | x86_64 | 36    | GCC 12.0.1 (20220413)      | 3.22.2 |
 | macOS      | x86_64 | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
 | macOS      | x86_64 | 11    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
 | macOS      | arm64  | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
