@@ -352,6 +352,9 @@ if(PACKAGE_SET STREQUAL full)
     unset(root_cocoa)
     set(root_x11 ON)
   endif()
+  if(CMAKE_CXX_COMPILER_ID STREQUAL GNU AND CMAKE_CXX_COMPILER_VERSION GREATER 11)
+    set(root_runtime_cxxmodules "-Druntime_cxxmodules=OFF")
+  endif()
   ExternalProject_Add(root
     GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
     GIT_SHALLOW 1
@@ -389,6 +392,7 @@ if(PACKAGE_SET STREQUAL full)
       ${cmake_python_config_old}
       ${root_builtin_glew}
       ${root_cocoa}
+      ${root_runtime_cxxmodules}
     DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
