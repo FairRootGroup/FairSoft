@@ -357,6 +357,7 @@ if(PACKAGE_SET STREQUAL full)
     GIT_SHALLOW 1
     PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/support_python_3.11.patch"
     COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_compilation_with_gcc12.patch"
+    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/add_missing_cstring_include.patch"
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
