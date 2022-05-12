@@ -366,6 +366,7 @@ if(PACKAGE_SET STREQUAL full)
     PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/support_python_3.11.patch"
     COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_compilation_with_gcc12.patch"
     COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/add_missing_cstring_include.patch"
+    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/update_xrootd_checksum.patch"
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"

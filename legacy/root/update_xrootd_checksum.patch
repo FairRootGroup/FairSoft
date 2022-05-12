@@ -1,0 +1,19 @@
+commit 8c22e4b9985246fa8ea39fdac0c33822c865c2c3
+Author: Bertrand Bellenot <Bertrand.Bellenot@cern.ch>
+Date:   Mon May 2 13:59:31 2022 +0200
+
+    Update the checksum for xrootd-5.4.2.tar.gz (fixes #10503)
+
+diff --git a/builtins/xrootd/CMakeLists.txt b/builtins/xrootd/CMakeLists.txt
+index 4886647e4c..34152d09f8 100644
+--- a/builtins/xrootd/CMakeLists.txt
++++ b/builtins/xrootd/CMakeLists.txt
+@@ -33,7 +33,7 @@ endif()
+ ExternalProject_Add(
+     XROOTD
+     URL ${XROOTD_SRC_URI}
+-    URL_HASH SHA256=84e8a9a2bcad116df479f94e985c287dd99fbac0613d4fbb61f4ccc0cef81fa3
++    URL_HASH SHA256=2b394270c55cb3d14f3c44b692311db99d2d25278882b513d4d564b68a58ed4a
+     INSTALL_DIR ${XROOTD_PREFIX}
+     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+                -DCMAKE_PREFIX_PATH:STRING=${OPENSSL_PREFIX}
