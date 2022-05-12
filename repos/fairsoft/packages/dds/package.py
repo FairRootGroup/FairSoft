@@ -1,6 +1,6 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 #   Spack Project Developers. See the top-level COPYRIGHT file for details.
-# Copyright 2019-2021 GSI Helmholtz Centre for Heavy Ion Research GmbH,
+# Copyright 2019-2022 GSI Helmholtz Centre for Heavy Ion Research GmbH,
 #   Darmstadt, Germany
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -19,7 +19,9 @@ class Dds(CMakePackage):
     git = "https://github.com/FairRootGroup/DDS"
     maintainers = ['dennisklein', 'ChristianTackeGSI']
 
-    version('develop', branch='master', get_full_repo=True)
+    version('3.6', commit='c71f8df77766c052441f8f3a89e948755a07c2a2', no_cache=True)
+    version('3.5.16', commit='2bb197d7080521c81f35b8e75dbadecc40f7cc8b', no_cache=True)
+    version('3.5.14', commit='85aee1f7e34d3648cd6c5fb7439f0482583031a0', no_cache=True)
     version('3.5.10', commit='a3e15b32c8c090afc676da015e8b6e4bc29aeb4e', no_cache=True)
     version('3.5.7', commit='a2aad21ed019a7b7ae064af3f1f9d89e984d19fb', no_cache=True)
     version('3.5.6', commit='f9382d2b784ed6ab4032aec209502622cff71254', no_cache=True)
@@ -43,13 +45,21 @@ class Dds(CMakePackage):
     patch('fix_wn_bin_3.2_3.5.2.patch', when='@3.2:3.5.2')
     patch('fix_wn_bin_3.5.3.patch', when='@3.5.3')
     patch('fix_wn_bin_3.5.4_3.5.10.patch', when='@3.5.4:3.5.10')
-    patch('fix_wn_bin_master.patch', when='@develop')
-    # TODO Upstream the wn_bin fix
+    patch('fix_wn_bin_3.5.14.patch', when='@3.5.14')
+    patch('fix_wn_bin_3.5.16.patch', when='@3.5.16')
+    patch('fix_wn_bin_3.6.patch', when='@3.6')
+    # Upstream PR / patch tracking:
+    # https://github.com/FairRootGroup/DDS/pull/354
     patch('fix_uuid_init.patch', when='@2.5-odc:3.0')
+
+    # Part of / inspired by upstream
+    # commit d992115921022daa7433ab2ba6135fd69f064db7
+    patch('fix_missing_thread_include_2.4_3.5.11.patch', when='@2.4:3.5.11')
+    patch('fix_missing_thread_include_2.5_3.0.patch', when='@2.5:3.0')
 
     depends_on('boost +shared+log+thread+program_options+filesystem+system+regex+test', when='@2.4:')
     depends_on('boost@1.67:1.72', when='@2.4:3.5.3')
-    depends_on('boost@1.67:1.75', when='@3.5.4:')
+    depends_on('boost@1.67:', when='@3.5.4:')
     depends_on('boost@1.67:1.68 +shared+log+thread+program_options+filesystem+system+regex+test+signals', when='@:2.3')
     conflicts('^boost@1.70:', when='^cmake@:3.14')
 

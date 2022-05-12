@@ -29,14 +29,14 @@ index 0b1ccff..0f26c15 100644
 -else()
 -  file(TO_CMAKE_PATH "$ENV{LD_LIBRARY_PATH}" ENV_LD_LIBRARY_PATH)
 +# top-level executables to package in wn pkg
-+list(APPEND WN_PKG_EXECUTABLES
++list(APPEND WN_PKG_TARGETS
 +  $<TARGET_FILE:dds-agent>
 +  $<TARGET_FILE:dds-user-defaults> )
 +if(BUILD_TESTS)
-+  list(APPEND $<TARGET_FILE:dds_topology_lib-tests>)
++  list(APPEND WN_PKG_TARGETS $<TARGET_FILE:dds_topology_lib-tests>)
  endif()
-+separate_arguments(CLI_WN_PKG_EXECUTABLES
-+  UNIX_COMMAND "${WN_PKG_EXECUTABLES}" )
++separate_arguments(CLI_WN_PKG_TARGETS
++  UNIX_COMMAND "${WN_PKG_TARGETS}" )
  
 -set(PREREQ_DIRS "$<TARGET_FILE_DIR:dds-user-defaults>::$<TARGET_FILE_DIR:dds_protocol_lib>::$<TARGET_FILE_DIR:dds_intercom_lib>::$<TARGET_FILE_DIR:dds_topology_lib>::$<TARGET_FILE_DIR:dds_ncf>::${DDS_BOOST_LIB_DIR}")
 -foreach(p IN LISTS ENV_LD_LIBRARY_PATH)
@@ -94,7 +94,7 @@ index 0b1ccff..0f26c15 100644
 -	COMMAND ${CMAKE_COMMAND} -DPREREQ_DESTINATION=${WN_PKG_DIR} -DDDS_AGENT_BIN_PATH=${DDS_AGENT_BIN_PATH}
 -		-DPREREQ_DIRS=${PREREQ_DIRS} -DDDS_BOOST_LIB_DIR=${DDS_BOOST_LIB_DIR} -P "${CMAKE_SOURCE_DIR}/cmake/modules/DDS_CollectPrerequisites.cmake"
 +  COMMAND ${CMAKE_COMMAND}
-+    -DEXECUTABLES=${CLI_WN_PKG_EXECUTABLES}
++    -DEXECUTABLES=${CLI_WN_PKG_TARGETS}
 +    -DDESTINATION=${WN_PKG_DIR}
 +    -DEXCLUDED_SYSTEM_PREFIXES=${CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES}
 +    -P "${CMAKE_SOURCE_DIR}/cmake/DDSCollectWNPkgFiles.cmake"
@@ -127,7 +127,7 @@ index 0000000..2b0e38e
 --- /dev/null
 +++ b/cmake/DDSCollectWNPkgFiles.cmake
 @@ -0,0 +1,24 @@
-+# Copyright 2017-2020 GSI, Inc. All rights reserved.
++# Copyright 2017-2022 GSI, Inc. All rights reserved.
 +#
 +#
 +

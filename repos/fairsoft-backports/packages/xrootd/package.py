@@ -1,4 +1,4 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -13,6 +13,9 @@ class Xrootd(CMakePackage):
     homepage = "http://xrootd.org"
     url      = "http://xrootd.org/download/v5.0.1/xrootd-5.0.1.tar.gz"
 
+    version('5.3.1', sha256='7ea3a112ae9d8915eb3a06616141e5a0ee366ce9a5e4d92407b846b37704ee98')
+    version('5.2.0', sha256='e4a90116bd4868c7738024a9091d5b393f649d891da97d7436d520b4a8f87859')
+    version('5.1.0', sha256='c639536f1bdc5b6b365e807f3337ed2d41012cd3df608d40e91ed05f1c568b6d')
     version('5.0.3', sha256='be40a1897d6c1f153d3e23c39fe96e45063bfafc3cc073db88a1a9531db79ac5')
     version('5.0.1', sha256='ff4462b0b61db4cc01dda0e26abdd78e43649ee7ac5e90f7a05b74328ff5ac83')
     version('4.12.6', sha256='1a9056ab7aeeaafa586ea77e442960c71d233c9ba60c7f9db9262c1410954ac4')
@@ -73,6 +76,11 @@ class Xrootd(CMakePackage):
         """
         if self.spec.satisfies('@4.7.0:'):
             filter_file(r'\-std=c\+\+0x', r'', 'cmake/XRootDOSDefs.cmake')
+        if self.spec.satisfies('@5.2.0:'):
+            cxxstd = self.spec.variants['cxxstd'].value
+            filter_file(r'CMAKE_CXX_STANDARD +[0-9]+',
+                        'CMAKE_CXX_STANDARD ' + cxxstd,
+                        'cmake/XRootDOSDefs.cmake')
 
     def cmake_args(self):
         spec = self.spec
@@ -93,6 +101,9 @@ class Xrootd(CMakePackage):
         return options
 
     def setup_build_environment(self, env):
+        if self.spec.satisfies('@5.2.0:'):
+            return
+
         cxxstdflag = ''
         if self.spec.variants['cxxstd'].value == '98':
             cxxstdflag = self.compiler.cxx98_flag

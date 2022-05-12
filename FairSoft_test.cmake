@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2019-2021 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2019-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -153,10 +153,13 @@ if (BUILD_METHOD STREQUAL legacy)
   if(APPLE)
     execute_process(COMMAND brew --prefix python OUTPUT_VARIABLE python_prefix)
     string(STRIP "${python_prefix}" python_prefix)
-    list(APPEND options "-DPYTHON_EXECUTABLE=${python_prefix}/bin/python3")
+    list(APPEND options "-DPython_EXECUTABLE=${python_prefix}/bin/python3")
     execute_process(COMMAND brew --prefix icu4c OUTPUT_VARIABLE icu_prefix)
     string(STRIP "${icu_prefix}" icu_prefix)
     list(APPEND options "-DICU_ROOT=${icu_prefix}")
+    execute_process(COMMAND brew ruby -e "puts MacOS.sdk_path(0)" OUTPUT_VARIABLE macos_sdk_path)
+    string(STRIP "${macos_sdk_path}" macos_sdk_path)
+    list(APPEND options "-DCMAKE_OSX_SYSROOT=${macos_sdk_path}")
   endif()
   list(JOIN options ";" optionsstr)
   show_big_header("Configuring")
@@ -164,8 +167,13 @@ if (BUILD_METHOD STREQUAL legacy)
   fairsoft_ctest_submit()
 
   show_big_header("Building")
-  ctest_build(FLAGS "-j${NCPUS}")
+  ctest_build(RETURN_VALUE _ctest_build_retval
+              NUMBER_ERRORS _ctest_build_errors
+              FLAGS "-j${NCPUS}")
   fairsoft_ctest_submit()
+  if (_ctest_build_errors)
+    set(_ctest_build_retval 255)
+  endif()
 
   set(from "${CTEST_BINARY_DIRECTORY}/Log")
   message(STATUS " Copy logs ....... from: ${from}")
@@ -191,10 +199,16 @@ else()
   ctest_start(Continuous TRACK ${cdash_group})
   show_big_header("Configuring")
   ctest_configure(OPTIONS "-DFS_TEST_WORKDIR=${FS_TEST_WORKDIR};-DFS_TEST_INSTALLTREE=${FS_TEST_INSTALLTREE};-DBUILD_METHOD=spack")
+  set(_ctest_build_retval 0)
 endif()
-show_big_header("Starting Tests")
-ctest_test(RETURN_VALUE _ctest_test_ret_val
-           PARALLEL_LEVEL ${test_parallel_level})
+if (_ctest_build_retval)
+    show_big_header("Skipping Tests, Build Failed")
+    set(_ctest_test_ret_val 255)
+else()
+    show_big_header("Starting Tests")
+    ctest_test(RETURN_VALUE _ctest_test_ret_val
+               PARALLEL_LEVEL ${test_parallel_level})
+endif()
 fairsoft_ctest_submit(FINAL)
 
 if (NOT "${FS_TEST_WORKDIR_TEMP}" STREQUAL "")

@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2020-2021 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -48,6 +48,7 @@ function(fs_legacy_container)
 endfunction()
 
 
+fs_legacy_container(OS archlinux VERSION latest)
 fs_legacy_container(OS centos VERSION 7 PACKAGE_SETUP_SCRIPT "setup-centos-7.sh")
 fs_legacy_container(OS rockylinux VERSION 8)
 fs_legacy_container(OS debian VERSION 10 BOOTSTRAP_CMAKE)
@@ -55,8 +56,19 @@ fs_legacy_container(OS debian VERSION 11)
 fs_legacy_container(OS fedora VERSION 33)
 fs_legacy_container(OS fedora VERSION 34)
 fs_legacy_container(OS fedora VERSION 35)
+fs_legacy_container(OS fedora VERSION 36)
 fs_legacy_container(OS opensuse VERSION 15.2 DOCKER_TAG "opensuse/leap:15.2")
 fs_legacy_container(OS ubuntu VERSION 20.04)
+fs_legacy_container(OS ubuntu VERSION 22.04)
 
 
 add_custom_target(all-legacy-containers DEPENDS ${legacy_containers})
+
+list(TRANSFORM legacy_containers
+     PREPEND "${CMAKE_CURRENT_BINARY_DIR}/"
+     OUTPUT_VARIABLE legacy_containers_for_install)
+
+install(FILES ${legacy_containers_for_install}
+        DESTINATION "${PROJECT_CONTAINER_DIR}"
+        COMPONENT containers
+        EXCLUDE_FROM_ALL)

@@ -1,5 +1,17 @@
+commit 89737b2179dc72f357cca860e97e24b5d149b8c3
+Author: Christian Tacke <58549698+ChristianTackeGSI@users.noreply.github.com>
+Date:   Tue Jul 20 12:38:41 2021 +0200
+
+    wn_bin pkg: Rewrite using modern cmake
+    
+    Modern cmake has better tools to collect the prereqs of
+    binaries. Let's use them.
+    
+    The original patches are by Dennis Klein. He deserves most
+    of the credit for developing this.
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0b1ccff..0f26c15 100644
+index 62f1def..8456e09 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -10,7 +10,8 @@ set(DDS_PROTOCOL_VERSION "2")
@@ -12,7 +24,7 @@ index 0b1ccff..0f26c15 100644
  
  string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
  
-@@ -422,68 +423,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
+@@ -420,68 +421,31 @@ set( WN_PKG_DIR "${CMAKE_BINARY_DIR}/dds-wrk-bin" )
  set( WN_PKG_NAME_ARCH "${WN_PKG_NAME}.tar.gz" )
  set( WN_PKG_REMOTE_DIR "/u/ddswww/web-docs/releases/add/${DDS_VERSION}" )
  
@@ -29,16 +41,16 @@ index 0b1ccff..0f26c15 100644
 -else()
 -  file(TO_CMAKE_PATH "$ENV{LD_LIBRARY_PATH}" ENV_LD_LIBRARY_PATH)
 +# top-level executables to package in wn pkg
-+list(APPEND WN_PKG_EXECUTABLES
++list(APPEND WN_PKG_TARGETS
 +  $<TARGET_FILE:dds-agent>
 +  $<TARGET_FILE:dds-user-defaults> )
 +if(BUILD_TESTS)
-+  list(APPEND $<TARGET_FILE:dds_topology_lib-tests>)
++  list(APPEND WN_PKG_TARGETS $<TARGET_FILE:dds_topology_lib-tests>)
  endif()
-+separate_arguments(CLI_WN_PKG_EXECUTABLES
-+  UNIX_COMMAND "${WN_PKG_EXECUTABLES}" )
++separate_arguments(CLI_WN_PKG_TARGETS
++  UNIX_COMMAND "${WN_PKG_TARGETS}" )
  
--set(PREREQ_DIRS "$<TARGET_FILE_DIR:dds-user-defaults>::$<TARGET_FILE_DIR:dds_protocol_lib>::$<TARGET_FILE_DIR:dds_intercom_lib>::$<TARGET_FILE_DIR:dds_topology_lib>::$<TARGET_FILE_DIR:dds_ncf>::${DDS_BOOST_LIB_DIR}")
+-set(PREREQ_DIRS "$<TARGET_FILE_DIR:dds-user-defaults>::$<TARGET_FILE_DIR:dds_protocol_lib>::$<TARGET_FILE_DIR:dds_intercom_lib>::$<TARGET_FILE_DIR:dds_topology_lib>::$<TARGET_FILE_DIR:dds_misc_lib>::${DDS_BOOST_LIB_DIR}")
 -foreach(p IN LISTS ENV_LD_LIBRARY_PATH)
 -  set(PREREQ_DIRS "${PREREQ_DIRS}::${p}")
 -endforeach()
@@ -94,14 +106,14 @@ index 0b1ccff..0f26c15 100644
 -	COMMAND ${CMAKE_COMMAND} -DPREREQ_DESTINATION=${WN_PKG_DIR} -DDDS_AGENT_BIN_PATH=${DDS_AGENT_BIN_PATH}
 -		-DPREREQ_DIRS=${PREREQ_DIRS} -DDDS_BOOST_LIB_DIR=${DDS_BOOST_LIB_DIR} -P "${CMAKE_SOURCE_DIR}/cmake/modules/DDS_CollectPrerequisites.cmake"
 +  COMMAND ${CMAKE_COMMAND}
-+    -DEXECUTABLES=${CLI_WN_PKG_EXECUTABLES}
++    -DEXECUTABLES=${CLI_WN_PKG_TARGETS}
 +    -DDESTINATION=${WN_PKG_DIR}
 +    -DEXCLUDED_SYSTEM_PREFIXES=${CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES}
 +    -P "${CMAKE_SOURCE_DIR}/cmake/DDSCollectWNPkgFiles.cmake"
  	COMMAND ${CMAKE_COMMAND} -E tar czf ${WN_PKG_NAME_ARCH} "${WN_PKG_DIR}"
  	COMMAND chmod go+xr ${WN_PKG_NAME_ARCH}
  	COMMENT "Generate WN binary package"
-@@ -506,19 +470,6 @@ add_dependencies( wn_bin_upload
+@@ -504,19 +468,6 @@ add_dependencies( wn_bin_upload
  
  INSTALL(FILES ${CMAKE_BINARY_DIR}/${WN_PKG_NAME_ARCH} DESTINATION "${PROJECT_INSTALL_BINDIR}/wn_bins" OPTIONAL)
  
@@ -123,11 +135,11 @@ index 0b1ccff..0f26c15 100644
  #
 diff --git a/cmake/DDSCollectWNPkgFiles.cmake b/cmake/DDSCollectWNPkgFiles.cmake
 new file mode 100644
-index 0000000..2b0e38e
+index 0000000..7915e01
 --- /dev/null
 +++ b/cmake/DDSCollectWNPkgFiles.cmake
 @@ -0,0 +1,24 @@
-+# Copyright 2017-2021 GSI, Inc. All rights reserved.
++# Copyright 2017-2022 GSI, Inc. All rights reserved.
 +#
 +#
 +
@@ -197,15 +209,18 @@ index 27c7a05..0000000
 \ No newline at end of file
 diff --git a/cmake/modules/DDS_CollectPrerequisitesGen.cmake.in b/cmake/modules/DDS_CollectPrerequisitesGen.cmake.in
 deleted file mode 100644
-index 6759585..0000000
+index fc7857a..0000000
 --- a/cmake/modules/DDS_CollectPrerequisitesGen.cmake.in
 +++ /dev/null
-@@ -1,51 +0,0 @@
+@@ -1,57 +0,0 @@
 -# Copyright 2017 GSI, Inc. All rights reserved.
 -#
 -#
 -include(GetPrerequisites)
 -
+-
+-cmake_policy(PUSH)
+-cmake_policy(SET CMP0012 NEW) # if() recognizes numbers and booleans
 -# WORKAROUND: if "macro" is used it doesn't outoup "message" messages.
 -#macro(DDS_CollectPrerequisites)
 -	
@@ -235,8 +250,9 @@ index 6759585..0000000
 -		# link only third-party libs
 -		# Skip DDS libs
 -		if(NOT ${resolved_file} STREQUAL "@PREREQ_DESTINATION@/${PREREQNAME}")
--			if(${PREREQNAME} MATCHES "^libboost_*")
--				# skip existing files. Fixes GH-323
+-			if(@CREATE_BOOST_SYMLINKS@ AND (${PREREQNAME} MATCHES "^libboost_*"))
+-				
+-					# skip existing files. Fixes GH-323
 -				if(EXISTS "@PREREQ_DESTINATION@/${PREREQNAME}")
 -					message("DDS Commander prerequisite: creating a symlink: destination exists. SKIPPING: @PREREQ_DESTINATION@/${PREREQNAME}")
 -					continue()
@@ -250,5 +266,7 @@ index 6759585..0000000
 -		endif()
 -	endforeach()
 -	###################################################
+-
+-cmake_policy(POP)
 -
 -#endmacro(DDS_CollectPrerequisites)

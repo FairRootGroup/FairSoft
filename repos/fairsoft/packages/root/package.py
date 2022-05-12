@@ -1,4 +1,4 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -14,6 +14,9 @@ class Root(CMakePackage):
 
     homepage = "https://root.cern.ch"
     url      = "https://root.cern/download/root_v6.16.00.source.tar.gz"
+    git      = "https://github.com/root-project/root.git"
+
+    executables = ['^root$', '^root-config$']
 
     tags = ['hep']
 
@@ -22,12 +25,14 @@ class Root(CMakePackage):
     # ###################### Versions ##########################
 
     # Master branch
-    version('master', git="https://github.com/root-project/root.git",
-            branch='master')
+    version('master', branch='master')
 
     # Development version (when more recent than production).
 
     # Production version
+    version('6.24.06', sha256='907f69f4baca1e4f30eeb4979598ca7599b6aa803ca046e80e25b6bbaa0ef522')
+    version('6.24.02', sha256='0507e1095e279ccc7240f651d25966024325179fa85a1259b694b56723ad7c1c')
+    version('6.24.00', sha256='9da30548a289211c3122d47dacb07e85d35e61067fac2be6c5a5ff7bda979989')
     version('6.22.08', sha256='6f061ff6ef8f5ec218a12c4c9ea92665eea116b16e1cd4df4f96f00c078a2f6f')
     version('6.22.06', sha256='c4688784a7e946cd10b311040b6cf0b2f75125a7520e04d1af0b746505911b57')
     version('6.22.02', sha256='89784afa9c9047e9da25afa72a724f32fa8aa646df267b7731e4527cc8a0c340')
@@ -81,11 +86,28 @@ class Root(CMakePackage):
         # https://sft.its.cern.ch/jira/browse/ROOT-8226.
         patch('root6-60606-mathmore.patch', when='@6.06.06')
 
+    # Backport xrootd 5 support to 6.20.08
+    # *Might* work on all 6.20 releases.
+    # https://github.com/root-project/root/commit/20be1b74489bd20fb27f69f64fd3bfc1210a9c68
+    # https://github.com/root-project/root/commit/963f043cc93aec49c2f1b5e5628b688bf331bb51
+    patch('https://github.com/root-project/root/commit/20be1b74489bd20fb27f69f64fd3bfc1210a9c68.patch?full_index=1',
+          sha256='e100fbd68178ec68b78e9d09761c00808fb2aef32005b8e296630e9917e4b680',
+          when='@6.20.08')
+    patch('https://github.com/root-project/root/commit/963f043cc93aec49c2f1b5e5628b688bf331bb51.patch?full_index=1',
+          sha256='123bf070fd30e3668de7e966438409a794d5f3ef92455bcf42da39b2a602039e',
+          when='@6.20.08')
+
     # https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013
-    patch('https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013.patch',
-          sha256='829d22a3a6dd9af7d8a9dd2e03c5f25753947b2db1bb249233fad7f1ad59569d',
+    patch('https://github.com/root-project/root/commit/b7313a238633d31aa5f6a06ea6e69c567382d013.patch?full_index=1',
+          sha256='531693b38b90810a33c6fa92723247432ebfc762758cf903fb3379af8b0c16b5',
           when='@6.20:6.22.05')
     patch('root6_16_macos11_config.patch', when='@6.16:6.18.04')
+
+    # Backport: Use ROOT_LIBRARY_PATH in DynamicPath
+    # See: https://github.com/root-project/root/pull/7031
+    patch('https://github.com/root-project/root/commit/3376e30ddd2dac30b97fe1a5caa38ce1ff5cd7c0.patch?full_index=1',
+          sha256='b6982005127521c2ef6d2934f5610edf6fc8106c1f2d9f16507e97562c19c2a9',
+          when='@6.16:6.23')
 
     # ###################### Variants ##########################
 
@@ -202,6 +224,7 @@ class Root(CMakePackage):
     depends_on('libpng')
     depends_on('lz4', when='@6.13.02:')  # See cmake_args, below.
     depends_on('ncurses')
+    depends_on('nlohmann-json', when='@6.24:')
     depends_on('pcre')
     depends_on('xxhash', when='@6.13.02:')  # See cmake_args, below.
     depends_on('xz')
@@ -262,13 +285,20 @@ class Root(CMakePackage):
     depends_on('shadow',    when='+shadow')
     depends_on('sqlite',    when='+sqlite')
     depends_on('tbb',       when='+tbb')
+    # See: https://github.com/root-project/root/issues/6933
+    conflicts('^intel-tbb@2021.1:', when='@:6.22',
+              msg='Please use an older intel-tbb version')
+    conflicts('^intel-oneapi-tbb@2021.1:', when='@:6.22',
+              msg='Please use an older intel-tbb/intel-oneapi-tbb version')
+    # depends_on('intel-tbb@:2021.0', when='@:6.22 ^intel-tbb')
     depends_on('unuran',    when='+unuran')
     depends_on('vc',        when='+vc')
     depends_on('veccore',   when='+veccore')
     depends_on('vdt',       when='+vdt')
     depends_on('libxml2~python',   when='+xml')
     depends_on('xrootd',          when='+xrootd')
-    depends_on('xrootd@:4.99.99', when='@:6.22.03 +xrootd')
+    depends_on('xrootd@:4.99.99', when='@:6.20.07 +xrootd')
+    depends_on('xrootd@:4.99.99', when='@6.22.00:6.22.03 +xrootd')
     # depends_on('hdfs') - supported (TODO)
 
     # Not supported
@@ -298,6 +328,25 @@ class Root(CMakePackage):
                 msg='Obsolete option +{0} selected.'.format(pkg))) for pkg in
      ('memstat', 'qt4', 'table')]
 
+    @classmethod
+    def filter_detected_exes(cls, prefix, exes_in_prefix):
+        result = []
+        for exe in exes_in_prefix:
+            # no need to check the root executable itself
+            # we can get all information from root-config
+            if exe.endswith('root'):
+                continue
+            result.append(exe)
+        return result
+
+    @classmethod
+    def determine_version(cls, exe):
+        output = Executable(exe)('--version', output=str, error=str)
+        # turn the output of root-config --version
+        # (something like 6.22/06)
+        # into the format used in this recipe (6.22.06)
+        return output.strip().replace('/', '.')
+
     def cmake_args(self):
         spec = self.spec
         define = self.define
@@ -314,7 +363,10 @@ class Root(CMakePackage):
             define('libcxx', False),
             define('shared', True),
             define('soversion', True),
-            define_from_variant('thread', 'threads')
+            define_from_variant('thread', 'threads'),
+            # The following option makes sure that Cling will call the compiler
+            # it was compiled with at run time; see #17488, #18078 and #23886
+            define('CLING_CXX_PATH', self.compiler.cxx),
         ]
 
         # Options related to ROOT's ability to download and build its own
@@ -330,6 +382,7 @@ class Root(CMakePackage):
             define('builtin_gsl', False),
             define('builtin_llvm', True),
             define('builtin_lzma', False),
+            define('builtin_nlohmannjson', False),
             define('builtin_openssl', False),
             define('builtin_pcre', False),
             define('builtin_tbb', False),
@@ -369,7 +422,6 @@ class Root(CMakePackage):
                 'ON' if '+x' in spec else 'OFF'),
             '-Dbonjour:BOOL=OFF',
             define('cocoa', use_aqua),
-            # -Dcxxmodules=OFF # use clang C++ modules
             '-Ddavix:BOOL=%s' % (
                 'ON' if '+davix' in spec else 'OFF'),
             '-Dfftw3:BOOL=%s' % (
@@ -494,8 +546,6 @@ class Root(CMakePackage):
             '-Drfio:BOOL=OFF',      # not supported
             '-Droottest:BOOL=OFF',  # requires network
             '-Druby:BOOL=OFF',      # unmantained upstream
-            # Use clang C++ modules, experimental
-            '-Druntime_cxxmodules:BOOL=OFF',
             '-Dsapdb:BOOL=OFF',     # option not implemented
             '-Dsrp:BOOL=OFF',       # option not implemented
             '-Dtcmalloc:BOOL=OFF'
@@ -541,26 +591,22 @@ class Root(CMakePackage):
             options.append('-DFONTCONFIG_INCLUDE_DIR={0}'.format(
                 self.spec['fontconfig'].prefix.include))
 
-        # see https://github.com/spack/spack/pull/11579
         if '+python' in self.spec:
-            options.append('-DPYTHON_EXECUTABLE=%s' %
-                           spec['python'].command.path)
+            # See https://github.com/spack/spack/pull/11579
+            options.append(define('PYTHON_EXECUTABLE',
+                                  spec['python'].command.path))
 
         return options
 
-    def setup_environment(self, spack_env, run_env):
+    def setup_build_environment(self, env):
         spec = self.spec
 
-        run_env.set('ROOTSYS', self.prefix)
-        run_env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
-        run_env.prepend_path('PYTHONPATH', self.prefix.lib)
-        if 'lz4' in self.spec:
-            spack_env.append_path('CMAKE_PREFIX_PATH',
-                                  self.spec['lz4'].prefix)
+        if 'lz4' in spec:
+            env.append_path('CMAKE_PREFIX_PATH', spec['lz4'].prefix)
 
         # This hack is made necessary by a header name collision between
         # asimage's "import.h" and Python's "import.h" headers...
-        spack_env.set('SPACK_INCLUDE_DIRS', '', force=True)
+        env.set('SPACK_INCLUDE_DIRS', '', force=True)
 
         # ...but it breaks header search for any ROOT dependency which does not
         # use CMake. To resolve this, we must bring back those dependencies's
@@ -571,11 +617,11 @@ class Root(CMakePackage):
         # system/compiler combinations don't like having -I/usr/include around.
         def add_include_path(dep_name):
             try:
-                include_path = self.spec[dep_name].prefix.include
+                include_path = spec[dep_name].prefix.include
             except KeyError:
                 return
             if not is_system_path(include_path):
-                spack_env.append_path('SPACK_INCLUDE_DIRS', include_path)
+                env.append_path('SPACK_INCLUDE_DIRS', include_path)
 
         # The internal afterimage needs those sometimes:
         add_include_path('zlib')
@@ -593,14 +639,24 @@ class Root(CMakePackage):
             add_include_path('glew')
             add_include_path('mesa-glu')
 
-    def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
-        spack_env.set('ROOTSYS', self.prefix)
-        spack_env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
-        spack_env.prepend_path('PYTHONPATH', self.prefix.lib)
-        spack_env.prepend_path('PATH', self.prefix.bin)
-        spack_env.append_path('CMAKE_MODULE_PATH', '{0}/cmake'
-                              .format(self.prefix))
-        run_env.set('ROOTSYS', self.prefix)
-        run_env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
-        run_env.prepend_path('PYTHONPATH', self.prefix.lib)
-        run_env.prepend_path('PATH', self.prefix.bin)
+    def setup_run_environment(self, env):
+        env.set('ROOTSYS', self.prefix)
+        env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
+        env.prepend_path('PYTHONPATH', self.prefix.lib)
+
+    def setup_dependent_build_environment(self, env, dependent_spec):
+        env.set('ROOTSYS', self.prefix)
+        env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
+        env.prepend_path('PYTHONPATH', self.prefix.lib)
+        env.prepend_path('PATH', self.prefix.bin)
+        env.append_path('CMAKE_MODULE_PATH', self.prefix.cmake)
+        if "+rpath" not in self.spec:
+            env.prepend_path('LD_LIBRARY_PATH', self.prefix.lib)
+
+    def setup_dependent_run_environment(self, env, dependent_spec):
+        env.set('ROOTSYS', self.prefix)
+        env.set('ROOT_VERSION', 'v{0}'.format(self.version.up_to(1)))
+        env.prepend_path('PYTHONPATH', self.prefix.lib)
+        env.prepend_path('PATH', self.prefix.bin)
+        if "+rpath" not in self.spec:
+            env.prepend_path('LD_LIBRARY_PATH', self.prefix.lib)

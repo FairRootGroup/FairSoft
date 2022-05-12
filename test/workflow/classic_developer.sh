@@ -13,10 +13,14 @@ env | grep -i ctest
 # see https://github.com/FairRootGroup/FairRoot/issues/995
 ctest_exclude_pattern="TGeant3|sim_tutorial2|MQ_pixel"
 
-if [[ "$ENVNAME" =~ jun19 ]]
-then
-  no_boost_cmake=1
-fi
+fairroot_branch=dev
+
+case "$ENVNAME" in
+  *jun19*)
+    fairroot_branch=v18.6_patches
+    extra_cmake_flags="-DBoost_NO_BOOST_CMAKE=ON -DUSE_DIFFERENT_COMPILER=ON"
+    ;;
+esac
 
 case "$ENVNAME" in
   *)
@@ -34,15 +38,15 @@ if [ "$(uname)" = Darwin ]
 then
   extra_excludes="-e libpng -e libjpeg-turbo -e libiconv -e sqlite"
 fi
-spack view --dependencies true $extra_excludes -e fairroot symlink -i $SIMPATH fairroot cmake
+spack view --dependencies true $extra_excludes -e fairroot \
+	symlink -i $SIMPATH fairroot faircmakemodules
 
-git clone --branch dev https://github.com/FairRootGroup/FairRoot
+git clone --branch "$fairroot_branch" https://github.com/FairRootGroup/FairRoot
 pushd FairRoot
 export FAIRROOTPATH="$(realpath ./install)"
 $cmake -S. -Bbuild \
-  -DUSE_DIFFERENT_COMPILER=ON \
   -DCMAKE_RULE_MESSAGES=OFF -DCMAKE_INSTALL_MESSAGE=NEVER \
-  ${no_boost_cmake:+-DBoost_NO_BOOST_CMAKE=ON} \
+  ${extra_cmake_flags} \
   -DCMAKE_INSTALL_PREFIX=$FAIRROOTPATH
 $cmake --build build --target install -j $SPACK_BUILD_JOBS
 pushd build

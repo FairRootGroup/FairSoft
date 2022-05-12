@@ -1,4 +1,4 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -60,7 +60,7 @@ class Geant3(CMakePackage):
     def common_env_setup(self, env):
         env.set('G3SYS', join_path(self.prefix.share, 'geant3'))
         # So that root finds the shared library / rootmap
-        env.prepend_path("LD_LIBRARY_PATH", self.prefix.lib)
+        env.prepend_path("ROOT_LIBRARY_PATH", self.prefix.lib)
 
     def setup_run_environment(self, env):
         self.common_env_setup(env)

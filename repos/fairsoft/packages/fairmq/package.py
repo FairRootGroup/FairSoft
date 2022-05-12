@@ -1,6 +1,6 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 #   Spack Project Developers. See the top-level COPYRIGHT file for details.
-# Copyright 2019-2021 GSI Helmholtz Centre for Heavy Ion Research GmbH,
+# Copyright 2019-2022 GSI Helmholtz Centre for Heavy Ion Research GmbH,
 #   Darmstadt, Germany
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -17,6 +17,7 @@ class Fairmq(CMakePackage):
     generator = 'Ninja'
 
     version('develop', branch='dev', submodules=True, get_full_repo=True)
+    version('1.4.39', tag='v1.4.39', commit='479d6e071234fdb2541fb7d666eab99fbff58120', submodules=True, no_cache=True)
     version('1.4.33', tag='v1.4.33', commit='bffe74c5cfe11797adbc9acda18591ceb0275833', submodules=True, no_cache=True)
     version('1.4.30', tag='v1.4.30', commit='2b3e38d9a48a0d941a7a794be0a53c8dbfefbaec', submodules=True, no_cache=True)
     version('1.4.29', tag='v1.4.29', commit='c6b13cd3a18ac0e4d724e4df54f8027885b9ee0d', submodules=True, no_cache=True)
@@ -69,6 +70,9 @@ class Fairmq(CMakePackage):
     patch('missing_stdexcept_header.patch', when='@:1.4.19')
     patch('fix_cpp17moveinsertable_assertion_xcode12.patch', when='@1.4.8:1.4.23')
     patch('update_command_format_in_pmix_plugin.patch', when='@1.4.23')
+    patch('no_external_asio_1.4.11.patch', when='@1.4.8:1.4.26')
+    patch('fix_missing_include_thread_1.4.10_1.4.38.patch',
+          when='@1.4.10:1.4.38')
 
     depends_on('googletest@1.7:', when='@:1.4.8')
     depends_on('boost@1.64: +container+program_options+thread+system+filesystem+regex+date_time', when='@1.3')
@@ -90,6 +94,7 @@ class Fairmq(CMakePackage):
     depends_on('dds@3.5.3:', when='@1.4.27:')
     depends_on('flatbuffers', when='@1.4.9:')
     depends_on('pmix@2.1.4:', when='@1.4:')
+    depends_on('asio@1.18:', when='@1.4.27:')
 
     depends_on('cmake@3.9.4:', type='build', when='@1.3')
     depends_on('cmake@3.10:', type='build', when='@1.4.0:1.4.7')
@@ -112,6 +117,9 @@ class Fairmq(CMakePackage):
            args.append('-DBUILD_SDK_COMMANDS=ON')
         if self.spec.satisfies('@1.4.11:'):
            args.append('-DBUILD_SDK=ON')
+        if self.spec.satisfies('@:1.4.38'):
+           # googletest too old for gcc11, just disable
+           args.append('-DBUILD_TESTING=OFF')
         # NOTE Support for building the ofi transport will be added at a later
         #      point in time.
         # args.append('-DBUILD_OFI_TRANSPORT=ON')

@@ -1,6 +1,6 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 #   Spack Project Developers. See the top-level COPYRIGHT file for details.
-# Copyright 2020-2021 GSI Helmholtz Centre for Heavy Ion Research GmbH,
+# Copyright 2020-2022 GSI Helmholtz Centre for Heavy Ion Research GmbH,
 #   Darmstadt, Germany
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -31,6 +31,7 @@ class Fairroot(CMakePackage):
 
     depends_on('cmake@3.13.4:', type='build')
     depends_on('boost@1.68.0: +container')
+    depends_on('faircmakemodules@0.2:', when='@19:')
     depends_on('fairlogger@1.4.0:')
     depends_on('fairmq@1.4.11:')
     depends_on('fairsoft-config', when='@:18,develop')
@@ -44,6 +45,7 @@ class Fairroot(CMakePackage):
     depends_on('pythia6', when='+sim')
     depends_on('pythia8', when='+sim')
     depends_on('root+http+xml+gdml')
+    depends_on('root@6.18:', when='@19:')
     depends_on('vgm', when="+sim")
     depends_on('vmc', when='@18.4: ^root@6.18:')
     depends_on('yaml-cpp', when='@18.2:')
@@ -70,6 +72,7 @@ class Fairroot(CMakePackage):
 
     def cmake_args(self):
         options = []
+        options.append('--log-level=VERBOSE')
         if self.spec.satisfies('@18.4:'):
             cxxstd = self.spec.variants['cxxstd'].value
             if cxxstd != 'default':

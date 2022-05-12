@@ -1,12 +1,12 @@
 ################################################################################
-# Copyright (C) 2020-2021 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 cmake_minimum_required(VERSION 3.16.1 FATAL_ERROR)
-cmake_policy(VERSION 3.16.1...3.20)
+cmake_policy(VERSION 3.16.1...3.23)
 if(POLICY CMP0114)
   cmake_policy(SET CMP0114 OLD)
 endif()
@@ -41,22 +41,33 @@ set(CMAKE_DEFAULT_ARGS CMAKE_CACHE_DEFAULT_ARGS
   "-DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD}"
   "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
   "-DCMAKE_INSTALL_LIBDIR:PATH=lib"
-)
+  )
+if (CMAKE_TOOLCHAIN_FILE)
+  list(APPEND CMAKE_DEFAULT_ARGS -DCMAKE_TOOLCHAIN_FILE:STRING=${CMAKE_TOOLCHAIN_FILE})
+endif()
 if(APPLE)
   set(CMAKE_DEFAULT_ARGS ${CMAKE_DEFAULT_ARGS}
     "-DCMAKE_MACOSX_RPATH:BOOL=ON"
   )
+  if(CMAKE_OSX_SYSROOT)
+    set(CMAKE_DEFAULT_ARGS ${CMAKE_DEFAULT_ARGS}
+      "-DCMAKE_OSX_SYSROOT:PATH=${CMAKE_OSX_SYSROOT}"
+    )
+  endif()
 endif()
-unset(python)
 if(ICU_ROOT)
   set(icu "-DICU_ROOT=${ICU_ROOT}")
   set(boost_icu_config "--with-icu=${ICU_ROOT}")
 endif()
-if(PYTHON_EXECUTABLE)
-  set(python "-DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}")
-  get_filename_component(PYTHON_EXECUTABLE_FILE "${PYTHON_EXECUTABLE}" NAME)
-  set(boost_python_config "--with-python=${PYTHON_EXECUTABLE_FILE}")
-endif()
+find_package(Python 3 REQUIRED COMPONENTS Interpreter Development)
+get_target_property(Python_EXECUTABLE Python::Interpreter LOCATION)
+get_filename_component(Python_EXECUTABLE_NAME "${Python_EXECUTABLE}" NAME)
+configure_file(${CMAKE_SOURCE_DIR}/legacy/boost/site-config.jam.in ${CMAKE_BINARY_DIR}/site-config.jam @ONLY)
+set(boost_python_config_bootstrap "--with-python=${Python_EXECUTABLE}")
+set(boost_python_config_b2 "--site-config=${CMAKE_BINARY_DIR}/site-config.jam")
+set(cmake_python_config_old "-DPYTHON_EXECUTABLE=${Python_EXECUTABLE}"
+  "-DPYTHON_INCLUDE_DIR=${Python_INCLUDE_DIRS}" "-DPYTHON_LIBRARY=${Python_LIBRARIES}")
+set(cmake_python_config "-DPython_EXECUTABLE=${Python_EXECUTABLE}")
 set(LOG_TO_FILE
   LOG_DIR "${CMAKE_BINARY_DIR}/Log"
   LOG_DOWNLOAD ON
@@ -70,6 +81,7 @@ set(LOG_TO_FILE
   LOG_OUTPUT_ON_FAILURE ON
 )
 
+set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
 if(SOURCE_CACHE)
   add_custom_target(extract-source-cache
     DEPENDS "${CMAKE_BINARY_DIR}/extracted"
@@ -81,7 +93,6 @@ if(SOURCE_CACHE)
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Extracting source cache ${SOURCE_CACHE} at ${CMAKE_BINARY_DIR}"
   )
-  set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
   set_property(DIRECTORY PROPERTY EP_STEP_TARGETS mkdir download update patch configure build install test)
   set(DEPENDS_ON_SOURCE_CACHE DEPENDS extract-source-cache)
   set(extract_source_cache_target extract-source-cache)
@@ -113,45 +124,60 @@ ExternalProject_Add(asio
 )
 
 list(APPEND packages boost)
-set(boost_version "75")
+set(boost_version "78")
+set(boost_features
+  "cxxstd=${CMAKE_CXX_STANDARD}"
+  "link=shared"
+  "threading=multi"
+  "variant=release"
+  "visibility=hidden"
+  "pch=off"
+)
 ExternalProject_Add(boost
   URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
-  URL_HASH SHA256=953db31e016db7bb207f11432bef7df100516eeb746843fa0486a222e3fd49cb
+  URL_HASH SHA256=8681f175d4bdb26c52222665793eef08490d7758529330f98d3b29dd0735bccc
   BUILD_IN_SOURCE ON
   BUILD_ALWAYS ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
-    ${boost_python_config} ${boost_icu_config}
+    ${boost_python_config_bootstrap}
+    ${boost_icu_config}
   BUILD_COMMAND "./b2" "--layout=system"
-    "cxxstd=${CMAKE_CXX_STANDARD}"
-    "link=shared"
-    "threading=multi"
-    "variant=release"
-    "visibility=hidden"
-  INSTALL_COMMAND "./b2" "install" "-j" "${NCPUS}"
+    ${boost_features}
+    ${boost_python_config_b2}
+    "-j ${NCPUS}"
+  INSTALL_COMMAND "./b2"
+    ${boost_features}
+    ${boost_python_config_b2}
+    "-j ${NCPUS}"
+    "install"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
 
 list(APPEND packages fmt)
-set(fmt_version "6.1.2")
+set(fmt_version "8.1.1")
 ExternalProject_Add(fmt
   URL "https://github.com/fmtlib/fmt/releases/download/${fmt_version}/fmt-${fmt_version}.zip"
-  URL_HASH SHA256=63650f3c39a96371f5810c4e41d6f9b0bb10305064e6faf201cbafe297ea30e8
-  BUILD_ALWAYS ON
+  URL_HASH SHA256=23778bad8edba12d76e4075da06db591f3b0e3c6c04928ced4a7282ca3400e5d
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFMT_DOC=OFF"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
 
+if(ICU_ROOT)
+  set(dds_icu_hint "-DDDS_LD_LIBRARY_PATH=${ICU_ROOT}/lib")
+endif()
 list(APPEND packages dds)
 set(dds_version "3.6")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DBoost_NO_BOOST_CMAKE=ON"
+    ${dds_icu_hint}
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_boost_lookup.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/allow_dds_ld_library_path_as_cmake_var.patch"
   DEPENDS boost ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
@@ -162,7 +188,7 @@ ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
 )
 
 list(APPEND packages fairlogger)
-set(fairlogger_version "1.9.2")
+set(fairlogger_version "1.11.0")
 ExternalProject_Add(fairlogger
   GIT_REPOSITORY https://github.com/FairRootGroup/FairLogger GIT_TAG v${fairlogger_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -172,13 +198,14 @@ ExternalProject_Add(fairlogger
 )
 
 list(APPEND packages zeromq)
-set(zeromq_version "4.3.2")
+set(zeromq_version "4.3.4")
 ExternalProject_Add(zeromq
   GIT_REPOSITORY https://github.com/zeromq/libzmq GIT_TAG v${zeromq_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DWITH_PERF_TOOL=ON"
     "-DZMQ_BUILD_TESTS=ON"
     "-DENABLE_CPACK=OFF"
+    "-DENABLE_DRAFTS=OFF"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
@@ -197,29 +224,26 @@ ExternalProject_Add(flatbuffers
 
 if (NOT PACKAGE_SET STREQUAL fairmqdev)
   list(APPEND packages fairmq)
-  set(fairmq_version "1.4.44")
+  set(fairmq_version "1.4.50")
   ExternalProject_Add(fairmq
     GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DBUILD_DDS_PLUGIN=OFF"
-      "-DBUILD_SDK_COMMANDS=OFF"
-      "-DBUILD_SDK=OFF"
-    DEPENDS asio boost fairlogger flatbuffers zeromq ${extract_source_cache_target}
+    ${CMAKE_DEFAULT_ARGS}
+    DEPENDS asio boost fairlogger zeromq ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
-  list(APPEND packages odc)
-  set(odc_version "0.62")
-  ExternalProject_Add(odc
-    GIT_REPOSITORY https://github.com/FairRootGroup/ODC GIT_TAG ${odc_version}
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DBUILD_GRPC_CLIENT=OFF"
-      "-DBUILD_GRPC_SERVER=OFF"
-      "-DBUILD_EPN_PLUGIN=OFF"
-      "-DBUILD_EXAMPLES=OFF"
-    DEPENDS boost dds fairlogger fairmq ${extract_source_cache_target}
-    ${LOG_TO_FILE}
-  )
+  # list(APPEND packages odc)
+  # set(odc_version "0.62")
+  # ExternalProject_Add(odc
+    # GIT_REPOSITORY https://github.com/FairRootGroup/ODC GIT_TAG ${odc_version}
+    # ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+      # "-DBUILD_GRPC_CLIENT=OFF"
+      # "-DBUILD_GRPC_SERVER=OFF"
+      # "-DBUILD_EPN_PLUGIN=OFF"
+      # "-DBUILD_EXAMPLES=OFF"
+    # DEPENDS boost dds fairlogger fairmq ${extract_source_cache_target}
+    # ${LOG_TO_FILE}
+  # )
 endif()
 
 if(PACKAGE_SET STREQUAL full)
@@ -252,17 +276,15 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(vc
     URL https://github.com/VcDevel/Vc/archive/${vc_version}.tar.gz
     URL_HASH SHA256=50d3f151e40b0718666935aa71d299d6370fafa67411f0a9e249fbce3e6e3952
-    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
     ${DEPENDS_ON_SOURCE_CACHE}
   )
 
   list(APPEND packages clhep)
-  set(clhep_version "2.4.4.0")
+  set(clhep_version "2.4.5.1")
   ExternalProject_Add(clhep
     URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
-    URL_HASH SHA256=5df78c11733a091da9ae5a24ce31161d44034dd45f20455587db85f1ca1ba539
-    BUILD_ALWAYS ON
+    URL_HASH SHA256=2517c9b344ad9f55974786ae6e7a0ef8b22f4abcbf506df91194ea2299ce3813
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
     ${LOG_TO_FILE}
@@ -276,13 +298,12 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages pythia8)
-  set(pythia8_version "8303")
+  set(pythia8_version "8306")
   string(SUBSTRING "${pythia8_version}" 0 2 pythia8_major_version)
   string(TOUPPER "${CMAKE_BUILD_TYPE}" selected)
   ExternalProject_Add(pythia8
     URL https://pythia.org/download/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
-    URL_HASH SHA256=9093351829f92d81c60c719bfb007b1e89efb4307f4c8957407406bf3281a6f7
-    BUILD_ALWAYS ON
+    URL_HASH SHA256=03787c817492bbbf9ef3e9d103b6fb80280ee6d6ff2e87c287a9c433cbaf302c
     BUILD_IN_SOURCE ON
     CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
       "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
@@ -294,7 +315,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages geant4)
-  set(geant4_version "10.7.1")
+  set(geant4_version "11.0.1")
   if(GEANT4MT)
     set(mt
       "-DGEANT4_BUILD_MULTITHREADED=ON"
@@ -304,11 +325,10 @@ if(PACKAGE_SET STREQUAL full)
       "-DGEANT4_BUILD_MULTITHREADED=OFF")
   endif()
   ExternalProject_Add(geant4
-    URL https://gitlab.cern.ch/geant4/geant4/-/archive/v${geant4_version}/geant4-v${geant4_version}.tar.gz
-    URL_HASH SHA256=2aa7cb4b231081e0a35d84c707be8f35e4edc4e97aad2b233943515476955293
-    BUILD_ALWAYS ON
+    URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
+    URL_HASH SHA256=3e9b0e68b006c1ddd8c5f6ded084fcd8029a568ecd0e45026d7ef818df46a02b
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DGEANT4_BUILD_CXXSTD=${CMAKE_CXX_STANDARD}"
+      "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
       ${mt}
       "-DGEANT4_USE_SYSTEM_CLHEP=ON"
       "-DGEANT4_USE_SYSTEM_EXPAT=ON"
@@ -321,13 +341,15 @@ if(PACKAGE_SET STREQUAL full)
       "-DGEANT4_INSTALL_DATA=ON"
       "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
       "-DGEANT4_BUILD_VERBOSE_CODE=ON"
-      ${python}
+      "-DGEANT4_BUILD_BUILTIN_BACKTRACE=OFF"
+      ${cmake_python_config_old}
     DEPENDS boost clhep ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
   list(APPEND packages root)
-  set(root_version "6.22.08")
+  set(root_version "6.26.02")
+  string(REPLACE "\." "-" root_version_gittag ${root_version})
   if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
     set(root_builtin_glew "-Dbuiltin_glew=ON")
   endif()
@@ -338,16 +360,22 @@ if(PACKAGE_SET STREQUAL full)
     unset(root_cocoa)
     set(root_x11 ON)
   endif()
+  if(CMAKE_CXX_COMPILER_ID STREQUAL GNU AND CMAKE_CXX_COMPILER_VERSION GREATER 11)
+    set(root_runtime_cxxmodules "-Druntime_cxxmodules=OFF")
+  endif()
   ExternalProject_Add(root
-    URL https://root.cern/download/root_v${root_version}.source.tar.gz
-    URL_HASH SHA256=6f061ff6ef8f5ec218a12c4c9ea92665eea116b16e1cd4df4f96f00c078a2f6f
-    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/dirty_stdatomic_h_fix.patch"
-    BUILD_ALWAYS ON
+    GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
+    GIT_SHALLOW 1
+    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/support_python_3.11.patch"
+    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_compilation_with_gcc12.patch"
+    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/add_missing_cstring_include.patch"
+    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/update_xrootd_checksum.patch"
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
       "-Dcintex=OFF"
       "-Ddavix=OFF"
+      "-Dfftw3=ON"
       "-Dfortran=ON"
       "-Dgdml=ON"
       "-Dglobus=OFF"
@@ -366,19 +394,20 @@ if(PACKAGE_SET STREQUAL full)
       "-Dtmva=ON"
       "-Dvc=ON"
       "-Dvdt=OFF"
-      "-Dvmc=OFF"
       "-Dxml=ON"
       "-Dxrootd=ON"
       "-Dx11=${root_x11}"
-      ${python}
+      ${cmake_python_config}
+      ${cmake_python_config_old}
       ${root_builtin_glew}
       ${root_cocoa}
+      ${root_runtime_cxxmodules}
     DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
 
   list(APPEND packages vmc)
-  set(vmc_version "1-0-p3")
+  set(vmc_version "2-0")
   ExternalProject_Add(vmc
     GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
@@ -386,7 +415,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages geant3)
-  set(geant3_version "3-9_fairsoft")
+  set(geant3_version "4-0_fairsoft")
   ExternalProject_Add(geant3
     GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -396,7 +425,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages vgm)
-  set(vgm_version "4-8")
+  set(vgm_version "5-0")
   ExternalProject_Add(vgm
     GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -406,7 +435,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages geant4_vmc)
-  set(geant4_vmc_version "5-3")
+  set(geant4_vmc_version "6-1")
   ExternalProject_Add(geant4_vmc
     GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v${geant4_vmc_version}
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -422,7 +451,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(fairsoft-config
     GIT_REPOSITORY https://github.com/FairRootGroup/fairsoft-config GIT_TAG master
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-    "-DFAIRSOFT_VERSION=apr21"
+    "-DFAIRSOFT_VERSION=apr22"
     DEPENDS root ${extract_source_cache_target}
     ${LOG_TO_FILE}
   )
@@ -525,6 +554,10 @@ if(SOURCE_CACHE)
   message(STATUS "  ${Cyan}SOURCE CACHE${CR}       ${BGreen}${SOURCE_CACHE}${CR}")
 else()
   message(STATUS "  ${Cyan}SOURCE CACHE${CR}       using upstream URLs (generate cache by building target 'source-cache' and pass via ${BMagenta}-DSOURCE_CACHE=...${CR})")
+endif()
+if(CMAKE_OSX_SYSROOT)
+  message(STATUS "  ")
+  message(STATUS "  ${Cyan}OSX_SYSROOT${CR}        ${BGreen}${CMAKE_OSX_SYSROOT}${CR} (change with ${BMagenta}-DCMAKE_OSX_SYSROOT=...${CR})")
 endif()
 message(STATUS "  ")
 message(STATUS "  ${Cyan}INSTALL PREFIX${CR}     ${BGreen}${CMAKE_INSTALL_PREFIX}${CR} (change with ${BMagenta}-DCMAKE_INSTALL_PREFIX=...${CR})")

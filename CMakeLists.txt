@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2019-2021 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2019-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -22,6 +22,7 @@ if(APPLE)
 endif()
 
 project(FairSoft LANGUAGES C CXX Fortran)
+string(TOLOWER "${PROJECT_NAME}" PROJECT_NAME_LOWER)
 
 if(NOT DEFINED BUILD_METHOD)
   set(BUILD_METHOD legacy)

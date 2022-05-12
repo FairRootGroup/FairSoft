@@ -1,0 +1,13 @@
+diff --git a/dds-info/src/main.cpp b/dds-info/src/main.cpp
+index 48bddf4..7fd74e3 100644
+--- a/dds-info/src/main.cpp
++++ b/dds-info/src/main.cpp
+@@ -11,6 +11,8 @@
+ #include "SysHelper.h"
+ #include "Tools.h"
+ #include "UserDefaults.h"
++// STD
++#include <thread>
+ 
+ using namespace std;
+ using namespace MiscCommon;

@@ -1,4 +1,4 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -11,19 +11,21 @@ class Pythia8(AutotoolsPackage):
        i.e. for the description of collisions at high energies between elementary
        particles such as e+, e-, p and pbar in various combinations."""
 
-    homepage = "http://home.thep.lu.se/Pythia/"
-    url      = "http://home.thep.lu.se/~torbjorn/pythia8/pythia8244.tgz"
+    homepage = "https://pythia.org/"
 
     maintainers = ['ChristianTackeGSI']
 
-    version('8303', sha256='cd7c2b102670dae74aa37053657b4f068396988ef7da58fd3c318c84dc37913e')
-    version('8302', sha256='7372e4cc6f48a074e6b7bc426b040f218ec4a64b0a55e89da6af56933b5f5085')
-    version('8301', sha256='51382768eb9aafb97870dca1909516422297b64ef6a6b94659259b3e4afa7f06')
-    version('8244', sha256='e34880f999daf19cdd893a187123927ba77d1bf851e30f6ea9ec89591f4c92ca')
-    version('8240', sha256='d27495d8ca7707d846f8c026ab695123c7c78c7860f04e2c002e483080418d8d')
-    version('8235', sha256='e82f0d6165a8250a92e6aa62fb53201044d8d853add2fdad6d3719b28f7e8e9d')
-    version('8230', sha256='332fad0ed4f12e6e0cb5755df0ae175329bc16bfaa2ae472d00994ecc99cd78d')
-    version('8212', sha256='f8fb4341c7e8a8be3347eb26b00329a388ccf925313cfbdba655a08d7fd5a70e')
+    version('8306', sha256='03787c817492bbbf9ef3e9d103b6fb80280ee6d6ff2e87c287a9c433cbaf302c')
+    version('8305', sha256='7d450ed52b037934e443058a6a7f8072c1e09e4f84b00e0ef521ccdb2a94d75a')
+    version('8304', sha256='65c6165d61cabefb1594998ff2afebd12616def9bb5d18524212bc5886ca8f68')
+    version('8303', sha256='9093351829f92d81c60c719bfb007b1e89efb4307f4c8957407406bf3281a6f7')
+    version('8302', sha256='7aae73eabdd38ebbcf7998f63c271ae9b397522497a7ee67a9505b9baae1cb1c')
+    version('8301', sha256='bcf1f4d96d76c550338aa8a0eff9c2c2085dadbb440df849062ff6b2032fbfd9')
+    version('8244', sha256='6f1bb061bd5a708efb08fe0b1b68050174b11f817f470b5681f0afd82cb45300')
+    version('8240', sha256='3d71cae2b6fc451910b69a18ee4f6d527c5ad10e32982a0dce5f6449a10c3ff1')
+    version('8235', sha256='ef9a1448a09b317d6fa21e43bc706854ac01d1087882600ec31c508c57a9a97e')
+    version('8230', sha256='38c9d2bc8996b202f0a1037733d5e50f2deb447f25a3e89a4ecfab7dae0c5495')
+    version('8212', sha256='5631cf828ddc37c3a6a5dcce6366bcb9fd80cdd26d363ea197e8cb34aa2eb898')
 
     # Avoid sqrt of negative numbers
     # See: https://github.com/alisw/alidist/pull/2333
@@ -31,6 +33,8 @@ class Pythia8(AutotoolsPackage):
     # See: https://github.com/alisw/alidist/pull/2336
     # See: https://github.com/alisw/pythia8/commit/f97ec11943af269e3b08634c03339ae4189b3bbe
     patch('ropewalk_sqrt.patch', when='@8240:8244,8301:8302')
+
+    patch('8303_limits.patch', when='@8303')
 
     depends_on('rsync', type='build')
     depends_on('hepmc@2:2.99')
@@ -45,6 +49,10 @@ class Pythia8(AutotoolsPackage):
             args.append('--enable-shared')
         return args
 
-    def setup_environment(self, spack_env, run_env):
-        run_env.set('PYTHIA8DATA', '%s/share/Pythia8/xmldoc' % prefix )
-        run_env.set('PYTHIA8', '%s' % prefix )
+    def setup_dependent_run_environment(self, env, dependent_spec):
+        env.set('PYTHIA8', self.prefix)
+        env.set('PYTHIA8DATA', self.prefix.share.Pythia8.xmldoc)
+
+    def url_for_version(self, version):
+        url = "https://pythia.org/download/pythia{0}/pythia{1}.tgz"
+        return url.format(str(version)[:2], version)

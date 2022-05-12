@@ -19,8 +19,10 @@ trap "cleanup ${builddir}" EXIT
 pushd "${builddir}" > /dev/null
 
 cmakebaseurl="https://github.com/Kitware/CMake/releases/download/v"
-cmakeversion="3.18.3"
-cmaketargz="cmake-${cmakeversion}-$(uname -s)-$(uname -m).tar.gz"
+cmakeversion="3.22.3"
+unames=$(uname -s | tr '[:upper:]' '[:lower:]')
+unamem=$(uname -m | tr '[:upper:]' '[:lower:]')
+cmaketargz="cmake-${cmakeversion}-${unames}-${unamem}.tar.gz"
 cmakechecksums="cmake-${cmakeversion}-SHA-256.txt"
 
 cmake="${cmakebaseurl}${cmakeversion}/$cmaketargz"
@@ -28,7 +30,7 @@ echo "Downloading ${cmake}"
 curl -L -O -# "${cmake}"
 
 curl -L -O -s "${cmakebaseurl}${cmakeversion}/$cmakechecksums"
-grep "$(uname -s).*$(uname -m).*\.tar\.gz" $cmakechecksums > checksum.txt
+grep "${unames}.*${unamem}.*\.tar\.gz" $cmakechecksums > checksum.txt
 sha256sum -c checksum.txt
 
 echo "Installing to ${installdir}"

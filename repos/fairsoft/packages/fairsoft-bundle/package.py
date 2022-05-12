@@ -1,6 +1,6 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 #   Spack Project Developers. See the top-level COPYRIGHT file for details.
-# Copyright 2020-2021 GSI Helmholtz Centre for Heavy Ion Research GmbH,
+# Copyright 2020-2022 GSI Helmholtz Centre for Heavy Ion Research GmbH,
 #   Darmstadt, Germany
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -25,6 +25,9 @@ class FairsoftBundle(BundlePackage):
     variant('graphics', default=False)
     variant('mt', default=False)
 
+    # Some normal packages
+    depends_on('faircmakemodules')
+
     # Pin some variants:
     depends_on('geant4 ~threads', when='~mt')
     depends_on('geant4 +threads', when='+mt')
@@ -34,6 +37,9 @@ class FairsoftBundle(BundlePackage):
     depends_on('root +fortran+pythia6+pythia8+vc~vdt')
     # Mostly for the experiments:
     depends_on('root +python+tmva+mlp+xrootd+sqlite')
+    # FFTW for Panda
+    depends_on('root +fftw')
+    depends_on('fftw~mpi')
     depends_on('root +spectrum', when='@20.11:')
     depends_on('root ~x~opengl~aqua', when='~graphics')
     depends_on('root +x+opengl', when='+graphics')
@@ -44,12 +50,12 @@ class FairsoftBundle(BundlePackage):
     depends_on('root +aqua', when='+graphics')
 
     # next (master):
-    depends_on('pythia8@8303',          when='@master')
+    depends_on('pythia8@8306',          when='@master')
     # geant4 pinning breaks concretization
-    depends_on('root@6.22.08',          when='@master')
+    depends_on('root@6.24.02',          when='@master')
     depends_on('vmc@1-0-p3',            when='@master')
     depends_on('geant3@3.8',            when='@master')
-    depends_on('vgm@4-8',               when='@master')
+    depends_on('vgm@4-9',               when='@master')
     depends_on('geant4-vmc@5-3',        when='@master')
     depends_on('fairsoft-config@develop', when='@master', type='run')
 

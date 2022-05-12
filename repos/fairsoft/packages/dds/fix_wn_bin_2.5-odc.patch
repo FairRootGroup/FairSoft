@@ -116,11 +116,11 @@ index 73d70a4..bb85b06 100644
 -	COMMAND ${CMAKE_COMMAND} -DPREREQ_DESTINATION=${WN_PKG_DIR} -DDDS_AGENT_BIN_PATH=${DDS_AGENT_BIN_PATH}
 -		-DPREREQ_DIRS=${PREREQ_DIRS} -DDDS_BOOST_LIB_DIR=${DDS_BOOST_LIB_DIR} -P "${CMAKE_SOURCE_DIR}/cmake/modules/DDS_CollectPrerequisites.cmake"
 +# top-level executables to package in wn pkg
-+list(APPEND WN_PKG_EXECUTABLES
++list(APPEND WN_PKG_TARGETS
 +  $<TARGET_FILE:dds-agent>
 +  $<TARGET_FILE:dds-user-defaults> )
-+separate_arguments(CLI_WN_PKG_EXECUTABLES
-+  UNIX_COMMAND "${WN_PKG_EXECUTABLES}" )
++separate_arguments(CLI_WN_PKG_TARGETS
++  UNIX_COMMAND "${WN_PKG_TARGETS}" )
 +
 +# Generate a list of what CMake considers to be system prefixes
 +list(APPEND WN_PKG_EXCLUDED_SYSTEM_PREFIXES
@@ -133,7 +133,7 @@ index 73d70a4..bb85b06 100644
 +add_custom_target( wn_bin
 +	COMMAND ${CMAKE_COMMAND} -E make_directory ${WN_PKG_DIR}
 +  COMMAND ${CMAKE_COMMAND}
-+    -DEXECUTABLES=${CLI_WN_PKG_EXECUTABLES}
++    -DEXECUTABLES=${CLI_WN_PKG_TARGETS}
 +    -DDESTINATION=${WN_PKG_DIR}
 +    -DEXCLUDED_SYSTEM_PREFIXES=${CLI_WN_PKG_EXCLUDED_SYSTEM_PREFIXES}
 +    -P "${CMAKE_SOURCE_DIR}/cmake/DDSCollectWNPkgFiles.cmake"
@@ -169,7 +169,7 @@ index 0000000..1b31397
 --- /dev/null
 +++ b/cmake/DDSCollectWNPkgFiles.cmake
 @@ -0,0 +1,24 @@
-+# Copyright 2017-2021 GSI, Inc. All rights reserved.
++# Copyright 2017-2022 GSI, Inc. All rights reserved.
 +#
 +#
 +

@@ -11,6 +11,8 @@ def isLegacyChange() {
   def target = false
   if (env.CHANGE_TARGET != null) {
     target = "refs/remotes/origin/${env.CHANGE_TARGET}"
+  } else if (env.BRANCH_NAME =~ /legacy/) {
+    return true
   } else if (env.BRANCH_NAME != 'dev' && env.BRANCH_NAME != 'master') {
     sh "git fetch --no-tags --force --progress -- ${scm.userRemoteConfigs[0].url} +refs/heads/dev:refs/remotes/origin/dev"
     target = sh(label: 'Retrieve merge base', returnStdout: true,
@@ -32,9 +34,11 @@ def isLegacyChange() {
   return false
 }
 
-def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
+def jobMatrix(String node_type, String inp_ctestcmd, List specs, Closure callback) {
   def nodes = [:]
   for (spec in specs) {
+    // allocate some fresh objects per loop iteration
+    def ctestcmd = inp_ctestcmd
     def node_alloc_label = node_type
     def label = spec.os
     def jobsh = "job_${label}.sh"
@@ -45,12 +49,17 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
     } else {
       container = spec.container
     }
+    def extra = spec.getOrDefault("extra", null)
     nodes[title] = {
       node(node_alloc_label) {
         githubNotify(context: title, description: 'Building ...', status: 'PENDING')
         def legacy = false
         try {
           checkout scm
+
+          if (extra != null) {
+            ctestcmd = ctestcmd + ' ' + extra
+          }
 
           legacy = isLegacyChange() // needs to run after scm checkout in node context
           if (legacy) {
@@ -62,7 +71,7 @@ def jobMatrix(String node_type, String ctestcmd, List specs, Closure callback) {
 
           if (node_type == 'slurm') {
             sh(label: "Create Slurm Job Script", script: """
-              exec test/slurm-create-jobscript.sh "${label}" "${container}" "${ctestcmd}" "${jobsh}"
+              exec test/slurm-create-jobscript.sh "${label}" "${container}" "${jobsh}" ${ctestcmd}
             """)
           }
 
@@ -91,9 +100,13 @@ pipeline {
     stage('Info Stage') {
       steps {
         echo "BRANCH_NAME: ${BRANCH_NAME}"
-        echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
-        echo "env.CHANGE_ID: ${env.CHANGE_ID}"
-        echo "env.CHANGE_TARGET: ${env.CHANGE_TARGET}"
+        echo """
+          env.BRANCH_NAME: ${env.BRANCH_NAME}
+          env.CHANGE_ID: ${env.CHANGE_ID}
+          env.CHANGE_TARGET: ${env.CHANGE_TARGET}
+          env.GIT_PREVIOUS_COMMIT: ${env.GIT_PREVIOUS_COMMIT}
+          env.GIT_PREVIOUS_SUCCESSFUL_COMMIT: ${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}
+          """
         echo "getBuildCauses: ${currentBuild.getBuildCauses()}"
         echo "our_quiet_period: ${our_quiet_period}"
       }
@@ -103,15 +116,19 @@ pipeline {
         script {
           def ctestcmd = "ctest -VV -S FairSoft_test.cmake"
           def specs_list = [
+            [os: 'Archlinux',        container: 'archlinux.latest.sif'],
             [os: 'CentOS-7',         container: 'centos.7.sif'],
             [os: 'Rockylinux-8',     container: 'rockylinux.8.sif', for_pr: true],
             [os: 'Debian-10',        container: 'debian.10.sif'],
             [os: 'Debian-11',        container: 'debian.11.sif'],
             [os: 'Fedora-33',        container: 'fedora.33.sif'],
-            [os: 'Fedora-34',        container: 'fedora.34.sif'],
+            [os: 'Fedora-34',        container: 'fedora.34.sif',    for_pr: true,
+             extra: '--label-exclude "env:.*(jun19).*"'],
             [os: 'Fedora-35',        container: 'fedora.35.sif',    for_pr: true],
+            [os: 'Fedora-36',        container: 'fedora.36.sif'],
             [os: 'openSUSE-15.2',    container: 'opensuse.15.2.sif'],
             [os: 'Ubuntu-20.04-LTS', container: 'ubuntu.20.04.sif', for_pr: true],
+            [os: 'Ubuntu-22.04-LTS', container: 'ubuntu.22.04.sif'],
           ]
 
           if (env.CHANGE_ID != null) {
@@ -134,8 +151,9 @@ pipeline {
               ];
           } else {
               specs_list = [
-                [os: 'macOS10.15'],
-                [os: 'macOS11.0'],
+                [os: 'macos-11-x86_64'],
+                [os: 'macos-12-x86_64'],
+                [os: 'macos-12-arm64']
               ];
           }
 
@@ -143,7 +161,7 @@ pipeline {
           { spec, label, jobsh, ctest ->
             sh """
               hostname -f
-              export LABEL=${label}
+              export LABEL="${label}"
               ${ctest}
             """
           }

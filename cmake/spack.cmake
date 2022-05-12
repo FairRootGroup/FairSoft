@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2019-2021 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2019-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -54,7 +54,8 @@ function(fs_test_props testname)
                TIMEOUT 14400)
 endfunction()
 function(fs_test)
-  cmake_parse_arguments(ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST" "DEPENDS" ${ARGN})
+  cmake_parse_arguments(PARSE_ARGV 0 ARGS "MIGHT_FAIL" "NAME;ENV;SPEC;POST"
+                        "DEPENDS;LABELS")
   if(ARGS_ENV)
     set(type env)
     set(what ${ARGS_ENV}/spack.yaml)
@@ -66,6 +67,12 @@ function(fs_test)
            COMMAND test/build${type}.sh ${what} ${ARGS_POST}
            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
   fs_test_props(${ARGS_NAME})
+  set_property(TEST ${ARGS_NAME} APPEND PROPERTY
+               LABELS "${type}:${what}")
+  if(ARGS_LABELS)
+    set_property(TEST ${ARGS_NAME} APPEND PROPERTY
+                 LABELS "${ARGS_LABELS}")
+  endif()
   if(ARGS_MIGHT_FAIL)
     fs_test_might_fail(${ARGS_NAME})
   endif()
@@ -90,7 +97,8 @@ set_property(TEST test.start APPEND PROPERTY
 # Main tests
 # ----------
 
-fs_test(NAME test.cmake               SPEC cmake)
+fs_test(NAME test.faircmakemodules    SPEC faircmakemodules)
+fs_test(NAME test.faircmakemodules_m  SPEC faircmakemodules@master)
 fs_test(NAME test.grpc                SPEC grpc)
 fs_test(NAME test.flatbuffers         SPEC flatbuffers)
 fs_test(NAME test.fairlogger          ENV test/env/fairlogger)
@@ -110,7 +118,8 @@ fs_test(NAME dev.sim_mt               ENV env/dev/sim_mt)
 fs_test(NAME dev.sim_mt_headless      ENV env/dev/sim_mt_headless)
 fs_test(NAME test.jun19_fairroot_18_4 ENV test/env/jun19_fairroot_18_4)
 fs_test(NAME test.fairroot_develop    ENV test/env/fairroot_develop)
-fs_test(NAME test.r3broot             ENV test/env/r3broot)
+fs_test(NAME test.r3broot             ENV test/env/r3broot
+        LABELS "env:like/jun19")
 
 fs_test(NAME workflow.classic_developer_jun19
         ENV env/jun19/sim
@@ -128,6 +137,11 @@ fs_test(NAME workflow.classic_developer_dev
         ENV env/dev/sim
         DEPENDS "dev.sim;workflow.classic_developer_apr21"
         POST test/workflow/classic_developer.sh)
+
+add_test(NAME test.pkg_sanity_checks
+         COMMAND test/spack-pkg-sanity.sh
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+fs_test_props(test.pkg_sanity_checks)
 
 # Test cleanup
 # ------------

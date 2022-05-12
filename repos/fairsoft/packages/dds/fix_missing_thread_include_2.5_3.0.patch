@@ -1,0 +1,12 @@
+diff --git a/MiscCommon/Process.h b/MiscCommon/Process.h
+index d43de64..6bedcb2 100644
+--- a/MiscCommon/Process.h
++++ b/MiscCommon/Process.h
+@@ -20,6 +20,7 @@
+ #endif
+ 
+ // STD
++#include <thread>
+ #include <fstream>
+ #include <iterator>
+ #include <memory>

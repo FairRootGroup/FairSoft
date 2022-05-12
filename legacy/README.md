@@ -33,9 +33,9 @@ git clone -b <release> https://github.com/FairRootGroup/FairSoft
 ```
 
 For `<release>` choose
-* `apr21`, or `apr21p1`, ... - a particular release
-* `apr21_patches` - always points to the latest patch release for the `apr21` release
-* `master` - track the latest stable release (e.g. if `apr21` is the latest release `master` is the same as `apr21_patches`)
+* `apr22`, or `apr22p1`, ... - a particular release
+* `apr22_patches` - always points to the latest patch release for the `apr22` release
+* `master` - track the latest stable release (e.g. if `apr22` is the latest release `master` is the same as `apr22_patches`)
 * `dev` - the bleeding edge development version
 
 Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
@@ -50,6 +50,8 @@ cmake -S <path-to-source> -B <path-to-build> -C <path-to-source>/FairSoftConfig.
 * `<path-to-build>` is a temporary directory of your choice where all of the package download, extraction, and building happens
 
 Set the installation prefix and more customization options in the [`FairSoftConfig.cmake`](../FairSoftConfig.cmake) file itself.
+
+**macOS users**: Notice [macOS SDK](advanced.md#macos-sdk)!
 
 ### 4. CMake build/install step
 
@@ -80,42 +82,45 @@ Find several advanced and troubleshooting topics in the [advanced section](advan
 The following systems are tested regularly. If you feel your system is missing,
 please contact us.
 
-| **System** | **Version** | **Compiler** | **CMake** |
-| --- | --- | --- | --- |
-| CentOS | 7 | GCC 7.3.1 (devtoolset-7) | 3.17.3 (epel: cmake3) |
-| Rockylinux | 8 | GCC 8.5.0 | 3.20.2 |
-| Debian | 10 | GCC 8.3.0 | 3.18.3 (`bootstrap-cmake.sh`) |
-| Debian | 11 | GCC 10.2.1 | 3.18.4 |
-| Fedora | 33 | GCC 10.3.1 | 3.19.7 |
-| Fedora | 34 | GCC 11.2.1 | 3.20.5 |
-| Fedora | 35 | GCC 11.2.1 | 3.22.1 |
-| macOS | 10.15 | AppleClang 12.0, gfortran 11.2.0 | 3.22.1 (brew) |
-| macOS | 11 | AppleClang 12.0, gfortran 11.2.0 | 3.22.1 (brew) |
-| OpenSUSE | 15.2 | GCC 7.5.0 | 3.17.0 |
-| Ubuntu | 20.04 | GCC 9.3.0 | 3.16.3 |
+| **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
+| --- | --- | --- | --- | --- |
+| Archlinux  | x86_64 | latest| GCC 11.2.0                 | 3.23.1 |
+| CentOS     | x86_64 | 7     | GCC 11.2.1 (devtoolset-11) | 3.17.5 (epel: cmake3) |
+| Rockylinux | x86_64 | 8     | GCC 8.5.0                  | 3.20.2 |
+| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.22.3 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.18.4 |
+| Fedora     | x86_64 | 33    | GCC 10.3.1                 | 3.19.7 |
+| Fedora     | x86_64 | 34    | GCC 11.2.1                 | 3.20.5 |
+| Fedora     | x86_64 | 35    | GCC 11.2.1                 | 3.22.2 |
+| Fedora     | x86_64 | 36    | GCC 12.0.1 (20220413)      | 3.22.2 |
+| macOS      | x86_64 | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
+| macOS      | x86_64 | 11    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
+| macOS      | arm64  | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
+| OpenSUSE   | x86_64 | 15.2  | GCC 7.5.0                  | 3.17.0 |
+| Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.16.3 |
+| Ubuntu     | x86_64 | 22.04 | GCC 11.2.0                 | 3.22.1 |
 
 ## Included packages
 
 | **Package** | **Version** | **URL** |
 | --- | --- | --- |
 | asio             | 1.19.1       | https://think-async.com/Asio/ |
-| boost            | 1.75.0       | https://www.boost.org/ |
-| clhep            | 2.4.4.0      | http://proj-clhep.web.cern.ch |
+| boost            | 1.78.0       | https://www.boost.org/ |
+| clhep            | 2.4.5.1      | http://proj-clhep.web.cern.ch |
 | dds              | 3.6          | http://dds.gsi.de |
 | faircmakemodules | 1.0.0        | https://github.com/FairRootGroup/FairCMakeModules |
-| fairlogger       | 1.9.2        | https://github.com/FairRootGroup/FairLogger |
-| fairmq           | 1.4.44       | https://github.com/FairRootGroup/FairMQ |
+| fairlogger       | 1.11.0       | https://github.com/FairRootGroup/FairLogger |
+| fairmq           | 1.4.50       | https://github.com/FairRootGroup/FairMQ |
 | flatbuffers      | 1.12.0       | https://github.com/google/flatbuffers |
-| fmt              | 6.1.2        | https://github.com/fmtlib/fmt |
-| geant3           | 3-9_fairsoft | https://github.com/FairRootGroup/geant3 |
-| geant4           | 10.7.1       | https://geant4.web.cern.ch |
-| geant4_vmc       | 5-3          | https://github.com/vmc-project/geant4_vmc |
+| fmt              | 8.1.1        | https://github.com/fmtlib/fmt |
+| geant3           | 4-0_fairsoft | https://github.com/FairRootGroup/geant3 |
+| geant4           | 11.0.1       | https://geant4.web.cern.ch |
+| geant4_vmc       | 6-1          | https://github.com/vmc-project/geant4_vmc |
 | hepmc            | 2.06.11      | http://hepmc.web.cern.ch |
-| odc              | 0.62         | https://github.com/FairRootGroup/ODC |
 | pythia6          | 428-alice1   | https://github.com/alisw/pythia6 |
-| pythia8          | 8303         | https://pythia.org/ |
-| root             | 6.22.08      | https://root.cern |
+| pythia8          | 8306         | https://pythia.org/ |
+| root             | 6.26.02      | https://root.cern |
 | vc               | 1.4.2        | https://github.com/VcDevel/Vc |
-| vgm              | 4-8          | https://github.com/vmc-project/vgm |
-| vmc              | 1-0-p3       | https://github.com/vmc-project/vmc |
-| zeromq           | 4.3.2        | https://github.com/zeromq/libzmq |
+| vgm              | 5-0          | https://github.com/vmc-project/vgm |
+| vmc              | 2-0          | https://github.com/vmc-project/vmc |
+| zeromq           | 4.3.4        | https://github.com/zeromq/libzmq |
