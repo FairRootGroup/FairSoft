@@ -48,8 +48,8 @@ SDK and toolchain to use.
 We found that - in some cases - the selection of the SDK differs between
 `brew`, `cmake` and default shell environment (likely depending on the system's
 upgrade history, user configuration, and software versions). For most
-software packages this is not an issue. However, the Root is very sensitive on
-the chosen SDK. This is a known issue to the upstream Root developers, but so
+software packages this is not an issue. However, the ROOT is very sensitive on
+the chosen SDK. This is a known issue to the upstream ROOT developers, but so
 far they have not found a way to make this more robust (as of a comment by Axel
 in April '22). A "wrong" SDK may result in compilation errors as reported in
 https://github.com/root-project/root/issues/7881.
@@ -57,7 +57,7 @@ https://github.com/root-project/root/issues/7881.
 While this is not completely understood, we believe picking the latest
 installed SDK version is the most sensible course of action here. `brew`
 contains already some logic to detect and choose the latest SDK. See the
-"macOS SDK" section in [FairSoftConfig.cmake](FairSoftConfig.cmake).
+"macOS SDK" section in [FairSoftConfig.cmake](../FairSoftConfig.cmake).
 
 **If you have a deeper understanding of this issue and know a better
 solution, please let us know!**
