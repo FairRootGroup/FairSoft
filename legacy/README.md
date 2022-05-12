@@ -51,6 +51,8 @@ cmake -S <path-to-source> -B <path-to-build> -C <path-to-source>/FairSoftConfig.
 
 Set the installation prefix and more customization options in the [`FairSoftConfig.cmake`](../FairSoftConfig.cmake) file itself.
 
+**macOS users**: Notice [macOS SDK](advanced.md#macos-sdk)!
+
 ### 4. CMake build/install step
 
 After a successful CMake configure step, you start the build/install step as follows:
