@@ -137,7 +137,6 @@ ExternalProject_Add(boost
   URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
   URL_HASH SHA256=8681f175d4bdb26c52222665793eef08490d7758529330f98d3b29dd0735bccc
   BUILD_IN_SOURCE ON
-  BUILD_ALWAYS ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     ${boost_python_config_bootstrap}
@@ -252,7 +251,6 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(pythia6
     URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
     URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
-    BUILD_ALWAYS ON
     PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
     ${DEPENDS_ON_SOURCE_CACHE}
@@ -263,7 +261,6 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(hepmc
     URL https://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
     URL_HASH SHA256=86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
-    BUILD_ALWAYS ON
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Dlength:STRING=CM"
       "-Dmomentum:STRING=GEV"
