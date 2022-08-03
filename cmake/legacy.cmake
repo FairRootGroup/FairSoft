@@ -345,7 +345,7 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages root)
-  set(root_version "6.26.02")
+  set(root_version "6.26.06")
   string(REPLACE "\." "-" root_version_gittag ${root_version})
   if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
     set(root_builtin_glew "-Dbuiltin_glew=ON")
@@ -363,10 +363,7 @@ if(PACKAGE_SET STREQUAL full)
   ExternalProject_Add(root
     GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
     GIT_SHALLOW 1
-    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/support_python_3.11.patch"
-    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_compilation_with_gcc12.patch"
-    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/add_missing_cstring_include.patch"
-    COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/update_xrootd_checksum.patch"
+    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_compilation_with_gcc12.patch"
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
