@@ -115,7 +115,7 @@ ExternalProject_Add(faircmakemodules
 )
 
 list(APPEND packages asio)
-set(asio_version "1.19.1")
+set(asio_version "1.24.0")
 ExternalProject_Add(asio
   GIT_REPOSITORY https://github.com/FairRootGroup/asio GIT_TAG v${asio_version}
   ${CMAKE_DEFAULT_ARGS}
