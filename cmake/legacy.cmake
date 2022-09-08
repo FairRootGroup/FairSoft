@@ -269,10 +269,10 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages vc)
-  set(vc_version "1.4.2")
+  set(vc_version "1.4.3")
   ExternalProject_Add(vc
-    URL https://github.com/VcDevel/Vc/archive/${vc_version}.tar.gz
-    URL_HASH SHA256=50d3f151e40b0718666935aa71d299d6370fafa67411f0a9e249fbce3e6e3952
+    URL https://github.com/VcDevel/Vc/releases/download/${vc_version}/Vc-${vc_version}.tar.gz
+    URL_HASH SHA256=988ea0053f3fbf17544ca776a2749c097b3139089408b0286fa4e9e8513e037f
     ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
     ${DEPENDS_ON_SOURCE_CACHE}
   )
