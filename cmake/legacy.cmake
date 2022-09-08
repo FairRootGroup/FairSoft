@@ -6,7 +6,7 @@
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 cmake_minimum_required(VERSION 3.16.1 FATAL_ERROR)
-cmake_policy(VERSION 3.16.1...3.23)
+cmake_policy(VERSION 3.16.1...3.24)
 if(POLICY CMP0114)
   cmake_policy(SET CMP0114 OLD)
 endif()
@@ -124,7 +124,7 @@ ExternalProject_Add(asio
 )
 
 list(APPEND packages boost)
-set(boost_version "78")
+set(boost_version "80")
 set(boost_features
   "cxxstd=${CMAKE_CXX_STANDARD}"
   "link=shared"
@@ -135,8 +135,9 @@ set(boost_features
 )
 ExternalProject_Add(boost
   URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
-  URL_HASH SHA256=8681f175d4bdb26c52222665793eef08490d7758529330f98d3b29dd0735bccc
+  URL_HASH SHA256=1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0
   BUILD_IN_SOURCE ON
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/boost/0004-filesystem-posix-fix-no-at-apis-missing-include.patch"
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     ${boost_python_config_bootstrap}
