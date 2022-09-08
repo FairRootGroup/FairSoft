@@ -89,14 +89,14 @@ please contact us.
 | Rockylinux | x86_64 | 8     | GCC 8.5.0                  | 3.20.2 |
 | Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.22.3 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.18.4 |
-| Fedora     | x86_64 | 33    | GCC 10.3.1                 | 3.19.7 |
+| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.24.1 |
 | Fedora     | x86_64 | 34    | GCC 11.2.1                 | 3.20.5 |
 | Fedora     | x86_64 | 35    | GCC 11.2.1                 | 3.22.2 |
-| Fedora     | x86_64 | 36    | GCC 12.0.1 (20220413)      | 3.22.2 |
-| macOS      | x86_64 | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
-| macOS      | x86_64 | 11    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
-| macOS      | arm64  | 12    | AppleClang 13, gfortran 11 | 3.23.0 (brew) |
-| OpenSUSE   | x86_64 | 15.2  | GCC 7.5.0                  | 3.17.0 |
+| Fedora     | x86_64 | 36    | GCC 12.2.1                 | 3.22.2 |
+| Fedora     | x86_64 | 37    | GCC 12.2.1                 | 3.24.1 |
+| macOS      | x86_64 | 12    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
+| macOS      | x86_64 | 11    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
+| macOS      | arm64  | 12    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
 | Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.16.3 |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.2.0                 | 3.22.1 |
 
