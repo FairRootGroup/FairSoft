@@ -295,12 +295,12 @@ if(PACKAGE_SET STREQUAL full)
   )
 
   list(APPEND packages pythia8)
-  set(pythia8_version "8306")
+  set(pythia8_version "8307")
   string(SUBSTRING "${pythia8_version}" 0 2 pythia8_major_version)
   string(TOUPPER "${CMAKE_BUILD_TYPE}" selected)
   ExternalProject_Add(pythia8
     URL https://pythia.org/download/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
-    URL_HASH SHA256=03787c817492bbbf9ef3e9d103b6fb80280ee6d6ff2e87c287a9c433cbaf302c
+    URL_HASH SHA256=e5b14d44aa5943332e32dd5dda9a18fdd1a0085c7198e28d840e04167fa6013d
     BUILD_IN_SOURCE ON
     CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
       "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
