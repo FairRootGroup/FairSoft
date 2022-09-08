@@ -211,13 +211,12 @@ ExternalProject_Add(zeromq
 )
 
 list(APPEND packages flatbuffers)
-set(flatbuffers_version "1.12.0")
+set(flatbuffers_version "2.0.8")
 ExternalProject_Add(flatbuffers
   GIT_REPOSITORY https://github.com/google/flatbuffers GIT_TAG v${flatbuffers_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFLATBUFFERS_BUILD_SHAREDLIB=ON"
     "-DFLATBUFFERS_BUILD_FLATLIB=OFF"
-  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/flatbuffers/remove_werror.patch"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
