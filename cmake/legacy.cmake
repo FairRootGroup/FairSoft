@@ -224,7 +224,7 @@ ExternalProject_Add(flatbuffers
 
 if (NOT PACKAGE_SET STREQUAL fairmqdev)
   list(APPEND packages fairmq)
-  set(fairmq_version "1.4.50")
+  set(fairmq_version "1.4.54")
   ExternalProject_Add(fairmq
     GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
     ${CMAKE_DEFAULT_ARGS}
