@@ -53,11 +53,11 @@ fs_legacy_container(OS centos VERSION 7 PACKAGE_SETUP_SCRIPT "setup-centos-7.sh"
 fs_legacy_container(OS rockylinux VERSION 8)
 fs_legacy_container(OS debian VERSION 10 BOOTSTRAP_CMAKE)
 fs_legacy_container(OS debian VERSION 11)
-fs_legacy_container(OS fedora VERSION 33)
+fs_legacy_container(OS debian VERSION 12 DOCKER_TAG "debian:bookworm")
 fs_legacy_container(OS fedora VERSION 34)
 fs_legacy_container(OS fedora VERSION 35)
 fs_legacy_container(OS fedora VERSION 36)
-fs_legacy_container(OS opensuse VERSION 15.2 DOCKER_TAG "opensuse/leap:15.2")
+fs_legacy_container(OS fedora VERSION 37)
 fs_legacy_container(OS ubuntu VERSION 20.04)
 fs_legacy_container(OS ubuntu VERSION 22.04)
 
