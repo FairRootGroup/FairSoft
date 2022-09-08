@@ -104,7 +104,7 @@ please contact us.
 
 | **Package** | **Version** | **URL** |
 | --- | --- | --- |
-| asio             | 1.19.1       | https://think-async.com/Asio/ |
+| asio             | 1.24.0       | https://think-async.com/Asio/ |
 | boost            | 1.80.0       | https://www.boost.org/ |
 | clhep            | 2.4.5.1      | http://proj-clhep.web.cern.ch |
 | dds              | 3.6          | http://dds.gsi.de |
