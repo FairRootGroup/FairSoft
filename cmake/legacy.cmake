@@ -370,6 +370,7 @@ if(PACKAGE_SET STREQUAL full)
     ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
       "-Daqua=ON"
       "-Dasimage=ON"
+      "-Dbuiltin_nlohmannjson=ON"
       "-Dcintex=OFF"
       "-Ddavix=OFF"
       "-Dfftw3=ON"
