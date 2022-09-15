@@ -178,6 +178,8 @@ ExternalProject_Add(dds
     ${dds_icu_hint}
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_boost_lookup.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/allow_dds_ld_library_path_as_cmake_var.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/add_missing_include.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_deprecated_boost_filesystem.patch"
   DEPENDS boost ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )

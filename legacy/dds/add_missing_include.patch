@@ -1,0 +1,20 @@
+commit 3ee4b3191617fb43fe247e3fde3c45fa151204ad
+Author: David Rohr <drohr@jwdt.org>
+Date:   Tue Jul 26 08:35:14 2022 +0200
+
+    Add missing include
+
+    Without compilation on GCC 12.1 fails
+
+diff --git a/dds-misc-lib/src/SSHConfigFile.cpp b/dds-misc-lib/src/SSHConfigFile.cpp
+index dc86997..3068fe3 100644
+--- a/dds-misc-lib/src/SSHConfigFile.cpp
++++ b/dds-misc-lib/src/SSHConfigFile.cpp
+@@ -6,6 +6,7 @@
+ // std
+ #include <iomanip>
+ #include <iostream>
++#include <fstream>
+ // boost
+ #include <boost/tokenizer.hpp>
+ // Misc
