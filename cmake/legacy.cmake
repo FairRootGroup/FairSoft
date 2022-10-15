@@ -426,6 +426,15 @@ ExternalProject_Add(geant4_vmc
   ${LOG_TO_FILE}
 )
 
+list(APPEND packages eigen)
+set(eigen_version "3.4.0")
+ExternalProject_Add(eigen
+  GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git GIT_TAG ${eigen_version}
+  ${CMAKE_DEFAULT_ARGS}
+  DEPENDS ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
+
 ExternalProject_Add(fairsoft-config
   GIT_REPOSITORY https://github.com/FairRootGroup/fairsoft-config GIT_TAG master
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS

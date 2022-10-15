@@ -108,6 +108,7 @@ please contact us.
 | boost            | 1.80.0       | https://www.boost.org/ |
 | clhep            | 2.4.5.1      | http://proj-clhep.web.cern.ch |
 | dds              | 3.6          | http://dds.gsi.de |
+| eigen            | 3.4.0        | https://eigen.tuxfamily.org |
 | faircmakemodules | 1.0.0        | https://github.com/FairRootGroup/FairCMakeModules |
 | fairlogger       | 1.11.0       | https://github.com/FairRootGroup/FairLogger |
 | fairmq           | 1.4.54       | https://github.com/FairRootGroup/FairMQ |
