@@ -465,7 +465,7 @@ ExternalProject_Add(onnxruntime
 ExternalProject_Add(fairsoft-config
   GIT_REPOSITORY https://github.com/FairRootGroup/fairsoft-config GIT_TAG master
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-  "-DFAIRSOFT_VERSION=apr22"
+  "-DFAIRSOFT_VERSION=oct22"
   DEPENDS root ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
