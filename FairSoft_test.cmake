@@ -170,10 +170,19 @@ if (BUILD_METHOD STREQUAL legacy)
   ctest_build(RETURN_VALUE _ctest_build_retval
               NUMBER_ERRORS _ctest_build_errors
               FLAGS "-j${NCPUS}")
-  fairsoft_ctest_submit()
   if (_ctest_build_errors)
     set(_ctest_build_retval 255)
   endif()
+  if(NOT _ctest_build_errors)
+    ctest_build(RETURN_VALUE _ctest_build_retval
+                NUMBER_ERRORS _ctest_build_errors
+                TARGET "onnxruntime"
+                FLAGS "-j${NCPUS}")
+    if (_ctest_build_errors)
+      set(_ctest_build_retval 255)
+    endif()
+  endif()
+  fairsoft_ctest_submit()
 
   set(from "${CTEST_BINARY_DIRECTORY}/Log")
   message(STATUS " Copy logs ....... from: ${from}")
