@@ -32,18 +32,6 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install prefi
 # set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type" FORCE)
 
 #
-# Package set
-#
-#  Which packages to build and install, choices are:
-#  * full - All packages (default)
-#  * fairmq - Only FairMQ and dependencies
-#  * fairmqdev - Only development dependencies of FairMQ
-#
-# set(PACKAGE_SET "full" CACHE STRING "FairSoft package set" FORCE)
-# set(PACKAGE_SET "fairmq" CACHE STRING "FairSoft package set" FORCE)
-# set(PACKAGE_SET "fairmqdev" CACHE STRING "FairSoft package set" FORCE)
-
-#
 # Geant4 multi-threading (default OFF)
 #
 # set(GEANT4MT OFF CACHE BOOL "Build Geant4 in multi-threading mode" FORCE)

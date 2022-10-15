@@ -22,9 +22,6 @@ include(FairSoftLib)
 set_fairsoft_defaults()
 message(STATUS "NCPUS: ${NCPUS} (from ${NCPUS_SOURCE})")
 
-if(NOT PACKAGE_SET)
-  set(PACKAGE_SET full)
-endif()
 if(NOT DEFINED GEANT4MT)
   set(GEANT4MT OFF)
 endif()
@@ -223,236 +220,219 @@ ExternalProject_Add(flatbuffers
   ${DEPENDS_ON_SOURCE_CACHE}
 )
 
-if (NOT PACKAGE_SET STREQUAL fairmqdev)
-  list(APPEND packages fairmq)
-  set(fairmq_version "1.4.54")
-  ExternalProject_Add(fairmq
-    GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
-    ${CMAKE_DEFAULT_ARGS}
-    DEPENDS asio boost fairlogger zeromq ${extract_source_cache_target}
-    ${LOG_TO_FILE}
-  )
+list(APPEND packages fairmq)
+set(fairmq_version "1.4.54")
+ExternalProject_Add(fairmq
+  GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
+  ${CMAKE_DEFAULT_ARGS}
+  DEPENDS asio boost fairlogger zeromq ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
 
-  # list(APPEND packages odc)
-  # set(odc_version "0.62")
-  # ExternalProject_Add(odc
-    # GIT_REPOSITORY https://github.com/FairRootGroup/ODC GIT_TAG ${odc_version}
-    # ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      # "-DBUILD_GRPC_CLIENT=OFF"
-      # "-DBUILD_GRPC_SERVER=OFF"
-      # "-DBUILD_EPN_PLUGIN=OFF"
-      # "-DBUILD_EXAMPLES=OFF"
-    # DEPENDS boost dds fairlogger fairmq ${extract_source_cache_target}
-    # ${LOG_TO_FILE}
-  # )
+list(APPEND packages pythia6)
+set(pythia6_version "428-alice1")
+ExternalProject_Add(pythia6
+  URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
+  URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
+  ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+  ${DEPENDS_ON_SOURCE_CACHE}
+)
+
+list(APPEND packages hepmc)
+set(hepmc_version "2.06.11")
+ExternalProject_Add(hepmc
+  URL https://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
+  URL_HASH SHA256=86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-Dlength:STRING=CM"
+    "-Dmomentum:STRING=GEV"
+  ${LOG_TO_FILE}
+  ${DEPENDS_ON_SOURCE_CACHE}
+)
+
+list(APPEND packages vc)
+set(vc_version "1.4.3")
+ExternalProject_Add(vc
+  URL https://github.com/VcDevel/Vc/releases/download/${vc_version}/Vc-${vc_version}.tar.gz
+  URL_HASH SHA256=988ea0053f3fbf17544ca776a2749c097b3139089408b0286fa4e9e8513e037f
+  ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+  ${DEPENDS_ON_SOURCE_CACHE}
+)
+
+list(APPEND packages clhep)
+set(clhep_version "2.4.5.1")
+ExternalProject_Add(clhep
+  URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
+  URL_HASH SHA256=2517c9b344ad9f55974786ae6e7a0ef8b22f4abcbf506df91194ea2299ce3813
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
+  ${LOG_TO_FILE}
+  ${DEPENDS_ON_SOURCE_CACHE}
+)
+set(clhep_source ${CMAKE_BINARY_DIR}/Source/clhep)
+ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
+  COMMAND ${CMAKE_COMMAND} -E copy_directory "${clhep_source}/CLHEP" "${clhep_source}"
+  BYPRODUCTS "${clhep_source}/CMakeLists.txt"
+  LOG ON
+)
+
+list(APPEND packages pythia8)
+set(pythia8_version "8307")
+string(SUBSTRING "${pythia8_version}" 0 2 pythia8_major_version)
+string(TOUPPER "${CMAKE_BUILD_TYPE}" selected)
+ExternalProject_Add(pythia8
+  URL https://pythia.org/download/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
+  URL_HASH SHA256=e5b14d44aa5943332e32dd5dda9a18fdd1a0085c7198e28d840e04167fa6013d
+  BUILD_IN_SOURCE ON
+  CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
+    "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
+    "--prefix=${CMAKE_INSTALL_PREFIX}"
+    "--cxx=${CMAKE_CXX_COMPILER}"
+    "--cxx-common='${CMAKE_CXX_FLAGS_${selected}} -fPIC -std=c++${CMAKE_CXX_STANDARD}'"
+  DEPENDS hepmc ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
+
+list(APPEND packages geant4)
+set(geant4_version "11.0.3")
+if(GEANT4MT)
+  set(mt
+    "-DGEANT4_BUILD_MULTITHREADED=ON"
+    "-DGEANT4_BUILD_TLS_MODEL=global-dynamic")
+else()
+  set(mt
+    "-DGEANT4_BUILD_MULTITHREADED=OFF")
 endif()
+ExternalProject_Add(geant4
+  URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
+  URL_HASH SHA256=72f8b687512d6e630dc6c64c5c41ba711220468540132999d00e4fce1908ae48
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
+    ${mt}
+    "-DGEANT4_USE_SYSTEM_CLHEP=ON"
+    "-DGEANT4_USE_SYSTEM_EXPAT=ON"
+    "-DGEANT4_USE_SYSTEM_ZLIB=ON"
+    "-DGEANT4_USE_G3TOG4=ON"
+    "-DGEANT4_USE_GDML=ON"
+    "-DGEANT4_USE_OPENGL_X11=OFF"
+    "-DGEANT4_USE_RAYTRACER_X11=OFF"
+    "-DGEANT4_USE_PYTHON=ON"
+    "-DGEANT4_INSTALL_DATA=ON"
+    "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
+    "-DGEANT4_BUILD_VERBOSE_CODE=ON"
+    "-DGEANT4_BUILD_BUILTIN_BACKTRACE=OFF"
+    ${cmake_python_config_old}
+  DEPENDS boost clhep ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
 
-if(PACKAGE_SET STREQUAL full)
-  list(APPEND packages pythia6)
-  set(pythia6_version "428-alice1")
-  ExternalProject_Add(pythia6
-    URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
-    URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
-    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
-    ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
-    ${DEPENDS_ON_SOURCE_CACHE}
-  )
-
-  list(APPEND packages hepmc)
-  set(hepmc_version "2.06.11")
-  ExternalProject_Add(hepmc
-    URL https://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
-    URL_HASH SHA256=86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-Dlength:STRING=CM"
-      "-Dmomentum:STRING=GEV"
-    ${LOG_TO_FILE}
-    ${DEPENDS_ON_SOURCE_CACHE}
-  )
-
-  list(APPEND packages vc)
-  set(vc_version "1.4.3")
-  ExternalProject_Add(vc
-    URL https://github.com/VcDevel/Vc/releases/download/${vc_version}/Vc-${vc_version}.tar.gz
-    URL_HASH SHA256=988ea0053f3fbf17544ca776a2749c097b3139089408b0286fa4e9e8513e037f
-    ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
-    ${DEPENDS_ON_SOURCE_CACHE}
-  )
-
-  list(APPEND packages clhep)
-  set(clhep_version "2.4.5.1")
-  ExternalProject_Add(clhep
-    URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
-    URL_HASH SHA256=2517c9b344ad9f55974786ae6e7a0ef8b22f4abcbf506df91194ea2299ce3813
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
-    ${LOG_TO_FILE}
-    ${DEPENDS_ON_SOURCE_CACHE}
-  )
-  set(clhep_source ${CMAKE_BINARY_DIR}/Source/clhep)
-  ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
-    COMMAND ${CMAKE_COMMAND} -E copy_directory "${clhep_source}/CLHEP" "${clhep_source}"
-    BYPRODUCTS "${clhep_source}/CMakeLists.txt"
-    LOG ON
-  )
-
-  list(APPEND packages pythia8)
-  set(pythia8_version "8307")
-  string(SUBSTRING "${pythia8_version}" 0 2 pythia8_major_version)
-  string(TOUPPER "${CMAKE_BUILD_TYPE}" selected)
-  ExternalProject_Add(pythia8
-    URL https://pythia.org/download/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
-    URL_HASH SHA256=e5b14d44aa5943332e32dd5dda9a18fdd1a0085c7198e28d840e04167fa6013d
-    BUILD_IN_SOURCE ON
-    CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
-      "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
-      "--prefix=${CMAKE_INSTALL_PREFIX}"
-      "--cxx=${CMAKE_CXX_COMPILER}"
-      "--cxx-common='${CMAKE_CXX_FLAGS_${selected}} -fPIC -std=c++${CMAKE_CXX_STANDARD}'"
-    DEPENDS hepmc ${extract_source_cache_target}
-    ${LOG_TO_FILE}
-  )
-
-  list(APPEND packages geant4)
-  set(geant4_version "11.0.3")
-  if(GEANT4MT)
-    set(mt
-      "-DGEANT4_BUILD_MULTITHREADED=ON"
-      "-DGEANT4_BUILD_TLS_MODEL=global-dynamic")
-  else()
-    set(mt
-      "-DGEANT4_BUILD_MULTITHREADED=OFF")
-  endif()
-  ExternalProject_Add(geant4
-    URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
-    URL_HASH SHA256=72f8b687512d6e630dc6c64c5c41ba711220468540132999d00e4fce1908ae48
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
-      ${mt}
-      "-DGEANT4_USE_SYSTEM_CLHEP=ON"
-      "-DGEANT4_USE_SYSTEM_EXPAT=ON"
-      "-DGEANT4_USE_SYSTEM_ZLIB=ON"
-      "-DGEANT4_USE_G3TOG4=ON"
-      "-DGEANT4_USE_GDML=ON"
-      "-DGEANT4_USE_OPENGL_X11=OFF"
-      "-DGEANT4_USE_RAYTRACER_X11=OFF"
-      "-DGEANT4_USE_PYTHON=ON"
-      "-DGEANT4_INSTALL_DATA=ON"
-      "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
-      "-DGEANT4_BUILD_VERBOSE_CODE=ON"
-      "-DGEANT4_BUILD_BUILTIN_BACKTRACE=OFF"
-      ${cmake_python_config_old}
-    DEPENDS boost clhep ${extract_source_cache_target}
-    ${LOG_TO_FILE}
-  )
-
-  list(APPEND packages root)
-  set(root_version "6.26.06")
-  string(REPLACE "\." "-" root_version_gittag ${root_version})
-  if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
-    set(root_builtin_glew "-Dbuiltin_glew=ON")
-  endif()
-  if(APPLE)
-    set(root_cocoa "-Dcocoa=ON")
-    set(root_x11 OFF)
-  else()
-    unset(root_cocoa)
-    set(root_x11 ON)
-  endif()
-  if(CMAKE_CXX_COMPILER_ID STREQUAL GNU AND CMAKE_CXX_COMPILER_VERSION GREATER 11)
-    set(root_runtime_cxxmodules "-Druntime_cxxmodules=OFF")
-  endif()
-  ExternalProject_Add(root
-    GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
-    GIT_SHALLOW 1
-    PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_compilation_with_gcc12.patch"
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-Daqua=ON"
-      "-Dasimage=ON"
-      "-Dbuiltin_nlohmannjson=ON"
-      "-Dcintex=OFF"
-      "-Ddavix=OFF"
-      "-Dfftw3=ON"
-      "-Dfortran=ON"
-      "-Dgdml=ON"
-      "-Dglobus=OFF"
-      "-Dgnuinstall=ON"
-      "-Dhttp=ON"
-      "-Dmathmore=ON"
-      "-Dminuit2=ON"
-      "-Dmlp=ON"
-      "-Dpyroot=ON"
-      "-Dreflex=OFF"
-      "-Droofit=ON"
-      "-Drpath=ON"
-      "-Dsoversion=ON"
-      "-Dspectrum=ON"
-      "-Dsqlite=ON"
-      "-Dtmva=ON"
-      "-Dvc=ON"
-      "-Dvdt=OFF"
-      "-Dxml=ON"
-      "-Dxrootd=ON"
-      "-Dx11=${root_x11}"
-      ${cmake_python_config}
-      ${cmake_python_config_old}
-      ${root_builtin_glew}
-      ${root_cocoa}
-      ${root_runtime_cxxmodules}
-    DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
-    ${LOG_TO_FILE}
-  )
-
-  list(APPEND packages vmc)
-  set(vmc_version "2-0")
-  ExternalProject_Add(vmc
-    GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
-    ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
-    DEPENDS root ${extract_source_cache_target}
-  )
-
-  list(APPEND packages geant3)
-  set(geant3_version "4-1_fairsoft")
-  ExternalProject_Add(geant3
-    GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DBUILD_GCALOR=ON"
-    DEPENDS root vmc ${extract_source_cache_target}
-    ${LOG_TO_FILE}
-  )
-
-  list(APPEND packages vgm)
-  set(vgm_version "5-0")
-  ExternalProject_Add(vgm
-    GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DWITH_TEST=OFF"
-    DEPENDS clhep geant4 root ${extract_source_cache_target}
-    ${LOG_TO_FILE}
-  )
-
-  list(APPEND packages geant4_vmc)
-  set(geant4_vmc_version "6-1-p1")
-  ExternalProject_Add(geant4_vmc
-    GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v${geant4_vmc_version}
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-      "-DGeant4VMC_USE_VGM=ON"
-      "-DGeant4VMC_USE_GEANT4_UI=OFF"
-      "-DGeant4VMC_USE_GEANT4_VIS=OFF"
-      "-DGeant4VMC_USE_GEANT4_G3TOG4=ON"
-      "-DWITH_TEST=OFF"
-    DEPENDS clhep geant4 root vgm vmc ${extract_source_cache_target}
-    ${LOG_TO_FILE}
-  )
-
-  ExternalProject_Add(fairsoft-config
-    GIT_REPOSITORY https://github.com/FairRootGroup/fairsoft-config GIT_TAG master
-    ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-    "-DFAIRSOFT_VERSION=apr22"
-    DEPENDS root ${extract_source_cache_target}
-    ${LOG_TO_FILE}
-  )
+list(APPEND packages root)
+set(root_version "6.26.06")
+string(REPLACE "\." "-" root_version_gittag ${root_version})
+if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
+  set(root_builtin_glew "-Dbuiltin_glew=ON")
 endif()
+if(APPLE)
+  set(root_cocoa "-Dcocoa=ON")
+  set(root_x11 OFF)
+else()
+  unset(root_cocoa)
+  set(root_x11 ON)
+endif()
+if(CMAKE_CXX_COMPILER_ID STREQUAL GNU AND CMAKE_CXX_COMPILER_VERSION GREATER 11)
+  set(root_runtime_cxxmodules "-Druntime_cxxmodules=OFF")
+endif()
+ExternalProject_Add(root
+  GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
+  GIT_SHALLOW 1
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_compilation_with_gcc12.patch"
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-Daqua=ON"
+    "-Dasimage=ON"
+    "-Dbuiltin_nlohmannjson=ON"
+    "-Dcintex=OFF"
+    "-Ddavix=OFF"
+    "-Dfftw3=ON"
+    "-Dfortran=ON"
+    "-Dgdml=ON"
+    "-Dglobus=OFF"
+    "-Dgnuinstall=ON"
+    "-Dhttp=ON"
+    "-Dmathmore=ON"
+    "-Dminuit2=ON"
+    "-Dmlp=ON"
+    "-Dpyroot=ON"
+    "-Dreflex=OFF"
+    "-Droofit=ON"
+    "-Drpath=ON"
+    "-Dsoversion=ON"
+    "-Dspectrum=ON"
+    "-Dsqlite=ON"
+    "-Dtmva=ON"
+    "-Dvc=ON"
+    "-Dvdt=OFF"
+    "-Dxml=ON"
+    "-Dxrootd=ON"
+    "-Dx11=${root_x11}"
+    ${cmake_python_config}
+    ${cmake_python_config_old}
+    ${root_builtin_glew}
+    ${root_cocoa}
+    ${root_runtime_cxxmodules}
+  DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
+
+list(APPEND packages vmc)
+set(vmc_version "2-0")
+ExternalProject_Add(vmc
+  GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
+  ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+  DEPENDS root ${extract_source_cache_target}
+)
+
+list(APPEND packages geant3)
+set(geant3_version "4-1_fairsoft")
+ExternalProject_Add(geant3
+  GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DBUILD_GCALOR=ON"
+  DEPENDS root vmc ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
+
+list(APPEND packages vgm)
+set(vgm_version "5-0")
+ExternalProject_Add(vgm
+  GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DWITH_TEST=OFF"
+  DEPENDS clhep geant4 root ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
+
+list(APPEND packages geant4_vmc)
+set(geant4_vmc_version "6-1-p1")
+ExternalProject_Add(geant4_vmc
+  GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v${geant4_vmc_version}
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DGeant4VMC_USE_VGM=ON"
+    "-DGeant4VMC_USE_GEANT4_UI=OFF"
+    "-DGeant4VMC_USE_GEANT4_VIS=OFF"
+    "-DGeant4VMC_USE_GEANT4_G3TOG4=ON"
+    "-DWITH_TEST=OFF"
+  DEPENDS clhep geant4 root vgm vmc ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
+
+ExternalProject_Add(fairsoft-config
+  GIT_REPOSITORY https://github.com/FairRootGroup/fairsoft-config GIT_TAG master
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+  "-DFAIRSOFT_VERSION=apr22"
+  DEPENDS root ${extract_source_cache_target}
+  ${LOG_TO_FILE}
+)
 
 if(TARGET geant4-download)
   add_custom_target(geant4-download-data
@@ -492,7 +472,7 @@ execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
   OUTPUT_VARIABLE SHORT_HASH
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
-set(tarfile ${CMAKE_BINARY_DIR}/FairSoft_source_cache_${PACKAGE_SET}_${SHORT_HASH}.tar.gz)
+set(tarfile ${CMAKE_BINARY_DIR}/FairSoft_source_cache_${SHORT_HASH}.tar.gz)
 list(JOIN tardirs " " tarargs)
 add_custom_target(source-cache
   ${BASH} -c "tar czf ${tarfile} ${tarargs}"
@@ -515,8 +495,6 @@ message(STATUS "  ")
 message(STATUS "  ${Cyan}CXX STANDARD${CR}       ${BGreen}C++${CMAKE_CXX_STANDARD}${CR} (change with ${BMagenta}-DCMAKE_CXX_STANDARD=17${CR})")
 message(STATUS "  ")
 message(STATUS "  ${Cyan}BUILD TYPE${CR}         ${BGreen}${CMAKE_BUILD_TYPE}${CR} (change with ${BMagenta}-DCMAKE_BUILD_TYPE=...${CR})")
-message(STATUS "  ")
-message(STATUS "  ${Cyan}PACKAGE SET${CR}        ${BGreen}${PACKAGE_SET}${CR} (change with ${BMagenta}-DPACKAGE_SET=...${CR})")
 if(packages)
   list(SORT packages)
   message(STATUS "  ")
