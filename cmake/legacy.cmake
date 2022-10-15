@@ -435,6 +435,33 @@ ExternalProject_Add(eigen
   ${LOG_TO_FILE}
 )
 
+list(APPEND packages onnxruntime)
+set(onnxruntime_version "1.12.1-alice1")
+ExternalProject_Add(onnxruntime
+  GIT_REPOSITORY https://github.com/alisw/onnxruntime.git GIT_TAG v${onnxruntime_version}
+  GIT_SHALLOW ON
+  GIT_SUBMODULES
+    "cmake/external/SafeInt"
+    "cmake/external/date"
+    "cmake/external/flatbuffers" # at the moment, there is no option to consume external
+    "cmake/external/json"
+    "cmake/external/mp11"
+    "cmake/external/nsync"
+    "cmake/external/onnx"
+    "cmake/external/protobuf" # TODO explore, if we can offer this as separate pkg (conditionally?)
+    "cmake/external/pytorch_cpuinfo"
+    "cmake/external/re2"
+  SOURCE_SUBDIR cmake
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-Donnxruntime_BUILD_UNIT_TESTS=OFF"
+    "-Donnxruntime_BUILD_SHARED_LIB=ON"
+    "-Donnxruntime_USE_PREINSTALLED_EIGEN=ON"
+    "-Deigen_SOURCE_PATH=${CMAKE_INSTALL_PREFIX}/include/eigen3"
+  DEPENDS eigen ${extract_source_cache_target}
+  EXCLUDE_FROM_ALL ON
+  ${LOG_TO_FILE}
+)
+
 ExternalProject_Add(fairsoft-config
   GIT_REPOSITORY https://github.com/FairRootGroup/fairsoft-config GIT_TAG master
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -518,6 +545,9 @@ if(packages)
       else()
         set(comment "single-threaded (change with ${BMagenta}-DGEANT4MT=ON${CR})")
       endif()
+    elseif(dep STREQUAL onnxruntime)
+      set(version_str "${${dep}_version}")
+      set(comment "optional (by building target ${BMagenta}onnxruntime${CR} explicitely)")
     else()
       set(version_str "${${dep}_version}")
     endif()
