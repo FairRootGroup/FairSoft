@@ -451,13 +451,12 @@ ExternalProject_Add(onnxruntime
     "cmake/external/protobuf" # TODO explore, if we can offer this as separate pkg (conditionally?)
     "cmake/external/pytorch_cpuinfo"
     "cmake/external/re2"
+    "cmake/external/eigen"
   SOURCE_SUBDIR cmake
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-Donnxruntime_BUILD_UNIT_TESTS=OFF"
     "-Donnxruntime_BUILD_SHARED_LIB=ON"
-    "-Donnxruntime_USE_PREINSTALLED_EIGEN=ON"
-    "-Deigen_SOURCE_PATH=${CMAKE_INSTALL_PREFIX}/include/eigen3"
-  DEPENDS eigen ${extract_source_cache_target}
+  DEPENDS ${extract_source_cache_target}
   EXCLUDE_FROM_ALL ON
   ${LOG_TO_FILE}
 )
