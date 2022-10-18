@@ -436,9 +436,9 @@ ExternalProject_Add(eigen
 )
 
 list(APPEND packages onnxruntime)
-set(onnxruntime_version "1.12.1-alice1")
+set(onnxruntime_version "1.12.1")
 ExternalProject_Add(onnxruntime
-  GIT_REPOSITORY https://github.com/alisw/onnxruntime.git GIT_TAG v${onnxruntime_version}
+  GIT_REPOSITORY https://github.com/microsoft/onnxruntime/ GIT_TAG v${onnxruntime_version}
   GIT_SHALLOW ON
   GIT_SUBMODULES
     "cmake/external/SafeInt"
