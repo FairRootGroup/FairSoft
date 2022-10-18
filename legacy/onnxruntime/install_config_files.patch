@@ -106,4 +106,4 @@ index 700a0e264..e659b1390 100644
 +
 +install(FILES ${PROJECT_SOURCE_DIR}/ONNXRuntimeConfig.cmake
 +        ${PROJECT_SOURCE_DIR}/ONNXRuntimeConfigVersion.cmake
-+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
++        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ONNXRuntime-${ORT_VERSION})
