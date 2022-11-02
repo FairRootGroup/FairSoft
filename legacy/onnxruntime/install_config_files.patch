@@ -3,7 +3,7 @@ new file mode 100644
 index 000000000..28a7dcb58
 --- /dev/null
 +++ b/cmake/ONNXRuntimeConfig.cmake
-@@ -0,0 +1,37 @@
+@@ -0,0 +1,45 @@
 +# Custom cmake config file by fuhlig to enable find_package(ONNXRuntime)
 +# Inspired by https://stackoverflow.com/a/66494534
 +#
@@ -40,6 +40,14 @@ index 000000000..28a7dcb58
 +set_target_properties(ONNXRuntime::ONNXRuntime PROPERTIES
 +  IMPORTED_LOCATION "${ONNXRuntime_LIBRARY}"
 +  INTERFACE_INCLUDE_DIRECTORIES "${ONNXRuntime_INCDIRS}"
++  INTERFACE_INCLUDE_DIRECTORIES "${ONNXRuntime_INCDIRS}/onnxruntime/core/common"
++  INTERFACE_INCLUDE_DIRECTORIES "${ONNXRuntime_INCDIRS}/onnxruntime/core/common/logging"
++  INTERFACE_INCLUDE_DIRECTORIES "${ONNXRuntime_INCDIRS}/onnxruntime/core/framework"
++  INTERFACE_INCLUDE_DIRECTORIES "${ONNXRuntime_INCDIRS}/onnxruntime/core/graph"
++  INTERFACE_INCLUDE_DIRECTORIES "${ONNXRuntime_INCDIRS}/onnxruntime/core/optimizer"
++  INTERFACE_INCLUDE_DIRECTORIES "${ONNXRuntime_INCDIRS}/onnxruntime/core/providers"
++  INTERFACE_INCLUDE_DIRECTORIES "${ONNXRuntime_INCDIRS}/onnxruntime/core/providers/cpu"
++  INTERFACE_INCLUDE_DIRECTORIES "${ONNXRuntime_INCDIRS}/onnxruntime/core/session"
 +)
 diff --git a/cmake/ONNXRuntimeConfigVersion.cmake b/cmake/ONNXRuntimeConfigVersion.cmake
 new file mode 100644
