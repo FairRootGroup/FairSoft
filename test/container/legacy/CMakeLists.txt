@@ -49,7 +49,7 @@ endfunction()
 
 
 fs_legacy_container(OS archlinux VERSION latest)
-fs_legacy_container(OS centos VERSION 7 PACKAGE_SETUP_SCRIPT "setup-centos-7.sh")
+fs_legacy_container(OS centos VERSION 7 BOOTSTRAP_CMAKE PACKAGE_SETUP_SCRIPT "setup-centos-7.sh")
 fs_legacy_container(OS rockylinux VERSION 8)
 fs_legacy_container(OS debian VERSION 10 BOOTSTRAP_CMAKE)
 fs_legacy_container(OS debian VERSION 11)
@@ -58,7 +58,7 @@ fs_legacy_container(OS fedora VERSION 34)
 fs_legacy_container(OS fedora VERSION 35)
 fs_legacy_container(OS fedora VERSION 36)
 fs_legacy_container(OS fedora VERSION 37)
-fs_legacy_container(OS ubuntu VERSION 20.04)
+fs_legacy_container(OS ubuntu VERSION 20.04 BOOTSTRAP_CMAKE)
 fs_legacy_container(OS ubuntu VERSION 22.04)
 
 
