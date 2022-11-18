@@ -430,6 +430,7 @@ list(APPEND packages onnxruntime)
 set(onnxruntime_version "1.12.1")
 ExternalProject_Add(onnxruntime
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/install_config_files.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/fix_python_detection.patch"
   GIT_REPOSITORY https://github.com/microsoft/onnxruntime/ GIT_TAG v${onnxruntime_version}
   GIT_SHALLOW ON
   GIT_SUBMODULES
