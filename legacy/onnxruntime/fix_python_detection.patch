@@ -1,0 +1,26 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f914e78b..39e22923 100644
+--- a/cmake/external/onnx/CMakeLists.txt
++++ b/cmake/external/onnx/CMakeLists.txt
+@@ -113,9 +113,9 @@ endif()
+ 
+ # find_package Python has replaced PythonInterp and PythonLibs since cmake 3.12
+ # Use the following command in the future; now this is only compatible with the latest pybind11
+-# find_package(Python ${PY_VERSION} COMPONENTS Interpreter Development REQUIRED)
+-find_package(PythonInterp ${PY_VERSION} REQUIRED)
+-find_package(PythonLibs ${PY_VERSION})
++ find_package(Python ${PY_VERSION} COMPONENTS Interpreter Development REQUIRED)
++#find_package(PythonInterp ${PY_VERSION} REQUIRED)
++#find_package(PythonLibs ${PY_VERSION})
+ 
+ if(CMAKE_SYSTEM_NAME STREQUAL "AIX")
+   set(CMAKE_NO_SYSTEM_FROM_IMPORTED 1)
+@@ -256,7 +256,7 @@ function(RELATIVE_PROTOBUF_GENERATE_CPP NAME SRCS HDRS ROOT_DIR DEPEND)
+     endif()
+ 
+     add_custom_command(OUTPUT "${GENERATED_PROTO}"
+-                       COMMAND "${PYTHON_EXECUTABLE}" "${GEN_PROTO_PY}"
++                       COMMAND "${Python_EXECUTABLE}" "${GEN_PROTO_PY}"
+                                ARGS ${GEN_PROTO_ARGS}
+                        DEPENDS ${INFILE}
+                        COMMENT "Running gen_proto.py on ${INFILE}"
