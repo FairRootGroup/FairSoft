@@ -1,0 +1,24 @@
+commit 98ad99126cd7f2754dc02ae7e82288d435fec341
+Author: Enric Tejedor Saavedra <enric.tejedor.saavedra@cern.ch>
+Date:   Fri Jun 10 16:42:49 2022 +0200
+
+    [PyROOT] Prevent cast error when calling PyTuple_SET_ITEM in 3.11
+
+    PyTuple_SET_ITEM ends up calling _PyObject_CAST(nullptr) which
+    causes "error: invalid cast from type 'std::nullptr_t' to type
+    'const PyObject*' {aka 'const _object*'}
+
+diff --git a/bindings/pyroot/cppyy/CPyCppyy/src/CPPMethod.cxx b/bindings/pyroot/cppyy/CPyCppyy/src/CPPMethod.cxx
+index 685ad3dc60..2189348594 100644
+--- a/bindings/pyroot/cppyy/CPyCppyy/src/CPPMethod.cxx
++++ b/bindings/pyroot/cppyy/CPyCppyy/src/CPPMethod.cxx
+@@ -580,7 +580,7 @@ PyObject* CPyCppyy::CPPMethod::ProcessKeywords(PyObject* self, PyObject* args, P
+ // set all values to zero to be able to check them later (this also guarantees normal
+ // cleanup by the tuple deallocation)
+     for (Py_ssize_t i = 0; i < nArgs+nKeys; ++i)
+-        PyTuple_SET_ITEM(newArgs, i, nullptr);
++        PyTuple_SET_ITEM(newArgs, i, static_cast<PyObject*>(nullptr));
+
+ // next, insert the keyword values
+     PyObject *key, *value;
+
