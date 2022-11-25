@@ -33,9 +33,9 @@ git clone -b <release> https://github.com/FairRootGroup/FairSoft
 ```
 
 For `<release>` choose
-* `apr22`, or `apr22p1`, ... - a particular release
-* `apr22_patches` - always points to the latest patch release for the `apr22` release
-* `master` - track the latest stable release (e.g. if `apr22` is the latest release `master` is the same as `apr22_patches`)
+* `nov22`, or `nov22p1`, ... - a particular release
+* `nov22_patches` - always points to the latest patch release for the `nov22` release
+* `master` - track the latest stable release (e.g. if `nov22` is the latest release `master` is the same as `nov22_patches`)
 * `dev` - the bleeding edge development version
 
 Discover releases here: https://github.com/FairRootGroup/FairSoft/releases
@@ -84,21 +84,21 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
-| Archlinux  | x86_64 | latest| GCC 11.2.0                 | 3.23.1 |
-| CentOS     | x86_64 | 7     | GCC 11.2.1 (devtoolset-11) | 3.17.5 (epel: cmake3) |
+| Archlinux  | x86_64 | latest| GCC 12.2.0                 | 3.25.0 |
+| CentOS     | x86_64 | 7     | GCC 11.2.1 (devtoolset-11) | 3.24.3 (`bootstrap-cmake.sh`) |
 | Rockylinux | x86_64 | 8     | GCC 8.5.0                  | 3.20.2 |
-| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.22.3 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.24.3 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.18.4 |
-| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.24.1 |
-| Fedora     | x86_64 | 34    | GCC 11.2.1                 | 3.20.5 |
-| Fedora     | x86_64 | 35    | GCC 11.2.1                 | 3.22.2 |
-| Fedora     | x86_64 | 36    | GCC 12.2.1                 | 3.22.2 |
-| Fedora     | x86_64 | 37    | GCC 12.2.1                 | 3.24.1 |
+| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.24.3 |
+| Fedora     | x86_64 | 34    | GCC 11.3.1                 | 3.20.5 |
+| Fedora     | x86_64 | 35    | GCC 11.3.1                 | 3.24.2 |
+| Fedora     | x86_64 | 36    | GCC 12.2.1                 | 3.24.2 |
+| Fedora     | x86_64 | 37    | GCC 12.2.1                 | 3.24.2 |
 | macOS      | x86_64 | 12    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
 | macOS      | x86_64 | 11    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
 | macOS      | arm64  | 12    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
-| Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.16.3 |
-| Ubuntu     | x86_64 | 22.04 | GCC 11.2.0                 | 3.22.1 |
+| Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.24.3 (`bootstrap-cmake.sh`) |
+| Ubuntu     | x86_64 | 22.04 | GCC 11.3.0                 | 3.22.1 |
 
 ## Included packages
 
