@@ -350,6 +350,7 @@ ExternalProject_Add(root
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_pyroot_code_h_inclusion_python_3_11.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_tpython_python_3_11_deprecation.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_pyroot_cast_error_python_3_11.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_root_install_external_tars_with_cmake_3_24.patch"
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-Daqua=ON"
     "-Dasimage=ON"
