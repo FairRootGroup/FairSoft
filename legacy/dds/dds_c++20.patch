@@ -1,0 +1,96 @@
+diff --git a/dds-protocol-lib/src/BaseChannelImpl.h b/dds-protocol-lib/src/BaseChannelImpl.h
+index f2b150f..26fb177 100644
+--- a/dds-protocol-lib/src/BaseChannelImpl.h
++++ b/dds-protocol-lib/src/BaseChannelImpl.h
+@@ -237,7 +237,7 @@ namespace dds
+             DDS_DECLARE_EVENT_HANDLER_CLASS(CChannelMessageHandlersImpl)
+ 
+           protected:
+-            CBaseChannelImpl<T>(boost::asio::io_context& _service, uint64_t _protocolHeaderID)
++            CBaseChannelImpl(boost::asio::io_context& _service, uint64_t _protocolHeaderID)
+                 : CChannelEventHandlersImpl()
+                 , CChannelMessageHandlersImpl()
+                 , m_isHandshakeOK(false)
+@@ -265,7 +265,7 @@ namespace dds
+             }
+ 
+           public:
+-            ~CBaseChannelImpl<T>()
++            ~CBaseChannelImpl()
+             {
+                 LOG(dds::misc::info) << "Channel " << gChannelTypeName[m_channelType] << " destructor is called";
+                 stop();
+diff --git a/dds-protocol-lib/src/BaseSMChannelImpl.h b/dds-protocol-lib/src/BaseSMChannelImpl.h
+index da4960f..7606536 100644
+--- a/dds-protocol-lib/src/BaseSMChannelImpl.h
++++ b/dds-protocol-lib/src/BaseSMChannelImpl.h
+@@ -194,7 +194,7 @@ namespace dds
+             DDS_DECLARE_EVENT_HANDLER_CLASS(CChannelMessageHandlersImpl)
+ 
+           protected:
+-            CBaseSMChannelImpl<T>(boost::asio::io_context& _service,
++            CBaseSMChannelImpl(boost::asio::io_context& _service,
+                                   const std::string& _inputName,
+                                   const std::string& _outputName,
+                                   uint64_t _protocolHeaderID,
+@@ -209,7 +209,7 @@ namespace dds
+                 defaultInit({ _inputName }, _outputName, _inputOpenType, _outputOpenType);
+             }
+ 
+-            CBaseSMChannelImpl<T>(boost::asio::io_context& _service,
++            CBaseSMChannelImpl(boost::asio::io_context& _service,
+                                   const std::vector<std::string>& _inputNames,
+                                   const std::string& _outputName,
+                                   uint64_t _protocolHeaderID,
+@@ -250,7 +250,7 @@ namespace dds
+             }
+ 
+           public:
+-            ~CBaseSMChannelImpl<T>()
++            ~CBaseSMChannelImpl()
+             {
+                 LOG(dds::misc::info) << "SM: channel destructor is called. MQ: " << getName();
+                 stop();
+diff --git a/dds-protocol-lib/src/ClientChannelImpl.h b/dds-protocol-lib/src/ClientChannelImpl.h
+index 71a0f60..90dd7dc 100644
+--- a/dds-protocol-lib/src/ClientChannelImpl.h
++++ b/dds-protocol-lib/src/ClientChannelImpl.h
+@@ -23,7 +23,7 @@ namespace dds
+             typedef std::function<void(T*)> handlerEventFunction_t;
+ 
+           protected:
+-            CClientChannelImpl<T>(boost::asio::io_context& _service,
++            CClientChannelImpl(boost::asio::io_context& _service,
+                                   EChannelType _channelType,
+                                   uint64_t _protocolHeaderID)
+                 : CBaseChannelImpl<T>(_service, _protocolHeaderID)
+@@ -63,7 +63,7 @@ namespace dds
+                     });
+             }
+ 
+-            ~CClientChannelImpl<T>()
++            ~CClientChannelImpl()
+             {
+             }
+ 
+diff --git a/dds-protocol-lib/src/ServerChannelImpl.h b/dds-protocol-lib/src/ServerChannelImpl.h
+index 539b825..1bc89be 100644
+--- a/dds-protocol-lib/src/ServerChannelImpl.h
++++ b/dds-protocol-lib/src/ServerChannelImpl.h
+@@ -18,7 +18,7 @@ namespace dds
+         class CServerChannelImpl : public CBaseChannelImpl<T>
+         {
+           protected:
+-            CServerChannelImpl<T>(boost::asio::io_context& _service, const channelTypeVector_t _requiredChannelTypes)
++            CServerChannelImpl(boost::asio::io_context& _service, const channelTypeVector_t _requiredChannelTypes)
+                 : CBaseChannelImpl<T>(_service, 0)
+                 , m_requiredChannelTypes(_requiredChannelTypes)
+             {
+@@ -81,5 +81,5 @@ namespace dds
+                 //                    });
+             }
+ 
+-            ~CServerChannelImpl<T>()
++            ~CServerChannelImpl()
+             {
+             }

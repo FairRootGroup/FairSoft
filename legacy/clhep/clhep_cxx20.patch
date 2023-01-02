@@ -1,0 +1,13 @@
+diff --git a/cmake/Modules/ClhepVariables.cmake b/cmake/Modules/ClhepVariables.cmake
+index ae48462..1f85cc0 100644
+--- a/cmake/Modules/ClhepVariables.cmake
++++ b/cmake/Modules/ClhepVariables.cmake
+@@ -263,7 +263,7 @@ macro( _clhep_check_cxxstd )
+   elseif( "${CLHEP_BUILD_CXXSTD}" STREQUAL "-std=c++17" )
+     _clhep_verify_cxx17()
+   elseif( DEFINED CLHEP_BUILD_CXXSTD )
+-    message( FATAL_ERROR "${CLHEP_BUILD_CXXSTD} is not supported.  Supported extensions are c++11, c++1y, and c++14.")
++    message( WARNING "${CLHEP_BUILD_CXXSTD} is not officially supported.  Supported extensions are c++11, c++1y, and c++14.")
+   else()
+     # presume -std=c++11
+     set(CLHEP_BUILD_CXXSTD "-std=c++11")
