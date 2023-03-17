@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2020-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2023 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -204,7 +204,7 @@ ExternalProject_Add(zeromq
     "-DWITH_PERF_TOOL=ON"
     "-DZMQ_BUILD_TESTS=ON"
     "-DENABLE_CPACK=OFF"
-    "-DENABLE_DRAFTS=OFF"
+    "-DENABLE_DRAFTS=ON"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
