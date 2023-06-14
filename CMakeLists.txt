@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2019-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2019-2023 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -9,8 +9,7 @@ if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
   message(FATAL_ERROR "In-source builds are not supported.")
 endif()
 
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-cmake_policy(VERSION 3.0...3.20)
+cmake_minimum_required(VERSION 3.5...3.28 FATAL_ERROR)
 
 if(APPLE)
   if(NOT DEFINED CMAKE_C_COMPILER)
