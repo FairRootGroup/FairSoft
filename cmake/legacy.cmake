@@ -6,7 +6,7 @@
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
-cmake_policy(VERSION 3.18...3.24)
+cmake_policy(VERSION 3.18...3.26)
 if(POLICY CMP0114)
   cmake_policy(SET CMP0114 OLD)
 endif()
