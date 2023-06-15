@@ -221,11 +221,11 @@ ExternalProject_Add(flatbuffers
 )
 
 list(APPEND packages fairmq)
-set(fairmq_version "1.4.54")
+set(fairmq_version "1.6.0")
 ExternalProject_Add(fairmq
   GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
   ${CMAKE_DEFAULT_ARGS}
-  DEPENDS asio boost fairlogger zeromq ${extract_source_cache_target}
+  DEPENDS boost fairlogger zeromq ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
 
