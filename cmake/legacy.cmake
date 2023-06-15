@@ -144,10 +144,10 @@ ExternalProject_Add(boost
 )
 
 list(APPEND packages fmt)
-set(fmt_version "9.1.0")
+set(fmt_version "10.0.0")
 ExternalProject_Add(fmt
   URL "https://github.com/fmtlib/fmt/releases/download/${fmt_version}/fmt-${fmt_version}.zip"
-  URL_HASH SHA256=cceb4cb9366e18a5742128cb3524ce5f50e88b476f1e54737a47ffdf4df4c996
+  URL_HASH SHA256=4943cb165f3f587f26da834d3056ee8733c397e024145ca7d2a8a96bb71ac281
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFMT_DOC=OFF"
   ${LOG_TO_FILE}
