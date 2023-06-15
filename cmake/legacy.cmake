@@ -285,7 +285,7 @@ ExternalProject_Add(pythia8
 )
 
 list(APPEND packages geant4)
-set(geant4_version "11.0.3")
+set(geant4_version "11.2.0")
 if(GEANT4MT)
   set(mt
     "-DGEANT4_BUILD_MULTITHREADED=ON"
@@ -296,7 +296,7 @@ else()
 endif()
 ExternalProject_Add(geant4
   URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
-  URL_HASH SHA256=72f8b687512d6e630dc6c64c5c41ba711220468540132999d00e4fce1908ae48
+  URL_HASH SHA256=46ad7fab3c5cb4bd0bdd77dd6d3e2283184819235bcbc01b2d117d81b35596a6
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
     ${mt}
