@@ -200,7 +200,7 @@ ExternalProject_Add(zeromq
 )
 
 list(APPEND packages flatbuffers)
-set(flatbuffers_version "22.9.29")
+set(flatbuffers_version "23.5.26")
 ExternalProject_Add(flatbuffers
   GIT_REPOSITORY https://github.com/google/flatbuffers GIT_TAG v${flatbuffers_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
