@@ -94,9 +94,9 @@ please contact us.
 | Fedora     | x86_64 | 35    | GCC 11.3.1                 | 3.24.2 |
 | Fedora     | x86_64 | 36    | GCC 12.2.1                 | 3.24.2 |
 | Fedora     | x86_64 | 37    | GCC 12.2.1                 | 3.24.2 |
-| macOS      | x86_64 | 12    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
-| macOS      | x86_64 | 11    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
-| macOS      | arm64  | 12    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
+| macOS      | x86_64 | 12    | AppleClang 14, gfortran 13 | 3.26 (brew) |
+| macOS      | x86_64 | 13    | AppleClang 14, gfortran 13 | 3.26 (brew) |
+| macOS      | arm64  | 13    | AppleClang 14, gfortran 13 | 3.26 (brew) |
 | Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.24.3 (`bootstrap-cmake.sh`) |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.3.0                 | 3.22.1 |
 
