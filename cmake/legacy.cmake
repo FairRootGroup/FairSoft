@@ -263,7 +263,7 @@ ExternalProject_Add(vc
 list(APPEND packages clhep)
 set(clhep_version "2.4.5.1")
 ExternalProject_Add(clhep
-  URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
+  URL https://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
   URL_HASH SHA256=2517c9b344ad9f55974786ae6e7a0ef8b22f4abcbf506df91194ea2299ce3813
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
