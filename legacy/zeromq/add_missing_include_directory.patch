@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index dd3d8eb9..16e4d2a4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -204,6 +204,7 @@ if(ENABLE_WS)
+       list(APPEND sources ${CMAKE_CURRENT_SOURCE_DIR}/src/wss_address.hpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/wss_address.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/wss_engine.hpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/wss_engine.cpp)
++           include_directories(${GNUTLS_INCLUDE_DIR})
+ 
+       message(STATUS "Enable WSS transport")
+       set(ZMQ_USE_GNUTLS 1)
