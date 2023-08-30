@@ -68,5 +68,5 @@ variable) may also be needed when compiling **FairRoot** and your
 **ExperimentRoot**, e.g.
 
 ```bash
-export SDKROOT=$(brew ruby -e "puts MacOS.sdk_path(0)")
+export SDKROOT=$(brew ruby -e "puts MacOS.sdk_path")
 ```
