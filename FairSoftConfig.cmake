@@ -75,7 +75,7 @@ endif()
 #  Since we anyways depend on brew, let's use it.
 #
 if(APPLE)
-  execute_process(COMMAND brew ruby -e "puts MacOS.sdk_path(0)" OUTPUT_VARIABLE macos_sdk_path)
+  execute_process(COMMAND brew ruby -e "puts MacOS.sdk_path" OUTPUT_VARIABLE macos_sdk_path)
   string(STRIP "${macos_sdk_path}" macos_sdk_path)
   set(CMAKE_OSX_SYSROOT "${macos_sdk_path}" CACHE FILEPATH "macOS SDK" FORCE)
 endif()
