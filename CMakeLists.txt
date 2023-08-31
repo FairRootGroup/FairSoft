@@ -9,8 +9,8 @@ if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
   message(FATAL_ERROR "In-source builds are not supported.")
 endif()
 
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-cmake_policy(VERSION 3.0...3.20)
+cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
+cmake_policy(VERSION 3.18...3.27)
 
 if(APPLE)
   if(NOT DEFINED CMAKE_C_COMPILER)
