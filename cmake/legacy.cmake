@@ -287,7 +287,7 @@ ExternalProject_Add(pythia8
 )
 
 list(APPEND packages geant4)
-set(geant4_version "11.1.1")
+set(geant4_version "11.1.2")
 if(GEANT4MT)
   set(mt
     "-DGEANT4_BUILD_MULTITHREADED=ON"
@@ -298,24 +298,22 @@ else()
 endif()
 ExternalProject_Add(geant4
   URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
-  URL_HASH SHA256=d29122eb2a5df7715437340c1a3a293a29d47386ca15ceec8758aa439a2de469
+  URL_HASH SHA256=7b782d93e0749fb9c498e98d4ba32a76cb0c04d3490e9f07d8400c87b9c647d5
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
     ${mt}
     "-DGEANT4_USE_SYSTEM_CLHEP=ON"
-    "-DGEANT4_USE_SYSTEM_EXPAT=ON"
+    "-DGEANT4_USE_SYSTEM_EXPAT=OFF"
     "-DGEANT4_USE_SYSTEM_ZLIB=ON"
     "-DGEANT4_USE_G3TOG4=ON"
     "-DGEANT4_USE_GDML=ON"
     "-DGEANT4_USE_OPENGL_X11=OFF"
     "-DGEANT4_USE_RAYTRACER_X11=OFF"
-    "-DGEANT4_USE_PYTHON=ON"
     "-DGEANT4_INSTALL_DATA=ON"
     "-DGEANT4_INSTALL_DATA_TIMEOUT=36000"
     "-DGEANT4_BUILD_STORE_TRAJECTORY=OFF"
     "-DGEANT4_BUILD_VERBOSE_CODE=ON"
     "-DGEANT4_BUILD_BUILTIN_BACKTRACE=OFF"
-    ${cmake_python_config_old}
   DEPENDS boost clhep ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
