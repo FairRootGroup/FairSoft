@@ -84,42 +84,32 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
-| Archlinux  | x86_64 | latest| GCC 12.2.0                 | 3.25.0 |
-| CentOS     | x86_64 | 7     | GCC 11.2.1 (devtoolset-11) | 3.24.3 (`bootstrap-cmake.sh`) |
-| Rockylinux | x86_64 | 8     | GCC 8.5.0                  | 3.20.2 |
-| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.24.3 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.18.4 |
-| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.24.3 |
-| Fedora     | x86_64 | 34    | GCC 11.3.1                 | 3.20.5 |
-| Fedora     | x86_64 | 35    | GCC 11.3.1                 | 3.24.2 |
-| Fedora     | x86_64 | 36    | GCC 12.2.1                 | 3.24.2 |
-| Fedora     | x86_64 | 37    | GCC 12.2.1                 | 3.24.2 |
-| macOS      | x86_64 | 12    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
-| macOS      | x86_64 | 11    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
-| macOS      | arm64  | 12    | AppleClang 13, gfortran 12 | 3.24.1 (brew) |
-| Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.24.3 (`bootstrap-cmake.sh`) |
-| Ubuntu     | x86_64 | 22.04 | GCC 11.3.0                 | 3.22.1 |
+| Debian     | x86_64 | 10    | GCC 8.3.0                        | 3.18.0 (``handmade`) |
+| Debian     | x86_64 | 10    | GCC 8.3.0                        | 3.27.4 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 12    | GCC 12.2.0                       | 3.27.4 (`bootstrap-cmake.sh`) |
+| macOS      | x86_64 | 13    | AppleClang 14.0.3, gfortran 13.1 | 3.27.4 (brew) |
+| macOS      | x86_64 | 13    | AppleClang 14.0.0, gfortran 13.1 | 3.27.4 (brew) |
 
 ## Included packages
 
 | **Package** | **Version** | **URL** |
 | --- | --- | --- |
-| boost            | 1.80.0       | https://www.boost.org/ |
+| boost            | 1.83.0       | https://www.boost.org/ |
 | clhep            | 2.4.6.4      | http://proj-clhep.web.cern.ch |
-| dds              | 3.6          | http://dds.gsi.de |
+| dds              | 3.7.10       | http://dds.gsi.de |
 | faircmakemodules | 1.0.0        | https://github.com/FairRootGroup/FairCMakeModules |
 | fairlogger       | 1.11.1       | https://github.com/FairRootGroup/FairLogger |
-| fairmq           | 1.6.0        | https://github.com/FairRootGroup/FairMQ |
+| fairmq           | 1.7.0        | https://github.com/FairRootGroup/FairMQ |
 | flatbuffers      | 23.5.26      | https://github.com/google/flatbuffers |
-| fmt              | 1.10.0       | https://github.com/fmtlib/fmt |
+| fmt              | 10.1.1       | https://github.com/fmtlib/fmt |
 | geant3           | 4-1_fairsoft | https://github.com/FairRootGroup/geant3 |
-| geant4           | 11.1.1       | https://geant4.web.cern.ch |
-| geant4_vmc       | 6-3-p1       | https://github.com/vmc-project/geant4_vmc |
+| geant4           | 11.1.2       | https://geant4.web.cern.ch |
+| geant4_vmc       | 6-3-p2       | https://github.com/vmc-project/geant4_vmc |
 | hepmc            | 2.06.11      | http://hepmc.web.cern.ch |
 | onnxruntime      | 1.12.1       | https://github.com/microsoft/onnxruntime |
 | pythia6          | 428-alice1   | https://github.com/alisw/pythia6 |
-| pythia8          | 8309         | https://pythia.org/ |
-| root             | 6.28.04      | https://root.cern |
+| pythia8          | 8310         | https://pythia.org/ |
+| root             | 6.28.06      | https://root.cern |
 | vc               | 1.4.3        | https://github.com/VcDevel/Vc |
 | vgm              | 5-2          | https://github.com/vmc-project/vgm |
 | vmc              | 2-0          | https://github.com/vmc-project/vmc |
