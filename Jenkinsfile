@@ -116,17 +116,14 @@ pipeline {
         script {
           def ctestcmd = "ctest -VV -S FairSoft_test.cmake"
           def specs_list = [
-            [os: 'Archlinux',        container: 'archlinux.latest.sif'],
             [os: 'CentOS-7',         container: 'centos.7.sif'],
             [os: 'Rockylinux-8',     container: 'rockylinux.8.sif', for_pr: true],
             [os: 'Debian-10',        container: 'debian.10.sif'],
             [os: 'Debian-11',        container: 'debian.11.sif'],
-            [os: 'Debian-12',        container: 'debian.12.sif'],
-            [os: 'Fedora-34',        container: 'fedora.34.sif',    for_pr: true,
-             extra: '--label-exclude "env:.*(jun19).*"'],
-            [os: 'Fedora-35',        container: 'fedora.35.sif'],
-            [os: 'Fedora-36',        container: 'fedora.36.sif',    for_pr: true],
-            [os: 'Fedora-37',        container: 'fedora.37.sif'],
+            [os: 'Debian-12',        container: 'debian.12.sif',    for_pr: true],
+            [os: 'Fedora-37',        container: 'fedora.37.sif',    for_pr: true],
+            [os: 'Fedora-38',        container: 'fedora.38.sif'],
+            [os: 'Fedora-39',        container: 'fedora.39.sif',    for_pr: true],
             [os: 'Ubuntu-20.04-LTS', container: 'ubuntu.20.04.sif', for_pr: true],
             [os: 'Ubuntu-22.04-LTS', container: 'ubuntu.22.04.sif'],
           ]

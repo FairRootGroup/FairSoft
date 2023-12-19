@@ -84,21 +84,19 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
-| Archlinux  | x86_64 | latest| GCC 12.2.0                 | 3.25.0 |
-| CentOS     | x86_64 | 7     | GCC 11.2.1 (devtoolset-11) | 3.24.3 (`bootstrap-cmake.sh`) |
+| CentOS     | x86_64 | 7     | GCC 11.2.1 (devtoolset-11) | 3.27.4 (`bootstrap-cmake.sh`) |
 | Rockylinux | x86_64 | 8     | GCC 8.5.0                  | 3.20.2 |
-| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.24.3 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.18.4 |
-| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.24.3 |
-| Fedora     | x86_64 | 34    | GCC 11.3.1                 | 3.20.5 |
-| Fedora     | x86_64 | 35    | GCC 11.3.1                 | 3.24.2 |
-| Fedora     | x86_64 | 36    | GCC 12.2.1                 | 3.24.2 |
-| Fedora     | x86_64 | 37    | GCC 12.2.1                 | 3.24.2 |
-| macOS      | x86_64 | 12    | AppleClang 14, gfortran 13 | 3.26 (brew) |
+| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.27.4 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.25.1 |
+| Fedora     | x86_64 | 37    | GCC 12.3.1                 | 3.27.7 |
+| Fedora     | x86_64 | 38    | GCC 13.2.1                 | 3.27.7 |
+| Fedora     | x86_64 | 39    | GCC 13.2.1                 | 3.27.7 |
+| macOS      | x86_64 | 12    | AppleClang 14, gfortran 13 | 3.27.6 (brew) |
 | macOS      | x86_64 | 13    | AppleClang 14, gfortran 13 | 3.26 (brew) |
-| macOS      | arm64  | 13    | AppleClang 14, gfortran 13 | 3.26 (brew) |
-| Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.24.3 (`bootstrap-cmake.sh`) |
-| Ubuntu     | x86_64 | 22.04 | GCC 11.3.0                 | 3.22.1 |
+| macOS      | arm64  | 13    | AppleClang 14, gfortran 13 | 3.28.1 (brew) |
+| Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.27.4 (`bootstrap-cmake.sh`) |
+| Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                 | 3.22.1 |
 
 ## Included packages
 
