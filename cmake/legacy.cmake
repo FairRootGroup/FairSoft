@@ -5,10 +5,7 @@
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
-cmake_minimum_required(VERSION 3.18...3.28 FATAL_ERROR)
-if(POLICY CMP0114)
-  cmake_policy(SET CMP0114 OLD)
-endif()
+cmake_minimum_required(VERSION 3.19...3.28 FATAL_ERROR)
 
 find_package(Git REQUIRED)
 find_package(Patch REQUIRED)
@@ -77,8 +74,8 @@ set(LOG_TO_FILE
   LOG_OUTPUT_ON_FAILURE ON
 )
 
-set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
 if(SOURCE_CACHE)
+  set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
   add_custom_target(extract-source-cache
     DEPENDS "${CMAKE_BINARY_DIR}/extracted"
   )
@@ -93,8 +90,6 @@ if(SOURCE_CACHE)
   set(DEPENDS_ON_SOURCE_CACHE DEPENDS extract-source-cache)
   set(extract_source_cache_target extract-source-cache)
 else()
-  set_property(DIRECTORY PROPERTY EP_STEP_TARGETS configure build install test)
-  set_property(DIRECTORY PROPERTY EP_INDEPENDENT_STEP_TARGETS mkdir download update patch)
   unset(DEPENDS_ON_SOURCE_CACHE)
   unset(extract_source_cache_target)
 endif()
@@ -106,8 +101,8 @@ set(faircmakemodules_version "1.0.0")
 ExternalProject_Add(faircmakemodules
   GIT_REPOSITORY https://github.com/FairRootGroup/FairCMakeModules GIT_TAG v${faircmakemodules_version}
   ${CMAKE_DEFAULT_ARGS}
-  DEPENDS ${extract_source_cache_target}
   ${LOG_TO_FILE}
+  ${DEPENDS_ON_SOURCE_CACHE}
 )
 
 list(APPEND packages boost)
@@ -264,6 +259,7 @@ set(clhep_source ${CMAKE_BINARY_DIR}/Source/clhep)
 ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
   COMMAND ${CMAKE_COMMAND} -E copy_directory "${clhep_source}/CLHEP" "${clhep_source}"
   BYPRODUCTS "${clhep_source}/CMakeLists.txt"
+  INDEPENDENT ON
   LOG ON
 )
 
