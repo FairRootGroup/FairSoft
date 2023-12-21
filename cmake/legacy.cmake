@@ -349,6 +349,7 @@ ExternalProject_Add(root
     "-Dminuit2=ON"
     "-Dmlp=ON"
     "-Dpyroot=ON"
+    "-Dpythia6=ON"
     "-Dreflex=OFF"
     "-Droofit=ON"
     "-Drpath=ON"
