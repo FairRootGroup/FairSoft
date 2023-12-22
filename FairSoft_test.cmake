@@ -150,6 +150,9 @@ if (BUILD_METHOD STREQUAL legacy)
     "-DBUILD_METHOD=legacy"
     "-DCMAKE_INSTALL_PREFIX=install"
     "-DNCPUS=${NCPUS}")
+  if(CMAKE_CXX_STANDARD)
+    list(APPEND options "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}")
+  endif()
   if(APPLE)
     execute_process(COMMAND brew --prefix python OUTPUT_VARIABLE python_prefix)
     string(STRIP "${python_prefix}" python_prefix)
