@@ -123,7 +123,8 @@ pipeline {
             [os: 'Debian-12',        container: 'debian.12.sif',    for_pr: true],
             [os: 'Fedora-37',        container: 'fedora.37.sif',    for_pr: true],
             [os: 'Fedora-38',        container: 'fedora.38.sif'],
-            [os: 'Fedora-39',        container: 'fedora.39.sif',    for_pr: true],
+            [os: 'Fedora-39',        container: 'fedora.39.sif',    for_pr: true,
+             extra: '-DCMAKE_CXX_STANDARD=20'],
             [os: 'Ubuntu-20.04-LTS', container: 'ubuntu.20.04.sif', for_pr: true],
             [os: 'Ubuntu-22.04-LTS', container: 'ubuntu.22.04.sif'],
           ]
