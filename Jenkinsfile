@@ -148,9 +148,9 @@ pipeline {
               ];
           } else {
               specs_list = [
-                [os: 'macos-12-x86_64'],
                 [os: 'macos-13-x86_64'],
-                [os: 'macos-13-arm64']
+                [os: 'macos-14-x86_64'],
+                [os: 'macos-14-arm64']
               ];
           }
 
