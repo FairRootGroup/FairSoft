@@ -151,7 +151,7 @@ if(ICU_ROOT)
   set(dds_icu_hint "-DDDS_LD_LIBRARY_PATH=${ICU_ROOT}/lib")
 endif()
 list(APPEND packages dds)
-set(dds_version "3.6")
+set(dds_version "3.7.23")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
