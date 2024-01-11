@@ -367,6 +367,7 @@ ExternalProject_Add(root
     ${root_builtin_glew}
     ${root_cocoa}
     ${root_runtime_cxxmodules}
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
   DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
