@@ -115,6 +115,16 @@ set(boost_features
   "visibility=hidden"
   "pch=off"
 )
+
+list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
+
+if("${isSystemDir}" STREQUAL "-1")
+  list(APPEND boost_features
+    "hardcode-dll-paths=true"
+    "dll-path=${CMAKE_INSTALL_PREFIX}/lib"
+  )
+endif()
+
 ExternalProject_Add(boost
   URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
   URL_HASH SHA256=6478edfe2f3305127cffe8caf73ea0176c53769f4bf1585be237eb30798c3b8e
