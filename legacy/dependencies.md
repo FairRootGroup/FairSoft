@@ -24,11 +24,11 @@ and let us discuss a solution together.
 
 ## Bootstrapping CMake
 
-If your system does not provide the required CMake version (`3.16.1`), you may
+If your system does not provide the required CMake version (`3.19`), you may
 run
 
 ```
-<path-to-source>/bootstrap-cmake.sh <install-dir>
+<path-to-source>/legacy/bootstrap-cmake.sh <install-dir>
 export PATH=<install-dir>/bin:$PATH
 ```
 
