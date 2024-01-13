@@ -3,7 +3,7 @@ From: @DOCKER_TAG@
 
 %files
     @PACKAGE_SETUP_SCRIPT@ /setup.sh
-    @CMAKE_SOURCE_DIR@/bootstrap-cmake.sh /bootstrap-cmake.sh
+    @CMAKE_SOURCE_DIR@/legacy/bootstrap-cmake.sh /bootstrap-cmake.sh
 
 %post
     bash /setup.sh
