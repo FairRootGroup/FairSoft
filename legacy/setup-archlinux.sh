@@ -10,5 +10,5 @@ pacman -S --noconfirm \
     lsb-release lz4 m4 make mesa ncurses net-tools openblas openssl patch \
     pkg-config procps python python-numpy python-pygments python-pyyaml \
     readline rsync sed sqlite subversion tar tbb unzip util-linux-libs wget \
-    which xerces-c xz yaml-cpp
+    which xerces-c xz yaml-cpp zstd
 pacman -Scc --noconfirm
