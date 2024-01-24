@@ -121,4 +121,4 @@ please contact us.
 | vc               | 1.4.3        | https://github.com/VcDevel/Vc |
 | vgm              | 5-2          | https://github.com/vmc-project/vgm |
 | vmc              | 2-0          | https://github.com/vmc-project/vmc |
-| zeromq           | 4.3.4        | https://github.com/zeromq/libzmq |
+| zeromq           | 4.3.5        | https://github.com/zeromq/libzmq |
