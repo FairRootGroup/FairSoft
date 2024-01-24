@@ -157,29 +157,6 @@ ExternalProject_Add(fmt
   ${DEPENDS_ON_SOURCE_CACHE}
 )
 
-if(ICU_ROOT)
-  set(dds_icu_hint "-DDDS_LD_LIBRARY_PATH=${ICU_ROOT}/lib")
-endif()
-list(APPEND packages dds)
-set(dds_version "3.6")
-ExternalProject_Add(dds
-  GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
-  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-    "-DBoost_NO_BOOST_CMAKE=ON"
-    ${dds_icu_hint}
-  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_boost_lookup.patch"
-  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/allow_dds_ld_library_path_as_cmake_var.patch"
-  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/add_missing_include.patch"
-  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/fix_deprecated_boost_filesystem.patch"
-  DEPENDS boost ${extract_source_cache_target}
-  ${LOG_TO_FILE}
-)
-ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/Build/dds
-  COMMAND ${CMAKE_COMMAND} --build . --target wn_bin -j "${NCPUS}"
-  LOG ON
-)
-
 list(APPEND packages fairlogger)
 set(fairlogger_version "1.11.1")
 ExternalProject_Add(fairlogger

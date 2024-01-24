@@ -104,7 +104,6 @@ please contact us.
 | --- | --- | --- |
 | boost            | 1.83.0       | https://www.boost.org/ |
 | clhep            | 2.4.7.1      | http://proj-clhep.web.cern.ch |
-| dds              | 3.6          | http://dds.gsi.de |
 | faircmakemodules | 1.0.0        | https://github.com/FairRootGroup/FairCMakeModules |
 | fairlogger       | 1.11.1       | https://github.com/FairRootGroup/FairLogger |
 | fairmq           | 1.8.4        | https://github.com/FairRootGroup/FairMQ |
