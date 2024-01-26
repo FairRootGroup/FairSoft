@@ -95,7 +95,6 @@ please contact us.
 | macOS      | x86_64 | 13    | AppleClang 15, gfortran 13 | 3.28.1 (brew) |
 | macOS      | x86_64 | 14    | AppleClang 15, gfortran 13 | 3.28.1 (brew) |
 | macOS      | arm64  | 14    | AppleClang 15, gfortran 13 | 3.28.1 (brew) |
-| Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.27.4 (`bootstrap-cmake.sh`) |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                 | 3.22.1 |
 
 ## Included packages
