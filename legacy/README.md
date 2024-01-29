@@ -84,7 +84,6 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
-| CentOS     | x86_64 | 7     | GCC 11.2.1 (devtoolset-11) | 3.27.4 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.27.4 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.25.1 |
