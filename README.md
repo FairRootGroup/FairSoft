@@ -22,8 +22,6 @@ For all [VAEs](https://hpc.gsi.de/virgo/platform/software.html#application-envir
 
 ### macOS (beta)
 
-Tested: `macOS 12 (x86_64)`, `macOS 13 (x86_64)`, `macOS 13 (arm64)` with *Command Line Tools for Xcode* `14`
-
 FairSoft config: [default](FairSoftConfig.cmake), no other configs planned
 
 1. Install *Command Line Tools for Xcode* from https://developer.apple.com/downloads (requires Apple account)
@@ -32,9 +30,9 @@ FairSoft config: [default](FairSoftConfig.cmake), no other configs planned
 4. Run
 ```
 brew tap fairrootgroup/fairsoft
-brew install fairsoft@22.11
+brew install fairsoft
 ```
-5. Use via `export SIMPATH=$(brew --prefix fairsoft@24.1)`
+5. Use via `export SIMPATH=$(brew --prefix fairsoft)`
 
 *Note*: macOS is a fast moving target and it is possible the packages will stop working from one day to another after some system component was updated. We try our best to keep up, one great way to help is to provide detailed problem reports [here on github](https://github.com/FairRootGroup/FairSoft/issues/new).
 
