@@ -244,7 +244,7 @@ ExternalProject_Add(hepmc
 list(APPEND packages vc)
 set(vc_version "1.4.4")
 ExternalProject_Add(vc
-  URL https://github.com/VcDevel/Vc/releases/download/${vc_version}/Vc-${vc_version}.tar.gz
+  URL https://github.com/VcDevel/Vc/archive/refs/tags/${vc_version}.tar.gz
   URL_HASH SHA256=5933108196be44c41613884cd56305df320263981fe6a49e648aebb3354d57f3
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
