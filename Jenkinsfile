@@ -116,22 +116,15 @@ pipeline {
         script {
           def ctestcmd = "ctest -VV -S FairSoft_test.cmake"
           def specs_list = [
-            [os: 'CentOS-7',         container: 'centos.7.sif'],
             [os: 'Debian-10',        container: 'debian.10.sif'],
             [os: 'Debian-11',        container: 'debian.11.sif'],
-            [os: 'Debian-12',        container: 'debian.12.sif',    for_pr: true],
-            [os: 'Fedora-37',        container: 'fedora.37.sif',    for_pr: true],
+            [os: 'Debian-12',        container: 'debian.12.sif'],
+            [os: 'Fedora-37',        container: 'fedora.37.sif'],
             [os: 'Fedora-38',        container: 'fedora.38.sif'],
-            [os: 'Fedora-39',        container: 'fedora.39.sif',    for_pr: true,
+            [os: 'Fedora-39',        container: 'fedora.39.sif',
              extra: '-DCMAKE_CXX_STANDARD=20'],
             [os: 'Ubuntu-22.04-LTS', container: 'ubuntu.22.04.sif'],
           ]
-
-          if (env.CHANGE_ID != null) {
-              specs_list = specs_list.findAll {
-                  elmt -> elmt.getOrDefault("for_pr", false)
-              }
-          }
 
           def linux_jobs = jobMatrix('slurm',
             ctestcmd + " -DUSE_TEMPDIR:BOOL=ON", specs_list
@@ -141,17 +134,11 @@ pipeline {
             """)
           }
 
-          if (env.CHANGE_ID != null) {
-              specs_list = [
-                [os: 'macOS'],
-              ];
-          } else {
-              specs_list = [
-                [os: 'macos-13-x86_64'],
-                [os: 'macos-14-x86_64'],
-                [os: 'macos-14-arm64']
-              ];
-          }
+          specs_list = [
+            [os: 'macos-13-x86_64'],
+            [os: 'macos-14-x86_64'],
+            [os: 'macos-14-arm64']
+          ];
 
           def macos_jobs = jobMatrix('macos', ctestcmd, specs_list)
           { spec, label, jobsh, ctest ->
