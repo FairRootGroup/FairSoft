@@ -164,6 +164,7 @@ list(APPEND packages dds)
 set(dds_version "3.8")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/relax_protobuf_requirement.patch"
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     ${dds_icu_hint}
   DEPENDS boost ${extract_source_cache_target}
