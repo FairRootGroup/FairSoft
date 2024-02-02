@@ -9,7 +9,6 @@ Find the distro-specific setup in the `%post` section in the following [singular
 * **Fedora**: [33](../test/container/fedora.33.def)
 * **CentOS**: [7](../test/container/centos.7.def)
 * **Debian**: [10](../test/container/debian.10.def)
-* **Ubuntu**: [20.04](../test/container/ubuntu.20.04.def)
 * **openSUSE**: [15.2](../test/container/opensuse.15.2.def)
 
 ## macOS

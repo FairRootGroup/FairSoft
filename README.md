@@ -9,7 +9,7 @@ Choose between the classic (called "Legacy") installation method or the new Spac
 | **Legacy (Recommended)** | **Spack (EXPERIMENTAL)** |
 | -- | -- |
 | This is the classic bash/cmake based setup system. | This is an ongoing standardization and modernization effort based on Spack (which itself is still under heavy development). Most things are already working. For early adopters. |
-| Releases are reflected in the git history via tags and branches, e.g.: `nov22`, `apr21p2`, `apr21_patches` | Always use the latest `dev` branch. Multiple releases are described within the metadata contained in the repo (read on in the Installation instructions on how to select a release). |
+| Releases are reflected in the git history via tags and branches, e.g.: `jan24`, `nov22`, `apr21p2`, `apr21_patches` | Always use the latest `dev` branch. Multiple releases are described within the metadata contained in the repo (read on in the Installation instructions on how to select a release). |
 | ► [continue](legacy/README.md) | ► [continue](docs/README.md) |
 
 ## Installation of pre-compiled Binaries
@@ -22,8 +22,6 @@ For all [VAEs](https://hpc.gsi.de/virgo/platform/software.html#application-envir
 
 ### macOS (beta)
 
-Tested: `macOS 11 (x86_64)`, `macOS 12 (x86_64)`, `macOS 12 (arm64)` with *Command Line Tools for Xcode* `13`
-
 FairSoft config: [default](FairSoftConfig.cmake), no other configs planned
 
 1. Install *Command Line Tools for Xcode* from https://developer.apple.com/downloads (requires Apple account)
@@ -32,9 +30,9 @@ FairSoft config: [default](FairSoftConfig.cmake), no other configs planned
 4. Run
 ```
 brew tap fairrootgroup/fairsoft
-brew install fairsoft@22.11
+brew install fairsoft
 ```
-5. Use via `export SIMPATH=$(brew --prefix fairsoft@22.11)`
+5. Use via `export SIMPATH=$(brew --prefix fairsoft)`
 
 *Note*: macOS is a fast moving target and it is possible the packages will stop working from one day to another after some system component was updated. We try our best to keep up, one great way to help is to provide detailed problem reports [here on github](https://github.com/FairRootGroup/FairSoft/issues/new).
 

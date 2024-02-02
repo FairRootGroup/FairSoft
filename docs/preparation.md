@@ -3,6 +3,9 @@
 ### I.1. Install the [prerequisites](prerequisites.md).
 
 ### I.2. Clone the repo
+
+If you are running on NFS, please take note the [Filesystem requirements](https://spack.readthedocs.io/en/latest/basic_usage.html#filesystem-requirements) of spack on the ``flock`` requirements of spack and possible workarounds. Also, compiling ROOT with X11 support will install font-related packages which require ``$HOME/.cache/fontconfig/`` to support locking.
+
 ```
 git clone -b dev https://github.com/FairRootGroup/FairSoft
 cd FairSoft

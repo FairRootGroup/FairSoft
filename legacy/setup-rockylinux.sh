@@ -15,6 +15,6 @@ dnf -y install \
     m4 make make mesa-libGL-devel mesa-libGLU-devel ncurses-devel openssl-devel patch pcre-devel \
     procps python39 python39-devel python39-numpy python39-pyyaml readline-devel redhat-lsb-core \
     rsync sed sqlite-devel subversion tar tbb-devel unzip wget which xerces-c-devel xxhash-devel \
-    xz-devel yaml-cpp-devel zstd
+    xz-devel yaml-cpp-devel zstd protobuf-devel
 alternatives --set python /usr/bin/python3
 dnf -y clean all
