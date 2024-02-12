@@ -2,3 +2,9 @@ using python : @Python_VERSION_MAJOR@.@Python_VERSION_MINOR@
              : @Python_EXECUTABLE_NAME@
              : @Python_INCLUDE_DIRS@
              : @Python_LIBRARY_DIRS@ ;
+
+@ZSTD_EXTERNAL@ @ZSTD_VERSION@
+             @ZSTD_STRING@
+
+@LZMA_EXTERNAL@ @LZMA_VERSION@
+             @LZMA_STRING@
