@@ -1,11 +1,48 @@
 ################################################################################
-# Copyright (C) 2020-2023 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2024 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 cmake_minimum_required(VERSION 3.19...3.28 FATAL_ERROR)
+cmake_policy(VERSION 3.19...3.28)
+
+find_package(LibLZMA)
+if(LibLZMA_FOUND)
+  message(STATUS "LZMA installation found. Boost iostream will be build with lzma compression")
+else()
+  message(WARNING "LZMA installation not found. Boost iostream will be build without lzma compression")
+endif()
+
+find_package(ZSTD)
+if(ZSTD_FOUND)
+  message(STATUS "ZSTD installation found. Boost iostream will be build with zstd compression")
+else()
+  message(WARNING "ZSTD installation not found. Boost iostream will be build without zstd compression")
+endif()
+
+if(APPLE AND LibLZMA_FOUND)
+  set(LZMA_EXTERNAL "using lzma   :" CACHE STRING "LZMA exetrnal usage for Boost" FORCE)
+  set(LZMA_VERSION "${LIBLZMA_VERSION}" CACHE STRING "LZMA version info for Boost" FORCE)
+  set(LZMA_STRING ": <include>${LIBLZMA_INCLUDE_DIR}  <search>${LIBLZMA_LIBRARY} ;" CACHE STRING "LZMA install info for Boost" FORCE)
+else()
+  set(LZMA_EXTERNAL "" CACHE STRING "LZMA exetrnal usage for Boost" FORCE)
+  set(LZMA_VERSION "" CACHE STRING "LZMA version info for Boost" FORCE)
+  set(LZMA_STRING "" CACHE STRING "LZMA install info for Boost" FORCE)
+endif()
+
+if(APPLE AND ZSTD_FOUND)
+  get_filename_component(ZSTD_LIBRARY_DIR ${ZSTD_LIBRARY} DIRECTORY)
+  set(ZSTD_EXTERNAL "using zstd   :" CACHE STRING "ZSTD exetrnal usage for Boost" FORCE)
+  set(ZSTD_VERSION "${ZSTD_VERSION}" CACHE STRING "ZSTD version info for Boost" FORCE)
+  set(ZSTD_STRING ": <include>${ZSTD_INCLUDE_DIR} <search>${ZSTD_LIBRARY_DIR} ;" CACHE STRING "ZSTD install info for Boost" FORCE)
+else()
+  set(ZSTD_EXTERNAL "" CACHE STRING "ZSTD exetrnal usage for Boost" FORCE)
+  set(ZSTD_VERSION "" CACHE STRING "ZSTD version info for Boost" FORCE)
+  set(ZSTD_STRING "" CACHE STRING "ZSTD install info for Boost" FORCE)
+endif()
+
 
 find_package(Git REQUIRED)
 find_package(Patch REQUIRED)
