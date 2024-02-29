@@ -6,6 +6,7 @@ set -x
 export SIMPATH="@CMAKE_INSTALL_PREFIX@"
 version="@TEST_VERSION@"
 sourcedir=FairRoot_${version}
+rm -rf $sourcedir
 git clone -b ${version} https://github.com/FairRootGroup/FairRoot $sourcedir
 pushd $sourcedir
 mkdir -p build/install
