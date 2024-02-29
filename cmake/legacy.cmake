@@ -111,8 +111,8 @@ set(LOG_TO_FILE
   LOG_OUTPUT_ON_FAILURE ON
 )
 
+set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
 if(SOURCE_CACHE)
-  set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
   add_custom_target(extract-source-cache
     DEPENDS "${CMAKE_BINARY_DIR}/extracted"
   )
@@ -299,7 +299,7 @@ ExternalProject_Add(clhep
   ${DEPENDS_ON_SOURCE_CACHE}
 )
 set(clhep_source ${CMAKE_BINARY_DIR}/Source/clhep)
-ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
+ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch patch_disconnected
   COMMAND ${CMAKE_COMMAND} -E copy_directory "${clhep_source}/CLHEP" "${clhep_source}"
   BYPRODUCTS "${clhep_source}/CMakeLists.txt"
   INDEPENDENT ON
@@ -541,11 +541,14 @@ add_custom_target(source-cache
 
 include(CTest)
 
-foreach(ver IN ITEMS 18.6 18.8)
-  set(TEST_VERSION v${ver}_patches)
-  configure_file(test/legacy/fairroot.sh.in ${CMAKE_BINARY_DIR}/test_fairroot_${ver}.sh @ONLY)
-  add_test(NAME FairRoot_${ver}
-           COMMAND test_fairroot_${ver}.sh
+set(test_versions v18.6_patches v18.8_patches dev)
+if(APPLE)
+  set(test_versions v18.8_patches dev)
+endif()
+foreach(TEST_VERSION IN LISTS test_versions)
+  configure_file(test/legacy/fairroot.sh.in ${CMAKE_BINARY_DIR}/test_fairroot_${TEST_VERSION}.sh @ONLY)
+  add_test(NAME FairRoot_${TEST_VERSION}
+           COMMAND test_fairroot_${TEST_VERSION}.sh
            WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 endforeach()
 
