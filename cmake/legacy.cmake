@@ -74,8 +74,8 @@ set(LOG_TO_FILE
   LOG_OUTPUT_ON_FAILURE ON
 )
 
+set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
 if(SOURCE_CACHE)
-  set_property(DIRECTORY PROPERTY EP_UPDATE_DISCONNECTED ON)
   add_custom_target(extract-source-cache
     DEPENDS "${CMAKE_BINARY_DIR}/extracted"
   )
@@ -262,7 +262,7 @@ ExternalProject_Add(clhep
   ${DEPENDS_ON_SOURCE_CACHE}
 )
 set(clhep_source ${CMAKE_BINARY_DIR}/Source/clhep)
-ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
+ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch patch_disconnected
   COMMAND ${CMAKE_COMMAND} -E copy_directory "${clhep_source}/CLHEP" "${clhep_source}"
   BYPRODUCTS "${clhep_source}/CMakeLists.txt"
   INDEPENDENT ON
