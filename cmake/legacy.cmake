@@ -370,9 +370,6 @@ else()
   unset(root_cocoa)
   set(root_x11 ON)
 endif()
-if(CMAKE_CXX_COMPILER_ID STREQUAL GNU AND CMAKE_CXX_COMPILER_VERSION GREATER 11)
-  set(root_runtime_cxxmodules "-Druntime_cxxmodules=OFF")
-endif()
 ExternalProject_Add(root
   GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
   GIT_SHALLOW 1
@@ -395,6 +392,7 @@ ExternalProject_Add(root
     "-Dpythia6=ON"
     "-Dreflex=OFF"
     "-Droofit=ON"
+    "-Druntime_cxxmodules=OFF"
     "-Drpath=ON"
     "-Dsoversion=ON"
     "-Dspectrum=ON"
@@ -409,7 +407,6 @@ ExternalProject_Add(root
     ${cmake_python_config_old}
     ${root_builtin_glew}
     ${root_cocoa}
-    ${root_runtime_cxxmodules}
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
   DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
