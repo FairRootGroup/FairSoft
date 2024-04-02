@@ -358,7 +358,7 @@ ExternalProject_Add(geant4
 )
 
 list(APPEND packages root)
-set(root_version "6.30.02")
+set(root_version "6.30.04")
 string(REPLACE "\." "-" root_version_gittag ${root_version})
 if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
   set(root_builtin_glew "-Dbuiltin_glew=ON")
