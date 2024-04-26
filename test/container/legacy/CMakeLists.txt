@@ -50,6 +50,7 @@ endfunction()
 
 fs_legacy_container(OS centos VERSION 7 BOOTSTRAP_CMAKE PACKAGE_SETUP_SCRIPT "setup-centos-7.sh")
 fs_legacy_container(OS rockylinux VERSION 8)
+fs_legacy_container(OS almalinux VERSION 9 BOOTSTRAP_CMAKE)
 fs_legacy_container(OS debian VERSION 10 BOOTSTRAP_CMAKE)
 fs_legacy_container(OS debian VERSION 11 BOOTSTRAP_CMAKE)
 fs_legacy_container(OS debian VERSION 12)
