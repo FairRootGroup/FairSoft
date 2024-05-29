@@ -10,7 +10,7 @@ dnf -y install \
     libXdmcp-devel libXext-devel libXfont-devel libXft-devel libXmu-devel libXpm-devel \
     libXrender-devel libbsd-devel libicu-devel libjpeg-turbo-devel libtiff-devel libtool \
     libunistring-devel libuuid-devel libxml2-devel libzstd-devel lz4-devel m4 make make mesa-libGL-devel \
-    mesa-libGLU-devel ncurses-devel openblas-devel openssl-devel patch procps python \
+    mesa-libGLU-devel ncurses-devel openblas-devel openssl-devel patch procps protobuf-devel python \
     python-devel python3-numpy python3-pygments python3-pyyaml readline-devel redhat-lsb-core \
     rsync sed sqlite-devel subversion tar tbb-devel unzip wget which xerces-c-devel xz-devel \
     yaml-cpp-devel
