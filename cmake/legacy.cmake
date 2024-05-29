@@ -202,6 +202,7 @@ set(dds_version "3.8")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/relax_protobuf_requirement.patch"
+  UPDATE_DISCONNECTED ON
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     ${dds_icu_hint}
   DEPENDS boost ${extract_source_cache_target}
@@ -262,6 +263,7 @@ set(pythia6_version "428-alice1")
 ExternalProject_Add(pythia6
   URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
   URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
+  UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
@@ -407,6 +409,7 @@ ExternalProject_Add(root
     ${cmake_python_config_old}
     ${root_builtin_glew}
     ${root_cocoa}
+  UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
   DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
@@ -457,6 +460,7 @@ ExternalProject_Add(geant4_vmc
 list(APPEND packages onnxruntime)
 set(onnxruntime_version "1.12.1")
 ExternalProject_Add(onnxruntime
+  UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/install_config_files.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/fix_python_detection.patch"
   GIT_REPOSITORY https://github.com/microsoft/onnxruntime/ GIT_TAG v${onnxruntime_version}
