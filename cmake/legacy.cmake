@@ -207,6 +207,7 @@ ExternalProject_Add(dds
     ${dds_icu_hint}
   DEPENDS boost ${extract_source_cache_target}
   ${LOG_TO_FILE}
+  EXCLUDE_FROM_ALL ON
 )
 ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/Build/dds
@@ -569,9 +570,9 @@ if(packages)
       else()
         set(comment "single-threaded (change with ${BMagenta}-DGEANT4MT=ON${CR})")
       endif()
-    elseif(dep STREQUAL onnxruntime)
+    elseif(dep STREQUAL dds OR dep STREQUAL onnxruntime)
       set(version_str "${${dep}_version}")
-      set(comment "optional (by building target ${BMagenta}onnxruntime${CR} explicitely)")
+      set(comment "optional (by building target ${BMagenta}${dep}${CR} explicitely)")
     else()
       set(version_str "${${dep}_version}")
     endif()
