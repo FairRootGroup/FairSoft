@@ -514,7 +514,7 @@ add_custom_target(source-cache
 
 include(CTest)
 
-foreach(ver IN ITEMS 18.4 18.6 18.8)
+foreach(ver IN ITEMS 18.4 18.6 18.8 19.0)
   set(TEST_VERSION v${ver}_patches)
   configure_file(test/legacy/fairroot.sh.in ${CMAKE_BINARY_DIR}/test_fairroot_${ver}.sh @ONLY)
   add_test(NAME FairRoot_${ver}
