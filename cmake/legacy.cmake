@@ -1,11 +1,48 @@
 ################################################################################
-# Copyright (C) 2020-2023 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2024 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 cmake_minimum_required(VERSION 3.19...3.28 FATAL_ERROR)
+cmake_policy(VERSION 3.19...3.28)
+
+find_package(LibLZMA)
+if(LibLZMA_FOUND)
+  message(STATUS "LZMA installation found. Boost iostream will be build with lzma compression")
+else()
+  message(WARNING "LZMA installation not found. Boost iostream will be build without lzma compression")
+endif()
+
+find_package(ZSTD)
+if(ZSTD_FOUND)
+  message(STATUS "ZSTD installation found. Boost iostream will be build with zstd compression")
+else()
+  message(WARNING "ZSTD installation not found. Boost iostream will be build without zstd compression")
+endif()
+
+if(APPLE AND LibLZMA_FOUND)
+  set(LZMA_EXTERNAL "using lzma   :" CACHE STRING "LZMA exetrnal usage for Boost" FORCE)
+  set(LZMA_VERSION "${LIBLZMA_VERSION}" CACHE STRING "LZMA version info for Boost" FORCE)
+  set(LZMA_STRING ": <include>${LIBLZMA_INCLUDE_DIR}  <search>${LIBLZMA_LIBRARY} ;" CACHE STRING "LZMA install info for Boost" FORCE)
+else()
+  set(LZMA_EXTERNAL "" CACHE STRING "LZMA exetrnal usage for Boost" FORCE)
+  set(LZMA_VERSION "" CACHE STRING "LZMA version info for Boost" FORCE)
+  set(LZMA_STRING "" CACHE STRING "LZMA install info for Boost" FORCE)
+endif()
+
+if(APPLE AND ZSTD_FOUND)
+  get_filename_component(ZSTD_LIBRARY_DIR ${ZSTD_LIBRARY} DIRECTORY)
+  set(ZSTD_EXTERNAL "using zstd   :" CACHE STRING "ZSTD exetrnal usage for Boost" FORCE)
+  set(ZSTD_VERSION "${ZSTD_VERSION}" CACHE STRING "ZSTD version info for Boost" FORCE)
+  set(ZSTD_STRING ": <include>${ZSTD_INCLUDE_DIR} <search>${ZSTD_LIBRARY_DIR} ;" CACHE STRING "ZSTD install info for Boost" FORCE)
+else()
+  set(ZSTD_EXTERNAL "" CACHE STRING "ZSTD exetrnal usage for Boost" FORCE)
+  set(ZSTD_VERSION "" CACHE STRING "ZSTD version info for Boost" FORCE)
+  set(ZSTD_STRING "" CACHE STRING "ZSTD install info for Boost" FORCE)
+endif()
+
 
 find_package(Git REQUIRED)
 find_package(Patch REQUIRED)
@@ -165,10 +202,12 @@ set(dds_version "3.8")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/relax_protobuf_requirement.patch"
+  UPDATE_DISCONNECTED ON
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     ${dds_icu_hint}
   DEPENDS boost ${extract_source_cache_target}
   ${LOG_TO_FILE}
+  EXCLUDE_FROM_ALL ON
 )
 ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/Build/dds
@@ -225,6 +264,7 @@ set(pythia6_version "428-alice1")
 ExternalProject_Add(pythia6
   URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
   URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
+  UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
@@ -321,7 +361,7 @@ ExternalProject_Add(geant4
 )
 
 list(APPEND packages root)
-set(root_version "6.30.02")
+set(root_version "6.30.04")
 string(REPLACE "\." "-" root_version_gittag ${root_version})
 if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
   set(root_builtin_glew "-Dbuiltin_glew=ON")
@@ -332,9 +372,6 @@ if(APPLE)
 else()
   unset(root_cocoa)
   set(root_x11 ON)
-endif()
-if(CMAKE_CXX_COMPILER_ID STREQUAL GNU AND CMAKE_CXX_COMPILER_VERSION GREATER 11)
-  set(root_runtime_cxxmodules "-Druntime_cxxmodules=OFF")
 endif()
 ExternalProject_Add(root
   GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
@@ -358,6 +395,7 @@ ExternalProject_Add(root
     "-Dpythia6=ON"
     "-Dreflex=OFF"
     "-Droofit=ON"
+    "-Druntime_cxxmodules=OFF"
     "-Drpath=ON"
     "-Dsoversion=ON"
     "-Dspectrum=ON"
@@ -372,7 +410,7 @@ ExternalProject_Add(root
     ${cmake_python_config_old}
     ${root_builtin_glew}
     ${root_cocoa}
-    ${root_runtime_cxxmodules}
+  UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
   DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
@@ -423,6 +461,7 @@ ExternalProject_Add(geant4_vmc
 list(APPEND packages onnxruntime)
 set(onnxruntime_version "1.12.1")
 ExternalProject_Add(onnxruntime
+  UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/install_config_files.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/fix_python_detection.patch"
   GIT_REPOSITORY https://github.com/microsoft/onnxruntime/ GIT_TAG v${onnxruntime_version}
@@ -504,7 +543,7 @@ add_custom_target(source-cache
 
 include(CTest)
 
-foreach(ver IN ITEMS 18.6 18.8)
+foreach(ver IN ITEMS 18.6 18.8 19.0)
   set(TEST_VERSION v${ver}_patches)
   configure_file(test/legacy/fairroot.sh.in ${CMAKE_BINARY_DIR}/test_fairroot_${ver}.sh @ONLY)
   add_test(NAME FairRoot_${ver}
@@ -531,9 +570,9 @@ if(packages)
       else()
         set(comment "single-threaded (change with ${BMagenta}-DGEANT4MT=ON${CR})")
       endif()
-    elseif(dep STREQUAL onnxruntime)
+    elseif(dep STREQUAL dds OR dep STREQUAL onnxruntime)
       set(version_str "${${dep}_version}")
-      set(comment "optional (by building target ${BMagenta}onnxruntime${CR} explicitely)")
+      set(comment "optional (by building target ${BMagenta}${dep}${CR} explicitely)")
     else()
       set(version_str "${${dep}_version}")
     endif()

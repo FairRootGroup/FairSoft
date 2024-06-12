@@ -79,3 +79,16 @@ if(APPLE)
   string(STRIP "${macos_sdk_path}" macos_sdk_path)
   set(CMAKE_OSX_SYSROOT "${macos_sdk_path}" CACHE FILEPATH "macOS SDK" FORCE)
 endif()
+
+#
+# LZMA and ZSTD
+#
+# On macOS both packages aren't installed in some standard system path
+# so we need to give CMake some hints where to find them.
+# On Linux the packages are in the default system paths and are found
+# automatically.
+if(APPLE)
+  execute_process(COMMAND brew --prefix OUTPUT_VARIABLE brew_prefix)
+  set(LibLZMA_ROOT ${brew_prefix})
+  set(ZSTD_ROOT ${brew_prefix})
+endif()

@@ -84,15 +84,16 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
+| Almalinux  | x86_64 | 9     | GCC 11.4.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.27.4 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.25.1 |
 | Fedora     | x86_64 | 37    | GCC 12.3.1                 | 3.27.7 |
 | Fedora     | x86_64 | 38    | GCC 13.2.1                 | 3.27.7 |
 | Fedora     | x86_64 | 39    | GCC 13.2.1                 | 3.27.7 |
-| macOS      | x86_64 | 13    | AppleClang 15, gfortran 13 | 3.28.1 (brew) |
-| macOS      | x86_64 | 14    | AppleClang 15, gfortran 13 | 3.28.1 (brew) |
-| macOS      | arm64  | 14    | AppleClang 15, gfortran 13 | 3.28.1 (brew) |
+| macOS      | x86_64 | 13    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
+| macOS      | x86_64 | 14    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
+| macOS      | arm64  | 14    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                 | 3.22.1 |
 
 ## Included packages
@@ -114,7 +115,7 @@ please contact us.
 | onnxruntime      | 1.12.1       | https://github.com/microsoft/onnxruntime |
 | pythia6          | 428-alice1   | https://github.com/alisw/pythia6 |
 | pythia8          | 8310         | https://pythia.org/ |
-| root             | 6.30.02      | https://root.cern |
+| root             | 6.30.04      | https://root.cern |
 | vc               | 1.4.4        | https://github.com/VcDevel/Vc |
 | vgm              | 5-2          | https://github.com/vmc-project/vgm |
 | vmc              | 2-0          | https://github.com/vmc-project/vmc |
