@@ -273,7 +273,7 @@ ExternalProject_Add(pythia6
 list(APPEND packages hepmc)
 set(hepmc_version "2.06.11")
 ExternalProject_Add(hepmc
-  URL https://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
+  URL https://hepmc.web.cern.ch/releases/hepmc${hepmc_version}.tgz
   URL_HASH SHA256=86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-Dlength:STRING=CM"
