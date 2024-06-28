@@ -8,8 +8,8 @@ class Hepmc(CMakePackage):
     """The HepMC package is an object oriented, C++ event record for
        High Energy Physics Monte Carlo generators and simulation."""
 
-    homepage = "https://hepmc.web.cern.ch/hepmc/"
-    url      = "https://hepmc.web.cern.ch/hepmc/releases/hepmc2.06.11.tgz"
+    homepage = "https://hepmc.web.cern.ch/"
+    url      = "https://hepmc.web.cern.ch/releases/hepmc2.06.11.tgz"
 
     tags = ['hep']
 
@@ -38,5 +38,5 @@ class Hepmc(CMakePackage):
         if version <= Version("2.06.08"):
             url = "http://lcgapp.cern.ch/project/simu/HepMC/download/HepMC-{0}.tar.gz"
         else:
-            url = "https://hepmc.web.cern.ch/hepmc/releases/hepmc{0}.tgz"
+            url = "https://hepmc.web.cern.ch/releases/hepmc{0}.tgz"
         return url.format(version)
