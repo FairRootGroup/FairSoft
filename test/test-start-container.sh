@@ -46,7 +46,7 @@ fi
 
 (
 	set -x
-	singularity exec -B"$bindmounts" "$image" bash -l -c "${ctestcmd}"
+	singularity exec --writable-tmpfs -B"$bindmounts" "$image" bash -l -c "${ctestcmd}"
 )
 retval=$?
 
