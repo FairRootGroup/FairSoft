@@ -118,6 +118,6 @@ please contact us.
 | pythia8          | 8312         | https://pythia.org/ |
 | root             | 6.32.02      | https://root.cern |
 | vc               | 1.4.5        | https://github.com/VcDevel/Vc |
-| vgm              | 5-2          | https://github.com/vmc-project/vgm |
+| vgm              | 5-3          | https://github.com/vmc-project/vgm |
 | vmc              | 2-0          | https://github.com/vmc-project/vmc |
 | zeromq           | 4.3.5        | https://github.com/zeromq/libzmq |
