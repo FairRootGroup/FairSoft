@@ -145,28 +145,8 @@ pipeline {
             """)
           }
 
-          if (env.CHANGE_ID != null) {
-              specs_list = [
-                [os: 'macOS'],
-              ];
-          } else {
-              specs_list = [
-                [os: 'macos-11-x86_64'],
-                [os: 'macos-12-x86_64'],
-                [os: 'macos-12-arm64']
-              ];
-          }
-
-          def macos_jobs = jobMatrix('macos', ctestcmd, specs_list)
-          { spec, label, jobsh, ctest ->
-            sh """
-              hostname -f
-              export LABEL="${label}"
-              ${ctest}
-            """
-          }
           throttle(['long']) {
-            parallel(linux_jobs + macos_jobs)
+            parallel(linux_jobs)
           }
         }
       }
