@@ -11,9 +11,9 @@ ctestcmd="$2"
 
 # Some default paths:
 : ${FS_INSTALLTREE_BASE:="/srv/alfaci/FairSoft/install-tree"}
-: ${SINGULARITY_CONTAINER_ROOT:="/cvmfs/fairsoft_dev.gsi.de/ci/for-fairsoft/latest/container"}
+: ${CONTAINER_ROOT:="/cvmfs/fairsoft_dev.gsi.de/ci/for-fairsoft/2022-11-24_1730/container"}
 
-image="${SINGULARITY_CONTAINER_ROOT}/${container}"
+image="${CONTAINER_ROOT}/${container}"
 bindmounts="/etc/environment,/cvmfs,$PWD"
 
 if [ -d "$FS_INSTALLTREE_BASE" ]
