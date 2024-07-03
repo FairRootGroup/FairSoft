@@ -443,7 +443,7 @@ ExternalProject_Add(vgm
 )
 
 list(APPEND packages geant4_vmc)
-set(geant4_vmc_version "6-5")
+set(geant4_vmc_version "6-6-p1")
 ExternalProject_Add(geant4_vmc
   GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v${geant4_vmc_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
