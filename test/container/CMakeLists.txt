@@ -28,7 +28,7 @@ function(fs_spack_container)
 
   add_custom_command(OUTPUT ${target}
     COMMAND ${CMAKE_COMMAND} -E env ${BASH} -c
-    "${SINGULARITY} build -f -F ${target} ${CMAKE_CURRENT_SOURCE_DIR}/${def} > ${log} 2>&1"
+    "${APPTAINER} build -f -F ${target} ${CMAKE_CURRENT_SOURCE_DIR}/${def} > ${log} 2>&1"
     VERBATIM
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building spack container ${target}, logging to ${CMAKE_CURRENT_BINARY_DIR}/${log}"
