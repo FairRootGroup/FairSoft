@@ -361,7 +361,7 @@ ExternalProject_Add(geant4
 )
 
 list(APPEND packages root)
-set(root_version "6.30.08")
+set(root_version "6.32.02")
 string(REPLACE "\." "-" root_version_gittag ${root_version})
 if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
   set(root_builtin_glew "-Dbuiltin_glew=ON")
@@ -389,10 +389,8 @@ ExternalProject_Add(root
     "-Dgnuinstall=ON"
     "-Dhttp=ON"
     "-Dmathmore=ON"
-    "-Dminuit2=ON"
     "-Dmlp=ON"
     "-Dpyroot=ON"
-    "-Dpythia6=ON"
     "-Dreflex=OFF"
     "-Droofit=ON"
     "-Druntime_cxxmodules=OFF"
@@ -412,7 +410,7 @@ ExternalProject_Add(root
     ${root_cocoa}
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
-  DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
+  DEPENDS pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
 
