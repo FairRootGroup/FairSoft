@@ -95,6 +95,7 @@ please contact us.
 | macOS      | x86_64 | 14    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
 | macOS      | arm64  | 14    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                 | 3.22.1 |
+| Ubuntu     | x86_64 | 24.04 | GCC 13.2.0                 | 3.28.3 |
 
 ## Included packages
 
