@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2019-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2019-2024 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -33,7 +33,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(${BUILD_METHOD})
 
 find_program(BASH bash HINTS "/bin")
-find_program(SINGULARITY singularity)
-if(BASH AND SINGULARITY)
+find_program(APPTAINER apptainer)
+if(BASH AND APPTAINER)
   add_subdirectory(test/container)
 endif()
