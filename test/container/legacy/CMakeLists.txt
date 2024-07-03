@@ -59,6 +59,7 @@ fs_legacy_container(OS fedora VERSION 38)
 fs_legacy_container(OS fedora VERSION 39)
 fs_legacy_container(OS ubuntu VERSION 20.04 BOOTSTRAP_CMAKE)
 fs_legacy_container(OS ubuntu VERSION 22.04)
+fs_legacy_container(OS ubuntu VERSION 24.04)
 
 
 add_custom_target(all-legacy-containers DEPENDS ${legacy_containers})
