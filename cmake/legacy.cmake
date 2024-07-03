@@ -143,7 +143,7 @@ ExternalProject_Add(faircmakemodules
 )
 
 list(APPEND packages boost)
-set(boost_version "83")
+set(boost_version "85")
 set(boost_features
   "cxxstd=${CMAKE_CXX_STANDARD}"
   "link=shared"
@@ -163,8 +163,8 @@ if("${isSystemDir}" STREQUAL "-1")
 endif()
 
 ExternalProject_Add(boost
-  URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
-  URL_HASH SHA256=6478edfe2f3305127cffe8caf73ea0176c53769f4bf1585be237eb30798c3b8e
+  URL "https://archives.boost.io/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
+  URL_HASH SHA256=7009fe1faa1697476bdc7027703a2badb84e849b7b0baad5086b087b971f8617
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
