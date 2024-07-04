@@ -273,7 +273,7 @@ ExternalProject_Add(pythia6
 list(APPEND packages hepmc)
 set(hepmc_version "2.06.11")
 ExternalProject_Add(hepmc
-  URL https://hepmc.web.cern.ch/hepmc/releases/hepmc${hepmc_version}.tgz
+  URL https://hepmc.web.cern.ch/releases/hepmc${hepmc_version}.tgz
   URL_HASH SHA256=86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-Dlength:STRING=CM"
@@ -361,7 +361,7 @@ ExternalProject_Add(geant4
 )
 
 list(APPEND packages root)
-set(root_version "6.30.04")
+set(root_version "6.30.08")
 string(REPLACE "\." "-" root_version_gittag ${root_version})
 if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
   set(root_builtin_glew "-Dbuiltin_glew=ON")

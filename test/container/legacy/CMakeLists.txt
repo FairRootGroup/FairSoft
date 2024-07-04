@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2020-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2024 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -36,7 +36,7 @@ function(fs_legacy_container)
 
   add_custom_command(OUTPUT ${target}
     COMMAND ${CMAKE_COMMAND} -E env ${BASH} -c
-      "${SINGULARITY} build -f -F ${target} ${def} > ${log} 2>&1"
+      "${APPTAINER} build -f -F ${target} ${def} > ${log} 2>&1"
     VERBATIM
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building legacy container ${target}, logging to ${CMAKE_CURRENT_BINARY_DIR}/${log}"
@@ -59,6 +59,7 @@ fs_legacy_container(OS fedora VERSION 38)
 fs_legacy_container(OS fedora VERSION 39)
 fs_legacy_container(OS ubuntu VERSION 20.04 BOOTSTRAP_CMAKE)
 fs_legacy_container(OS ubuntu VERSION 22.04)
+fs_legacy_container(OS ubuntu VERSION 24.04)
 
 
 add_custom_target(all-legacy-containers DEPENDS ${legacy_containers})

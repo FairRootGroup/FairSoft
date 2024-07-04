@@ -125,6 +125,7 @@ pipeline {
             [os: 'Fedora-39',        container: 'fedora.39.sif',
              extra: '-DCMAKE_CXX_STANDARD=20'],
             [os: 'Ubuntu-22.04-LTS', container: 'ubuntu.22.04.sif'],
+            [os: 'Ubuntu-24.04-LTS', container: 'ubuntu.24.04.sif'],
           ]
 
           def linux_jobs = jobMatrix('slurm',

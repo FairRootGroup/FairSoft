@@ -95,6 +95,7 @@ please contact us.
 | macOS      | x86_64 | 14    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
 | macOS      | arm64  | 14    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                 | 3.22.1 |
+| Ubuntu     | x86_64 | 24.04 | GCC 13.2.0                 | 3.28.3 |
 
 ## Included packages
 
@@ -115,7 +116,7 @@ please contact us.
 | onnxruntime      | 1.12.1       | https://github.com/microsoft/onnxruntime |
 | pythia6          | 428-alice1   | https://github.com/alisw/pythia6 |
 | pythia8          | 8310         | https://pythia.org/ |
-| root             | 6.30.04      | https://root.cern |
+| root             | 6.30.08      | https://root.cern |
 | vc               | 1.4.4        | https://github.com/VcDevel/Vc |
 | vgm              | 5-2          | https://github.com/vmc-project/vgm |
 | vmc              | 2-0          | https://github.com/vmc-project/vmc |
