@@ -259,17 +259,6 @@ ExternalProject_Add(fairmq
   ${LOG_TO_FILE}
 )
 
-list(APPEND packages pythia6)
-set(pythia6_version "428-alice1")
-ExternalProject_Add(pythia6
-  URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
-  URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
-  UPDATE_DISCONNECTED ON
-  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
-  ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
-  ${DEPENDS_ON_SOURCE_CACHE}
-)
-
 list(APPEND packages hepmc)
 set(hepmc_version "2.06.11")
 ExternalProject_Add(hepmc
