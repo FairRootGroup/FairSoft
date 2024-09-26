@@ -1,0 +1,32 @@
+diff --git a/cmake/modules/SearchInstalledSoftware.cmake b/cmake/modules/SearchInstalledSoftware.cmake
+index 682de46f27..57addbc948 100644
+--- a/cmake/modules/SearchInstalledSoftware.cmake
++++ b/cmake/modules/SearchInstalledSoftware.cmake
+@@ -565,6 +565,17 @@ find_package(Python3 3.8 COMPONENTS ${python_components})
+ #---Check for OpenGL installation-------------------------------------------------------
+ if(opengl)
+   message(STATUS "Looking for OpenGL")
++  # Search for the OpenGL installation first in the system.
++  # OpenGL installed via brew (mesa, mesa-glu) and X11 seems not to work
++  # properly so it is needed to use the system version.
++  # CMAKE_FIND_FRAMEWORK defines the search order on macosx which as
++  # default is search first for frameworks.
++  # ROOT changes the order to search last for the framework.
++  # Temporarely change the search order for OpenGL.
++  if(APPLE)
++    set(frame_temp ${CMAKE_FIND_FRAMEWORK})
++    set(CMAKE_FIND_FRAMEWORK FIRST)
++  endif()
+   find_package(OpenGL)
+   if(NOT OPENGL_FOUND OR NOT OPENGL_GLU_FOUND)
+     if(fail-on-missing)
+@@ -574,6 +585,9 @@ if(opengl)
+       set(opengl OFF CACHE BOOL "Disabled because OpenGL (with GLU) not found (${opengl_description})" FORCE)
+     endif()
+   endif()
++  if (APPLE)
++    set(CMAKE_FIND_FRAMEWORK ${frame_temp})
++  endif()
+ endif()
+ # OpenGL should be working only with x11 (Linux),
+ # in case when -Dall=ON -Dx11=OFF, we will just disable opengl.
