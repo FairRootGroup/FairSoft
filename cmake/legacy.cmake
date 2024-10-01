@@ -374,13 +374,19 @@ else()
   unset(root_cocoa)
   set(root_x11 ON)
 endif()
+find_package(nlohmann_json 3.9)
+if(nlohmann_json_FOUND)
+  set(root_builtin_nlohmannjson "-Dbuiltin_nlohmannjson=OFF")
+else()
+  set(root_builtin_nlohmannjson "-Dbuiltin_nlohmannjson=ON")
+endif()
+
 ExternalProject_Add(root
   GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
   GIT_SHALLOW 1
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-Daqua=ON"
     "-Dasimage=ON"
-    "-Dbuiltin_nlohmannjson=ON"
     "-Dcintex=OFF"
     "-Ddavix=OFF"
     "-Dfftw3=ON"
@@ -410,6 +416,7 @@ ExternalProject_Add(root
     ${cmake_python_config}
     ${cmake_python_config_old}
     ${root_builtin_glew}
+    ${root_builtin_nlohmannjson}
     ${root_cocoa}
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
