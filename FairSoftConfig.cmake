@@ -14,7 +14,7 @@
 #  Where to install the packages contained in FairSoft. FairRoot may find this FairSoft
 #  via the environment variable SIMPATH.
 #
-set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install prefix" FORCE)
+set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install prefix")
 # set(CMAKE_INSTALL_PREFIX "/some/other/path" CACHE PATH "Install prefix" FORCE)
 
 # Note: Defaults are effective even if the option is not set explicitely in this file.
