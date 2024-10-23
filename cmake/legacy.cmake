@@ -143,7 +143,7 @@ ExternalProject_Add(faircmakemodules
 )
 
 list(APPEND packages boost)
-set(boost_version "83")
+set(boost_version "85")
 set(boost_features
   "cxxstd=${CMAKE_CXX_STANDARD}"
   "link=shared"
@@ -163,8 +163,8 @@ if("${isSystemDir}" STREQUAL "-1")
 endif()
 
 ExternalProject_Add(boost
-  URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
-  URL_HASH SHA256=6478edfe2f3305127cffe8caf73ea0176c53769f4bf1585be237eb30798c3b8e
+  URL "https://archives.boost.io/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
+  URL_HASH SHA256=7009fe1faa1697476bdc7027703a2badb84e849b7b0baad5086b087b971f8617
   BUILD_IN_SOURCE ON
   PATCH_COMMAND ${patch} -d libs/python -p1 -i "${CMAKE_SOURCE_DIR}/legacy/boost/support-numpy-2.patch"
   CONFIGURE_COMMAND "./bootstrap.sh"
@@ -185,10 +185,10 @@ ExternalProject_Add(boost
 )
 
 list(APPEND packages fmt)
-set(fmt_version "10.1.1")
+set(fmt_version "11.0.0")
 ExternalProject_Add(fmt
   URL "https://github.com/fmtlib/fmt/releases/download/${fmt_version}/fmt-${fmt_version}.zip"
-  URL_HASH SHA256=b84e58a310c9b50196cda48d5678d5fa0849bca19e5fdba6b684f0ee93ed9d1b
+  URL_HASH SHA256=583ce480ef07fad76ef86e1e2a639fc231c3daa86c4aa6bcba524ce908f30699
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFMT_DOC=OFF"
   ${LOG_TO_FILE}
@@ -217,7 +217,7 @@ ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
 )
 
 list(APPEND packages fairlogger)
-set(fairlogger_version "1.11.1")
+set(fairlogger_version "2.0.0")
 ExternalProject_Add(fairlogger
   GIT_REPOSITORY https://github.com/FairRootGroup/FairLogger GIT_TAG v${fairlogger_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -240,7 +240,7 @@ ExternalProject_Add(zeromq
 )
 
 list(APPEND packages flatbuffers)
-set(flatbuffers_version "23.5.26")
+set(flatbuffers_version "24.3.25")
 ExternalProject_Add(flatbuffers
   GIT_REPOSITORY https://github.com/google/flatbuffers GIT_TAG v${flatbuffers_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -260,17 +260,6 @@ ExternalProject_Add(fairmq
   ${LOG_TO_FILE}
 )
 
-list(APPEND packages pythia6)
-set(pythia6_version "428-alice1")
-ExternalProject_Add(pythia6
-  URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
-  URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
-  UPDATE_DISCONNECTED ON
-  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
-  ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
-  ${DEPENDS_ON_SOURCE_CACHE}
-)
-
 list(APPEND packages hepmc)
 set(hepmc_version "2.06.11")
 ExternalProject_Add(hepmc
@@ -284,10 +273,10 @@ ExternalProject_Add(hepmc
 )
 
 list(APPEND packages vc)
-set(vc_version "1.4.4")
+set(vc_version "1.4.5")
 ExternalProject_Add(vc
   URL https://github.com/VcDevel/Vc/archive/refs/tags/${vc_version}.tar.gz
-  URL_HASH SHA256=5933108196be44c41613884cd56305df320263981fe6a49e648aebb3354d57f3
+  URL_HASH SHA256=eb734ef4827933fcd67d4c74aef54211b841c350a867c681c73003eb6d511a48
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
@@ -311,12 +300,12 @@ ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
 )
 
 list(APPEND packages pythia8)
-set(pythia8_version "8310")
+set(pythia8_version "8312")
 string(SUBSTRING "${pythia8_version}" 0 2 pythia8_major_version)
 string(TOUPPER "${CMAKE_BUILD_TYPE}" selected)
 ExternalProject_Add(pythia8
   URL https://pythia.org/download/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
-  URL_HASH SHA256=90c811abe7a3d2ffdbf9b4aeab51cf6e0a5a8befb4e3efa806f3d5b9c311e227
+  URL_HASH SHA256=bad98e2967b687046c4568c9091d630a0c31b628745c021a994aba4d1d50f8ea
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
     "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
@@ -328,7 +317,7 @@ ExternalProject_Add(pythia8
 )
 
 list(APPEND packages geant4)
-set(geant4_version "11.2.0")
+set(geant4_version "11.2.2")
 if(GEANT4MT)
   set(mt
     "-DGEANT4_BUILD_MULTITHREADED=ON"
@@ -338,8 +327,8 @@ else()
     "-DGEANT4_BUILD_MULTITHREADED=OFF")
 endif()
 ExternalProject_Add(geant4
-  URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
-  URL_HASH SHA256=46ad7fab3c5cb4bd0bdd77dd6d3e2283184819235bcbc01b2d117d81b35596a6
+  URL https://gitlab.cern.ch/geant4/geant4/-/archive/v${geant4_version}/geant4-v${geant4_version}.tar.gz
+  URL_HASH SHA256=3a8d98c63fc52578f6ebf166d7dffaec36256a186d57f2520c39790367700c8d
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
     ${mt}
@@ -362,7 +351,7 @@ ExternalProject_Add(geant4
 )
 
 list(APPEND packages root)
-set(root_version "6.30.08")
+set(root_version "6.32.02")
 string(REPLACE "\." "-" root_version_gittag ${root_version})
 if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
   set(root_builtin_glew "-Dbuiltin_glew=ON")
@@ -396,10 +385,8 @@ ExternalProject_Add(root
     "-Dgnuinstall=ON"
     "-Dhttp=ON"
     "-Dmathmore=ON"
-    "-Dminuit2=ON"
     "-Dmlp=ON"
     "-Dpyroot=ON"
-    "-Dpythia6=ON"
     "-Dreflex=OFF"
     "-Droofit=ON"
     "-Druntime_cxxmodules=OFF"
@@ -420,7 +407,7 @@ ExternalProject_Add(root
     ${root_cocoa}
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
-  DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
+  DEPENDS pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
 
@@ -433,7 +420,7 @@ ExternalProject_Add(vmc
 )
 
 list(APPEND packages geant3)
-set(geant3_version "4-2_fairsoft")
+set(geant3_version "4-3_fairsoft")
 ExternalProject_Add(geant3
   GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -443,7 +430,7 @@ ExternalProject_Add(geant3
 )
 
 list(APPEND packages vgm)
-set(vgm_version "5-2")
+set(vgm_version "5-3")
 ExternalProject_Add(vgm
   GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -453,7 +440,7 @@ ExternalProject_Add(vgm
 )
 
 list(APPEND packages geant4_vmc)
-set(geant4_vmc_version "6-5")
+set(geant4_vmc_version "6-6-p1")
 ExternalProject_Add(geant4_vmc
   GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v${geant4_vmc_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
