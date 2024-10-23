@@ -400,6 +400,7 @@ ExternalProject_Add(root
     "-Dmlp=ON"
     "-Dpyroot=ON"
     "-Dpythia6=ON"
+    "-Dpythia8=ON"
     "-Dreflex=OFF"
     "-Droofit=ON"
     "-Druntime_cxxmodules=OFF"
