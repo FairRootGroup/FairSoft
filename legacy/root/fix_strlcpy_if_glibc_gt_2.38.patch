@@ -1,0 +1,14 @@
+diff --git a/core/foundation/inc/ROOT/RConfig.hxx b/core/foundation/inc/ROOT/RConfig.hxx
+index 6ce5077b74..609fe6dd3d 100644
+--- a/core/foundation/inc/ROOT/RConfig.hxx
++++ b/core/foundation/inc/ROOT/RConfig.hxx
+@@ -146,6 +146,9 @@
+ #      define R__USESTHROW
+ #      define R__SEEK64
+ #   endif
++#   if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 38)
++#      define HAS_STRLCPY
++#   endif
+ #endif
+ 
+ #if defined(linux) && defined(__i386__)

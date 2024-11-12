@@ -1,0 +1,12 @@
+diff --git a/graf3d/eve7/inc/ROOT/REveElement.hxx b/graf3d/eve7/inc/ROOT/REveElement.hxx
+index 57d9f0df7f..9627ba87c9 100644
+--- a/graf3d/eve7/inc/ROOT/REveElement.hxx
++++ b/graf3d/eve7/inc/ROOT/REveElement.hxx
+@@ -30,6 +30,7 @@
+ // present in multi-header installations (the default as of version 3.11.0), and
+ // single-header installations of version 3.11.2+.
+ 
++#include <cstdint>
+ #include <map>
+ #include <vector>
+ 
