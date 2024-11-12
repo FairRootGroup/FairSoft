@@ -1,0 +1,20 @@
+--- CLHEP/Random/Random/RandomEngine.h_orig	2024-11-12 08:33:55.438172038 +0000
++++ CLHEP/Random/Random/RandomEngine.h	2024-11-12 08:32:38.353363423 +0000
+@@ -38,6 +38,7 @@
+ #ifndef HepRandomEngine_h
+ #define HepRandomEngine_h 1
+
++#include <cstdint>
+ #include <iostream>
+ #include <fstream>
+ #include <iomanip>
+--- Random/Random/RandomEngine.h_orig	2024-11-12 08:33:55.438172038 +0000
++++ Random/Random/RandomEngine.h	2024-11-12 08:32:38.353363423 +0000
+@@ -38,6 +38,7 @@
+ #ifndef HepRandomEngine_h
+ #define HepRandomEngine_h 1
+
++#include <cstdint>
+ #include <iostream>
+ #include <fstream>
+ #include <iomanip>
