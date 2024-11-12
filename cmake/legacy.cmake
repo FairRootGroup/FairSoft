@@ -266,13 +266,23 @@ set(clhep_version "2.4.5.1")
 ExternalProject_Add(clhep
   URL http://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
   URL_HASH SHA256=2517c9b344ad9f55974786ae6e7a0ef8b22f4abcbf506df91194ea2299ce3813
+  PATCH_COMMAND ${patch} -p0 -i "${CMAKE_SOURCE_DIR}/legacy/clhep/add_missing_include_file.patch"
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
+
+if(${CMAKE_VERSION} VERSION_LESS 3.27.0)
+  set(patch_step_name patch)
+else()
+  set(patch_step_name patch_disconnected)
+endif()
+
 set(clhep_source ${CMAKE_BINARY_DIR}/Source/clhep)
-ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
+ExternalProject_Add_Step(clhep move_dir 
+  DEPENDEES download 
+  DEPENDERS ${patch_step_name}
   COMMAND ${CMAKE_COMMAND} -E copy_directory "${clhep_source}/CLHEP" "${clhep_source}"
   BYPRODUCTS "${clhep_source}/CMakeLists.txt"
   LOG ON
