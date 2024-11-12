@@ -1,0 +1,12 @@
+diff --git a/tests/reflection_test.h b/tests/reflection_test.h
+index d5148679..b20381fa 100644
+--- a/tests/reflection_test.h
++++ b/tests/reflection_test.h
+@@ -1,6 +1,7 @@
+ #ifndef TESTS_REFLECTION_TEST_H
+ #define TESTS_REFLECTION_TEST_H
+ 
++#include <cstdint>
+ #include <string>
+ 
+ namespace flatbuffers {

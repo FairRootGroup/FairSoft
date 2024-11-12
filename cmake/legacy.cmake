@@ -214,6 +214,7 @@ list(APPEND packages flatbuffers)
 set(flatbuffers_version "22.9.29")
 ExternalProject_Add(flatbuffers
   GIT_REPOSITORY https://github.com/google/flatbuffers GIT_TAG v${flatbuffers_version}
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/flatbuffers/add_missing_include_file.patch"
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFLATBUFFERS_BUILD_SHAREDLIB=ON"
     "-DFLATBUFFERS_BUILD_FLATLIB=OFF"
