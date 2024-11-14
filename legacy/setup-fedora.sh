@@ -9,9 +9,9 @@ dnf -y install \
     grpc-plugins gsl-devel gzip help2man hostname hwloc-devel libX11-devel libXau-devel \
     libXdmcp-devel libXext-devel libXfont-devel libXft-devel libXmu-devel libXpm-devel \
     libXrender-devel libbsd-devel libicu-devel libjpeg-turbo-devel libtiff-devel libtool \
-    libunistring-devel libuuid-devel libxml2-devel lz4-devel m4 make make mesa-libGL-devel \
-    mesa-libGLU-devel ncurses-devel openblas-devel openssl-devel patch procps python \
+    libunistring-devel libuuid-devel libxml2-devel libzstd-devel lz4-devel m4 make make mesa-libGL-devel \
+    mesa-libGLU-devel ncurses-devel openblas-devel openssl-devel openssl-devel-engine patch procps python \
     python-devel python3-numpy python3-pygments python3-pyyaml readline-devel redhat-lsb-core \
-    rsync sed sqlite-devel subversion tar tbb-devel unzip wget which xerces-c-devel xz-devel \
-    yaml-cpp-devel
+    rsync sed sqlite-devel subversion tar tbb-devel unzip wget which xerces-c-devel \
+    xrootd-devel xrootd-client-devel xz-devel yaml-cpp-devel
 dnf -y clean all
