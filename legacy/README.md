@@ -100,6 +100,17 @@ please contact us.
 | Ubuntu     | x86_64 | 20.04 | GCC 9.4.0                  | 3.24.3 (`bootstrap-cmake.sh`) |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.3.0                 | 3.22.1 |
 
+The following systems are not in the test matrix and therefore are not tested
+regularly. They were at least build successful once doing the same steps as
+executed for the regular tests. They maybe will be added to the test matrix
+for newer versions of FairSoft. 
+
+| **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
+| --- | --- | --- | --- | --- |
+| Fedora     | x86_64 | 41    | GCC 14.2.1                 | 3.30.5 |
+| OpenSuSe   | x86_64 | 15.5  | GCC 7.5.0                  | 3.20.4 |
+| Ubuntu     | x86_64 | 24.04 | GCC 13.2.0                 | 3.28.3 |
+
 ## Included packages
 
 | **Package** | **Version** | **URL** |
