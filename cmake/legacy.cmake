@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2020-2022 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2024 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -137,7 +137,6 @@ ExternalProject_Add(boost
   BUILD_IN_SOURCE ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/boost/0004-filesystem-posix-fix-no-at-apis-missing-include.patch"
   COMMAND ${patch} -p0 -i "${CMAKE_SOURCE_DIR}/legacy/boost/PyEval_CallMethod_fix_python_3-13.patch"
-  ${python_3_13_fix}
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     ${boost_python_config_bootstrap}
