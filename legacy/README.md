@@ -91,9 +91,9 @@ please contact us.
 | Fedora     | x86_64 | 37    | GCC 12.3.1                 | 3.27.7 |
 | Fedora     | x86_64 | 38    | GCC 13.2.1                 | 3.27.7 |
 | Fedora     | x86_64 | 39    | GCC 13.2.1                 | 3.27.7 |
-| macOS      | x86_64 | 13    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
-| macOS      | x86_64 | 14    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
-| macOS      | arm64  | 14    | AppleClang 15, gfortran 14 | 3.29.4 (brew) |
+| macOS      | x86_64 | 14    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
+| macOS      | x86_64 | 15    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
+| macOS      | arm64  | 15    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                 | 3.22.1 |
 | Ubuntu     | x86_64 | 24.04 | GCC 13.2.0                 | 3.28.3 |
 
