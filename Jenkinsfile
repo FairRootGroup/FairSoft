@@ -137,9 +137,9 @@ pipeline {
           }
 
           specs_list = [
-            [os: 'macos-13-x86_64'],
             [os: 'macos-14-x86_64'],
-            [os: 'macos-14-arm64']
+            [os: 'macos-15-x86_64'],
+            [os: 'macos-15-arm64']
           ];
 
           def macos_jobs = jobMatrix('macos', ctestcmd, specs_list)
