@@ -132,7 +132,7 @@ set(boost_features
 )
 
 ExternalProject_Add(boost
-  URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
+  URL "https://archives.boost.io/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
   URL_HASH SHA256=1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0
   BUILD_IN_SOURCE ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/boost/0004-filesystem-posix-fix-no-at-apis-missing-include.patch"
