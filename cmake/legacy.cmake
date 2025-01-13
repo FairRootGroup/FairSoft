@@ -134,7 +134,7 @@ set(boost_features
   "pch=off"
 )
 ExternalProject_Add(boost
-  URL "https://boostorg.jfrog.io/artifactory/main/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
+  URL "https://archives.boost.io/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
   URL_HASH SHA256=8681f175d4bdb26c52222665793eef08490d7758529330f98d3b29dd0735bccc
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND "./bootstrap.sh"
