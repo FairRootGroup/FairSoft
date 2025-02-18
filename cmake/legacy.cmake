@@ -302,17 +302,6 @@ ExternalProject_Add(fairmq
   ${LOG_TO_FILE}
 )
 
-list(APPEND packages pythia6)
-set(pythia6_version "428-alice1")
-ExternalProject_Add(pythia6
-  URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
-  URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
-  UPDATE_DISCONNECTED ON
-  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
-  ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
-  ${DEPENDS_ON_SOURCE_CACHE}
-)
-
 list(APPEND packages hepmc)
 set(hepmc_version "2.06.11")
 ExternalProject_Add(hepmc
@@ -443,7 +432,6 @@ ExternalProject_Add(root
     "-Dminuit2=ON"
     "-Dmlp=ON"
     "-Dpyroot=ON"
-    "-Dpythia6=ON"
     "-Dpythia8=ON"
     "-Dreflex=OFF"
     "-Droofit=ON"
@@ -467,7 +455,7 @@ ExternalProject_Add(root
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_findOpenGL.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_rpath_info.patch"
-  DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
+  DEPENDS pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
 
