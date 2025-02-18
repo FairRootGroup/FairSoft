@@ -198,10 +198,9 @@ if(ICU_ROOT)
   set(dds_icu_hint "-DDDS_LD_LIBRARY_PATH=${ICU_ROOT}/lib")
 endif()
 list(APPEND packages dds)
-set(dds_version "3.8")
+set(dds_version "3.13")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
-  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/relax_protobuf_requirement.patch"
   UPDATE_DISCONNECTED ON
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     ${dds_icu_hint}
