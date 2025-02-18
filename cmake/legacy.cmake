@@ -433,7 +433,7 @@ ExternalProject_Add(vmc
 )
 
 list(APPEND packages geant3)
-set(geant3_version "4-2_fairsoft")
+set(geant3_version "4-4_fairsoft")
 ExternalProject_Add(geant3
   GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
