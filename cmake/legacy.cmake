@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2020-2024 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2025 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -368,7 +368,7 @@ ExternalProject_Add(geant4
 )
 
 list(APPEND packages root)
-set(root_version "6.30.08")
+set(root_version "6.34.08")
 string(REPLACE "\." "-" root_version_gittag ${root_version})
 if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
   set(root_builtin_glew "-Dbuiltin_glew=ON")
@@ -380,7 +380,7 @@ else()
   unset(root_cocoa)
   set(root_x11 ON)
 endif()
-find_package(nlohmann_json 3.9)
+find_package(nlohmann_json 3.9 QUIET)
 if(nlohmann_json_FOUND)
   set(root_builtin_nlohmannjson "-Dbuiltin_nlohmannjson=OFF")
 else()
@@ -402,7 +402,6 @@ ExternalProject_Add(root
     "-Dgnuinstall=ON"
     "-Dhttp=ON"
     "-Dmathmore=ON"
-    "-Dminuit2=ON"
     "-Dmlp=ON"
     "-Dpyroot=ON"
     "-Dpythia8=ON"
@@ -416,6 +415,7 @@ ExternalProject_Add(root
     "-Dtmva=ON"
     "-Dvc=ON"
     "-Dvdt=OFF"
+    "-Dvecgeom=ON"
     "-Dxml=ON"
     "-Dxrootd=ON"
     "-Dx11=${root_x11}"
@@ -426,8 +426,7 @@ ExternalProject_Add(root
     ${root_cocoa}
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
-  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_findOpenGL.patch"
-  DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
+  DEPENDS pythia8 vc vecgeom ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
 
