@@ -250,7 +250,7 @@ ExternalProject_Add(flatbuffers
 )
 
 list(APPEND packages fairmq)
-set(fairmq_version "1.8.4")
+set(fairmq_version "1.9.2")
 ExternalProject_Add(fairmq
   GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
   ${CMAKE_DEFAULT_ARGS}
