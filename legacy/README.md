@@ -114,7 +114,6 @@ please contact us.
 | geant4_vmc       | 6-7-p1       | https://github.com/vmc-project/geant4_vmc |
 | hepmc            | 2.06.11      | http://hepmc.web.cern.ch |
 | onnxruntime      | 1.12.1       | https://github.com/microsoft/onnxruntime |
-| pythia6          | 428-alice1   | https://github.com/alisw/pythia6 |
 | pythia8          | 8315         | https://pythia.org/ |
 | root             | 6.30.08      | https://root.cern |
 | vc               | 1.4.4        | https://github.com/VcDevel/Vc |
