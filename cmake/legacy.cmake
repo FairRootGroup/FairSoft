@@ -325,6 +325,25 @@ ExternalProject_Add(pythia8
   ${LOG_TO_FILE}
 )
 
+if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm")
+  set(vector "-DVECGEOM_VECTOR=empty")
+else()
+  set(vector "-DVECGEOM_VECTOR=native")
+endif()
+
+list(APPEND packages vecgeom)
+set(vecgeom_version "v2.0.0-rc.6")
+ExternalProject_Add(vecgeom
+  GIT_REPOSITORY https://gitlab.cern.ch/VecGeom/VecGeom GIT_TAG ${vecgeom_version}
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DVECGEOM_BACKEND=vc"
+    "-DVECGEOM_BUILTIN_VECCORE=ON"
+    ${vector}
+  DEPENDS vc
+  ${LOG_TO_FILE}
+)
+
+
 list(APPEND packages geant4)
 set(geant4_version "11.3.2")
 if(GEANT4MT)
