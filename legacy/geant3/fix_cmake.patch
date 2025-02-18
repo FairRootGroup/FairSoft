@@ -1,0 +1,35 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c63aad6..ae45b94 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -24,7 +24,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+ endif()
+ 
+ #--- Define CMake requirements -------------------------------------------------
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ #--- Prepend our own CMake Modules to the search path --------------------------
+ set(CMAKE_MODULE_PATH
+diff --git a/cmake/Geant3BuildLibrary.cmake b/cmake/Geant3BuildLibrary.cmake
+index 695a455..7d609cc 100644
+--- a/cmake/Geant3BuildLibrary.cmake
++++ b/cmake/Geant3BuildLibrary.cmake
+@@ -11,7 +11,7 @@
+ # I. Hrivnacova, 13/06/2014
+ 
+ #---CMake required version -----------------------------------------------------
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ #-------------------------------------------------------------------------------
+ # Define installed names
+diff --git a/cmake/Geant3RequiredPackages.cmake b/cmake/Geant3RequiredPackages.cmake
+index ae5c291..502fa3a 100644
+--- a/cmake/Geant3RequiredPackages.cmake
++++ b/cmake/Geant3RequiredPackages.cmake
+@@ -27,3 +27,4 @@ include(${ROOT_USE_FILE})
+ 
+ #-- VMC (required) ------------------------------------------------------------
+ find_package(VMC CONFIG REQUIRED)
++set(VMC_DEPS VMCLibrary)
