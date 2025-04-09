@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (C) 2020-2024 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2025 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
@@ -143,7 +143,7 @@ ExternalProject_Add(faircmakemodules
 )
 
 list(APPEND packages boost)
-set(boost_version "83")
+set(boost_version "87")
 set(boost_features
   "cxxstd=${CMAKE_CXX_STANDARD}"
   "link=shared"
@@ -164,9 +164,8 @@ endif()
 
 ExternalProject_Add(boost
   URL "https://archives.boost.io/release/1.${boost_version}.0/source/boost_1_${boost_version}_0.tar.bz2"
-  URL_HASH SHA256=6478edfe2f3305127cffe8caf73ea0176c53769f4bf1585be237eb30798c3b8e
+  URL_HASH SHA256=af57be25cb4c4f4b413ed692fe378affb4352ea50fbe294a11ef548f4d527d89
   BUILD_IN_SOURCE ON
-  PATCH_COMMAND ${patch} -d libs/python -p1 -i "${CMAKE_SOURCE_DIR}/legacy/boost/support-numpy-2.patch"
   CONFIGURE_COMMAND "./bootstrap.sh"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     ${boost_python_config_bootstrap}
@@ -185,10 +184,10 @@ ExternalProject_Add(boost
 )
 
 list(APPEND packages fmt)
-set(fmt_version "10.1.1")
+set(fmt_version "11.1.4")
 ExternalProject_Add(fmt
   URL "https://github.com/fmtlib/fmt/releases/download/${fmt_version}/fmt-${fmt_version}.zip"
-  URL_HASH SHA256=b84e58a310c9b50196cda48d5678d5fa0849bca19e5fdba6b684f0ee93ed9d1b
+  URL_HASH SHA256=49b039601196e1a765e81c5c9a05a61ed3d33f23b3961323d7322e4fe213d3e6
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DFMT_DOC=OFF"
   ${LOG_TO_FILE}
@@ -199,10 +198,9 @@ if(ICU_ROOT)
   set(dds_icu_hint "-DDDS_LD_LIBRARY_PATH=${ICU_ROOT}/lib")
 endif()
 list(APPEND packages dds)
-set(dds_version "3.8")
+set(dds_version "3.13")
 ExternalProject_Add(dds
   GIT_REPOSITORY https://github.com/FairRootGroup/DDS GIT_TAG ${dds_version}
-  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/dds/relax_protobuf_requirement.patch"
   UPDATE_DISCONNECTED ON
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     ${dds_icu_hint}
@@ -217,7 +215,7 @@ ExternalProject_Add_Step(dds build_wn_bin DEPENDEES build DEPENDERS install
 )
 
 list(APPEND packages fairlogger)
-set(fairlogger_version "1.11.1")
+set(fairlogger_version "2.1.0")
 ExternalProject_Add(fairlogger
   GIT_REPOSITORY https://github.com/FairRootGroup/FairLogger GIT_TAG v${fairlogger_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -252,23 +250,12 @@ ExternalProject_Add(flatbuffers
 )
 
 list(APPEND packages fairmq)
-set(fairmq_version "1.8.4")
+set(fairmq_version "1.9.2")
 ExternalProject_Add(fairmq
   GIT_REPOSITORY https://github.com/FairRootGroup/FairMQ GIT_TAG v${fairmq_version}
   ${CMAKE_DEFAULT_ARGS}
   DEPENDS boost fairlogger zeromq ${extract_source_cache_target}
   ${LOG_TO_FILE}
-)
-
-list(APPEND packages pythia6)
-set(pythia6_version "428-alice1")
-ExternalProject_Add(pythia6
-  URL https://github.com/alisw/pythia6/archive/${pythia6_version}.tar.gz
-  URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
-  UPDATE_DISCONNECTED ON
-  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
-  ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
-  ${DEPENDS_ON_SOURCE_CACHE}
 )
 
 list(APPEND packages hepmc)
@@ -311,12 +298,12 @@ ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
 )
 
 list(APPEND packages pythia8)
-set(pythia8_version "8310")
+set(pythia8_version "8313")
 string(SUBSTRING "${pythia8_version}" 0 2 pythia8_major_version)
 string(TOUPPER "${CMAKE_BUILD_TYPE}" selected)
 ExternalProject_Add(pythia8
   URL https://pythia.org/download/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
-  URL_HASH SHA256=90c811abe7a3d2ffdbf9b4aeab51cf6e0a5a8befb4e3efa806f3d5b9c311e227
+  URL_HASH SHA256=d07e801501c4dcb76d948dc63285375f597453c1d6ec65e71287603dc776718c
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
     "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
@@ -327,8 +314,27 @@ ExternalProject_Add(pythia8
   ${LOG_TO_FILE}
 )
 
+if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm")
+  set(vector "-DVECGEOM_VECTOR=empty")
+else()
+  set(vector "-DVECGEOM_VECTOR=native")
+endif()
+
+list(APPEND packages vecgeom)
+set(vecgeom_version "1.2.10")
+ExternalProject_Add(vecgeom
+  GIT_REPOSITORY https://gitlab.cern.ch/VecGeom/VecGeom GIT_TAG v${vecgeom_version}
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DVECGEOM_BACKEND=vc"
+    "-DVECGEOM_BUILTIN_VECCORE=ON"
+    ${vector}
+  DEPENDS vc
+  ${LOG_TO_FILE}
+)
+
+
 list(APPEND packages geant4)
-set(geant4_version "11.2.0")
+set(geant4_version "11.3.0")
 if(GEANT4MT)
   set(mt
     "-DGEANT4_BUILD_MULTITHREADED=ON"
@@ -339,7 +345,7 @@ else()
 endif()
 ExternalProject_Add(geant4
   URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
-  URL_HASH SHA256=46ad7fab3c5cb4bd0bdd77dd6d3e2283184819235bcbc01b2d117d81b35596a6
+  URL_HASH SHA256=1da4318b3f96f87f4d47558a32dab269b8f3fc956708038c28e72a180b0efba6
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
     ${mt}
@@ -362,7 +368,7 @@ ExternalProject_Add(geant4
 )
 
 list(APPEND packages root)
-set(root_version "6.30.08")
+set(root_version "6.34.08")
 string(REPLACE "\." "-" root_version_gittag ${root_version})
 if(APPLE AND CMAKE_VERSION VERSION_GREATER 3.15)
   set(root_builtin_glew "-Dbuiltin_glew=ON")
@@ -374,7 +380,7 @@ else()
   unset(root_cocoa)
   set(root_x11 ON)
 endif()
-find_package(nlohmann_json 3.9)
+find_package(nlohmann_json 3.9 QUIET)
 if(nlohmann_json_FOUND)
   set(root_builtin_nlohmannjson "-Dbuiltin_nlohmannjson=OFF")
 else()
@@ -396,10 +402,8 @@ ExternalProject_Add(root
     "-Dgnuinstall=ON"
     "-Dhttp=ON"
     "-Dmathmore=ON"
-    "-Dminuit2=ON"
     "-Dmlp=ON"
     "-Dpyroot=ON"
-    "-Dpythia6=ON"
     "-Dpythia8=ON"
     "-Dreflex=OFF"
     "-Droofit=ON"
@@ -411,6 +415,7 @@ ExternalProject_Add(root
     "-Dtmva=ON"
     "-Dvc=ON"
     "-Dvdt=OFF"
+    "-Dvecgeom=ON"
     "-Dxml=ON"
     "-Dxrootd=ON"
     "-Dx11=${root_x11}"
@@ -421,8 +426,7 @@ ExternalProject_Add(root
     ${root_cocoa}
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
-  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_findOpenGL.patch"
-  DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
+  DEPENDS pythia8 vc vecgeom ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
 
@@ -435,7 +439,7 @@ ExternalProject_Add(vmc
 )
 
 list(APPEND packages geant3)
-set(geant3_version "4-2_fairsoft")
+set(geant3_version "4-4_fairsoft")
 ExternalProject_Add(geant3
   GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -445,7 +449,7 @@ ExternalProject_Add(geant3
 )
 
 list(APPEND packages vgm)
-set(vgm_version "5-2")
+set(vgm_version "5-3-1")
 ExternalProject_Add(vgm
   GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
@@ -455,7 +459,7 @@ ExternalProject_Add(vgm
 )
 
 list(APPEND packages geant4_vmc)
-set(geant4_vmc_version "6-5")
+set(geant4_vmc_version "6-7")
 ExternalProject_Add(geant4_vmc
   GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v${geant4_vmc_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
