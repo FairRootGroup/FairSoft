@@ -277,6 +277,7 @@ set(vc_version "1.4.4")
 ExternalProject_Add(vc
   URL https://github.com/VcDevel/Vc/archive/refs/tags/${vc_version}.tar.gz
   URL_HASH SHA256=5933108196be44c41613884cd56305df320263981fe6a49e648aebb3354d57f3
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/vc/fix_cmake.patch"
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
