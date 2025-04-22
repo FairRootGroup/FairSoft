@@ -228,6 +228,7 @@ list(APPEND packages zeromq)
 set(zeromq_version "4.3.5")
 ExternalProject_Add(zeromq
   GIT_REPOSITORY https://github.com/zeromq/libzmq GIT_TAG v${zeromq_version}
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/zeromq/fix_cmake.patch"
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DWITH_PERF_TOOL=ON"
     "-DZMQ_BUILD_TESTS=ON"
