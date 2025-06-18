@@ -268,6 +268,7 @@ ExternalProject_Add(pythia6
   URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/fix_cmake.patch"
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
