@@ -1,0 +1,91 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 77c7762225..c5feadd9e1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -524,6 +524,12 @@ else()
+   get_property(__pch_dependencies GLOBAL PROPERTY ROOT_PCH_DEPENDENCIES)
+   get_property(__pch_dictionaries GLOBAL PROPERTY ROOT_PCH_DICTIONARIES)
+ 
++  if (APPLE AND CMAKE_OSX_SYSROOT)
++    set(_sysroot_arg "SDKROOT=${CMAKE_OSX_SYSROOT}")
++  else()
++    set(_sysroot_arg)
++  endif()
++
+   add_custom_command(OUTPUT etc/allDict.cxx.pch
+     BYPRODUCTS
+       etc/dictpch/allCppflags.txt
+@@ -533,9 +539,12 @@ else()
+       ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/build/unix/makepchinput.py
+       ${CMAKE_SOURCE_DIR} . ${pyroot_legacy} ${__cling_pch}
+     COMMAND
+-      ${CMAKE_COMMAND} -E env ROOTIGNOREPREFIX=1 ${Python3_EXECUTABLE}
+-      ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py etc/allDict.cxx.pch
+-      ${__allIncludes} -I${CMAKE_BINARY_DIR}/include -I${CMAKE_SOURCE_DIR}/core
++      ${CMAKE_COMMAND} -E env
++        ${_sysroot_arg}
++        ROOTIGNOREPREFIX=1
++        ${Python3_EXECUTABLE}
++        ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py etc/allDict.cxx.pch
++        ${__allIncludes} -I${CMAKE_BINARY_DIR}/include -I${CMAKE_SOURCE_DIR}/core
+     DEPENDS
+       rootcling ${__pch_dependencies} ${__pch_dictionaries}
+       ${CMAKE_SOURCE_DIR}/build/unix/makepchinput.py
+diff --git a/cmake/modules/RootConfiguration.cmake b/cmake/modules/RootConfiguration.cmake
+index 9fd959736f..a221c1504a 100644
+--- a/cmake/modules/RootConfiguration.cmake
++++ b/cmake/modules/RootConfiguration.cmake
+@@ -35,6 +35,8 @@ set(ldflags ${CMAKE_CXX_LINK_FLAGS})
+ set(winrtdebug ${value${winrtdebug}})
+ set(exceptions ${value${exceptions}})
+ 
++set(macosxsdk ${CMAKE_OSX_SYSROOT})
++
+ if(gnuinstall)
+   set(prefix ${CMAKE_INSTALL_PREFIX})
+ else()
+diff --git a/config/root-config.in b/config/root-config.in
+index 59fe988331..74eeb86739 100755
+--- a/config/root-config.in
++++ b/config/root-config.in
+@@ -416,7 +416,7 @@ Usage: root-config [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version]\
+  [--noauxcflags] [--noauxlibs] [--noldflags] [--has-<feature>] [--arch]\
+  [--platform] [--config] [--features] [--ncpu] [--git-revision]\
+  [--python-version] [--python3-version] [--cxxstandard]\
+- [--cc] [--cxx] [--f77] [--ld ] [--help]"
++ [--cc] [--cxx] [--f77] [--ld ] [--macosx-sdk] [--help]"
+ 
+ if test $# -eq 0; then
+    echo "${usage}" 1>&2
+@@ -784,6 +784,10 @@ while test $# -gt 0; do
+       ### output used Linker
+       out="$out $altld"
+       ;;
++    --macosx-sdk)
++      ### Output the SDK path on macOS
++      out="$out @macosxsdk@"
++      ;;
+     --help)
+       ### Print a help message
+       echo "Usage: `basename $0` [options]"
+@@ -822,6 +826,7 @@ while test $# -gt 0; do
+       echo "  --cxx                 Print alternative C++ compiler specified when ROOT was built"
+       echo "  --f77                 Print alternative Fortran compiler specified when ROOT was built"
+       echo "  --ld                  Print alternative Linker specified when ROOT was built"
++      echo "  --macosx-sdk          Print SDK used when ROOT was built on macosx"
+       echo "  --help                Print this message"
+       exit 0
+       ;;
+diff --git a/cmake/modules/RootMacros.cmake b/cmake/modules/RootMacros.cmake
+index a636be0cbd..8c35ee27bd 100644
+--- a/cmake/modules/RootMacros.cmake
++++ b/cmake/modules/RootMacros.cmake
+@@ -613,6 +613,8 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
+     # doesn't work on Windows. It should resolve to the following and work:
+     #    set(rootcling_env "PATH=${CMAKE_BINARY_DIR}/bin:$ENV{PATH}")
+     set(rootcling_env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH}")
++  elseif(APPLE AND CMAKE_OSX_SYSROOT)
++    set(rootcling_env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH};SDKROOT=${CMAKE_OSX_SYSROOT}")
+   else()
+     set(rootcling_env "${ld_library_path}=${localruntimedir}:$ENV{${ld_library_path}}")
+   endif()
