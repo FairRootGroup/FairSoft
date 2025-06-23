@@ -379,7 +379,7 @@ else()
   unset(root_cocoa)
   set(root_x11 ON)
 endif()
-find_package(nlohmann_json 3.9)
+find_package(nlohmann_json 3.9 QUIET)
 if(nlohmann_json_FOUND)
   set(root_builtin_nlohmannjson "-Dbuiltin_nlohmannjson=OFF")
 else()
@@ -427,6 +427,8 @@ ExternalProject_Add(root
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_findOpenGL.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_clang17.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_for_rootcling.patch"
   DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
