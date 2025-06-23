@@ -1,0 +1,114 @@
+diff --git a/cmake/modules/RootMacros.cmake b/cmake/modules/RootMacros.cmake
+index 616b133943..0ed52ee3bc 100644
+--- a/cmake/modules/RootMacros.cmake
++++ b/cmake/modules/RootMacros.cmake
+@@ -604,6 +604,8 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
+   if(ARG_STAGE1)
+     if(MSVC AND CMAKE_ROOTTEST_DICT)
+       set(command ${CMAKE_COMMAND} -E ${CMAKE_BINARY_DIR}/bin/rootcling_stage1.exe)
++    elseif(APPLE AND CMAKE_OSX_SYSROOT)
++      set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH}" env "SDKROOT=${CMAKE_OSX_SYSROOT}" $<TARGET_FILE:rootcling_stage1>)
+     else()
+       set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH}" $<TARGET_FILE:rootcling_stage1>)
+     endif()
+@@ -613,6 +615,11 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
+     if(CMAKE_PROJECT_NAME STREQUAL ROOT)
+       if(MSVC AND CMAKE_ROOTTEST_DICT)
+         set(command ${CMAKE_COMMAND} -E env "ROOTIGNOREPREFIX=1" ${CMAKE_BINARY_DIR}/bin/rootcling.exe)
++      elseif(APPLE AND CMAKE_OSX_SYSROOT)
++        set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH}" env "SDKROOT=${CMAKE_OSX_SYSROOT}"
++                    "ROOTIGNOREPREFIX=1" $<TARGET_FILE:rootcling> -rootbuild)
++        # Modules need RConfigure.h copied into include/.
++        set(ROOTCINTDEP rootcling rconfigure)
+       else()
+         set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH}"
+                     "ROOTIGNOREPREFIX=1" $<TARGET_FILE:rootcling> -rootbuild)
+@@ -620,7 +627,9 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
+         set(ROOTCINTDEP rootcling rconfigure)
+       endif()
+     elseif(TARGET ROOT::rootcling)
+-      if(APPLE)
++      if(APPLE AND CMAKE_OSX_SYSROOT)
++        set(command ${CMAKE_COMMAND} -E env "DYLD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{DYLD_LIBRARY_PATH}" env "SDKROOT=${CMAKE_OSX_SYSROOT}" $<TARGET_FILE:ROOT::rootcling>)
++      elseif(APPLE)
+         set(command ${CMAKE_COMMAND} -E env "DYLD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{DYLD_LIBRARY_PATH}" $<TARGET_FILE:ROOT::rootcling>)
+       else()
+         set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}" $<TARGET_FILE:ROOT::rootcling>)
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 77c7762225..c5feadd9e1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -524,6 +524,12 @@ else()
+   get_property(__pch_dependencies GLOBAL PROPERTY ROOT_PCH_DEPENDENCIES)
+   get_property(__pch_dictionaries GLOBAL PROPERTY ROOT_PCH_DICTIONARIES)
+ 
++  if (APPLE AND CMAKE_OSX_SYSROOT)
++    set(_sysroot_arg "SDKROOT=${CMAKE_OSX_SYSROOT}")
++  else()
++    set(_sysroot_arg)
++  endif()
++
+   add_custom_command(OUTPUT etc/allDict.cxx.pch
+     BYPRODUCTS
+       etc/dictpch/allCppflags.txt
+@@ -533,9 +539,12 @@ else()
+       ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/build/unix/makepchinput.py
+       ${CMAKE_SOURCE_DIR} . ${pyroot_legacy} ${__cling_pch}
+     COMMAND
+-      ${CMAKE_COMMAND} -E env ROOTIGNOREPREFIX=1 ${PYTHON_EXECUTABLE}
+-      ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py etc/allDict.cxx.pch
+-      ${__allIncludes} -I${CMAKE_BINARY_DIR}/include -I${CMAKE_SOURCE_DIR}/core
++      ${CMAKE_COMMAND} -E env
++        ${_sysroot_arg}
++        ROOTIGNOREPREFIX=1
++        ${PYTHON_EXECUTABLE}
++        ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py etc/allDict.cxx.pch
++        ${__allIncludes} -I${CMAKE_BINARY_DIR}/include -I${CMAKE_SOURCE_DIR}/core
+     DEPENDS
+       rootcling ${__pch_dependencies} ${__pch_dictionaries}
+       ${CMAKE_SOURCE_DIR}/build/unix/makepchinput.py
+diff --git a/cmake/modules/RootConfiguration.cmake b/cmake/modules/RootConfiguration.cmake
+index 9fd959736f..a221c1504a 100644
+--- a/cmake/modules/RootConfiguration.cmake
++++ b/cmake/modules/RootConfiguration.cmake
+@@ -35,6 +35,8 @@ set(ldflags ${CMAKE_CXX_LINK_FLAGS})
+ set(winrtdebug ${value${winrtdebug}})
+ set(exceptions ${value${exceptions}})
+ 
++set(macosxsdk ${CMAKE_OSX_SYSROOT})
++
+ if(gnuinstall)
+   set(prefix ${CMAKE_INSTALL_PREFIX})
+ else()
+diff --git a/config/root-config.in b/config/root-config.in
+index 57b61ff89c..18c32254e0 100755
+--- a/config/root-config.in
++++ b/config/root-config.in
+@@ -448,7 +448,7 @@ Usage: root-config [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version]\
+  [--noauxcflags] [--noauxlibs] [--noldflags] [--has-<feature>] [--arch]\
+  [--platform] [--config] [--features] [--ncpu] [--git-revision]\
+  [--python-version] [--python2-version] [--python3-version]\
+- [--cc] [--cxx] [--f77] [--ld ] [--help]"
++ [--cc] [--cxx] [--f77] [--ld ] [--macosx-sdk] [--help]"
+ 
+ if test $# -eq 0; then
+    echo "${usage}" 1>&2
+@@ -816,6 +816,10 @@ while test $# -gt 0; do
+       ### output used Linker
+       out="$out $altld"
+       ;;
++    --macosx-sdk)
++      ### Output the prefix
++      out="$out @macosxsdk@"
++      ;;
+     --help)
+       ### Print a help message
+       echo "Usage: `basename $0` [options]"
+@@ -854,6 +858,7 @@ while test $# -gt 0; do
+       echo "  --cxx                 Print alternative C++ compiler specified when ROOT was built"
+       echo "  --f77                 Print alternative Fortran compiler specified when ROOT was built"
+       echo "  --ld                  Print alternative Linker specified when ROOT was built"
++      echo "  --macosx-sdk          Print SDK used when ROOT was built on macosx"
+       echo "  --help                Print this message"
+       exit 0
+       ;;

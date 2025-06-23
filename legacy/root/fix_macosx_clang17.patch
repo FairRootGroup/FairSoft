@@ -1,0 +1,20 @@
+diff --git a/graf2d/asimage/src/libAfterImage/libpng/pngconf.h b/graf2d/asimage/src/libAfterImage/libpng/pngconf.h
+index f0a69ccb6c..8ad4eb4ec3 100644
+--- a/graf2d/asimage/src/libAfterImage/libpng/pngconf.h
++++ b/graf2d/asimage/src/libAfterImage/libpng/pngconf.h
+@@ -429,9 +429,12 @@
+       * as it seems it doesn't agree with <fp.h>, yet we should really use
+       * <fp.h> if possible.
+       */
+-#    if !defined(__MATH_H__) && !defined(__MATH_H) && !defined(__cmath__)
+-#      include <fp.h>
+-#    endif
++// On recent macosx systems fp.h is deprecated, so use the
++// normal math library
++#    include <math.h>
++//#    if !defined(__MATH_H__) && !defined(__MATH_H) && !defined(__cmath__)
++//#      include <fp.h>
++//#    endif
+ #  else
+ #    include <math.h>
+ #  endif
