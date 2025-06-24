@@ -1,0 +1,37 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 918bef0..3efc04e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -24,7 +24,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+ endif()
+ 
+ #--- Define CMake requirements -------------------------------------------------
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ #--- Prepend our own CMake Modules to the search path --------------------------
+ set(CMAKE_MODULE_PATH
+diff --git a/cmake/Geant3BuildLibrary.cmake b/cmake/Geant3BuildLibrary.cmake
+index 33ef258..dc1dc2b 100644
+--- a/cmake/Geant3BuildLibrary.cmake
++++ b/cmake/Geant3BuildLibrary.cmake
+@@ -11,7 +11,7 @@
+ # I. Hrivnacova, 13/06/2014
+ 
+ #---CMake required version -----------------------------------------------------
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ #-------------------------------------------------------------------------------
+ # Define installed names
+diff --git a/cmake/Geant3RequiredPackages.cmake b/cmake/Geant3RequiredPackages.cmake
+index 04182d5..2f2f306 100644
+--- a/cmake/Geant3RequiredPackages.cmake
++++ b/cmake/Geant3RequiredPackages.cmake
+@@ -25,3 +25,6 @@ include(${ROOT_USE_FILE})
+ 
+ #-- VMC (required) ------------------------------------------------------------
+ find_package(VMC CONFIG REQUIRED)
++find_package(Pythia6 REQUIRED)
++set(VMC_DEPS VMCLibrary ${Pythia6_LIBRARY})
++

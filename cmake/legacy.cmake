@@ -445,6 +445,7 @@ ExternalProject_Add(geant3
   GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DBUILD_GCALOR=ON"
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant3/fix_cmake.patch"
   DEPENDS root vmc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
