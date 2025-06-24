@@ -470,6 +470,7 @@ ExternalProject_Add(geant4_vmc
     "-DGeant4VMC_USE_GEANT4_VIS=OFF"
     "-DGeant4VMC_USE_GEANT4_G3TOG4=ON"
     "-DWITH_TEST=OFF"
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant4_vmc/fix_cmake.patch"
   DEPENDS clhep geant4 root vgm vmc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
