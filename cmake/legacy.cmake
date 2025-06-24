@@ -455,6 +455,7 @@ ExternalProject_Add(vgm
   GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DWITH_TEST=OFF"
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/vgm/fix_cmake.patch"
   DEPENDS clhep geant4 root ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
