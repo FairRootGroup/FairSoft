@@ -1,0 +1,11 @@
+--- a/source/externals/g4tools/include/tools/wroot/columns.icc_orig	2025-06-23 17:33:15
++++ b/source/externals/g4tools/include/tools/wroot/columns.icc	2025-06-23 17:33:49
+@@ -399,7 +399,7 @@
+   protected:
+     std_vector_column_ref(const std_vector_column_ref& a_from)
+     :icol(a_from)
+-    ,m_branch(a_from.m_barnch)
++    ,m_branch(a_from.m_branch)
+     ,m_ref(a_from.m_ref)
+     ,m_leaf(0)
+     ,m_leaf_count(0)
