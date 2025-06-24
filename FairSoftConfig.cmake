@@ -74,7 +74,7 @@ endif()
 #  `brew` contains some logic to detect installed SDKs on your machine and can choose the latest.
 #  Since we anyways depend on brew, let's use it.
 #
-if(APPLE)
+if(APPLE AND NOT CMAKE_OSX_SYSROOT)
   execute_process(COMMAND brew ruby -e "puts MacOS.sdk_path" OUTPUT_VARIABLE macos_sdk_path)
   string(STRIP "${macos_sdk_path}" macos_sdk_path)
   set(CMAKE_OSX_SYSROOT "${macos_sdk_path}" CACHE FILEPATH "macOS SDK" FORCE)
