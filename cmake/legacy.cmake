@@ -435,6 +435,7 @@ set(vmc_version "2-0")
 ExternalProject_Add(vmc
   GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/vmc/fix_cmake.patch"
   DEPENDS root ${extract_source_cache_target}
 )
 
