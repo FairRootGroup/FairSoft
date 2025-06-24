@@ -361,6 +361,7 @@ ExternalProject_Add(geant4
     "-DGEANT4_BUILD_VERBOSE_CODE=ON"
     "-DGEANT4_BUILD_BUILTIN_BACKTRACE=OFF"
     ${cmake_python_config_old}
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant4/fix_cmake.patch"
   DEPENDS boost clhep ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
