@@ -5,8 +5,8 @@
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
-cmake_minimum_required(VERSION 3.19...4.0.1)
-cmake_policy(VERSION 3.19...4.0.1)
+cmake_minimum_required(VERSION 3.24...4.0.1)
+cmake_policy(VERSION 3.24...4.0.1)
 
 find_package(LibLZMA)
 if(LibLZMA_FOUND)
