@@ -1,12 +1,12 @@
 ################################################################################
-# Copyright (C) 2020-2024 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
+# Copyright (C) 2020-2026 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH  #
 #                                                                              #
 #              This software is distributed under the terms of the             #
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
-cmake_minimum_required(VERSION 3.19...3.28 FATAL_ERROR)
-cmake_policy(VERSION 3.19...3.28)
+cmake_minimum_required(VERSION 3.24...4.0.1)
+cmake_policy(VERSION 3.24...4.0.1)
 
 find_package(LibLZMA)
 if(LibLZMA_FOUND)
