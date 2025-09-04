@@ -72,6 +72,14 @@ set(CMAKE_DEFAULT_ARGS CMAKE_CACHE_DEFAULT_ARGS
   "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
   "-DCMAKE_INSTALL_LIBDIR:PATH=lib"
   )
+
+set(FAIRSOFT_RPATH_ARGS
+  "-DCMAKE_SKIP_BUILD_RPATH:BOOL=FALSE"
+  "-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=FALSE"
+  "-DCMAKE_INSTALL_RPATH:STRING=${CMAKE_INSTALL_PREFIX}/lib"
+  "-DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE"
+  )
+
 if (CMAKE_TOOLCHAIN_FILE)
   list(APPEND CMAKE_DEFAULT_ARGS -DCMAKE_TOOLCHAIN_FILE:STRING=${CMAKE_TOOLCHAIN_FILE})
 endif()
@@ -230,6 +238,7 @@ ExternalProject_Add(zeromq
   GIT_REPOSITORY https://github.com/zeromq/libzmq GIT_TAG v${zeromq_version}
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/zeromq/fix_cmake.patch"
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    ${FAIRSOFT_RPATH_ARGS}
     "-DWITH_PERF_TOOL=ON"
     "-DZMQ_BUILD_TESTS=ON"
     "-DENABLE_CPACK=OFF"
@@ -288,6 +297,7 @@ ExternalProject_Add(clhep
   URL https://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
   URL_HASH SHA256=1c8304a7772ac6b99195f1300378c6e3ddf4ad07c85d64a04505652abb8a55f9
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    ${FAIRSOFT_RPATH_ARGS}
     "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/clhep/allow_c++23.patch"
   ${LOG_TO_FILE}
@@ -351,6 +361,7 @@ ExternalProject_Add(geant4
   URL https://geant4-data.web.cern.ch/releases/geant4-v${geant4_version}.tar.gz
   URL_HASH SHA256=892aedd7425262a50ac3d3c7117d81c0c0da4b408c6880dbaf5478b9301e488c
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    ${FAIRSOFT_RPATH_ARGS}
     "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
     ${mt}
     "-DGEANT4_USE_SYSTEM_CLHEP=ON"
@@ -430,6 +441,7 @@ ExternalProject_Add(root
     ${root_cocoa}
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_rpath_info.patch"
   DEPENDS pythia8 vc vecgeom ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
@@ -438,7 +450,9 @@ list(APPEND packages vmc)
 set(vmc_version "2-1")
 ExternalProject_Add(vmc
   GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
-  ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    ${FAIRSOFT_RPATH_ARGS}
+  ${LOG_TO_FILE}
   DEPENDS root ${extract_source_cache_target}
 )
 
@@ -448,6 +462,7 @@ ExternalProject_Add(geant3
   GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant3/fix_cmake.patch"
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    ${FAIRSOFT_RPATH_ARGS}
     "-DBUILD_GCALOR=ON"
     "-DCMAKE_C_STANDARD=17"
   DEPENDS root vmc ${extract_source_cache_target}
@@ -459,6 +474,7 @@ set(vgm_version "5-3-1")
 ExternalProject_Add(vgm
   GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    ${FAIRSOFT_RPATH_ARGS}
     "-DWITH_TEST=OFF"
   DEPENDS clhep geant4 root ${extract_source_cache_target}
   ${LOG_TO_FILE}
@@ -469,6 +485,7 @@ set(geant4_vmc_version "6-7-p1")
 ExternalProject_Add(geant4_vmc
   GIT_REPOSITORY https://github.com/vmc-project/geant4_vmc GIT_TAG v${geant4_vmc_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    ${FAIRSOFT_RPATH_ARGS}
     "-DGeant4VMC_USE_VGM=ON"
     "-DGeant4VMC_USE_GEANT4_UI=OFF"
     "-DGeant4VMC_USE_GEANT4_VIS=OFF"

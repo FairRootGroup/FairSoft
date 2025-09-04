@@ -1,0 +1,43 @@
+diff --git a/bindings/pyroot/cppyy/CPyCppyy/CMakeLists.txt b/bindings/pyroot/cppyy/CPyCppyy/CMakeLists.txt
+index 911517294b..be64df9b42 100644
+--- a/bindings/pyroot/cppyy/CPyCppyy/CMakeLists.txt
++++ b/bindings/pyroot/cppyy/CPyCppyy/CMakeLists.txt
+@@ -67,6 +67,8 @@ endif()
+ 
+ if(NOT MSVC)
+   target_compile_options(${libname} PRIVATE -Wno-strict-aliasing)
++  # Make sure that relative RUNPATH to main ROOT libraries is always correct.
++  ROOT_APPEND_LIBDIR_TO_INSTALL_RPATH(${libname} ${CMAKE_INSTALL_LIBDIR})
+ endif()
+ if(NOT "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" AND NOT MSVC)
+   target_compile_options(${libname} PRIVATE
+diff --git a/bindings/pyroot/cppyy/cppyy-backend/CMakeLists.txt b/bindings/pyroot/cppyy/cppyy-backend/CMakeLists.txt
+index f296f3886d..bb0a0fd9b6 100644
+--- a/bindings/pyroot/cppyy/cppyy-backend/CMakeLists.txt
++++ b/bindings/pyroot/cppyy/cppyy-backend/CMakeLists.txt
+@@ -36,6 +36,12 @@ target_link_libraries(${libname} Core ${CMAKE_DL_LIBS})
+ # cppyy uses ROOT headers from binary directory
+ add_dependencies(${libname} move_headers)
+ 
++if(NOT MSVC)
++  # Make sure that relative RUNPATH to main ROOT libraries is always correct.
++  ROOT_APPEND_LIBDIR_TO_INSTALL_RPATH(${libname} ${CMAKE_INSTALL_LIBDIR})
++endif()
++
++
+ set_property(GLOBAL APPEND PROPERTY ROOT_EXPORTED_TARGETS ${libname})
+ 
+ # Install library
+diff --git a/bindings/pyroot/pythonizations/CMakeLists.txt b/bindings/pyroot/pythonizations/CMakeLists.txt
+index e222e04c0e..a80c716d73 100644
+--- a/bindings/pyroot/pythonizations/CMakeLists.txt
++++ b/bindings/pyroot/pythonizations/CMakeLists.txt
+@@ -187,6 +187,8 @@ endif()
+ target_include_directories(${libname}
+     SYSTEM PRIVATE ${Python3_INCLUDE_DIRS})
+ 
++ROOT_APPEND_LIBDIR_TO_INSTALL_RPATH(${libname} ${CMAKE_INSTALL_LIBDIR})
++
+ target_include_directories(${libname}
+     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/inc>)
+ 
