@@ -19,7 +19,7 @@ trap "cleanup ${builddir}" EXIT
 pushd "${builddir}" > /dev/null
 
 cmakebaseurl="https://github.com/Kitware/CMake/releases/download/v"
-cmakeversion="3.27.4"
+cmakeversion="4.1.1"
 unames=$(uname -s | tr '[:upper:]' '[:lower:]')
 unamem=$(uname -m | tr '[:upper:]' '[:lower:]')
 cmaketargz="cmake-${cmakeversion}-${unames}-${unamem}.tar.gz"
