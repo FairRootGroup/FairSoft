@@ -84,18 +84,31 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
-| Almalinux  | x86_64 | 9     | GCC 11.4.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.27.4 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.25.1 |
-| Fedora     | x86_64 | 37    | GCC 12.3.1                 | 3.27.7 |
 | Fedora     | x86_64 | 38    | GCC 13.2.1                 | 3.27.7 |
-| Fedora     | x86_64 | 39    | GCC 13.2.1                 | 3.27.7 |
+| Fedora     | x86_64 | 40    | GCC 14.2.1                 | 3.30.8 |
+| Fedora     | x86_64 | 42    | GCC 15.2.1                 | 3.31.6 |
+| Debian     | x86_64 | 11    | GCC 10.2.1                 | 4.4.1 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.25.1 |
+| Open Suse  | x86_64 | 15.6  | GCC 14.3.0 (non system)    | 3.28.3 | 
+
+Not yet tested but know to work with previous FairSoft release.
+Will be tested before release
+
+| **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
+| --- | --- | --- | --- | --- |
+| Almalinux  | x86_64 | 9     | GCC 11.4.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
 | macOS      | x86_64 | 14    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
 | macOS      | x86_64 | 15    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
 | macOS      | arm64  | 15    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                 | 3.22.1 |
 | Ubuntu     | x86_64 | 24.04 | GCC 13.2.0                 | 3.28.3 |
+
+The additional package **onnxruntime** currently can't be compiled on
+Debian10 because of the rather old compiler version. **onnxruntime**
+requires at least gcc 11.1 The compilation also fails for OpenSuse Leap 15.6
+due to configuration problems. Sine the build system requires at least CMake
+3.28 it is needed to install a newer CMake version for Debian12 and
+Fedora38. 
 
 ## Included packages
 
