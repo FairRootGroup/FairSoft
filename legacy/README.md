@@ -51,6 +51,41 @@ cmake -S <path-to-source> -B <path-to-build> -C <path-to-source>/FairSoftConfig.
 
 Set the installation prefix and more customization options in the [`FairSoftConfig.cmake`](../FairSoftConfig.cmake) file itself.
 
+#### 3.1 CMake configure step for macOS users
+
+There are some known problems about the compilation of FairSoft on macOS.
+
+The first two problems are related to the version of the **patch** and **make**
+commands on macOS.
+
+The **patch** command does not support the needed parameters,
+so one needs to install a version of the **patch** command with brew.
+The **make** command doesn't properly support the jobsserver which allows
+parallel builds of all the packages contained in FairSoft which slows down
+the installation enormously. The version provided by brew fixes the problem.
+Both packages are already added in the updated setup script for macOS.
+If found the packages from the homebrew installation directory will be used.
+
+The last problem is related to the macOS, compiler and SDK versions, such
+that it depends on the personal setup. As described in more detail at
+[macOS SDK](advanced.md#macos-sdk)! ROOT is very picky about the compiler
+and the connected SDK. Compiling older ROOT versions with newer compilers
+may need using an older SDK version. If not specified explicitly the
+latest SDK version is used. To use an older SDK version one needs to add the
+following parameter when running CMake
+
+```
+-DCMAKE_OSX_SYSROOT=<full path to SDK directory>
+```
+
+e.g. for Apple Clang 17 on macOS 15 or Apple Clang 16 on macOS 14
+
+```
+-DCMAKE_OSX_SYSROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk
+```
+
+More information can be found at
+
 **macOS users**: Notice [macOS SDK](advanced.md#macos-sdk)!
 
 ### 4. CMake build/install step
