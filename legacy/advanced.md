@@ -59,6 +59,17 @@ installed SDK version is the most sensible course of action here. `brew`
 contains already some logic to detect and choose the latest SDK. See the
 "macOS SDK" section in [FairSoftConfig.cmake](../FairSoftConfig.cmake).
 
+The downside with picking the latest SDK version is that some older ROOT
+versions can't be compiled any longer after updating the compiler and the
+connected SDK. As described above the problems with compilation errors due
+to **wrong** SDKs are because of ROOT and there mainly becuase of rootcling.
+To overcome the problem and allow a more flexible compilation also with
+non default SDKs we add the possibilty to define an older SDK when running
+CMake. There are some additional changes in the build system of ROOT such
+that rootcling take the setting properly into account. With this changes it
+becomes possible to install FairSoft jan24 (ROOT 6.30.08) with Apple Clang
+17 on macosx 15.
+
 **If you have a deeper understanding of this issue and know a better
 solution, please let us know!**
 
