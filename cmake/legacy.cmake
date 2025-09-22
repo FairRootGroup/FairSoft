@@ -45,9 +45,31 @@ endif()
 
 
 find_package(Git REQUIRED)
-find_package(Patch REQUIRED)
+
+if (APPLE)
+   find_program(_patch NAMES gpatch patch)
+   if(NOT _patch)
+     message(FATAL_ERROR "Could not find gpatch or patch command")
+   else()
+     message(STATUS "Found Patch: ${_patch}")
+   endif()
+   set(patch ${_patch} --merge)
+else()
+  find_package(Patch REQUIRED)
+  set(patch $<TARGET_FILE:Patch::patch> --merge)
+endif()
+
+if(APPLE AND ${CMAKE_MAKE_PROGRAM} MATCHES ".*/make$")
+  find_program(_make NAMES gmake make)
+  if(NOT _make)
+    message(FATAL_ERROR "Could not find gmake or make command")
+  else()
+    message(STATUS "Found Make: ${_make}")
+  endif()
+  set(CMAKE_MAKE_PROGRAM ${_make} CACHE FILEPATH "Make program" FORCE)
+endif()
+
 find_package(UnixCommands)
-set(patch $<TARGET_FILE:Patch::patch> --merge)
 
 set(PROJECT_MIN_CXX_STANDARD 17)
 
