@@ -187,6 +187,7 @@ ExternalProject_Add(faircmakemodules
 list(APPEND packages boost)
 set(boost_version "90")
 set(boost_features
+  "-d+2"
   "cxxstd=${CMAKE_CXX_STANDARD}"
   "link=shared"
   "threading=multi"
@@ -194,6 +195,11 @@ set(boost_features
   "visibility=hidden"
   "pch=off"
 )
+
+if (APPLE AND CMAKE_OSX_SYSROOT)
+  list(APPEND boost_features "cxxflags='-isysroot${CMAKE_OSX_SYSROOT}'")
+  list(APPEND boost_features "linkflags='-isysroot${CMAKE_OSX_SYSROOT}'")
+endif()
 
 list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
 
