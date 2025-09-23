@@ -344,6 +344,12 @@ ExternalProject_Add(clhep
   ${DEPENDS_ON_SOURCE_CACHE}
 )
 
+if (APPLE AND CMAKE_OSX_SYSROOT)
+  set(_pythia8_macosx_sdk -isysroot${CMAKE_OSX_SYSROOT})
+else()
+  set(_pythia8_macosx_sdk)
+endif()
+
 list(APPEND packages pythia8)
 set(pythia8_version "8317")
 string(SUBSTRING "${pythia8_version}" 0 2 pythia8_major_version)
@@ -356,7 +362,7 @@ ExternalProject_Add(pythia8
     "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     "--cxx=${CMAKE_CXX_COMPILER}"
-    "--cxx-common='${CMAKE_CXX_FLAGS_${selected}} -fPIC -std=c++${CMAKE_CXX_STANDARD}'"
+    "--cxx-common='${CMAKE_CXX_FLAGS_${selected}} -fPIC -std=c++${CMAKE_CXX_STANDARD} ${_pythia8_macosx_sdk}'"
   DEPENDS hepmc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
