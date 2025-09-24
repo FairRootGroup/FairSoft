@@ -52,68 +52,35 @@ index 8233f4e2f2..c54c2e959a 100755
     ret = subprocess.call(command.split(), env=my_env)
     if ret == 0:
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 77c7762225..924942293e 100644
+index 77c7762225..c5feadd9e1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -524,23 +524,44 @@ else()
+@@ -524,6 +524,12 @@ else()
    get_property(__pch_dependencies GLOBAL PROPERTY ROOT_PCH_DEPENDENCIES)
    get_property(__pch_dictionaries GLOBAL PROPERTY ROOT_PCH_DICTIONARIES)
  
--  add_custom_command(OUTPUT etc/allDict.cxx.pch
--    BYPRODUCTS
--      etc/dictpch/allCppflags.txt
--      etc/dictpch/allHeaders.h
--      etc/dictpch/allLinkDefs.h
--    COMMAND
--      ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/cmake/unix/makepchinput.py
--      ${CMAKE_SOURCE_DIR} . ${pyroot_legacy} ${__cling_pch}
--    COMMAND
++  if (APPLE AND CMAKE_OSX_SYSROOT)
++    set(_sysroot_arg "SDKROOT=${CMAKE_OSX_SYSROOT}")
++  else()
++    set(_sysroot_arg)
++  endif()
++
+   add_custom_command(OUTPUT etc/allDict.cxx.pch
+     BYPRODUCTS
+       etc/dictpch/allCppflags.txt
+@@ -533,9 +539,12 @@ else()
+       ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/build/unix/makepchinput.py
+       ${CMAKE_SOURCE_DIR} . ${pyroot_legacy} ${__cling_pch}
+     COMMAND
 -      ${CMAKE_COMMAND} -E env ROOTIGNOREPREFIX=1 ${Python3_EXECUTABLE}
 -      ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py etc/allDict.cxx.pch
 -      ${__allIncludes} -I${CMAKE_BINARY_DIR}/include -I${CMAKE_SOURCE_DIR}/core
--    DEPENDS
--      rootcling ${__pch_dependencies} ${__pch_dictionaries}
--      ${CMAKE_SOURCE_DIR}/cmake/unix/makepchinput.py
--      ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py
--  )
-+  if(APPLE AND CMAKE_OSX_SYSROOT)
-+    add_custom_command(OUTPUT etc/allDict.cxx.pch
-+      BYPRODUCTS
-+        etc/dictpch/allCppflags.txt
-+        etc/dictpch/allHeaders.h
-+        etc/dictpch/allLinkDefs.h
-+      COMMAND
-+        ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/cmake/unix/makepchinput.py
-+        ${CMAKE_SOURCE_DIR} . ${pyroot_legacy} ${__cling_pch}
-+      COMMAND
-+        ${CMAKE_COMMAND} -E env "SDKROOT=${CMAKE_OSX_SYSROOT}" env ROOTIGNOREPREFIX=1 ${Python3_EXECUTABLE}
++      ${CMAKE_COMMAND} -E env
++        ${_sysroot_arg}
++        ROOTIGNOREPREFIX=1
++        ${PYTHON_EXECUTABLE}
 +        ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py etc/allDict.cxx.pch
 +        ${__allIncludes} -I${CMAKE_BINARY_DIR}/include -I${CMAKE_SOURCE_DIR}/core
-+      DEPENDS
-+        rootcling ${__pch_dependencies} ${__pch_dictionaries}
-+        ${CMAKE_SOURCE_DIR}/cmake/unix/makepchinput.py
-+        ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py
-+    )
-+  else()
-+    add_custom_command(OUTPUT etc/allDict.cxx.pch
-+      BYPRODUCTS
-+        etc/dictpch/allCppflags.txt
-+        etc/dictpch/allHeaders.h
-+        etc/dictpch/allLinkDefs.h
-+      COMMAND
-+        ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/cmake/unix/makepchinput.py
-+        ${CMAKE_SOURCE_DIR} . ${pyroot_legacy} ${__cling_pch}
-+      COMMAND
-+        ${CMAKE_COMMAND} -E env ROOTIGNOREPREFIX=1 ${Python3_EXECUTABLE}
-+        ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py etc/allDict.cxx.pch
-+        ${__allIncludes} -I${CMAKE_BINARY_DIR}/include -I${CMAKE_SOURCE_DIR}/core
-+      DEPENDS
-+        rootcling ${__pch_dependencies} ${__pch_dictionaries}
-+        ${CMAKE_SOURCE_DIR}/cmake/unix/makepchinput.py
-+        ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py
-+    )
-+  endif()
-+
-   add_custom_target(onepcm ALL DEPENDS etc/allDict.cxx.pch)
-   install(FILES ${CMAKE_BINARY_DIR}/etc/allDict.cxx.pch DESTINATION ${CMAKE_INSTALL_SYSCONFDIR})
-   install(DIRECTORY ${CMAKE_BINARY_DIR}/etc/dictpch DESTINATION ${CMAKE_INSTALL_SYSCONFDIR})
+     DEPENDS
+       rootcling ${__pch_dependencies} ${__pch_dictionaries}
+       ${CMAKE_SOURCE_DIR}/build/unix/makepchinput.py
