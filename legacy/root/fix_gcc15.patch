@@ -1,0 +1,48 @@
+diff --git a/graf2d/gpadv7/inc/ROOT/RVirtualCanvasPainter.hxx b/graf2d/gpadv7/inc/ROOT/RVirtualCanvasPainter.hxx
+index 881f1ecf8e..ee926dd050 100644
+--- a/graf2d/gpadv7/inc/ROOT/RVirtualCanvasPainter.hxx
++++ b/graf2d/gpadv7/inc/ROOT/RVirtualCanvasPainter.hxx
+@@ -9,6 +9,7 @@
+ #ifndef ROOT7_RVirtualCanvasPainter
+ #define ROOT7_RVirtualCanvasPainter
+ 
++#include <cstdint>
+ #include <memory>
+ #include <functional>
+ #include <string>
+diff --git a/interpreter/llvm-project/llvm/include/llvm/ADT/SmallVector.h b/interpreter/llvm-project/llvm/include/llvm/ADT/SmallVector.h
+index b8a11030fc..8bce0ea958 100644
+--- a/interpreter/llvm-project/llvm/include/llvm/ADT/SmallVector.h
++++ b/interpreter/llvm-project/llvm/include/llvm/ADT/SmallVector.h
+@@ -21,6 +21,7 @@
+ #include <algorithm>
+ #include <cassert>
+ #include <cstddef>
++#include <cstdint>
+ #include <cstdlib>
+ #include <cstring>
+ #include <functional>
+diff --git a/interpreter/llvm-project/llvm/lib/Target/X86/MCTargetDesc/X86MCTargetDesc.h b/interpreter/llvm-project/llvm/lib/Target/X86/MCTargetDesc/X86MCTargetDesc.h
+index 35604cd3ec..93cb72ad7f 100644
+--- a/interpreter/llvm-project/llvm/lib/Target/X86/MCTargetDesc/X86MCTargetDesc.h
++++ b/interpreter/llvm-project/llvm/lib/Target/X86/MCTargetDesc/X86MCTargetDesc.h
+@@ -13,6 +13,7 @@
+ #ifndef LLVM_LIB_TARGET_X86_MCTARGETDESC_X86MCTARGETDESC_H
+ #define LLVM_LIB_TARGET_X86_MCTARGETDESC_X86MCTARGETDESC_H
+ 
++#include <cstdint>
+ #include <memory>
+ #include <string>
+ 
+diff --git a/tmva/tmva/inc/TMVA/RTensor.hxx b/tmva/tmva/inc/TMVA/RTensor.hxx
+index d645009ee0..4832535ccc 100644
+--- a/tmva/tmva/inc/TMVA/RTensor.hxx
++++ b/tmva/tmva/inc/TMVA/RTensor.hxx
+@@ -1,6 +1,7 @@
+ #ifndef TMVA_RTENSOR
+ #define TMVA_RTENSOR
+ 
++#include <cstdint>
+ #include <vector>
+ #include <cstddef>     // std::size_t
+ #include <stdexcept>   // std::runtime_error
