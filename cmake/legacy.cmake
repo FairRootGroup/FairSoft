@@ -425,6 +425,7 @@ ExternalProject_Add(root
   GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
   GIT_SHALLOW 1
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DCMAKE_C_STANDARD=11"
     "-Daqua=ON"
     "-Dasimage=ON"
     "-Dcintex=OFF"
@@ -464,6 +465,7 @@ ExternalProject_Add(root
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_findOpenGL.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_clang17.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_for_rootcling.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_gcc15.patch"
   DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
