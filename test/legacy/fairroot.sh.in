@@ -11,7 +11,8 @@ pushd $sourcedir
 mkdir -p build/install
 export FAIRROOTPATH="$(realpath ./build/install)"
 cmake -S. -Bbuild \
-  -DCMAKE_INSTALL_PREFIX=$FAIRROOTPATH
+  -DCMAKE_INSTALL_PREFIX=$FAIRROOTPATH \
+  -DCMAKE_C_STANDARD=11
 cmake --build build --target install -j @NCPUS@
 pushd build
 ctest --output-on-failure -E "(ex_MQ_pixel|pixelSplitDDS).*" -j @NCPUS@ $(ctest --version | grep -q "3\.16" || echo "--repeat until-pass:5")
