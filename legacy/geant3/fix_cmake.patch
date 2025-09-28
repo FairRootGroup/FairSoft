@@ -35,3 +35,25 @@ index 04182d5..2f2f306 100644
 +find_package(Pythia6 REQUIRED)
 +set(VMC_DEPS VMCLibrary ${Pythia6_LIBRARY})
 +
+diff --git a/cmake/FindPythia6.cmake b/cmake/FindPythia6.cmake
+index 0102be8..71a291d 100644
+--- a/cmake/FindPythia6.cmake
++++ b/cmake/FindPythia6.cmake
+@@ -28,7 +28,7 @@
+ #message(STATUS "Looking for Pythia6 ...")
+ 
+ find_path(Pythia6_LIBRARY_DIR
+-  NAMES libPythia6.so libPythia6.dylib
++  NAMES libPythia6.so libPythia6.dylib libpythia6.so libpythia6.dylib
+         pythia6-$ENV{PYTHIA6_VERSION}.so pythia6-$ENV{PYTHIA6_VERSION}.dylib
+   PATHS
+   ${Pythia6_LIB_DIR}
+@@ -39,7 +39,7 @@ find_path(Pythia6_LIBRARY_DIR
+ )
+ 
+ find_library(Pythia6_LIBRARY
+-  NAMES Pythia6 pythia6-$ENV{PYTHIA6_VERSION}
++  NAMES Pythia6 pythia6 pythia6-$ENV{PYTHIA6_VERSION}
+   HINTS ${Pythia6_LIBRARY_DIR})
+ 
+ set(Pythia6_LIBRARIES ${Pythia6_LIBRARY})
