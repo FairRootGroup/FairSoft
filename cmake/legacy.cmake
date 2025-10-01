@@ -421,6 +421,35 @@ else()
   set(root_builtin_nlohmannjson "-Dbuiltin_nlohmannjson=ON")
 endif()
 
+# Extract the OS and VERSION on Linux
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  execute_process(COMMAND cat /etc/os-release
+                  COMMAND grep ID=
+                  COMMAND grep -v VERSION
+                  COMMAND cut -d= -f2
+                  OUTPUT_VARIABLE OS_NAME
+                  OUTPUT_STRIP_TRAILING_WHITESPACE
+                 )
+  string(REPLACE "\"" "" OS_NAME ${OS_NAME})
+
+  execute_process(COMMAND cat /etc/os-release
+                  COMMAND grep ID=
+                  COMMAND grep VERSION
+                  COMMAND cut -d= -f2
+                  COMMAND cut -d\" -f2
+                  OUTPUT_VARIABLE OS_VERSION
+                  OUTPUT_STRIP_TRAILING_WHITESPACE
+                 )
+
+  if(${OS_NAME}${OS_VERSION} MATCHES "debian13" OR ${OS_NAME}${OS_VERSION} MATCHES "opensuse-leap16.0")
+    set(debian13_patch COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_ftgl.patch")
+  else()
+    set(debian13_patch)
+  endif()
+else()
+  set(debian13_patch)
+endif()
+
 ExternalProject_Add(root
   GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
   GIT_SHALLOW 1
@@ -466,6 +495,7 @@ ExternalProject_Add(root
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_clang17.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_for_rootcling.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_gcc15.patch"
+  ${debian13_patch}
   DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
