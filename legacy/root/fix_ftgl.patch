@@ -1,0 +1,40 @@
+diff --git a/graf3d/ftgl/inc/FTContour.h b/graf3d/ftgl/inc/FTContour.h
+index 8eb5132165..899643e109 100644
+--- a/graf3d/ftgl/inc/FTContour.h
++++ b/graf3d/ftgl/inc/FTContour.h
+@@ -25,7 +25,7 @@ class FTGL_EXPORT FTContour
+          * @param pointTags
+          * @param numberOfPoints
+          */
+-        FTContour( FT_Vector* contour, char* pointTags, unsigned int numberOfPoints);
++        FTContour( FT_Vector* contour, unsigned char* pointTags, unsigned int numberOfPoints);
+ 
+         /**
+          * Destructor
+diff --git a/graf3d/ftgl/src/FTContour.cxx b/graf3d/ftgl/src/FTContour.cxx
+index 76ada3c9c7..8a79b7f3a8 100644
+--- a/graf3d/ftgl/src/FTContour.cxx
++++ b/graf3d/ftgl/src/FTContour.cxx
+@@ -69,8 +69,7 @@ void FTContour::evaluateCubicCurve()
+     }
+ }
+ 
+-
+-FTContour::FTContour( FT_Vector* contour, char* pointTags, unsigned int numberOfPoints)
++FTContour::FTContour( FT_Vector* contour, unsigned char* pointTags, unsigned int numberOfPoints)
+ {
+     for( unsigned int pointIndex = 0; pointIndex < numberOfPoints; ++ pointIndex)
+     {
+diff --git a/graf3d/ftgl/src/FTVectoriser.cxx b/graf3d/ftgl/src/FTVectoriser.cxx
+index df32ac2f83..a468533b68 100644
+--- a/graf3d/ftgl/src/FTVectoriser.cxx
++++ b/graf3d/ftgl/src/FTVectoriser.cxx
+@@ -140,7 +140,7 @@ void FTVectoriser::ProcessContours()
+     for( short contourIndex = 0; contourIndex < ftContourCount; ++contourIndex)
+     {
+         FT_Vector* pointList = &outline.points[startIndex];
+-        char* tagList = &outline.tags[startIndex];
++        unsigned char* tagList = &outline.tags[startIndex];
+ 
+         endIndex = outline.contours[contourIndex];
+         contourLength =  ( endIndex - startIndex) + 1;
