@@ -10,9 +10,13 @@ git clone -b ${version} https://github.com/FairRootGroup/FairRoot $sourcedir
 pushd $sourcedir
 mkdir -p build/install
 export FAIRROOTPATH="$(realpath ./build/install)"
-cmake -S. -Bbuild \
-  -DCMAKE_INSTALL_PREFIX=$FAIRROOTPATH \
-  -DCMAKE_C_STANDARD=11
+_arguments="-DCMAKE_INSTALL_PREFIX=$FAIRROOTPATH -DCMAKE_C_STANDARD=11"
+if [[ -n "@APPLE@" ]]; then
+  if [[ -n "@CMAKE_OSX_SYSROOT@" ]]; then
+     _arguments="${_arguments} -DCMAKE_OSX_SYSROOT=@CMAKE_OSX_SYSROOT@"
+  fi
+fi
+cmake -S. -Bbuild ${_arguments}
 cmake --build build --target install -j @NCPUS@
 pushd build
 ctest --output-on-failure -E "(ex_MQ_pixel|pixelSplitDDS).*" -j @NCPUS@ $(ctest --version | grep -q "3\.16" || echo "--repeat until-pass:5")
