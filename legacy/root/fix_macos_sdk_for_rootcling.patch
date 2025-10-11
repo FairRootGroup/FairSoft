@@ -1,0 +1,86 @@
+diff --git a/cmake/modules/RootMacros.cmake b/cmake/modules/RootMacros.cmake
+index 616b133943..0ed52ee3bc 100644
+--- a/cmake/modules/RootMacros.cmake
++++ b/cmake/modules/RootMacros.cmake
+@@ -604,6 +604,8 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
+   if(ARG_STAGE1)
+     if(MSVC AND CMAKE_ROOTTEST_DICT)
+       set(command ${CMAKE_COMMAND} -E ${CMAKE_BINARY_DIR}/bin/rootcling_stage1.exe)
++    elseif(APPLE AND CMAKE_OSX_SYSROOT)
++      set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH}" env "SDKROOT=${CMAKE_OSX_SYSROOT}" $<TARGET_FILE:rootcling_stage1>)
+     else()
+       set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH}" $<TARGET_FILE:rootcling_stage1>)
+     endif()
+@@ -613,6 +615,11 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
+     if(CMAKE_PROJECT_NAME STREQUAL ROOT)
+       if(MSVC AND CMAKE_ROOTTEST_DICT)
+         set(command ${CMAKE_COMMAND} -E env "ROOTIGNOREPREFIX=1" ${CMAKE_BINARY_DIR}/bin/rootcling.exe)
++      elseif(APPLE AND CMAKE_OSX_SYSROOT)
++        set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH}" env "SDKROOT=${CMAKE_OSX_SYSROOT}"
++                    "ROOTIGNOREPREFIX=1" $<TARGET_FILE:rootcling> -rootbuild)
++        # Modules need RConfigure.h copied into include/.
++        set(ROOTCINTDEP rootcling rconfigure)
+       else()
+         set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH}"
+                     "ROOTIGNOREPREFIX=1" $<TARGET_FILE:rootcling> -rootbuild)
+@@ -620,7 +627,9 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
+         set(ROOTCINTDEP rootcling rconfigure)
+       endif()
+     elseif(TARGET ROOT::rootcling)
+-      if(APPLE)
++      if(APPLE AND CMAKE_OSX_SYSROOT)
++        set(command ${CMAKE_COMMAND} -E env "DYLD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{DYLD_LIBRARY_PATH}" env "SDKROOT=${CMAKE_OSX_SYSROOT}" $<TARGET_FILE:ROOT::rootcling>)
++      elseif(APPLE)
+         set(command ${CMAKE_COMMAND} -E env "DYLD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{DYLD_LIBRARY_PATH}" $<TARGET_FILE:ROOT::rootcling>)
+       else()
+         set(command ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH}" $<TARGET_FILE:ROOT::rootcling>)
+diff --git a/etc/dictpch/makepch.py b/etc/dictpch/makepch.py
+index 8233f4e2f2..c54c2e959a 100755
+--- a/etc/dictpch/makepch.py
++++ b/etc/dictpch/makepch.py
+@@ -112,8 +112,12 @@ def makepch():
+ 
+    my_env = os.environ.copy()
+    existing_ldlib = my_env.get("LD_LIBRARY_PATH")
++   osx_sdk = my_env.get("CMAKE_OSX_SYSROOT")
++   
+    if not existing_ldlib: existing_ldlib = ""
+    my_env["LD_LIBRARY_PATH"] = os.path.join(rootdir, "lib") + ":" + existing_ldlib
++   if osx_sdk:
++      my_env["SDKROOT"] = 'osx_sdk'
+ 
+    ret = subprocess.call(command.split(), env=my_env)
+    if ret == 0:
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 77c7762225..c5feadd9e1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -524,6 +524,12 @@ else()
+   get_property(__pch_dependencies GLOBAL PROPERTY ROOT_PCH_DEPENDENCIES)
+   get_property(__pch_dictionaries GLOBAL PROPERTY ROOT_PCH_DICTIONARIES)
+ 
++  if (APPLE AND CMAKE_OSX_SYSROOT)
++    set(_sysroot_arg "SDKROOT=${CMAKE_OSX_SYSROOT}")
++  else()
++    set(_sysroot_arg)
++  endif()
++
+   add_custom_command(OUTPUT etc/allDict.cxx.pch
+     BYPRODUCTS
+       etc/dictpch/allCppflags.txt
+@@ -533,9 +539,12 @@ else()
+       ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/build/unix/makepchinput.py
+       ${CMAKE_SOURCE_DIR} . ${pyroot_legacy} ${__cling_pch}
+     COMMAND
+-      ${CMAKE_COMMAND} -E env ROOTIGNOREPREFIX=1 ${PYTHON_EXECUTABLE}
+-      ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py etc/allDict.cxx.pch
+-      ${__allIncludes} -I${CMAKE_BINARY_DIR}/include -I${CMAKE_SOURCE_DIR}/core
++      ${CMAKE_COMMAND} -E env
++        ${_sysroot_arg}
++        ROOTIGNOREPREFIX=1
++        ${PYTHON_EXECUTABLE}
++        ${CMAKE_SOURCE_DIR}/etc/dictpch/makepch.py etc/allDict.cxx.pch
++        ${__allIncludes} -I${CMAKE_BINARY_DIR}/include -I${CMAKE_SOURCE_DIR}/core
+     DEPENDS
+       rootcling ${__pch_dependencies} ${__pch_dictionaries}
+       ${CMAKE_SOURCE_DIR}/build/unix/makepchinput.py

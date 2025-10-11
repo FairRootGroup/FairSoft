@@ -5,8 +5,8 @@
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
-cmake_minimum_required(VERSION 3.19...3.28 FATAL_ERROR)
-cmake_policy(VERSION 3.19...3.28)
+cmake_minimum_required(VERSION 3.19...4.0.1)
+cmake_policy(VERSION 3.19...4.0.1)
 
 find_package(LibLZMA)
 if(LibLZMA_FOUND)
@@ -45,9 +45,31 @@ endif()
 
 
 find_package(Git REQUIRED)
-find_package(Patch REQUIRED)
+
+if (APPLE)
+   find_program(_patch NAMES gpatch patch)
+   if(NOT _patch)
+     message(FATAL_ERROR "Could not find gpatch or patch command")
+   else()
+     message(STATUS "Found Patch: ${_patch}")
+   endif()
+   set(patch ${_patch} --merge)
+else()
+  find_package(Patch REQUIRED)
+  set(patch $<TARGET_FILE:Patch::patch> --merge)
+endif()
+
+if(APPLE AND ${CMAKE_MAKE_PROGRAM} MATCHES ".*/make$")
+  find_program(_make NAMES gmake make)
+  if(NOT _make)
+    message(FATAL_ERROR "Could not find gmake or make command")
+  else()
+    message(STATUS "Found Make: ${_make}")
+  endif()
+  set(CMAKE_MAKE_PROGRAM ${_make} CACHE FILEPATH "Make program" FORCE)
+endif()
+
 find_package(UnixCommands)
-set(patch $<TARGET_FILE:Patch::patch> --merge)
 
 set(PROJECT_MIN_CXX_STANDARD 17)
 
@@ -145,6 +167,7 @@ ExternalProject_Add(faircmakemodules
 list(APPEND packages boost)
 set(boost_version "83")
 set(boost_features
+  "-d+2"
   "cxxstd=${CMAKE_CXX_STANDARD}"
   "link=shared"
   "threading=multi"
@@ -152,6 +175,11 @@ set(boost_features
   "visibility=hidden"
   "pch=off"
 )
+
+if (APPLE AND CMAKE_OSX_SYSROOT)
+  list(APPEND boost_features "cxxflags='-isysroot${CMAKE_OSX_SYSROOT}'")
+  list(APPEND boost_features "linkflags='-isysroot${CMAKE_OSX_SYSROOT}'")
+endif()
 
 list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
 
@@ -230,6 +258,7 @@ list(APPEND packages zeromq)
 set(zeromq_version "4.3.5")
 ExternalProject_Add(zeromq
   GIT_REPOSITORY https://github.com/zeromq/libzmq GIT_TAG v${zeromq_version}
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/zeromq/fix_cmake.patch"
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DWITH_PERF_TOOL=ON"
     "-DZMQ_BUILD_TESTS=ON"
@@ -267,6 +296,7 @@ ExternalProject_Add(pythia6
   URL_HASH SHA256=b14e82870d3aa33d6fa07f4b1f4d17f1ab80a37d753f91ca6322352b397cb244
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/add_missing_extern_keyword.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/pythia6/fix_cmake.patch"
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
@@ -276,6 +306,7 @@ set(hepmc_version "2.06.11")
 ExternalProject_Add(hepmc
   URL https://hepmc.web.cern.ch/releases/hepmc${hepmc_version}.tgz
   URL_HASH SHA256=86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/hepmc/fix_cmake.patch"
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-Dlength:STRING=CM"
     "-Dmomentum:STRING=GEV"
@@ -288,6 +319,7 @@ set(vc_version "1.4.4")
 ExternalProject_Add(vc
   URL https://github.com/VcDevel/Vc/archive/refs/tags/${vc_version}.tar.gz
   URL_HASH SHA256=5933108196be44c41613884cd56305df320263981fe6a49e648aebb3354d57f3
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/vc/fix_cmake.patch"
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
@@ -310,6 +342,12 @@ ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
   LOG ON
 )
 
+if (APPLE AND CMAKE_OSX_SYSROOT)
+  set(_pythia8_macosx_sdk -isysroot${CMAKE_OSX_SYSROOT})
+else()
+  set(_pythia8_macosx_sdk)
+endif()
+
 list(APPEND packages pythia8)
 set(pythia8_version "8310")
 string(SUBSTRING "${pythia8_version}" 0 2 pythia8_major_version)
@@ -322,7 +360,7 @@ ExternalProject_Add(pythia8
     "--with-hepmc2=${CMAKE_INSTALL_PREFIX}"
     "--prefix=${CMAKE_INSTALL_PREFIX}"
     "--cxx=${CMAKE_CXX_COMPILER}"
-    "--cxx-common='${CMAKE_CXX_FLAGS_${selected}} -fPIC -std=c++${CMAKE_CXX_STANDARD}'"
+    "--cxx-common='${CMAKE_CXX_FLAGS_${selected}} -fPIC -std=c++${CMAKE_CXX_STANDARD} ${_pythia8_macosx_sdk}'"
   DEPENDS hepmc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
@@ -357,6 +395,8 @@ ExternalProject_Add(geant4
     "-DGEANT4_BUILD_VERBOSE_CODE=ON"
     "-DGEANT4_BUILD_BUILTIN_BACKTRACE=OFF"
     ${cmake_python_config_old}
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant4/fix_cmake.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant4/fix_typo.patch"
   DEPENDS boost clhep ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
@@ -374,17 +414,47 @@ else()
   unset(root_cocoa)
   set(root_x11 ON)
 endif()
-find_package(nlohmann_json 3.9)
+find_package(nlohmann_json 3.9 QUIET)
 if(nlohmann_json_FOUND)
   set(root_builtin_nlohmannjson "-Dbuiltin_nlohmannjson=OFF")
 else()
   set(root_builtin_nlohmannjson "-Dbuiltin_nlohmannjson=ON")
 endif()
 
+# Extract the OS and VERSION on Linux
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  execute_process(COMMAND cat /etc/os-release
+                  COMMAND grep ID=
+                  COMMAND grep -v VERSION
+                  COMMAND cut -d= -f2
+                  OUTPUT_VARIABLE OS_NAME
+                  OUTPUT_STRIP_TRAILING_WHITESPACE
+                 )
+  string(REPLACE "\"" "" OS_NAME ${OS_NAME})
+
+  execute_process(COMMAND cat /etc/os-release
+                  COMMAND grep ID=
+                  COMMAND grep VERSION
+                  COMMAND cut -d= -f2
+                  COMMAND cut -d\" -f2
+                  OUTPUT_VARIABLE OS_VERSION
+                  OUTPUT_STRIP_TRAILING_WHITESPACE
+                 )
+
+  if(${OS_NAME}${OS_VERSION} MATCHES "debian13" OR ${OS_NAME}${OS_VERSION} MATCHES "opensuse-leap16.0")
+    set(debian13_patch COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_ftgl.patch")
+  else()
+    set(debian13_patch)
+  endif()
+else()
+  set(debian13_patch)
+endif()
+
 ExternalProject_Add(root
   GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
   GIT_SHALLOW 1
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DCMAKE_C_STANDARD=11"
     "-Daqua=ON"
     "-Dasimage=ON"
     "-Dcintex=OFF"
@@ -422,6 +492,10 @@ ExternalProject_Add(root
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_findOpenGL.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macosx_clang17.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_for_rootcling.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_gcc15.patch"
+  ${debian13_patch}
   DEPENDS pythia6 pythia8 vc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
@@ -431,6 +505,7 @@ set(vmc_version "2-0")
 ExternalProject_Add(vmc
   GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
   ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/vmc/fix_cmake.patch"
   DEPENDS root ${extract_source_cache_target}
 )
 
@@ -440,6 +515,8 @@ ExternalProject_Add(geant3
   GIT_REPOSITORY https://github.com/FairRootGroup/geant3 GIT_TAG v${geant3_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DBUILD_GCALOR=ON"
+    "-DCMAKE_C_STANDARD=11"
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant3/fix_cmake.patch"
   DEPENDS root vmc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
@@ -450,6 +527,7 @@ ExternalProject_Add(vgm
   GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DWITH_TEST=OFF"
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/vgm/fix_cmake.patch"
   DEPENDS clhep geant4 root ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
@@ -464,6 +542,7 @@ ExternalProject_Add(geant4_vmc
     "-DGeant4VMC_USE_GEANT4_VIS=OFF"
     "-DGeant4VMC_USE_GEANT4_G3TOG4=ON"
     "-DWITH_TEST=OFF"
+  PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/geant4_vmc/fix_cmake.patch"
   DEPENDS clhep geant4 root vgm vmc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
@@ -553,8 +632,12 @@ add_custom_target(source-cache
 
 include(CTest)
 
-foreach(ver IN ITEMS 18.6 18.8 19.0)
-  set(TEST_VERSION v${ver}_patches)
+foreach(ver IN ITEMS 18.6 18.8 19.0 dev)
+  if(ver STREQUAL dev)
+    set(TEST_VERSION ${ver})
+  else()
+    set(TEST_VERSION v${ver}_patches)
+  endif()
   configure_file(test/legacy/fairroot.sh.in ${CMAKE_BINARY_DIR}/test_fairroot_${ver}.sh @ONLY)
   add_test(NAME FairRoot_${ver}
            COMMAND test_fairroot_${ver}.sh

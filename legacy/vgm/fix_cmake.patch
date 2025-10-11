@@ -1,0 +1,13 @@
+diff --git a/cmake/VGMConfig.cmake.in b/cmake/VGMConfig.cmake.in
+index 0d4e51c..fc934b5 100644
+--- a/cmake/VGMConfig.cmake.in
++++ b/cmake/VGMConfig.cmake.in
+@@ -25,7 +25,7 @@
+ # I. Hrivnacova, 04/06/2014
+ 
+ # Support CMake >= 3.8
+-cmake_policy(VERSION 3.8)
++cmake_policy(VERSION 3.8...4.0.1)
+ if(CMAKE_VERSION VERSION_LESS 3.8)
+   message(FATAL_ERROR "VGMConfig requires CMake 3.8 or newer")
+ endif()

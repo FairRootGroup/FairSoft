@@ -1,0 +1,286 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 20cedfe4..55f1c6d8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -24,7 +24,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+ endif()
+ 
+ #--- Define CMake requirements -------------------------------------------------
+-cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.3...4.0.1)
+ 
+ #--- Allow compiling with non Apple Clang on macOS -----------------------------
+ cmake_policy(SET CMP0025 NEW)
+diff --git a/examples/A01/CMakeLists.txt b/examples/A01/CMakeLists.txt
+index 2a29c168..7f414132 100644
+--- a/examples/A01/CMakeLists.txt
++++ b/examples/A01/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/A01/geant4/CMakeLists.txt b/examples/A01/geant4/CMakeLists.txt
+index d197af0a..0a2ba9bb 100644
+--- a/examples/A01/geant4/CMakeLists.txt
++++ b/examples/A01/geant4/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/CMakeLists.txt b/examples/CMakeLists.txt
+index 387f743c..6338db07 100644
+--- a/examples/CMakeLists.txt
++++ b/examples/CMakeLists.txt
+@@ -13,7 +13,7 @@
+ #---Adding examples subdirectories explicitly
+ #   and a custom target to for building all VMC examples -------------
+ 
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ set(CMAKE_MODULE_PATH
+diff --git a/examples/E01/CMakeLists.txt b/examples/E01/CMakeLists.txt
+index d6c98dad..cfcaa280 100644
+--- a/examples/E01/CMakeLists.txt
++++ b/examples/E01/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/E02/CMakeLists.txt b/examples/E02/CMakeLists.txt
+index ee2fc088..adb18b9a 100644
+--- a/examples/E02/CMakeLists.txt
++++ b/examples/E02/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/E03/CMakeLists.txt b/examples/E03/CMakeLists.txt
+index d16307d6..8dd4b711 100644
+--- a/examples/E03/CMakeLists.txt
++++ b/examples/E03/CMakeLists.txt
+@@ -13,7 +13,7 @@
+ #---Adding examples subdirectories explicitly
+ #   and a custom target to for building all VMC examples -------------
+ 
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ if(VMC_WITH_Multi)
+diff --git a/examples/E03/E03a/CMakeLists.txt b/examples/E03/E03a/CMakeLists.txt
+index 11e599a2..29c7199b 100644
+--- a/examples/E03/E03a/CMakeLists.txt
++++ b/examples/E03/E03a/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/E03/E03a/geant4/CMakeLists.txt b/examples/E03/E03a/geant4/CMakeLists.txt
+index 6dc15c1d..df882c3a 100644
+--- a/examples/E03/E03a/geant4/CMakeLists.txt
++++ b/examples/E03/E03a/geant4/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/E03/E03b/CMakeLists.txt b/examples/E03/E03b/CMakeLists.txt
+index 79db0001..aaa5b487 100644
+--- a/examples/E03/E03b/CMakeLists.txt
++++ b/examples/E03/E03b/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/E03/E03b/geant4/CMakeLists.txt b/examples/E03/E03b/geant4/CMakeLists.txt
+index db38d6ab..744ca699 100644
+--- a/examples/E03/E03b/geant4/CMakeLists.txt
++++ b/examples/E03/E03b/geant4/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/E03/E03c/CMakeLists.txt b/examples/E03/E03c/CMakeLists.txt
+index 995bfc0e..aab350cc 100644
+--- a/examples/E03/E03c/CMakeLists.txt
++++ b/examples/E03/E03c/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/E03/E03c/geant4/CMakeLists.txt b/examples/E03/E03c/geant4/CMakeLists.txt
+index 64bb6f46..750043c2 100644
+--- a/examples/E03/E03c/geant4/CMakeLists.txt
++++ b/examples/E03/E03c/geant4/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/E06/CMakeLists.txt b/examples/E06/CMakeLists.txt
+index e73be791..269802bb 100644
+--- a/examples/E06/CMakeLists.txt
++++ b/examples/E06/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/ExGarfield/CMakeLists.txt b/examples/ExGarfield/CMakeLists.txt
+index f351b36f..e4edb6b5 100644
+--- a/examples/ExGarfield/CMakeLists.txt
++++ b/examples/ExGarfield/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/ExGarfield/geant4/CMakeLists.txt b/examples/ExGarfield/geant4/CMakeLists.txt
+index 2fa00129..72c5cc03 100644
+--- a/examples/ExGarfield/geant4/CMakeLists.txt
++++ b/examples/ExGarfield/geant4/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/Gflash/CMakeLists.txt b/examples/Gflash/CMakeLists.txt
+index 5474b8ab..85bbab16 100644
+--- a/examples/Gflash/CMakeLists.txt
++++ b/examples/Gflash/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/Monopole/CMakeLists.txt b/examples/Monopole/CMakeLists.txt
+index 64f5a9be..cfcf1567 100644
+--- a/examples/Monopole/CMakeLists.txt
++++ b/examples/Monopole/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/examples/TR/CMakeLists.txt b/examples/TR/CMakeLists.txt
+index 74568186..31c336f8 100644
+--- a/examples/TR/CMakeLists.txt
++++ b/examples/TR/CMakeLists.txt
+@@ -12,7 +12,7 @@
+ 
+ #----------------------------------------------------------------------------
+ # Setup the project
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ #----------------------------------------------------------------------------
+diff --git a/g4root/CMakeLists.txt b/g4root/CMakeLists.txt
+index b7507436..d9d5edf8 100644
+--- a/g4root/CMakeLists.txt
++++ b/g4root/CMakeLists.txt
+@@ -11,7 +11,7 @@
+ # I. Hrivnacova, 24/04/2014
+ 
+ #---CMake required version -----------------------------------------------------
+-cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.3...4.0.1)
+ 
+ #---Project G4Root -------------------------------------------------------------
+ #
+diff --git a/g4root/test/CMakeLists.txt b/g4root/test/CMakeLists.txt
+index 35fe0973..b85da4fe 100644
+--- a/g4root/test/CMakeLists.txt
++++ b/g4root/test/CMakeLists.txt
+@@ -2,7 +2,7 @@
+ 
+ #---Adding the OpNovice subdirectory explicitly
+ 
+-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12...4.0.1)
+ 
+ 
+ set(CMAKE_MODULE_PATH
+diff --git a/source/CMakeLists.txt b/source/CMakeLists.txt
+index 3ebb885e..3ff721c7 100644
+--- a/source/CMakeLists.txt
++++ b/source/CMakeLists.txt
+@@ -11,7 +11,7 @@
+ # I. Hrivnacova, 24/04/2014
+ 
+ #---CMake required version -----------------------------------------------------
+-cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.3...4.0.1)
+ 
+ #---Project Geant4VMC  ---------------------------------------------------------
+ #
