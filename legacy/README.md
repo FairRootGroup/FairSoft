@@ -51,6 +51,41 @@ cmake -S <path-to-source> -B <path-to-build> -C <path-to-source>/FairSoftConfig.
 
 Set the installation prefix and more customization options in the [`FairSoftConfig.cmake`](../FairSoftConfig.cmake) file itself.
 
+#### 3.1 CMake configure step for macOS users
+
+There are some known problems about the compilation of FairSoft on macosx.
+
+The first two problems are related to the version of the **patch** and **make**
+commands on macosx.
+
+The **patch** command does not support the needed parameters,
+so one needs ot install a version of the **patch** command with brew.
+The **make** command doesn't properly support the jobsserver which allows
+parallel builds of all the packages contained in FairSoft which slows down
+the installation enormously. The version provided by brew fixes the problem.
+Both packages are already added in the updated setup script for macosx.
+If found the packages from the homebrew installation directory will be used.
+
+The last problem is related to the macosx, compiler and SDK versions, such
+that it depends on the personal setup. As described in more detail at
+[macOS SDK](advanced.md#macos-sdk)! ROOT is very picky about the compiler
+and the connected SDK. Compiling older ROOT versions with newer compilers
+may need using an older SDK version. If not specified explicitely the
+latest SDK version is used. To use an older SDK version on needs to add the
+following parameter when running CMake
+
+```
+-DCMAKE_OSX_SYSROOT=<full path to SDK directory>
+```
+
+e.g. for Apple Clang 17 on macosx 15 or Apple Clang 16 on macosx 14
+
+```
+-DCMAKE_OSX_SYSROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk
+```
+
+More information can be found at
+
 **macOS users**: Notice [macOS SDK](advanced.md#macos-sdk)!
 
 ### 4. CMake build/install step
@@ -84,40 +119,53 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
-| Almalinux  | x86_64 | 9     | GCC 11.4.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.27.4 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.25.1 |
-| Fedora     | x86_64 | 37    | GCC 12.3.1                 | 3.27.7 |
 | Fedora     | x86_64 | 38    | GCC 13.2.1                 | 3.27.7 |
-| Fedora     | x86_64 | 39    | GCC 13.2.1                 | 3.27.7 |
+| Fedora     | x86_64 | 40    | GCC 14.2.1                 | 3.30.8 |
+| Fedora     | x86_64 | 42    | GCC 15.2.1                 | 3.31.6 |
+| Debian     | x86_64 | 11    | GCC 10.2.1                 | 4.4.1 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.25.1 |
+| Open Suse  | x86_64 | 15.6  | GCC 14.3.0 (non system)    | 3.28.3 | 
+
+Not yet tested but know to work with previous FairSoft release.
+Will be tested before release
+
+| **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
+| --- | --- | --- | --- | --- |
+| Almalinux  | x86_64 | 9     | GCC 11.4.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
 | macOS      | x86_64 | 14    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
 | macOS      | x86_64 | 15    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
 | macOS      | arm64  | 15    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                 | 3.22.1 |
 | Ubuntu     | x86_64 | 24.04 | GCC 13.2.0                 | 3.28.3 |
 
+The additional package **onnxruntime** currently can't be compiled on
+Debian10 because of the rather old compiler version. **onnxruntime**
+requires at least gcc 11.1 The compilation also fails for OpenSuse Leap 15.6
+due to configuration problems. Sine the build system requires at least CMake
+3.28 it is needed to install a newer CMake version for Debian12 and
+Fedora38. 
+
 ## Included packages
 
 | **Package** | **Version** | **URL** |
 | --- | --- | --- |
-| boost            | 1.83.0       | https://www.boost.org/ |
+| boost            | 1.87.0       | https://www.boost.org/ |
 | clhep            | 2.4.7.1      | http://proj-clhep.web.cern.ch |
-| dds              | 3.8          | http://dds.gsi.de |
+| dds              | 3.13         | http://dds.gsi.de |
 | faircmakemodules | 1.0.0        | https://github.com/FairRootGroup/FairCMakeModules |
-| fairlogger       | 1.11.1       | https://github.com/FairRootGroup/FairLogger |
-| fairmq           | 1.8.4        | https://github.com/FairRootGroup/FairMQ |
+| fairlogger       | 2.2.0        | https://github.com/FairRootGroup/FairLogger |
+| fairmq           | 1.9.2        | https://github.com/FairRootGroup/FairMQ |
 | flatbuffers      | 23.5.26      | https://github.com/google/flatbuffers |
-| fmt              | 10.1.1       | https://github.com/fmtlib/fmt |
-| geant3           | 4-2_fairsoft | https://github.com/FairRootGroup/geant3 |
-| geant4           | 11.2.0       | https://geant4.web.cern.ch |
-| geant4_vmc       | 6-5          | https://github.com/vmc-project/geant4_vmc |
+| fmt              | 11.1.4       | https://github.com/fmtlib/fmt |
+| geant3           | 4-4_fairsoft | https://github.com/FairRootGroup/geant3 |
+| geant4           | 11.3.2       | https://geant4.web.cern.ch |
+| geant4_vmc       | 6-7-p1       | https://github.com/vmc-project/geant4_vmc |
 | hepmc            | 2.06.11      | http://hepmc.web.cern.ch |
-| onnxruntime      | 1.12.1       | https://github.com/microsoft/onnxruntime |
-| pythia6          | 428-alice1   | https://github.com/alisw/pythia6 |
-| pythia8          | 8310         | https://pythia.org/ |
-| root             | 6.30.08      | https://root.cern |
+| onnxruntime      | 1.22.2       | https://github.com/microsoft/onnxruntime |
+| pythia8          | 8315         | https://pythia.org/ |
+| root             | 6.36.04      | https://root.cern |
 | vc               | 1.4.4        | https://github.com/VcDevel/Vc |
-| vgm              | 5-2          | https://github.com/vmc-project/vgm |
-| vmc              | 2-0          | https://github.com/vmc-project/vmc |
+| vecgeom          | v.2.0.0-rc.6 | https://gitlab.cern.ch/VecGeom/VecGeom |
+| vgm              | 5-3-1        | https://github.com/vmc-project/vgm |
+| vmc              | 2-1          | https://github.com/vmc-project/vmc |
 | zeromq           | 4.3.5        | https://github.com/zeromq/libzmq |

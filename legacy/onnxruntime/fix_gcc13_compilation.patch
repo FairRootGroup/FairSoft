@@ -1,0 +1,42 @@
+diff --git a/onnxruntime/core/optimizer/transpose_optimization/optimizer_api.h b/onnxruntime/core/optimizer/transpose_optimization/optimizer_api.h
+index e4d59ea73..8d571d603 100644
+--- a/onnxruntime/core/optimizer/transpose_optimization/optimizer_api.h
++++ b/onnxruntime/core/optimizer/transpose_optimization/optimizer_api.h
+@@ -3,6 +3,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <functional>
+ #include <memory>
+ #include <optional>
+diff --git a/cmake/onnxruntime_mlas.cmake b/cmake/onnxruntime_mlas.cmake
+index 15864a0198..862f1ce0ce 100644
+--- a/cmake/onnxruntime_mlas.cmake
++++ b/cmake/onnxruntime_mlas.cmake
+@@ -602,12 +602,6 @@ else()
+           ${MLAS_SRC_DIR}/rotary_embedding_kernel_avx2.cpp
+           ${MLAS_SRC_DIR}/rotary_embedding_kernel_avx2_fp32.cpp
+         )
+-        if(CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 13.1 AND NOT(APPLE))
+-          set(mlas_platform_srcs_avx2
+-            ${mlas_platform_srcs_avx2}
+-            ${MLAS_SRC_DIR}/x86_64/cvtfp16Avx.S
+-          )
+-        endif()
+ 
+ message(STATUS "CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
+ message(STATUS "CMAKE_CXX_COMPILER_VERSION: ${CMAKE_CXX_COMPILER_VERSION}")
+diff --git a/onnxruntime/core/mlas/lib/platform.cpp b/onnxruntime/core/mlas/lib/platform.cpp
+index 582c1ab944..d09a65168c 100644
+--- a/onnxruntime/core/mlas/lib/platform.cpp
++++ b/onnxruntime/core/mlas/lib/platform.cpp
+@@ -500,7 +500,7 @@ Return Value:
+                 }
+ 
+ #ifndef __APPLE__
+-#if (defined(_MSC_VER) && (_MSC_VER >= 1933)) || (defined(__GNUC__) && (__GNUC__ >= 13))
++#if (defined(_MSC_VER) && (_MSC_VER >= 1933))
+                 //
+                 // Check if the processor supports AVX NE CONVERT.
+                 //

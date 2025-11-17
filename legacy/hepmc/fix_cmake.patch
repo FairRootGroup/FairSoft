@@ -1,0 +1,37 @@
+--- a/CMakeLists.txt	2025-04-22 10:37:30
++++ b/CMakeLists.txt	2020-06-08 13:25:39
+@@ -14,7 +14,7 @@
+ #------------------------------------------------------------------------------
+ 
+ # use cmake 2.6 or later
+-cmake_minimum_required (VERSION 2.6)
++cmake_minimum_required (VERSION 2.6...4.0.1)
+ 
+ # project name and version
+ project(HepMC)
+--- a/cmake/Modules/HepMCUseCpack.cmake_orig	2025-04-22 11:44:59
++++ b/cmake/Modules/HepMCUseCpack.cmake	2025-04-22 11:46:37
+@@ -8,8 +8,8 @@
+ #
+ FUNCTION(_My_COMPILER_DUMPVERSION _OUTPUT_VERSION)
+ 
+-  EXEC_PROGRAM(${CMAKE_CXX_COMPILER}
+-    ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
++  EXECUTE_PROCESS(COMMAND 
++    ${CMAKE_CXX_COMPILER} ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
+     OUTPUT_VARIABLE _my_COMPILER_VERSION
+   )
+   set( COMPILER_VERSION ${_my_COMPILER_VERSION} PARENT_SCOPE)
+--- a/cmake/Modules/HepMCVariables.cmake_orig	2025-04-22 11:45:10
++++ b/cmake/Modules/HepMCVariables.cmake	2025-04-22 11:46:01
+@@ -10,8 +10,8 @@
+ # so we need this for the example makefile
+ macro( _hepmc_fortran_compiler )
+ 
+-  EXEC_PROGRAM(${CMAKE_CXX_COMPILER}
+-    ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
++  EXECUTE_PROCESS(COMMAND 
++    ${CMAKE_CXX_COMPILER} ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
+     OUTPUT_VARIABLE _my_COMPILER_VERSION
+   )
+   STRING(REGEX REPLACE "([0-9])\\.([0-9])(\\.[0-9])?" "\\1"
