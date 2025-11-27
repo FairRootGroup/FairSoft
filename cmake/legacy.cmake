@@ -551,6 +551,44 @@ add_custom_target(source-cache
   COMMENT "Creating source cache at ${tarfile}"
 )
 
+# CI_BUILD_MODE: Serialize builds and remove package directories after install
+if(NOT DEFINED CI_BUILD_MODE)
+  set(CI_BUILD_MODE OFF)
+endif()
+
+if(CI_BUILD_MODE)
+  foreach(pkg IN LISTS packages)
+    ExternalProject_Add_Step(${pkg} reclaim_diskspace
+      COMMAND ${CMAKE_COMMAND}
+        -DPACKAGE_NAME=${pkg}
+        -DPKG_BUILD_DIR=${CMAKE_BINARY_DIR}/Build/${pkg}
+        -DPKG_SOURCE_DIR=${CMAKE_BINARY_DIR}/Source/${pkg}
+        -DCMAKE_BINARY_DIR=${CMAKE_BINARY_DIR}
+        -P ${CMAKE_SOURCE_DIR}/cmake/reclaim-diskspace.cmake
+      COMMENT "Removing ${pkg} package directories to reclaim disk space"
+      DEPENDEES install
+      ALWAYS OFF
+    )
+  endforeach()
+
+  # Serialize package builds to reduce peak disk usage in CI environments.
+  # This ensures only one package builds at a time, preventing multiple large
+  # package directories from existing simultaneously.
+  # Exclude optional packages (EXCLUDE_FROM_ALL) from the serial chain.
+  set(prev_pkg "")
+  foreach(pkg IN LISTS packages)
+    get_target_property(is_excluded ${pkg} EXCLUDE_FROM_ALL)
+    if(is_excluded)
+      continue()
+    endif()
+    if(prev_pkg)
+      ExternalProject_Add_StepDependencies(${pkg} configure ${prev_pkg})
+    endif()
+    set(prev_pkg ${pkg})
+  endforeach()
+  unset(prev_pkg)
+endif()
+
 include(CTest)
 
 foreach(ver IN ITEMS 18.6 18.8 19.0)
@@ -603,6 +641,12 @@ if(SOURCE_CACHE)
   message(STATUS "  ${Cyan}SOURCE CACHE${CR}       ${BGreen}${SOURCE_CACHE}${CR}")
 else()
   message(STATUS "  ${Cyan}SOURCE CACHE${CR}       using upstream URLs (generate cache by building target 'source-cache' and pass via ${BMagenta}-DSOURCE_CACHE=...${CR})")
+endif()
+message(STATUS "  ")
+if(CI_BUILD_MODE)
+  message(STATUS "  ${Cyan}CI_BUILD_MODE${CR}      ${BGreen}ON${CR} (serialized builds, package directories removed after install)")
+else()
+  message(STATUS "  ${Cyan}CI_BUILD_MODE${CR}      ${BGreen}OFF${CR} (enable with ${BMagenta}-DCI_BUILD_MODE=ON${CR} to reduce disk usage)")
 endif()
 if(CMAKE_OSX_SYSROOT)
   message(STATUS "  ")
