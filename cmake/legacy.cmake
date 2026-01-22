@@ -310,6 +310,7 @@ ExternalProject_Add(hepmc
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-Dlength:STRING=CM"
     "-Dmomentum:STRING=GEV"
+    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
