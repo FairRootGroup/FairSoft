@@ -458,6 +458,7 @@ ExternalProject_Add(vgm
   GIT_REPOSITORY https://github.com/vmc-project/vgm GIT_TAG v${vgm_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DWITH_TEST=OFF"
+    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
   DEPENDS clhep geant4 root ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
