@@ -5,8 +5,8 @@
 #              GNU Lesser General Public Licence (LGPL) version 3,             #
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
-cmake_minimum_required(VERSION 3.19...3.28 FATAL_ERROR)
-cmake_policy(VERSION 3.19...3.28)
+cmake_minimum_required(VERSION 3.19...4.0.1)
+cmake_policy(VERSION 3.19...4.0.1)
 
 find_package(LibLZMA)
 if(LibLZMA_FOUND)
@@ -279,6 +279,7 @@ ExternalProject_Add(hepmc
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-Dlength:STRING=CM"
     "-Dmomentum:STRING=GEV"
+    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
 )
