@@ -490,6 +490,7 @@ ExternalProject_Add(geant3
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-DBUILD_GCALOR=ON"
     "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+    "-DCMAKE_C_STANDARD=11"
   DEPENDS root vmc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
