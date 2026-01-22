@@ -436,7 +436,9 @@ list(APPEND packages vmc)
 set(vmc_version "2-0")
 ExternalProject_Add(vmc
   GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
-  ${CMAKE_DEFAULT_ARGS} ${LOG_TO_FILE}
+  ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
+    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+  ${LOG_TO_FILE}
   DEPENDS root ${extract_source_cache_target}
 )
 
