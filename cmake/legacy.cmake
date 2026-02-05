@@ -475,7 +475,7 @@ ExternalProject_Add(root
 )
 
 list(APPEND packages vmc)
-set(vmc_version "2-0")
+set(vmc_version "2-1")
 ExternalProject_Add(vmc
   GIT_REPOSITORY https://github.com/vmc-project/vmc GIT_TAG v${vmc_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
