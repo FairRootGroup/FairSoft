@@ -326,23 +326,16 @@ ExternalProject_Add(vc
   ${DEPENDS_ON_SOURCE_CACHE}
 )
 
+
 list(APPEND packages clhep)
-set(clhep_version "2.4.7.1")
+set(clhep_version "2_4_7_2")
 ExternalProject_Add(clhep
-  URL https://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-${clhep_version}.tgz
-  URL_HASH SHA256=1c8304a7772ac6b99195f1300378c6e3ddf4ad07c85d64a04505652abb8a55f9
+  GIT_REPOSITORY https://gitlab.cern.ch/CLHEP/CLHEP GIT_TAG CLHEP_${clhep_version}
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     ${FAIRSOFT_RPATH_ARGS}
     "-DCLHEP_BUILD_CXXSTD=-std=c++${CMAKE_CXX_STANDARD}"
   ${LOG_TO_FILE}
   ${DEPENDS_ON_SOURCE_CACHE}
-)
-set(clhep_source ${CMAKE_BINARY_DIR}/Source/clhep)
-ExternalProject_Add_Step(clhep move_dir DEPENDEES download DEPENDERS patch
-  COMMAND ${CMAKE_COMMAND} -E copy_directory "${clhep_source}/CLHEP" "${clhep_source}"
-  BYPRODUCTS "${clhep_source}/CMakeLists.txt"
-  INDEPENDENT ON
-  LOG ON
 )
 
 list(APPEND packages pythia8)
