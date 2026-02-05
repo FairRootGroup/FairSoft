@@ -118,6 +118,6 @@ please contact us.
 | root             | 6.36.08      | https://root.cern |
 | vc               | 1.4.5        | https://github.com/VcDevel/Vc |
 | vecgeom          | 2.0.0        | https://gitlab.cern.ch/VecGeom/VecGeom |
-| vgm              | 5-2          | https://github.com/vmc-project/vgm |
+| vgm              | 5-4          | https://github.com/vmc-project/vgm |
 | vmc              | 2-1          | https://github.com/vmc-project/vmc |
 | zeromq           | 4.3.5        | https://github.com/zeromq/libzmq |
