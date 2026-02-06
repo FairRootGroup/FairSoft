@@ -445,7 +445,7 @@ ExternalProject_Add(root
   GIT_REPOSITORY https://github.com/root-project/root/ GIT_TAG v${root_version_gittag}
   GIT_SHALLOW 1
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
-    "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}"
+    "-DCMAKE_C_STANDARD=11"
     "-Daqua=ON"
     "-Dasimage=ON"
     "-Dcintex=OFF"
@@ -504,6 +504,7 @@ ExternalProject_Add(geant3
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     ${FAIRSOFT_RPATH_ARGS}
     "-DBUILD_GCALOR=ON"
+    "-DCMAKE_C_STANDARD=11"
   DEPENDS root vmc ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
