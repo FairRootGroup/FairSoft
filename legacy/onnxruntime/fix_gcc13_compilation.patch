@@ -1,0 +1,53 @@
+diff --git a/cmake/onnxruntime_mlas.cmake b/cmake/onnxruntime_mlas.cmake
+index d7dcde945..ce5b9b2e2 100644
+--- a/cmake/onnxruntime_mlas.cmake
++++ b/cmake/onnxruntime_mlas.cmake
+@@ -720,13 +720,30 @@ else()
+           ${MLAS_SRC_DIR}/rotary_embedding_kernel_avx2.cpp
+           ${MLAS_SRC_DIR}/rotary_embedding_kernel_avx2.cpp
+         )
+-        if(CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 13.1 AND NOT(APPLE))
+-          set(mlas_platform_srcs_avx2
+-            ${mlas_platform_srcs_avx2}
+-            ${MLAS_SRC_DIR}/x86_64/cvtfp16Avx.S
+-          )
++
++        # The file cvtfp16Avx.S can't be compiled with compiler from
++        # Fedora38 don't add the file
++        set(Fedora38_FOUND FALSE)
++        if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
++          if(EXISTS "/etc/fedora-release")
++            file(READ "/etc/fedora-release" fedora_info)
++            string(FIND "${fedora_info}" "38" fedora38)
++              if(${fedora38} GREATER -1)
++                message(STATUS "Detected Fedora 38")
++                set(Fedora38_FOUND TRUE)
++              endif()
++          endif()
+         endif()
+ 
++        if(NOT(Fedora38_FOUND))
++          if(CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 13.1 AND NOT(APPLE))
++            set(mlas_platform_srcs_avx2
++              ${mlas_platform_srcs_avx2}
++              ${MLAS_SRC_DIR}/x86_64/cvtfp16Avx.S
++            )
++         endif()
++       endif()
++
+ message(STATUS "CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
+ message(STATUS "CMAKE_CXX_COMPILER_VERSION: ${CMAKE_CXX_COMPILER_VERSION}")
+ 
+diff --git a/onnxruntime/core/mlas/lib/platform.cpp b/onnxruntime/core/mlas/lib/platform.cpp
+index b913b1c3b..da76912da 100644
+--- a/onnxruntime/core/mlas/lib/platform.cpp
++++ b/onnxruntime/core/mlas/lib/platform.cpp
+@@ -522,7 +522,7 @@ Return Value:
+                 }
+ 
+ #ifndef __APPLE__
+-#if (defined(_MSC_VER) && (_MSC_VER >= 1933)) || (defined(__GNUC__) && (__GNUC__ >= 13))
++#if (defined(_MSC_VER) && (_MSC_VER >= 1933)) || (defined(__GNUC__) && (__GNUC__ >= 13)  && (__GNUC_RH_RELEASE__ != 7))
+                 //
+                 // Check if the processor supports AVX NE CONVERT.
+                 //
