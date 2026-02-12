@@ -180,7 +180,19 @@ if (BUILD_METHOD STREQUAL legacy)
   if (_ctest_build_errors)
     set(_ctest_build_retval 255)
   endif()
+  # Test the optional packages dds and onnxruntime
+  # onnxruntime needs at least CMAKE 3.28
   if(NOT _ctest_build_errors)
+    ctest_build(RETURN_VALUE _ctest_build_retval
+                NUMBER_ERRORS _ctest_build_errors
+                TARGET "dds"
+                FLAGS "-j${NCPUS}")
+    if (_ctest_build_errors)
+      set(_ctest_build_retval 255)
+    endif()
+  endif()
+  fairsoft_ctest_submit()
+  if(NOT _ctest_build_errors AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.28.0)
     ctest_build(RETURN_VALUE _ctest_build_retval
                 NUMBER_ERRORS _ctest_build_errors
                 TARGET "onnxruntime"
