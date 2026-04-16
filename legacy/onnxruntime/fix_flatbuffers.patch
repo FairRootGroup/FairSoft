@@ -1,0 +1,22 @@
+diff --git a/src/idl_gen_rust.cpp b/src/idl_gen_rust.cpp
+index 55b8439b..80c8cd59 100644
+--- a/cmake/external/flatbuffers/src/idl_gen_rust.cpp
++++ b/cmake/external/flatbuffers/src/idl_gen_rust.cpp
+@@ -406,7 +406,7 @@ class RustGenerator : public BaseGenerator {
+     // example: f(A, D::E)          -> super::D::E
+     // does not include leaf object (typically a struct type).
+ 
+-    size_t i = 0;
++//    size_t i = 0;
+     std::stringstream stream;
+ 
+     auto s = src->components.begin();
+@@ -417,7 +417,7 @@ class RustGenerator : public BaseGenerator {
+       if (*s != *d) { break; }
+       ++s;
+       ++d;
+-      ++i;
++ //     ++i;
+     }
+ 
+     for (; s != src->components.end(); ++s) { stream << "super::"; }

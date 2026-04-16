@@ -560,6 +560,8 @@ ExternalProject_Add(onnxruntime
   UPDATE_DISCONNECTED ON
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/install_config_files.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/fix_python_detection.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/fix_flatbuffers.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/onnxruntime/fix_compiler_errors.patch"
   GIT_REPOSITORY https://github.com/microsoft/onnxruntime/ GIT_TAG v${onnxruntime_version}
   GIT_SHALLOW ON
   GIT_SUBMODULES
@@ -578,6 +580,9 @@ ExternalProject_Add(onnxruntime
   ${CMAKE_DEFAULT_ARGS} CMAKE_ARGS
     "-Donnxruntime_BUILD_UNIT_TESTS=OFF"
     "-Donnxruntime_BUILD_SHARED_LIB=ON"
+    "-DCMAKE_BUILD_TYPE=Release"
+    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+    "-UCMAKE_PREFIX_PATH"
   DEPENDS ${extract_source_cache_target}
   EXCLUDE_FROM_ALL ON
   ${LOG_TO_FILE}
