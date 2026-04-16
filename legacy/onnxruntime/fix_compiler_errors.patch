@@ -1,0 +1,28 @@
+diff --git a/onnxruntime/core/optimizer/transpose_optimizer/optimizer_api.h b/onnxruntime/core/optimizer/transpose_optimizer/optimizer_api.h
+index 63269aa17..1123947e0 100644
+--- a/onnxruntime/core/optimizer/transpose_optimizer/optimizer_api.h
++++ b/onnxruntime/core/optimizer/transpose_optimizer/optimizer_api.h
+@@ -3,6 +3,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <memory>
+ #include <optional>
+ #include <string>
+--- a/cmake/patches/abseil/Fix_Nvidia_Build_Break.patch_orig	2026-04-15 14:53:24.540800722 +0200
++++ b/cmake/patches/abseil/Fix_Nvidia_Build_Break.patch	2026-04-15 14:53:35.165185897 +0200
+@@ -97,3 +97,13 @@
+    uint64_t carry;
+    uint64_t low = _umul128(Uint128Low64(lhs), Uint128Low64(rhs), &carry);
+    return MakeUint128(Uint128Low64(lhs) * Uint128High64(rhs) +
++--- a/absl/strings/internal/str_format/extension.h_orig	2026-04-15 14:07:04.607086433 +0200
+++++ b/absl/strings/internal/str_format/extension.h	2026-04-15 14:00:07.643934152 +0200
++@@ -19,6 +19,7 @@
++ #include <limits.h>
++ 
++ #include <cstddef>
+++#include <cstdint>
++ #include <cstring>
++ #include <ostream>
++ 
