@@ -14,27 +14,11 @@ Choose between the classic (called "Legacy") installation method or the new Spac
 
 ## Installation of pre-compiled Binaries
 
-*Note*: FairSoft is primarily a source distribution. Availability of latest releases as pre-compiled binaries may be delayed.
+*Note*: FairSoft is primarily a source distribution. Availability of latest releases as pre-compiled binaries may be delayed or are not available at all.
 
 ### GSI Virgo Cluster
 
 For all [VAEs](https://hpc.gsi.de/virgo/platform/software.html#application-environment) at `/cvmfs/fairsoft.gsi.de/<vae-os>/fairsoft/<release>`. Use by exporting the `SIMPATH` environment variable pointing to one of the directories.
-
-### macOS (beta)
-
-FairSoft config: [default](FairSoftConfig.cmake), no other configs planned
-
-1. Install *Command Line Tools for Xcode* from https://developer.apple.com/downloads (requires Apple account)
-2. Install [Homebrew](https://brew.sh/)
-3. Run `brew update && brew doctor` and fix potential issues reported by these commands until `Your system is ready to brew.`
-4. Run
-```
-brew tap fairrootgroup/fairsoft
-brew install fairsoft
-```
-5. Use via `export SIMPATH=$(brew --prefix fairsoft)`
-
-*Note*: macOS is a fast moving target and it is possible the packages will stop working from one day to another after some system component was updated. We try our best to keep up, one great way to help is to provide detailed problem reports [here on github](https://github.com/FairRootGroup/FairSoft/issues/new).
 
 ### Other platforms
 
