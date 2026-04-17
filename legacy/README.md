@@ -33,8 +33,8 @@ git clone -b <release> https://github.com/FairRootGroup/FairSoft
 ```
 
 For `<release>` choose
-* `jan24`, or `nov22p1`, ... - a particular release
-* `jan24_patches` - always points to the latest patch release for the `nov22` release
+* `jan24`, or `nov22p1`, ... - a particular release. To get a list of all the available releases use `git tag -l`
+* `jan24_patches` - always points to the latest patch release for the `jan24` release
 * `master` - track the latest stable release (e.g. if `jan24` is the latest release `master` is the same as `jan24_patches`)
 * `dev` - the bleeding edge development version
 
@@ -64,7 +64,7 @@ The **make** command doesn't properly support the jobsserver which allows
 parallel builds of all the packages contained in FairSoft which slows down
 the installation enormously. The version provided by brew fixes the problem.
 Both packages are already added in the updated setup script for macOS.
-If found the packages from the homebrew installation directory will be used.
+If the homebrew version of the packages are available those packages will be used automatically.
 
 The last problem is related to the macOS, compiler and SDK versions, such
 that it depends on the personal setup. As described in more detail at
@@ -84,9 +84,7 @@ e.g. for Apple Clang 17 on macOs 15 or Apple Clang 16 on macOS 14
 -DCMAKE_OSX_SYSROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk
 ```
 
-More information can be found at
-
-**macOS users**: Notice [macOS SDK](advanced.md#macos-sdk)!
+Defining the proper SDK is also needed when compiling **FairRoot** and your **ExperimentRoot**, e.g. **CbmRoot**. Please find more information at [macOS SDK](advanced.md#macos-sdk)!
 
 ### 4. CMake build/install step
 
@@ -97,7 +95,7 @@ cmake --build <path-to-build> [-j<ncpus>]
 ```
 
 * `<path-to-build>` is the same directory as chosen in the previous configure step
-* `-j<ncpus>` parallelize the build
+* `-j<ncpus>` parallelize the build. Please specify a value for the number of CPUs otherwise the computer can become completely stuck on some operating systems. 
 
 ### 5. Usage
 
@@ -119,18 +117,25 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
-| Almalinux  | x86_64 | 9     | GCC 11.4.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 10    | GCC 8.3.0                  | 3.27.4 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 11    | GCC 10.2.1                 | 3.27.4 (`bootstrap-cmake.sh`) |
-| Debian     | x86_64 | 12    | GCC 12.2.0                 | 3.25.1 |
-| Fedora     | x86_64 | 37    | GCC 12.3.1                 | 3.27.7 |
-| Fedora     | x86_64 | 38    | GCC 13.2.1                 | 3.27.7 |
-| Fedora     | x86_64 | 39    | GCC 13.2.1                 | 3.27.7 |
-| macOS      | x86_64 | 14    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
-| macOS      | x86_64 | 15    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
-| macOS      | arm64  | 15    | AppleClang 16, gfortran 14 | 3.31.0 (brew) |
-| Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                 | 3.22.1 |
-| Ubuntu     | x86_64 | 24.04 | GCC 13.2.0                 | 3.28.3 |
+| Debian     | x86_64 | 10    | GCC 8.3.0                             | 3.27.4 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 11    | GCC 10.2.1                             | 3.27.4 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 12    | GCC 12.2.0                             | 3.25.1 |
+| Debian     | x86_64 | 13    | GCC 14.2.0                             | 3.31.6 |
+| Fedora     | x86_64 | 38    | GCC 13.2.1                             | 3.27.7 |
+| Fedora     | x86_64 | 40    | GCC 14.2.1                             | 3.30.8 |
+| Fedora     | x86_64 | 42    | GCC 15.2.1                             | 3.31.6 |
+| Fedora     | x86_64 | 43    | GCC 15.2.1                             | 3.31.10 |
+| macOS      | x86_64 | 14.8.3 | SDK 14, AppleClang 16, gfortran 15.2.0 | 4.2.3 (`brew`) |
+| macOS      | x86_64 | 15.7.2 | SDK 14, AppleClang 17, gfortran 15.2.0 | 4.2.0 (`brew`) |
+| macOS      | arm64  | 26.4.1  | SDK 14, AppleClang 21, gfortran 15.2.0 | 4.2.3 (`brew`) |
+| OpenSuse   | x86_64 | 15.6  | GCC 14.3.0 (non system)                | 3.28.3 |
+| OpenSuse   | x86_64 | 16.0  | GCC 15.1.1                             | 3.31.7 |
+| Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                             | 3.22.1 |
+| Ubuntu     | x86_64 | 24.04 | GCC 13.3.0                             | 3.28.3 |
+| Ubuntu     | x86_64 | 26.04 | GCC 15.2.0                             | 3.31.6 |
+
+The compilation of the optional package **onnxruntime** doesn't work with gcc 13 and gcc 14 probably due to a problem with the STL library used for those versions.
+Compilation with earlier and later gcc versions as well as with clang work without errors.
 
 ## Included packages
 
@@ -144,7 +149,7 @@ please contact us.
 | fairmq           | 1.8.4        | https://github.com/FairRootGroup/FairMQ |
 | flatbuffers      | 23.5.26      | https://github.com/google/flatbuffers |
 | fmt              | 10.1.1       | https://github.com/fmtlib/fmt |
-| geant3           | 4-2_fairsoft | https://github.com/FairRootGroup/geant3 |
+|  geant3           | 4-2_fairsoft | https://github.com/FairRootGroup/geant3 |
 | geant4           | 11.2.0       | https://geant4.web.cern.ch |
 | geant4_vmc       | 6-5          | https://github.com/vmc-project/geant4_vmc |
 | hepmc            | 2.06.11      | http://hepmc.web.cern.ch |

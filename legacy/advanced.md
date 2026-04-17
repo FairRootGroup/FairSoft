@@ -73,11 +73,10 @@ becomes possible to install FairSoft jan24 (ROOT 6.30.08) with Apple Clang
 **If you have a deeper understanding of this issue and know a better
 solution, please let us know!**
 
-*Note*: Setting the `$SDKROOT` environment variable (or alternatively the
-[`-DCMAKE_OSX_SYSROOT`](https://cmake.org/cmake/help/latest/variable/CMAKE_OSX_SYSROOT.html)
-variable) may also be needed when compiling **FairRoot** and your
-**ExperimentRoot**, e.g.
+*Note*: Defining the proper SDK is also needed when ompiling **FairRoot** and your **ExperimentRoot**, e.g. **CbmRoot**.
+To ease the process of using the proper SDK version we have added some functionality to the root-config script which returns the information which SDK was used for the compilation of ROOT. If not using the latest SDK version add the following code to your cmake command to automatically use the correct SDK version 
 
-```bash
-export SDKROOT=$(brew ruby -e "puts MacOS.sdk_path")
 ```
+-DCMAKE_OSX_SYSROOT=$(<fairsoft_instll_dir>/bin/root-config --macosx-sdk)
+```
+
