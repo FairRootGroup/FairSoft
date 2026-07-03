@@ -483,6 +483,7 @@ ExternalProject_Add(root
   PATCH_COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_mismatch.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_macos_sdk_for_rootcling.patch"
   COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/fix_rpath_info.patch"
+  COMMAND ${patch} -p1 -i "${CMAKE_SOURCE_DIR}/legacy/root/backports_macos_sdk_26_4_from_root.patch"
   DEPENDS pythia8 vc vecgeom ${extract_source_cache_target}
   ${LOG_TO_FILE}
 )
