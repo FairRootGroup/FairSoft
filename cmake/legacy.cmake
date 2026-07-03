@@ -355,7 +355,7 @@ set(pythia8_version "8317")
 string(SUBSTRING "${pythia8_version}" 0 2 pythia8_major_version)
 string(TOUPPER "${CMAKE_BUILD_TYPE}" selected)
 ExternalProject_Add(pythia8
-  URL https://pythia.org/download/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
+  URL https://pythia.org/releases/pythia${pythia8_major_version}/pythia${pythia8_version}.tgz
   URL_HASH SHA256=1ae551d14dac495ddfe6b344792035ebe410fe6c6004d44a335e0ece0e745adf
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND ${CMAKE_BINARY_DIR}/Source/pythia8/configure
