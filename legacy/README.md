@@ -118,23 +118,24 @@ The following systems are tested regularly. If you feel your system is missing,
 please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
-| --- | --- | --- | --- | --- |
-| Debian     | x86_64 | 12    | GCC 12.2.0                             | 3.25.1 |
-| Debian     | x86_64 | 12    | GCC 12.2.0                             | 4.2.3 (bootstrap) |
-| Debian     | x86_64 | 13    | GCC 14.2.0                             | 3.31.6 |
-| Fedora     | x86_64 | 38    | GCC 13.2.1                             | 3.27.7 |
-| Fedora     | x86_64 | 38    | GCC 13.2.1                             | 4.2.3 (bootstrap) |
-| Fedora     | x86_64 | 40    | GCC 14.2.1                             | 3.30.8 |
-| Fedora     | x86_64 | 42    | GCC 15.2.1                             | 3.31.6 |
-| Fedora     | x86_64 | 43    | GCC 15.2.1                             | 3.31.10 |
-| macOS      | x86_64 | 15    | SDK 26, AppleClang 17, gfortran 15.2.0 | 4.2.0 (brew) |
-| macOS      | arm64  | 26    | SDK 26, AppleClang 17, gfortran 15.2.0 | 4.2.3 (brew) |
-| macOS      | arm64  | 26    | SDK 14, AppleClang 17, gfortran 15.2.0 | 4.2.3 (brew) |
-| OpenSuse   | x86_64 | 15.6  | GCC 14.3.0 (non system)                | 3.28.3 |
-| OpenSuse   | x86_64 | 16.0  | GCC 15.1.1                             | 3.31.7 |
-| Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                             | 4.2.3 (bootstrap) |
-| Ubuntu     | x86_64 | 24.04 | GCC 13.3.0                             | 3.28.3 |
-| Ubuntu     | x86_64 | 26.04 | GCC 15.2.0                             | 3.31.6 |
+| --- | --- | --- | --- | ---   |
+| Debian     | x86_64 | 12      | GCC 12.2.0                               | 4.2.3 (bootstrap) |
+| Debian     | x86_64 | 13      | GCC 14.2.0                               | 3.31.6 |
+| Fedora     | x86_64 | 38      | GCC 13.2.1                               | 3.27.7 |
+| Fedora     | x86_64 | 38      | GCC 13.2.1                               | 4.2.3 (bootstrap) |
+| Fedora     | x86_64 | 40      | GCC 14.2.1                               | 3.30.8 |
+| Fedora     | x86_64 | 42      | GCC 15.2.1                               | 3.31.11 |
+| Fedora     | x86_64 | 43      | GCC 15.2.1                               | 3.31.11 |
+| macOS      | x86_64 | 15.7.7  | SDK 14.5, AppleClang 17, gfortran 16.1.0 | 4.3.4 (brew) |
+| macOS      | x86_64 | 15.7.7  | SDK 26.2, AppleClang 17, gfortran 16.1.0 | 4.3.4 (brew) |
+| macOS      | arm64  | 26.5.2  | SDK 26.5, AppleClang 21, gfortran 16.1.0 | 4.4.0 (brew) |
+| macOS      | arm64  | 26.5.2  | SDK 14.5, AppleClang 21, gfortran 16.1.0 | 4.4.0 (brew) |
+| macOS      | arm64  | 27beta2 | SDK 26.5, AppleClang 21, gfortran 16.1.0 | 4.4.0 (brew) |
+| OpenSuse   | x86_64 | 15.6    | GCC 14.3.0 (non system)                  | 3.28.3 |
+| OpenSuse   | x86_64 | 16.0    | GCC 15.3.0                               | 3.31.7 |
+| Ubuntu     | x86_64 | 22.04   | GCC 11.4.0                               | 4.2.3 (bootstrap) |
+| Ubuntu     | x86_64 | 24.04   | GCC 13.3.0                               | 3.28.3 |
+| Ubuntu     | x86_64 | 26.04   | GCC 15.2.0                               | 3.31.6 |
 
 ## Included packages
 
