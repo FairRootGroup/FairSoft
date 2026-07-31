@@ -117,7 +117,7 @@ please contact us.
 
 | **OS Name** | **Arch** | **OS Version** | **Compiler** | **CMake** |
 | --- | --- | --- | --- | --- |
-| Debian     | x86_64 | 10    | GCC 8.3.0                             | 3.27.4 (`bootstrap-cmake.sh`) |
+| Debian     | x86_64 | 10    | GCC 8.3.0                              | 3.27.4 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 11    | GCC 10.2.1                             | 3.27.4 (`bootstrap-cmake.sh`) |
 | Debian     | x86_64 | 12    | GCC 12.2.0                             | 3.25.1 |
 | Debian     | x86_64 | 13    | GCC 14.2.0                             | 3.31.6 |
@@ -125,14 +125,14 @@ please contact us.
 | Fedora     | x86_64 | 40    | GCC 14.2.1                             | 3.30.8 |
 | Fedora     | x86_64 | 42    | GCC 15.2.1                             | 3.31.6 |
 | Fedora     | x86_64 | 43    | GCC 15.2.1                             | 3.31.10 |
-| macOS      | x86_64 | 14.8.3 | SDK 14, AppleClang 16, gfortran 15.2.0 | 4.2.3 (`brew`) |
-| macOS      | x86_64 | 15.7.2 | SDK 14, AppleClang 17, gfortran 15.2.0 | 4.2.0 (`brew`) |
-| macOS      | arm64  | 26.4.1  | SDK 14, AppleClang 21, gfortran 15.2.0 | 4.2.3 (`brew`) |
+| macOS      | x86_64 | 14.8.3 | SDK 15.2, AppleClang 16, gfortran 15.2.0 | 4.2.3 (`brew`) |
+| macOS      | x86_64 | 15.7.7 | SDK 14.5, AppleClang 17, gfortran 16.1.0 | 4.3.4 (`brew`) |
+| macOS      | arm64  | 26.5.2 | SDK 14.5, AppleClang 21, gfortran 16.1.0 | 4.4.0 (`brew`) |
 | OpenSuse   | x86_64 | 15.6  | GCC 14.3.0 (non system)                | 3.28.3 |
 | OpenSuse   | x86_64 | 16.0  | GCC 15.1.1                             | 3.31.7 |
 | Ubuntu     | x86_64 | 22.04 | GCC 11.4.0                             | 3.22.1 |
 | Ubuntu     | x86_64 | 24.04 | GCC 13.3.0                             | 3.28.3 |
-| Ubuntu     | x86_64 | 26.04 | GCC 15.2.0                             | 3.31.6 |
+| Ubuntu     | x86_64 | 26.04 | GCC 15.2.0                             | 3.27.4 (`bootstrap-cmake.sh`) |
 
 The compilation of the optional package **onnxruntime** doesn't work with gcc 13 and gcc 14 probably due to a problem with the STL library used for those versions.
 Compilation with earlier and later gcc versions as well as with clang work without errors.
