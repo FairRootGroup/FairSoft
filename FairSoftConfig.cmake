@@ -38,6 +38,23 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install prefi
 # set(GEANT4MT ON CACHE BOOL "Build Geant4 in multi-threading mode" FORCE)
 
 #
+# CI Build Mode (default OFF)
+#
+#  Enable this to reduce peak disk usage during builds. When enabled:
+#  - Packages are built sequentially (one at a time) instead of in parallel
+#  - Each package's build and source directories are removed after installation
+#  - Disk usage is logged (space reclaimed + total build tree size)
+#
+#  The -j<ncpus> argument still parallelizes compilation within each package build.
+#  Trade-offs:
+#  - Builds take longer due to package serialization
+#  - Incremental rebuilds after failure are longer (removed packages must fully rebuild)
+#  Recommended for CI environments or systems with limited storage.
+#
+# set(CI_BUILD_MODE OFF CACHE BOOL "Serialize builds and remove package dirs after install" FORCE)
+# set(CI_BUILD_MODE ON CACHE BOOL "Serialize builds and remove package dirs after install" FORCE)
+
+#
 # Python
 #
 #  On macOS we assume you have used <source-dir>/legacy/setup-macos.sh which
